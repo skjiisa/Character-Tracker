@@ -303,7 +303,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYI-j1-djF">
-                                    <rect key="frame" x="174" y="7" width="66" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <state key="normal" title="Add Race"/>
                                     <connections>
                                         <action selector="addRace:" destination="hEt-7s-HJP" eventType="touchUpInside" id="wwb-2q-GE0"/>
@@ -312,8 +312,10 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstItem="gYI-j1-djF" firstAttribute="centerX" secondItem="VpU-9Q-wIR" secondAttribute="centerX" id="Uol-J8-l6J"/>
-                                <constraint firstItem="gYI-j1-djF" firstAttribute="centerY" secondItem="VpU-9Q-wIR" secondAttribute="centerY" id="mDh-kN-60b"/>
+                                <constraint firstItem="gYI-j1-djF" firstAttribute="centerY" secondItem="VpU-9Q-wIR" secondAttribute="centerY" id="8BT-sk-HPL"/>
+                                <constraint firstItem="gYI-j1-djF" firstAttribute="width" secondItem="VpU-9Q-wIR" secondAttribute="width" id="Vem-gx-BEC"/>
+                                <constraint firstItem="gYI-j1-djF" firstAttribute="centerX" secondItem="VpU-9Q-wIR" secondAttribute="centerX" id="dVR-sa-Xt7"/>
+                                <constraint firstItem="gYI-j1-djF" firstAttribute="height" secondItem="VpU-9Q-wIR" secondAttribute="height" id="lsq-AZ-20p"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -359,7 +361,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4T-KY-j4F">
-                                    <rect key="frame" x="161" y="7" width="92" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <state key="normal" title="Add Attribute"/>
                                     <connections>
                                         <action selector="addAttribute:" destination="s9Q-u2-klJ" eventType="touchUpInside" id="lJE-j2-G4z"/>
@@ -368,8 +370,10 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstItem="o4T-KY-j4F" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="U5t-MI-Xs6"/>
-                                <constraint firstItem="o4T-KY-j4F" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="afQ-B6-tNX"/>
+                                <constraint firstItem="o4T-KY-j4F" firstAttribute="width" secondItem="0UY-hy-SUx" secondAttribute="width" id="5ar-mQ-7As"/>
+                                <constraint firstItem="o4T-KY-j4F" firstAttribute="height" secondItem="0UY-hy-SUx" secondAttribute="height" id="EH6-8P-Vmk"/>
+                                <constraint firstItem="o4T-KY-j4F" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="hps-S2-JQc"/>
+                                <constraint firstItem="o4T-KY-j4F" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="mRJ-St-2Pc"/>
                             </constraints>
                         </view>
                         <prototypes>
