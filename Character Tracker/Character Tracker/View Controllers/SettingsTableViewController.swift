@@ -43,7 +43,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
 
         cell.textLabel?.text = gameReference?.name
 
