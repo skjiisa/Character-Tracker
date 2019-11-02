@@ -24,7 +24,6 @@ class GameReference {
     
     func set(game: Game) {
         self.game = game
-        //delegate?.gameSet()
         gameSet()
     }
 }

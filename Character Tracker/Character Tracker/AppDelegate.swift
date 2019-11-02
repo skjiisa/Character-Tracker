@@ -56,15 +56,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     attributeType.name = tuplet.name
                 }
                 
-                let games: [(name: String, id: UUID)] = [
-                    ("Skyrim", UUID(uuidString: "33839302-E5B9-4299-AA81-444BED243F20")!),
-                    ("Daggerfall", UUID(uuidString: "620A5BF0-648A-404A-AD6D-8E6D4F9994BE")!)
+                let games: [(name: String, index: Int16, mainline: Bool, id: UUID)] = [
+                    ("Skyrim", 4, true, UUID(uuidString: "33839302-E5B9-4299-AA81-444BED243F20")!),
+                    ("Daggerfall", 1, true, UUID(uuidString: "620A5BF0-648A-404A-AD6D-8E6D4F9994BE")!),
+                    ("Elder Scrolls Online", 0, false, UUID(uuidString: "432650F5-26F6-491F-8280-5F3B0386C038")!)
                 ]
                 
                 for tuplet in games {
                     let game = Game(context: context)
                     game.id = tuplet.id
                     game.name = tuplet.name
+                    game.index = tuplet.index
+                    game.mainline = tuplet.mainline
                 }
 
                 try context.save()

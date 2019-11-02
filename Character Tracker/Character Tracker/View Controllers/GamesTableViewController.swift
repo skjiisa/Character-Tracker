@@ -18,12 +18,13 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
         
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
+            NSSortDescriptor(key: "mainline", ascending: false),
+            NSSortDescriptor(key: "index", ascending: false)
         ]
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: nil,
+                                             sectionNameKeyPath: "mainline",
                                              cacheName: nil)
         
         frc.delegate = self
@@ -54,7 +55,8 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Games"
+        let sectionInfo = fetchedResultsController.sections?[section]
+        return sectionInfo?.name == "1" ? "Mainline games" : "Spinoffs"
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

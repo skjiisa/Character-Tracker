@@ -26,6 +26,8 @@
     </entity>
     <entity name="Game" representedClassName="Game" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mainline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="game" inverseEntity="Attribute"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character"/>
@@ -44,7 +46,7 @@
         <element name="AttributeType" positionX="162" positionY="-108" width="128" height="88"/>
         <element name="Character" positionX="219" positionY="115" width="128" height="118"/>
         <element name="CharacterAttribute" positionX="462" positionY="-45" width="128" height="88"/>
-        <element name="Game" positionX="-29" positionY="-260" width="128" height="118"/>
+        <element name="Game" positionX="-29" positionY="-260" width="128" height="148"/>
         <element name="Race" positionX="-44" positionY="154" width="128" height="118"/>
     </elements>
 </model>
