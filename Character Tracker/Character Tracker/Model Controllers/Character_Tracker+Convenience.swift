@@ -9,11 +9,12 @@
 import CoreData
 
 extension Race {
-    @discardableResult convenience init(name: String, vanilla: Bool, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, vanilla: Bool, game: Game, id: UUID = UUID(), context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
         self.id = id
         self.vanilla = vanilla
+        self.game = game
     }
 }

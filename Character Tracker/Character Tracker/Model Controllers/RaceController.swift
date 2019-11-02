@@ -10,8 +10,8 @@ import CoreData
 
 class RaceController {
     
-    func create(race name: String, vanilla: Bool, context: NSManagedObjectContext) {
-        Race(name: name, vanilla: vanilla, context: context)
+    func create(race name: String, vanilla: Bool, game: Game, context: NSManagedObjectContext) {
+        Race(name: name, vanilla: vanilla, game: game, context: context)
         CoreDataStack.shared.save(context: context)
     }
     

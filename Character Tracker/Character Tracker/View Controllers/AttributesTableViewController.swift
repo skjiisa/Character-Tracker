@@ -137,14 +137,14 @@ class AttributesTableViewController: UITableViewController {
         let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.raceController.create(race: name, vanilla: true, context: CoreDataStack.shared.mainContext )
+            //self.raceController.create(race: name, vanilla: true, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
         let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.raceController.create(race: name, vanilla: false, context: CoreDataStack.shared.mainContext )
+            //self.raceController.create(race: name, vanilla: false, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
