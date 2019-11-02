@@ -71,7 +71,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeSelectorCell", for: indexPath)
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
                 if let race = race {
                     cell.textLabel?.text = race.name
                 } else {
@@ -79,7 +79,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 }
             }
         case 1...3:
-            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeSelectorCell", for: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
             cell.textLabel?.text = "Add Skill"
         default:
             cell = UITableViewCell()
