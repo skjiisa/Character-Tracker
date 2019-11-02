@@ -17,7 +17,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Properties
     
-    var attributeController = AttributeController()
+    var attributeController: AttributeController?
     var attributeType: AttributeType?
     var gameReference: GameReference?
     var callbacks: [( (Attribute) -> Void )] = []
@@ -168,14 +168,14 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.attributeController.create(attribute: name, vanilla: true, game: game, type: type, context: CoreDataStack.shared.mainContext )
+            self.attributeController?.create(attribute: name, vanilla: true, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
         let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.attributeController.create(attribute: name, vanilla: false, game: game, type: type, context: CoreDataStack.shared.mainContext )
+            self.attributeController?.create(attribute: name, vanilla: false, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         

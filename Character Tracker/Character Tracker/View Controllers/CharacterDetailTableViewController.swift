@@ -138,6 +138,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     self.navigationController?.popViewController(animated: true)
                 }
             } else if let attributesVC = vc as? AttributesTableViewController {
+                attributesVC.attributeController = attributeController
                 attributesVC.attributeType = attributeController.type(.skill)
                 attributesVC.callbacks.append { attribute in
                     //Add attribute

@@ -8,7 +8,7 @@
 
 import CoreData
 
-enum AttributeTypeKeys: String {
+enum AttributeTypeKeys: String, CaseIterable {
     case skill
     case objective
 }

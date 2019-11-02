@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    var attributeController = AttributeController()
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -32,23 +33,42 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Game"
+        if section == 0 {
+            return "Game"
+        } else {
+            return "\(gameReference?.name ?? "") Settings"
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+        if section == 0 {
+            return 1
+        } else {
+            return 1 + AttributeTypeKeys.allCases.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
+        let cell: UITableViewCell
+        
+        if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
+            cell.textLabel?.text = gameReference?.name
+        } else {
+            if indexPath.row == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
+                cell.textLabel?.text = "Races"
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+                cell.textLabel?.text = "\(AttributeTypeKeys.allCases[indexPath.row - 1].rawValue.capitalized)s"
+            }
+        }
 
-        cell.textLabel?.text = gameReference?.name
+        
 
         return cell
     }
@@ -92,9 +112,28 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let gamesTableVC = segue.destination as? GamesTableViewController {
-            gamesTableVC.gameReference = self.gameReference
+        if let vc = segue.destination as? CharacterTrackerViewController {
+            vc.gameReference = gameReference
+            
+            if let gamesTableVC = segue.destination as? GamesTableViewController {
+                gamesTableVC.gameReference = self.gameReference
+            } else if let racesVC = vc as? RacesTableViewController {
+                racesVC.callbacks.append { race in
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else if let attributesVC = vc as? AttributesTableViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                attributesVC.attributeController = attributeController
+                
+                attributesVC.attributeType = attributeController.type(AttributeTypeKeys.allCases[indexPath.row - 1])
+                
+                attributesVC.callbacks.append { attribute in
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
+        
+
     }
 
 }
