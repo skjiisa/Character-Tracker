@@ -33,7 +33,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         ]
         
         guard let game = gameReference?.game else { return nil }
-        
         fetchRequest.predicate = NSPredicate(format: "game == %@", game)
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -81,7 +80,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RaceCell", for: indexPath)
 
         cell.textLabel?.text = fetchedResultsController?.object(at: indexPath).name
 

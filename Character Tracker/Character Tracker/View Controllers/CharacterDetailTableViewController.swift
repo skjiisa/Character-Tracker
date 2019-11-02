@@ -12,6 +12,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     //MARK: Properties
     
+    let attributeController = AttributeController()
     var gameReference: GameReference?
     var race: Race?
 
@@ -133,6 +134,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if let racesVC = vc as? RacesTableViewController {
                 racesVC.callbacks.append { race in
                     self.race = race
+                    self.tableView.reloadData()
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else if let attributesVC = vc as? AttributesTableViewController {
+                attributesVC.attributeType = attributeController.type(.skill)
+                attributesVC.callbacks.append { attribute in
+                    //Add attribute
                     self.tableView.reloadData()
                     self.navigationController?.popViewController(animated: true)
                 }

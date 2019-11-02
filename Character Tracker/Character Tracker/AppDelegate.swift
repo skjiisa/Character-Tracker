@@ -46,8 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let context = CoreDataStack.shared.mainContext
 
                 let attributeTypes: [(name: String, id: UUID)] = [
-                    ("Skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
-                    ("Objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!)
+                    ("skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
+                    ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!)
                 ]
 
                 for tuplet in attributeTypes {

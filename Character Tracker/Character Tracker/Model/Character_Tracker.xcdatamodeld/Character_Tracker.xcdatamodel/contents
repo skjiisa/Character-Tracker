@@ -3,6 +3,7 @@
     <entity name="Attribute" representedClassName="Attribute" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="vanilla" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="skill" inverseEntity="CharacterAttribute"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="attributes" inverseEntity="AttributeType"/>
@@ -42,7 +43,7 @@
     </entity>
     <fetchRequest name="testAttributeTypes" entity="AttributeType"/>
     <elements>
-        <element name="Attribute" positionX="286" positionY="-222" width="128" height="118"/>
+        <element name="Attribute" positionX="286" positionY="-222" width="128" height="133"/>
         <element name="AttributeType" positionX="162" positionY="-108" width="128" height="88"/>
         <element name="Character" positionX="219" positionY="115" width="128" height="118"/>
         <element name="CharacterAttribute" positionX="462" positionY="-45" width="128" height="88"/>

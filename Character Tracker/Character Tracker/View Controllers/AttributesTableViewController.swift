@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AttributesTableViewController: UITableViewController {
+class AttributesTableViewController: UITableViewController, CharacterTrackerViewController {
     
     //MARK: Outlets
     
@@ -17,17 +17,39 @@ class AttributesTableViewController: UITableViewController {
     
     //MARK: Properties
     
-    var raceController = RaceController()
+    var attributeController = AttributeController()
+    var attributeType: AttributeType?
+    var gameReference: GameReference?
+    var callbacks: [( (Attribute) -> Void )] = []
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Race> = {
+    var attributeName: String {
+        if let name = attributeType?.name {
+            return name.capitalized
+        } else {
+            return "Attribute"
+        }
+    }
+    
+    func choose(attribute: Attribute) {
+        for callback in callbacks {
+            callback(attribute)
+        }
+    }
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<Attribute>? = {
         
-        let fetchRequest: NSFetchRequest<Race> = Race.fetchRequest()
+        let fetchRequest: NSFetchRequest<Attribute> = Attribute.fetchRequest()
         
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "vanilla", ascending: false),
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
+        guard let game = gameReference?.game,
+            let type = attributeType else { return nil }
+        
+        fetchRequest.predicate = NSPredicate(format: "game == %@ AND type = %@", game, type)
+
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
                                              sectionNameKeyPath: "vanilla",
@@ -53,18 +75,18 @@ class AttributesTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        title = "Races"
-        addAttributeButton.setTitle("Add Race", for: .normal)
+        title = "\(attributeName)s"
+        addAttributeButton.setTitle("Add \(attributeName)", for: .normal)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController?.sections?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if fetchedResultsController.sectionIndexTitles[section] == "1" {
+        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
             return "Vanilla"
         } else {
             return "Custom"
@@ -72,13 +94,13 @@ class AttributesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
 
-        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).name
+        cell.textLabel?.text = fetchedResultsController?.object(at: indexPath).name
 
         return cell
     }
@@ -128,30 +150,39 @@ class AttributesTableViewController: UITableViewController {
     }
     */
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        choose(attribute: attribute)
+    }
+    
     //MARK: Actions
     
     @IBAction func addAttribute(_ sender: UIButton) {
         
-        let alertController = UIAlertController(title: "New Race", message: "", preferredStyle: .alert)
+        guard let game = gameReference?.game,
+            let type = attributeType else { return }
+        
+        let alertController = UIAlertController(title: "New \(attributeName)", message: "", preferredStyle: .alert)
         
         let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            //self.raceController.create(race: name, vanilla: true, context: CoreDataStack.shared.mainContext )
+            self.attributeController.create(attribute: name, vanilla: true, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
         let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            //self.raceController.create(race: name, vanilla: false, context: CoreDataStack.shared.mainContext )
+            self.attributeController.create(attribute: name, vanilla: false, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { (textField) in
-            textField.placeholder = "Race name"
+            textField.placeholder = "\(self.attributeName) name"
         }
                 
         alertController.addAction(saveVanilla)
