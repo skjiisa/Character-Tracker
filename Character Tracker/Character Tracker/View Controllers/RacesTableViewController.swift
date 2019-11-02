@@ -15,6 +15,13 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     
     var raceController = RaceController()
     var gameReference: GameReference?
+    var callbacks: [( (Race) -> Void )] = []
+    
+    func choose(race: Race) {
+        for callback in callbacks {
+            callback(race)
+        }
+    }
     
     lazy var fetchedResultsController: NSFetchedResultsController<Race>? = {
         
@@ -125,6 +132,12 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let race = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        choose(race: race)
+    }
     
     //MARK: Actions
     

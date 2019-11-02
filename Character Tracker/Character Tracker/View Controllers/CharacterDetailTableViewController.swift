@@ -10,7 +10,10 @@ import UIKit
 
 class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Properties
+    
     var gameReference: GameReference?
+    var race: Race?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +72,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "AttributeSelectorCell", for: indexPath)
-                cell.textLabel?.text = "Select Race"
+                if let race = race {
+                    cell.textLabel?.text = race.name
+                } else {
+                    cell.textLabel?.text = "Select Race"
+                }
             }
         case 1...3:
             cell = tableView.dequeueReusableCell(withIdentifier: "AttributeSelectorCell", for: indexPath)
@@ -122,6 +129,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
+            
+            if let racesVC = vc as? RacesTableViewController {
+                racesVC.callbacks.append { race in
+                    self.race = race
+                    self.tableView.reloadData()
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
     }
 
