@@ -4,7 +4,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="skill" inverseEntity="CharacterAttribute"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="skills" inverseEntity="Game"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="attributes" inverseEntity="AttributeType"/>
     </entity>
     <entity name="AttributeType" representedClassName="AttributeType" syncable="YES" codeGenerationType="class">
@@ -27,9 +27,9 @@
     <entity name="Game" representedClassName="Game" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="game" inverseEntity="Attribute"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character"/>
         <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="game" inverseEntity="Race"/>
-        <relationship name="skills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="game" inverseEntity="Attribute"/>
     </entity>
     <entity name="Race" representedClassName="Race" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -38,12 +38,13 @@
         <relationship name="character" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="race" inverseEntity="Character"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="races" inverseEntity="Game"/>
     </entity>
+    <fetchRequest name="testAttributeTypes" entity="AttributeType"/>
     <elements>
+        <element name="Attribute" positionX="286" positionY="-222" width="128" height="118"/>
+        <element name="AttributeType" positionX="162" positionY="-108" width="128" height="88"/>
         <element name="Character" positionX="219" positionY="115" width="128" height="118"/>
         <element name="CharacterAttribute" positionX="462" positionY="-45" width="128" height="88"/>
         <element name="Game" positionX="-29" positionY="-260" width="128" height="118"/>
         <element name="Race" positionX="-44" positionY="154" width="128" height="118"/>
-        <element name="Attribute" positionX="286" positionY="-222" width="128" height="118"/>
-        <element name="AttributeType" positionX="162" positionY="-108" width="128" height="88"/>
     </elements>
 </model>

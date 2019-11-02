@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        preloadData()
         return true
     }
 
@@ -31,6 +32,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    private func preloadData() {
+        let preloadedDataKey = "didPreloadData"
+        
+        let userDefaults = UserDefaults.standard
+        
+        if !userDefaults.bool(forKey: preloadedDataKey) {
+            
+            do {
+                // Temporary method of preloading basic data until a proper method is implemented
+                let context = CoreDataStack.shared.mainContext
+
+                let attributeTypes: [(name: String, id: UUID)] = [
+                    ("Skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
+                    ("Objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!)
+                ]
+
+                for tuplet in attributeTypes {
+                    let attributeType = AttributeType(context: context)
+                    attributeType.id = tuplet.id
+                    attributeType.name = tuplet.name
+                }
+                
+                let games: [(name: String, id: UUID)] = [
+                    ("Skyrim", UUID(uuidString: "33839302-E5B9-4299-AA81-444BED243F20")!),
+                    ("Daggerfall", UUID(uuidString: "620A5BF0-648A-404A-AD6D-8E6D4F9994BE")!)
+                ]
+                
+                for tuplet in games {
+                    let game = Game(context: context)
+                    game.id = tuplet.id
+                    game.name = tuplet.name
+                }
+
+                try context.save()
+                
+                // Below is a failed attempt to preload an existing .sqlite database extracted from a simulator
+//                let fileManager = FileManager.default
+//                guard let applicationSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return }
+//
+//                let databaseURL = applicationSupport.appendingPathComponent("Character_Tracker.sqlite")
+//
+//                print(databaseURL)
+//
+//                guard let dbFilePath = Bundle.main.url(forResource: "Character_Tracker", withExtension: "sqlite") else { return }
+//
+//                let dbFile = try FileHandle(forReadingFrom: dbFilePath)
+//
+//                print(dbFile)
+//                let data = dbFile.readDataToEndOfFile()
+//                try data.write(to: databaseURL)
+//
+                userDefaults.set(true, forKey: preloadedDataKey)
+            } catch {
+                fatalError("Undable to preload data: \(error)")
+            }
+        }
     }
 
     // MARK: - Core Data stack

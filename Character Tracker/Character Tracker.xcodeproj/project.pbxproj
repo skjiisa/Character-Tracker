@@ -13,6 +13,13 @@
 		595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 595F7723236A55EF00151209 /* Character_Tracker.xcdatamodeld */; };
 		595F7727236A55F300151209 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595F7726236A55F300151209 /* Assets.xcassets */; };
 		595F772A236A55F300151209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7728236A55F300151209 /* LaunchScreen.storyboard */; };
+		59B3A776236B9EFE00B3D33B /* PreloadedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59B3A775236B9EFE00B3D33B /* PreloadedData.plist */; };
+		59B3A789236CE61B00B3D33B /* Character_Tracker.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 59B3A788236CE61B00B3D33B /* Character_Tracker.sqlite */; };
+		59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78A236CF29900B3D33B /* TabBarController.swift */; };
+		59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */; };
+		59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78E236CF68E00B3D33B /* GameReference.swift */; };
+		59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */; };
+		59B3A793236D01B300B3D33B /* CharactersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */; };
 		59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D1F236AA1C400A4A14E /* CharacterDetailTableViewController.swift */; };
 		59BB3D23236AA8FD00A4A14E /* RaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D22236AA8FD00A4A14E /* RaceController.swift */; };
 		59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */; };
@@ -29,6 +36,13 @@
 		595F7726236A55F300151209 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		595F7729236A55F300151209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		595F772B236A55F300151209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59B3A775236B9EFE00B3D33B /* PreloadedData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PreloadedData.plist; sourceTree = "<group>"; };
+		59B3A788236CE61B00B3D33B /* Character_Tracker.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Character_Tracker.sqlite; sourceTree = "<group>"; };
+		59B3A78A236CF29900B3D33B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		59B3A78E236CF68E00B3D33B /* GameReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReference.swift; sourceTree = "<group>"; };
+		59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesTableViewController.swift; sourceTree = "<group>"; };
+		59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersTableViewController.swift; sourceTree = "<group>"; };
 		59BB3D1F236AA1C400A4A14E /* CharacterDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailTableViewController.swift; sourceTree = "<group>"; };
 		59BB3D22236AA8FD00A4A14E /* RaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceController.swift; sourceTree = "<group>"; };
 		59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Character_Tracker+Convenience.swift"; path = "Character Tracker/Model Controllers/Character_Tracker+Convenience.swift"; sourceTree = SOURCE_ROOT; };
@@ -72,7 +86,7 @@
 				59BB3D21236AA8B300A4A14E /* Model Controllers */,
 				59BB3D1E236AA19800A4A14E /* View Controllers */,
 				595F7731236A561800151209 /* Storyboards */,
-				595F7726236A55F300151209 /* Assets.xcassets */,
+				59B3A774236B9EE800B3D33B /* Resources */,
 				595F772B236A55F300151209 /* Info.plist */,
 			);
 			path = "Character Tracker";
@@ -93,8 +107,19 @@
 				595F7723236A55EF00151209 /* Character_Tracker.xcdatamodeld */,
 				59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */,
 				59BB3D26236AA95700A4A14E /* CoreDataStack.swift */,
+				59B3A78E236CF68E00B3D33B /* GameReference.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		59B3A774236B9EE800B3D33B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59B3A788236CE61B00B3D33B /* Character_Tracker.sqlite */,
+				595F7726236A55F300151209 /* Assets.xcassets */,
+				59B3A775236B9EFE00B3D33B /* PreloadedData.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		59BB3D1E236AA19800A4A14E /* View Controllers */ = {
@@ -102,6 +127,10 @@
 			children = (
 				59BB3D1F236AA1C400A4A14E /* CharacterDetailTableViewController.swift */,
 				59BB3D28236AAB2F00A4A14E /* AttributesTableViewController.swift */,
+				59B3A78A236CF29900B3D33B /* TabBarController.swift */,
+				59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */,
+				59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */,
+				59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -174,7 +203,9 @@
 			files = (
 				595F772A236A55F300151209 /* LaunchScreen.storyboard in Resources */,
 				595F7727236A55F300151209 /* Assets.xcassets in Resources */,
+				59B3A789236CE61B00B3D33B /* Character_Tracker.sqlite in Resources */,
 				595F7722236A55EF00151209 /* Main.storyboard in Resources */,
+				59B3A776236B9EFE00B3D33B /* PreloadedData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,14 +216,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
+				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
+				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
 				59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */,
+				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
 				59BB3D23236AA8FD00A4A14E /* RaceController.swift in Sources */,
+				59B3A793236D01B300B3D33B /* CharactersTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
