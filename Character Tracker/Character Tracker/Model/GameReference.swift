@@ -8,13 +8,15 @@
 
 import Foundation
 
-protocol GameReferenceDelegate {
-    func gameSet()
-}
-
 class GameReference {
     private(set) var game: Game?
-    var delegate: GameReferenceDelegate?
+    var callbacks: [( () -> Void )] = []
+    
+    func gameSet() {
+        for callback in callbacks {
+            callback()
+        }
+    }
     
     var name: String {
         return game?.name ?? ""
@@ -22,6 +24,7 @@ class GameReference {
     
     func set(game: Game) {
         self.game = game
-        delegate?.gameSet()
+        //delegate?.gameSet()
+        gameSet()
     }
 }

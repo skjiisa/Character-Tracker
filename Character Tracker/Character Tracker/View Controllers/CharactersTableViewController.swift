@@ -10,7 +10,14 @@ import UIKit
 
 class CharactersTableViewController: UITableViewController, CharacterTrackerViewController {
     
-    var gameReference: GameReference?
+    var gameReference: GameReference? {
+        didSet {
+            gameReference?.callbacks.append {
+                self.navigationController?.popToRootViewController(animated: false)
+                self.title = self.gameReference?.name
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

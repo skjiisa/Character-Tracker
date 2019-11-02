@@ -23,7 +23,7 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "name",
+                                             sectionNameKeyPath: nil,
                                              cacheName: nil)
         
         frc.delegate = self
@@ -51,6 +51,10 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Games"
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

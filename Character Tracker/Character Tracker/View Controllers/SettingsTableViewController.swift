@@ -12,7 +12,10 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     
     var gameReference: GameReference? {
         didSet {
-            gameReference?.delegate = self
+            gameReference?.callbacks.append {
+                self.tableView.reloadData()
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 
@@ -94,11 +97,4 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         }
     }
 
-}
-
-extension SettingsTableViewController: GameReferenceDelegate {
-    func gameSet() {
-        tableView.reloadData()
-        navigationController?.popViewController(animated: true)
-    }
 }
