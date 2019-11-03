@@ -14,7 +14,24 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     let attributeController = AttributeController()
     var gameReference: GameReference?
+    
     var race: Race?
+    
+    var sectionsForAttributeType: [(type: AttributeTypeKeys, sections: [String])] = [
+        (.skill, ["Primary", "Major", "Minor"]),
+        (.objective, ["Questlines", "Objectives"])
+    ]
+    var allSections: [String] {
+        var sections: [String] = []
+        
+        sections.append("Character")
+        
+        for type in sectionsForAttributeType {
+            sections.append(contentsOf: type.sections)
+        }
+        
+        return sections
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,44 +48,59 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return allSections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        
+        guard let currentSubsection = self.subsection(for: section) else {
+            // Character section
             return 2
-        case 1:
-            return 1
-        case 2:
-            return 1
-        case 3:
-            return 1
-        default:
-            return 0
         }
+        
+        let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+        
+        return tempAttributes.count + 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Character"
-        case 1:
-            return "Primary Skills"
-        case 2:
-            return "Major Skills"
-        case 3:
-            return "Minor Skills"
-        default:
-            return ""
-        }
+        return allSections[section]
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
+
+//        switch indexPath.section {
+//        case 0:
+//            if indexPath.row == 0 {
+//                cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
+//            } else {
+//                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
+//                if let race = race {
+//                    cell.textLabel?.text = race.name
+//                } else {
+//                    cell.textLabel?.text = "Select Race"
+//                }
+//            }
+//        case 1...3:
+//            cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+//            cell.textLabel?.text = "Add Skill"
+//        default:
+//            cell = UITableViewCell()
+//        }
         
-        switch indexPath.section {
-        case 0:
+        if let currentSubsection = self.subsection(for: indexPath.section) {
+            let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+            
+            if indexPath.row < tempAttributes.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+                cell.textLabel?.text = tempAttributes[indexPath.row].name
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+                cell.textLabel?.text = "Add \(currentSubsection.type)"
+            }
+        } else {
+            // Character section
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
             } else {
@@ -79,11 +111,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.textLabel?.text = "Select Race"
                 }
             }
-        case 1...3:
-            cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-            cell.textLabel?.text = "Add Skill"
-        default:
-            cell = UITableViewCell()
         }
         
         return cell
@@ -123,6 +150,32 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         return true
     }
     */
+    
+    func subsection(for section: Int) -> (type: AttributeTypeKeys, priority: Int16)? {
+        var i = 0
+        
+        if section == 0 {
+            return nil
+        }
+        
+        var attributeType: AttributeTypeKeys?
+        var priority: Int16?
+        
+        for typeTuplet in sectionsForAttributeType {
+            if section <= i + typeTuplet.sections.count {
+                attributeType = typeTuplet.type
+                priority = Int16(section - i - 1)
+                break
+            } else {
+                i += typeTuplet.sections.count
+            }
+        }
+        
+        guard let unwrappedAttributeType = attributeType,
+            let unwrappedPriority = priority else { return nil }
+        
+        return (unwrappedAttributeType, unwrappedPriority)
+    }
 
     // MARK: - Navigation
 
@@ -137,13 +190,18 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     self.tableView.reloadData()
                     self.navigationController?.popViewController(animated: true)
                 }
-            } else if let attributesVC = vc as? AttributesTableViewController {
+            } else if let attributesVC = vc as? AttributesTableViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                
+                guard let currentSubsection = self.subsection(for: indexPath.section) else { return }
+                
                 attributesVC.attributeController = attributeController
-                attributesVC.attributeType = attributeController.type(.skill)
+                attributesVC.attributeType = attributeController.type(currentSubsection.type)
                 attributesVC.callbacks.append { attribute in
-                    //Add attribute
+                    self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
                     self.tableView.reloadData()
                     self.navigationController?.popViewController(animated: true)
+                    
                 }
             }
         }

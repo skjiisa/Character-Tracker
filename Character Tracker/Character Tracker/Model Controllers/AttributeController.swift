@@ -15,6 +15,8 @@ enum AttributeTypeKeys: String, CaseIterable {
 
 class AttributeController {
     
+    var tempAttributes: [Attribute: Int16] = [:]
+    
     func create(attribute name: String, vanilla: Bool, game: Game, type: AttributeType, context: NSManagedObjectContext) {
         Attribute(name: name, vanilla: vanilla, game: game, type: type, context: context)
         CoreDataStack.shared.save(context: context)
@@ -41,6 +43,28 @@ class AttributeController {
             NSLog("Could not fetch attribute type: \(error)")
             return nil
         }
+    }
+    
+    func add(tempAttribute attribute: Attribute, priority: Int16) {
+        tempAttributes[attribute] = priority
+    }
+    
+    func remove(tempAttribute attribute: Attribute) {
+        tempAttributes.removeValue(forKey: attribute)
+    }
+    
+    func getTempAttributes(ofType typeKey: AttributeTypeKeys) -> [Attribute] {
+        let type = self.type(typeKey)
+        
+        return tempAttributes.keys.filter { $0.type == type }
+    }
+    
+    func getTempAttributes(ofType typeKey: AttributeTypeKeys, priority: Int16) -> [Attribute] {
+        let type = self.type(typeKey)
+        
+        let attributesDictionary = tempAttributes.filter { $0.key.type == type && $0.value == priority }
+        
+        return attributesDictionary.map { $0.key }
     }
     
 }

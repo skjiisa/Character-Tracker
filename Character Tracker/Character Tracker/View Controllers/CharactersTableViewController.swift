@@ -27,9 +27,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        if let gameName = gameReference?.name {
-            self.title = "\(gameName) Characters"
-        }
+        self.title = self.gameReference?.name
     }
 
     // MARK: - Table view data source
