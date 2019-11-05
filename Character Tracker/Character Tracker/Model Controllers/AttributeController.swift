@@ -69,4 +69,33 @@ class AttributeController {
         return attributesDictionary.map { $0.key }
     }
     
+    func saveTempAttributes(to character: Character, context: NSManagedObjectContext) {
+        for attributePair in tempAttributes {
+            CharacterAttribute(character: character, attribute: attributePair.key, priority: attributePair.value, context: context)
+        }
+        
+        tempAttributes = [:]
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func fetchAttributes(for character: Character, context: NSManagedObjectContext) {
+        let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "character = %@", character)
+        
+        do {
+            let characterAttributes = try context.fetch(fetchRequest)
+            for characterAttribute in characterAttributes {
+                guard let attribute = characterAttribute.attribute else { continue }
+                tempAttributes[attribute] = characterAttribute.priority
+            }
+        } catch {
+            if let name = character.name {
+                NSLog("Could not fetch \(name)'s attributes: \(error)")
+            } else {
+                NSLog("Could not fetch character's attributes: \(error)")
+            }
+        }
+    }
+    
 }

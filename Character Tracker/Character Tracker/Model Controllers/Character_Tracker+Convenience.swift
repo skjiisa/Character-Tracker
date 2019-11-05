@@ -41,3 +41,13 @@ extension Character {
         self.id = id
     }
 }
+
+extension CharacterAttribute {
+    @discardableResult convenience init(character: Character, attribute: Attribute, priority: Int16, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.character = character
+        self.attribute = attribute
+        self.priority = priority
+    }
+}

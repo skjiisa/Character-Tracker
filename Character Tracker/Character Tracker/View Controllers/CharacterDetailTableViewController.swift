@@ -17,7 +17,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     var character: Character? {
         didSet {
-            race = character?.race
+            guard let character = character else { return }
+            race = character.race
+            attributeController.fetchAttributes(for: character, context: CoreDataStack.shared.mainContext)
         }
     }
     
@@ -213,13 +215,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             return
         }
         
+        let savedCharacter: Character
+        
         if let character = character {
             characterController.edit(character: character, name: name, race: race, context: CoreDataStack.shared.mainContext)
+            savedCharacter = character
         } else {
-            characterController.create(character: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
+            savedCharacter = characterController.create(character: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
         }
         
-        //TODO: save attributes
+        attributeController.saveTempAttributes(to: savedCharacter, context: CoreDataStack.shared.mainContext)
     }
     
     //MARK: Actions
