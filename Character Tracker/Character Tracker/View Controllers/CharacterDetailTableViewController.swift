@@ -15,7 +15,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     let attributeController = AttributeController()
     let characterController = CharacterController()
     
-    var character: Character?
+    var character: Character? {
+        didSet {
+            race = character?.race
+        }
+    }
     
     var gameReference: GameReference?
     var race: Race?
@@ -91,6 +95,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if indexPath.row == 0 {
                 if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? TextFieldTableViewCell {
                     textField = textFieldCell.textField
+
+                    if let name = textField?.text,
+                        name == "",
+                        let character = character {
+                        textField?.text = character.name
+                    }
+                    
                     cell = textFieldCell
                 } else {
                     cell = UITableViewCell()
@@ -174,7 +185,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     private func updateViews() {
         guard isViewLoaded else { return }
         
-        title = "New Character"
+        if let character = character {
+            title = character.name
+        } else {
+            title = "New Character"
+        }
     }
     
     private func prompt(message: String) {
@@ -199,7 +214,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         
         if let character = character {
-            characterController.edit(character: character, name: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
+            characterController.edit(character: character, name: name, race: race, context: CoreDataStack.shared.mainContext)
         } else {
             characterController.create(character: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
         }

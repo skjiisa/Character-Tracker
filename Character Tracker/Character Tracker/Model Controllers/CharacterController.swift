@@ -15,8 +15,9 @@ class CharacterController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func edit(character: Character, name: String, race: Race, game: Game, context: NSManagedObjectContext) {
-        Character(name: name, race: race, game: game, context: context)
+    func edit(character: Character, name: String, race: Race, context: NSManagedObjectContext) {
+        character.name = name
+        character.race = race
         CoreDataStack.shared.save(context: context)
     }
     

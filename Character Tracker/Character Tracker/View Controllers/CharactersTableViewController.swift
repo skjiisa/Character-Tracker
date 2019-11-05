@@ -126,8 +126,12 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? CharacterTrackerViewController {
+        if let vc = segue.destination as? CharacterDetailTableViewController {
             vc.gameReference = gameReference
+            if segue.identifier == "ShowCharacterDetail",
+                let indexPath = tableView.indexPathForSelectedRow {
+                vc.character = fetchedResultsController?.object(at: indexPath)
+            }
         }
     }
 
