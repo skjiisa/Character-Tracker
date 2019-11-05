@@ -47,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 let attributeTypes: [(name: String, id: UUID)] = [
                     ("skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
-                    ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!)
+                    ("combat style", UUID(uuidString: "C7D6EF66-DA61-480F-9508-13D1EF65F768")!),
+                    ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
+                    ("armor type", UUID(uuidString: "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8")!)
                 ]
 
                 for tuplet in attributeTypes {
@@ -59,7 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let games: [(name: String, index: Int16, mainline: Bool, id: UUID)] = [
                     ("Skyrim", 4, true, UUID(uuidString: "33839302-E5B9-4299-AA81-444BED243F20")!),
                     ("Daggerfall", 1, true, UUID(uuidString: "620A5BF0-648A-404A-AD6D-8E6D4F9994BE")!),
-                    ("Elder Scrolls Online", 5, false, UUID(uuidString: "432650F5-26F6-491F-8280-5F3B0386C038")!)
+                    ("Elder Scrolls Online", 5, false, UUID(uuidString: "432650F5-26F6-491F-8280-5F3B0386C038")!),
+                    ("Enderal", 5, false, UUID(uuidString: "4FBBD913-FCAB-43AC-B88B-5932EEB7983C")!)
                 ]
                 
                 for tuplet in games {

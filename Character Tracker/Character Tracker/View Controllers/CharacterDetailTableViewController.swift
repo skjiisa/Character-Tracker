@@ -18,8 +18,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     var race: Race?
     
     var sectionsForAttributeType: [(type: AttributeTypeKeys, sections: [String])] = [
-        (.skill, ["Primary", "Major", "Minor"]),
-        (.objective, ["Questlines", "Objectives"])
+        (.skill, ["Primary Skills", "Major Skills", "Minor Skills"]),
+        (.objective, ["High Priority", "Low Priority"]),
+        (.combatStyle, ["Primary Combat Styles", "Secondary Combat Styles"]),
+        (.armorType,["Armor Type"])
     ]
     var allSections: [String] {
         var sections: [String] = []
@@ -97,7 +99,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 cell.textLabel?.text = tempAttributes[indexPath.row].name
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                cell.textLabel?.text = "Add \(currentSubsection.type)"
+                cell.textLabel?.text = "Add \(currentSubsection.type.rawValue)"
             }
         } else {
             // Character section

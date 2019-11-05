@@ -56,7 +56,7 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionInfo = fetchedResultsController.sections?[section]
-        return sectionInfo?.name == "1" ? "Mainline games" : "Spinoffs"
+        return sectionInfo?.name == "1" ? "Mainline games" : "Others"
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
