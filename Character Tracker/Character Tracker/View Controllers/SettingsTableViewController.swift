@@ -117,19 +117,11 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             
             if let gamesTableVC = segue.destination as? GamesTableViewController {
                 gamesTableVC.gameReference = self.gameReference
-            } else if let racesVC = vc as? RacesTableViewController {
-                racesVC.callbacks.append { race in
-                    self.navigationController?.popViewController(animated: true)
-                }
             } else if let attributesVC = vc as? AttributesTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 attributesVC.attributeController = attributeController
                 
                 attributesVC.attributeType = attributeController.type(AttributeTypeKeys.allCases[indexPath.row - 1])
-                
-                attributesVC.callbacks.append { attribute in
-                    self.navigationController?.popViewController(animated: true)
-                }
             }
         }
         

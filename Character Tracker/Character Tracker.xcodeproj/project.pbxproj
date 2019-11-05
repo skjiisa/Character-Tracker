@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		594D7ABF2371212100F0795D /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* TextFieldTableViewCell.swift */; };
+		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
 		595F771B236A55EF00151209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771A236A55EF00151209 /* AppDelegate.swift */; };
 		595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771C236A55EF00151209 /* SceneDelegate.swift */; };
 		595F7722236A55EF00151209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7720236A55EF00151209 /* Main.storyboard */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		594D7ABE2371212100F0795D /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		595F771A236A55EF00151209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		595F771C236A55EF00151209 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		594D7ABD2371210D00F0795D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				594D7ABE2371212100F0795D /* TextFieldTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		595F770E236A55EF00151209 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +97,7 @@
 				595F7732236A562E00151209 /* Model */,
 				59BB3D21236AA8B300A4A14E /* Model Controllers */,
 				59BB3D1E236AA19800A4A14E /* View Controllers */,
+				594D7ABD2371210D00F0795D /* Views */,
 				595F7731236A561800151209 /* Storyboards */,
 				59B3A774236B9EE800B3D33B /* Resources */,
 				595F772B236A55F300151209 /* Info.plist */,
@@ -139,6 +152,7 @@
 			children = (
 				59BB3D22236AA8FD00A4A14E /* RaceController.swift */,
 				59B3A796236D506000B3D33B /* AttributeController.swift */,
+				594D7AC0237124AD00F0795D /* CharacterController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -217,7 +231,9 @@
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
+				594D7ABF2371212100F0795D /* TextFieldTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
+				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,

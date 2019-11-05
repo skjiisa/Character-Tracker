@@ -45,7 +45,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         do {
             try frc.performFetch()
         } catch {
-            fatalError("Error performing fetch for frc: \(error)")
+            fatalError("Error performing fetch for race frc: \(error)")
         }
         
         return frc
@@ -175,6 +175,8 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
     
 }
+
+//MARK: Fetched Results Controller Delegate
 
 extension RacesTableViewController: NSFetchedResultsControllerDelegate {
     

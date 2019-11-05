@@ -60,7 +60,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         do {
             try frc.performFetch()
         } catch {
-            fatalError("Error performing fetch for frc: \(error)")
+            fatalError("Error performing fetch for attribute frc: \(error)")
         }
         
         return frc
@@ -194,6 +194,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     }
     
 }
+
+//MARK: Fetched Results Controller Delegate
 
 extension AttributesTableViewController: NSFetchedResultsControllerDelegate {
     

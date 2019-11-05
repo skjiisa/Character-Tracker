@@ -13,10 +13,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     //MARK: Properties
     
     let attributeController = AttributeController()
+    let characterController = CharacterController()
+    
+    var character: Character?
+    
     var gameReference: GameReference?
-    
     var race: Race?
-    
+    var textField: UITextField?
+        
     var sectionsForAttributeType: [(type: AttributeTypeKeys, sections: [String])] = [
         (.skill, ["Primary Skills", "Major Skills", "Minor Skills"]),
         (.objective, ["High Priority", "Low Priority"]),
@@ -44,7 +48,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        title = "New Character"
+        updateViews()
     }
 
     // MARK: - Table view data source
@@ -71,25 +75,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
-
-//        switch indexPath.section {
-//        case 0:
-//            if indexPath.row == 0 {
-//                cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
-//            } else {
-//                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
-//                if let race = race {
-//                    cell.textLabel?.text = race.name
-//                } else {
-//                    cell.textLabel?.text = "Select Race"
-//                }
-//            }
-//        case 1...3:
-//            cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-//            cell.textLabel?.text = "Add Skill"
-//        default:
-//            cell = UITableViewCell()
-//        }
         
         if let currentSubsection = self.subsection(for: indexPath.section) {
             let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
@@ -104,7 +89,12 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         } else {
             // Character section
             if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath)
+                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? TextFieldTableViewCell {
+                    textField = textFieldCell.textField
+                    cell = textFieldCell
+                } else {
+                    cell = UITableViewCell()
+                }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
                 if let race = race {
@@ -178,7 +168,52 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         return (unwrappedAttributeType, unwrappedPriority)
     }
-
+    
+    //MARK: Private
+    
+    private func updateViews() {
+        guard isViewLoaded else { return }
+        
+        title = "New Character"
+    }
+    
+    private func prompt(message: String) {
+        let alertController = UIAlertController(title: "Could not save character", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func save() {
+        guard let game = gameReference?.game else { return }
+        
+        guard let name = textField?.text,
+            !name.isEmpty else {
+                prompt(message: "Please enter a character name.")
+                return
+        }
+        
+        guard let race = race else {
+            prompt(message: "Please select a race.")
+            return
+        }
+        
+        if let character = character {
+            characterController.edit(character: character, name: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
+        } else {
+            characterController.create(character: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
+        }
+        
+        //TODO: save attributes
+    }
+    
+    //MARK: Actions
+    
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+        save()
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
