@@ -32,11 +32,12 @@ extension Attribute {
 }
 
 extension Character {
-    @discardableResult convenience init(name: String, race: Race, game: Game, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, race: Race, female: Bool, game: Game, id: UUID = UUID(), context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
         self.race = race
+        self.female = female
         self.game = game
         self.id = id
     }

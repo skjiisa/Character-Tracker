@@ -19,12 +19,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         didSet {
             guard let character = character else { return }
             race = character.race
+            female = character.female
             attributeController.fetchAttributes(for: character, context: CoreDataStack.shared.mainContext)
         }
     }
     
     var gameReference: GameReference?
     var race: Race?
+    var female: Bool = false
+    var femaleSegmentedControl: UISegmentedControl?
     var textField: UITextField?
         
     var sectionsForAttributeType: [(type: AttributeTypeKeys, sections: [String])] = [
@@ -109,6 +112,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                         let character = character {
                         textField?.text = character.name
                     }
+                    
+                    femaleSegmentedControl = textFieldCell.femaleSegmentedControl
+                    textFieldCell.delegate = self
+                    
+                    femaleSegmentedControl?.selectedSegmentIndex = female ? 1 : 0
                     
                     cell = textFieldCell
                 } else {
@@ -238,13 +246,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             return
         }
         
+        guard let selectedSegmentIndex = femaleSegmentedControl?.selectedSegmentIndex else { return }
+        let female: Bool = selectedSegmentIndex == 0 ? false : true
+        
         let savedCharacter: Character
         
         if let character = character {
-            characterController.edit(character: character, name: name, race: race, context: CoreDataStack.shared.mainContext)
+            characterController.edit(character: character, name: name, race: race, female: female, context: CoreDataStack.shared.mainContext)
             savedCharacter = character
         } else {
-            savedCharacter = characterController.create(character: name, race: race, game: game, context: CoreDataStack.shared.mainContext)
+            savedCharacter = characterController.create(character: name, race: race, female: female, game: game, context: CoreDataStack.shared.mainContext)
         }
         
         attributeController.removeMissingTempAttributes(from: savedCharacter, context: CoreDataStack.shared.mainContext)
@@ -310,5 +321,14 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return false
+    }
+}
+
+//MARK: Segmented control delegate
+
+extension CharacterDetailTableViewController: SegmentedControlDelegate {
+    func valueChanged(_ sender: UISegmentedControl) {
+        gameReference?.isSafeToChangeGame = false
+        female = sender.selectedSegmentIndex == 0 ? false : true
     }
 }

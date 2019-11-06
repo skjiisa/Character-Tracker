@@ -205,19 +205,32 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4qg-cw-6ml">
-                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
+                                            <rect key="frame" x="20" y="11" width="239" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="name"/>
                                         </textField>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZEI-GH-c5x">
+                                            <rect key="frame" x="267" y="6.5" width="127" height="32"/>
+                                            <segments>
+                                                <segment title="Male"/>
+                                                <segment title="Female"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="femaleChanged:" destination="NZ5-HZ-Dfl" eventType="valueChanged" id="FZ5-TF-p6N"/>
+                                            </connections>
+                                        </segmentedControl>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="4qg-cw-6ml" firstAttribute="top" secondItem="ENZ-3D-Azo" secondAttribute="top" constant="11" id="1ZZ-1K-3RM"/>
                                         <constraint firstAttribute="bottom" secondItem="4qg-cw-6ml" secondAttribute="bottom" constant="11" id="HlW-uJ-F2n"/>
+                                        <constraint firstItem="ZEI-GH-c5x" firstAttribute="centerY" secondItem="ENZ-3D-Azo" secondAttribute="centerY" id="Ka1-ZS-y05"/>
                                         <constraint firstItem="4qg-cw-6ml" firstAttribute="leading" secondItem="ENZ-3D-Azo" secondAttribute="leadingMargin" id="Ork-IM-HLK"/>
-                                        <constraint firstItem="4qg-cw-6ml" firstAttribute="trailing" secondItem="ENZ-3D-Azo" secondAttribute="trailingMargin" id="yGa-1K-v0P"/>
+                                        <constraint firstItem="ZEI-GH-c5x" firstAttribute="leading" secondItem="4qg-cw-6ml" secondAttribute="trailing" constant="8" id="Zzf-Q5-nYy"/>
+                                        <constraint firstItem="ZEI-GH-c5x" firstAttribute="trailing" secondItem="ENZ-3D-Azo" secondAttribute="trailingMargin" id="t7e-dV-rKt"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="femaleSegmentedControl" destination="ZEI-GH-c5x" id="POe-h4-MiN"/>
                                     <outlet property="textField" destination="4qg-cw-6ml" id="eG5-jq-sRB"/>
                                 </connections>
                             </tableViewCell>

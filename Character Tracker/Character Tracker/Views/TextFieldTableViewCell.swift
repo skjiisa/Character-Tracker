@@ -8,6 +8,17 @@
 
 import UIKit
 
+protocol SegmentedControlDelegate {
+    func valueChanged(_ sender: UISegmentedControl)
+}
+
 class TextFieldTableViewCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var femaleSegmentedControl: UISegmentedControl!
+    
+    var delegate: SegmentedControlDelegate?
+    
+    @IBAction func femaleChanged(_ sender: UISegmentedControl) {
+        delegate?.valueChanged(sender)
+    }
 }
