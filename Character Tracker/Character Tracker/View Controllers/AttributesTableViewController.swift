@@ -19,6 +19,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     
     var attributeController: AttributeController?
     var attributeType: AttributeType?
+    var checkedAttributes: [Attribute] = []
     var gameReference: GameReference?
     var callbacks: [( (Attribute) -> Void )] = []
     
@@ -100,7 +101,12 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
 
-        cell.textLabel?.text = fetchedResultsController?.object(at: indexPath).name
+        guard let attribute = fetchedResultsController?.object(at: indexPath) else { return cell }
+        cell.textLabel?.text = attribute.name
+        
+        if checkedAttributes.contains(attribute) {
+            cell.accessoryType = .checkmark
+        }
 
         return cell
     }
@@ -152,7 +158,17 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
         
-        choose(attribute: attribute)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let cell = tableView.cellForRow(at: indexPath) {
+            if cell.accessoryType == .none {
+                cell.accessoryType = .checkmark
+                choose(attribute: attribute)
+            } else {
+                cell.accessoryType = .none
+                attributeController?.remove(tempAttribute: attribute)
+            }
+        }
     }
     
     //MARK: Actions

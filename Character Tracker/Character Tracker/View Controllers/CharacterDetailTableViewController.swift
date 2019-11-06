@@ -56,6 +56,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         updateViews()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -90,7 +95,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 cell.textLabel?.text = tempAttributes[indexPath.row].name
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                cell.textLabel?.text = "Add \(currentSubsection.type.rawValue)"
+                cell.textLabel?.text = "Add \(currentSubsection.type.rawValue)s"
             }
         } else {
             // Character section
@@ -274,14 +279,17 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 
                 guard let currentSubsection = self.subsection(for: indexPath.section) else { return }
                 
+                let selectedAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+                attributesVC.checkedAttributes = selectedAttributes
+                
                 attributesVC.attributeController = attributeController
                 attributesVC.attributeType = attributeController.type(currentSubsection.type)
+                
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
-                    self.tableView.reloadData()
+                    //self.tableView.reloadData()
                     self.gameReference?.isSafeToChangeGame = false
-                    self.navigationController?.popViewController(animated: true)
-                    
+                    //self.navigationController?.popViewController(animated: true)
                 }
             }
         }
@@ -295,7 +303,6 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text != character?.name {
             gameReference?.isSafeToChangeGame = false
-            print("Changed")
         }
     }
     
