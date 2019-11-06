@@ -20,4 +20,9 @@ class RaceController {
         CoreDataStack.shared.save(context: context)
     }
     
+    func delete(race: Race, context: NSManagedObjectContext) {
+        context.delete(race)
+        CoreDataStack.shared.save(context: context)
+    }
+    
 }

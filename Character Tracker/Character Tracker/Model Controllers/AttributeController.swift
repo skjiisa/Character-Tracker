@@ -29,6 +29,11 @@ class AttributeController {
         CoreDataStack.shared.save(context: context)
     }
     
+    func delete(attribute: Attribute, context: NSManagedObjectContext) {
+        context.delete(attribute)
+        CoreDataStack.shared.save(context: context)
+    }
+    
     func type(_ type: AttributeTypeKeys) -> AttributeType? {
         do {
             let fetchRequest: NSFetchRequest<AttributeType> = AttributeType.fetchRequest()
