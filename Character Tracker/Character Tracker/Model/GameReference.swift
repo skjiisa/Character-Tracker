@@ -11,6 +11,10 @@ import CoreData
 
 class GameReference {
     private(set) var game: Game?
+    var name: String {
+        return game?.name ?? ""
+    }
+    var isSafeToChangeGame = true
     var callbacks: [( () -> Void )] = []
     
     let selectedGameKey = "SelectedGame"
@@ -45,10 +49,6 @@ class GameReference {
         for callback in callbacks {
             callback()
         }
-    }
-    
-    var name: String {
-        return game?.name ?? ""
     }
     
     func set(game: Game) {

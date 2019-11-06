@@ -97,6 +97,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if indexPath.row == 0 {
                 if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? TextFieldTableViewCell {
                     textField = textFieldCell.textField
+                    textField?.delegate = self
 
                     if let name = textField?.text,
                         name == "",
@@ -243,13 +244,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         attributeController.removeMissingTempAttributes(from: savedCharacter, context: CoreDataStack.shared.mainContext)
         attributeController.saveTempAttributes(to: savedCharacter, context: CoreDataStack.shared.mainContext)
+        
+        gameReference?.isSafeToChangeGame = true
+        navigationController?.popViewController(animated: true)
     }
     
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
-        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Navigation
@@ -263,6 +266,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 racesVC.callbacks.append { race in
                     self.race = race
                     self.tableView.reloadData()
+                    self.gameReference?.isSafeToChangeGame = false
                     self.navigationController?.popViewController(animated: true)
                 }
             } else if let attributesVC = vc as? AttributesTableViewController,
@@ -275,6 +279,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
                     self.tableView.reloadData()
+                    self.gameReference?.isSafeToChangeGame = false
                     self.navigationController?.popViewController(animated: true)
                     
                 }
@@ -282,4 +287,21 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
     }
 
+}
+
+//MARK: Text field delegate
+
+extension CharacterDetailTableViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text != character?.name {
+            gameReference?.isSafeToChangeGame = false
+            print("Changed")
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return false
+    }
 }

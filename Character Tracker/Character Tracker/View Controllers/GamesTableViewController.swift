@@ -107,7 +107,25 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        gameReference?.set(game: fetchedResultsController.object(at: indexPath))
+        let game = fetchedResultsController.object(at: indexPath)
+        
+        if gameReference?.isSafeToChangeGame ?? true {
+            gameReference?.set(game: game)
+        } else {
+            let alertController = UIAlertController(title: "Are you sure?", message: "Changes to currently selected character will be lost.", preferredStyle: .alert)
+            
+            let continueAction = UIAlertAction(title: "Continue", style: .default) { _ in
+                self.gameReference?.set(game: game)
+                self.gameReference?.isSafeToChangeGame = true
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alertController.addAction(continueAction)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     /*

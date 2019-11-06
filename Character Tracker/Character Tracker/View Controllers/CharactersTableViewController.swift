@@ -36,6 +36,12 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         navigationItem.title = gameReference?.name
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        gameReference?.isSafeToChangeGame = true
+    }
 
     // MARK: - Table view data source
 
@@ -96,8 +102,6 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     //MARK: Private
     
     private func newFRC() -> NSFetchedResultsController<Character>? {
-        print("Neck")
-       
         let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
         
         fetchRequest.sortDescriptors = [
