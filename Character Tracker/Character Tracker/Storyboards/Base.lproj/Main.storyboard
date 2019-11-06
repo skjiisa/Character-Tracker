@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K9R-B8-xof">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K9R-B8-xof">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -198,24 +198,21 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextFieldCell" id="NZ5-HZ-Dfl" customClass="TextFieldTableViewCell" customModule="Character_Tracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NZ5-HZ-Dfl" id="ENZ-3D-Azo">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4qg-cw-6ml">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="44.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="2XP-aR-A1d"/>
-                                            </constraints>
+                                            <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="name"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="4qg-cw-6ml" firstAttribute="top" secondItem="ENZ-3D-Azo" secondAttribute="top" id="1ZZ-1K-3RM"/>
-                                        <constraint firstAttribute="bottom" secondItem="4qg-cw-6ml" secondAttribute="bottom" id="HlW-uJ-F2n"/>
+                                        <constraint firstItem="4qg-cw-6ml" firstAttribute="top" secondItem="ENZ-3D-Azo" secondAttribute="top" constant="11" id="1ZZ-1K-3RM"/>
+                                        <constraint firstAttribute="bottom" secondItem="4qg-cw-6ml" secondAttribute="bottom" constant="11" id="HlW-uJ-F2n"/>
                                         <constraint firstItem="4qg-cw-6ml" firstAttribute="leading" secondItem="ENZ-3D-Azo" secondAttribute="leadingMargin" id="Ork-IM-HLK"/>
                                         <constraint firstItem="4qg-cw-6ml" firstAttribute="trailing" secondItem="ENZ-3D-Azo" secondAttribute="trailingMargin" id="yGa-1K-v0P"/>
                                     </constraints>
@@ -225,7 +222,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectRaceCell" textLabel="HwG-io-H5I" style="IBUITableViewCellStyleDefault" id="rmv-Wq-tWk">
-                                <rect key="frame" x="0.0" y="100" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="99" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rmv-Wq-tWk" id="TZJ-vd-WQk">
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
@@ -245,7 +242,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttributeCell" textLabel="odt-Rg-Rwz" style="IBUITableViewCellStyleDefault" id="21T-uv-xI8">
-                                <rect key="frame" x="0.0" y="143.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="142.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="21T-uv-xI8" id="VuL-YG-kDr">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -262,7 +259,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectAttributeCell" textLabel="ZyO-xf-hax" style="IBUITableViewCellStyleDefault" id="R0Q-Sz-VjO">
-                                <rect key="frame" x="0.0" y="187" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="186" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="R0Q-Sz-VjO" id="eqx-3z-a4m">
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
