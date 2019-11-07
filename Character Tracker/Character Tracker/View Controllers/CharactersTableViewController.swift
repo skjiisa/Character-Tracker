@@ -13,6 +13,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Properties
     
+    var attributeTypeController: AttributeTypeController?
+    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -132,6 +134,9 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterDetailTableViewController {
             vc.gameReference = gameReference
+            vc.attributeTypeController = attributeTypeController
+            vc.attributeTypeSectionController = attributeTypeSectionController
+            
             if segue.identifier == "ShowCharacterDetail",
                 let indexPath = tableView.indexPathForSelectedRow {
                 vc.character = fetchedResultsController?.object(at: indexPath)

@@ -11,6 +11,7 @@ import UIKit
 class SettingsTableViewController: UITableViewController, CharacterTrackerViewController {
     
     var attributeController = AttributeController()
+    var attributeTypeController: AttributeTypeController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -48,7 +49,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         if section == 0 {
             return 1
         } else {
-            return 1 + AttributeTypeKeys.allCases.count
+            return 1 + (attributeTypeController?.types.count ?? 0)
         }
     }
 
@@ -64,7 +65,9 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
                 cell.textLabel?.text = "Races"
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                cell.textLabel?.text = "\(AttributeTypeKeys.allCases[indexPath.row - 1].rawValue.capitalized)s"
+                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 1].name?.capitalized {
+                    cell.textLabel?.text = "\(attributeTypeName)s"
+                }
             }
         }
 
@@ -121,7 +124,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
                 let indexPath = tableView.indexPathForSelectedRow {
                 attributesVC.attributeController = attributeController
                 
-                attributesVC.attributeType = attributeController.type(AttributeTypeKeys.allCases[indexPath.row - 1])
+                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
             }
         }
         

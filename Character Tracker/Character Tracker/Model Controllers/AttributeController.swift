@@ -8,12 +8,12 @@
 
 import CoreData
 
-enum AttributeTypeKeys: String, CaseIterable {
-    case skill
-    case objective
-    case combatStyle = "combat style"
-    case armorType = "armor type"
-}
+//enum AttributeTypeKeys: String, CaseIterable {
+//    case skill
+//    case objective
+//    case combatStyle = "combat style"
+//    case armorType = "armor type"
+//}
 
 class AttributeController {
     
@@ -36,24 +36,6 @@ class AttributeController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func type(_ type: AttributeTypeKeys) -> AttributeType? {
-        do {
-            let fetchRequest: NSFetchRequest<AttributeType> = AttributeType.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "name == %@", type.rawValue)
-            
-            let types = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-            
-            if types.count > 0 {
-                return types[0]
-            } else {
-                return nil
-            }
-        } catch {
-            NSLog("Could not fetch attribute type: \(error)")
-            return nil
-        }
-    }
-    
     //MARK: Temp Attributes
     
     func add(tempAttribute attribute: Attribute, priority: Int16) {
@@ -64,15 +46,11 @@ class AttributeController {
         tempAttributes.removeValue(forKey: attribute)
     }
     
-    func getTempAttributes(ofType typeKey: AttributeTypeKeys) -> [Attribute] {
-        let type = self.type(typeKey)
-        
+    func getTempAttributes(ofType type: AttributeType) -> [Attribute] {
         return tempAttributes.keys.filter { $0.type == type }
     }
     
-    func getTempAttributes(ofType typeKey: AttributeTypeKeys, priority: Int16) -> [Attribute] {
-        let type = self.type(typeKey)
-        
+    func getTempAttributes(ofType type: AttributeType, priority: Int16) -> [Attribute] {
         let attributesDictionary = tempAttributes.filter { $0.key.type == type && $0.value == priority }
         let attributeKeys = attributesDictionary.map { $0.key }
         let sortedAttributes = attributeKeys.sorted { (attribute0, attribute1) -> Bool in

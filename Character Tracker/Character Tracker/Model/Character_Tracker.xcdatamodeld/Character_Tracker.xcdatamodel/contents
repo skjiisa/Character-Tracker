@@ -12,6 +12,13 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="type" inverseEntity="Attribute"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AttributeTypeSection" inverseName="type" inverseEntity="AttributeTypeSection"/>
+    </entity>
+    <entity name="AttributeTypeSection" representedClassName="AttributeTypeSection" syncable="YES" codeGenerationType="class">
+        <attribute name="maxPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="sections" inverseEntity="AttributeType"/>
     </entity>
     <entity name="Character" representedClassName="Character" syncable="YES" codeGenerationType="class">
         <attribute name="female" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -45,10 +52,11 @@
     <fetchRequest name="testAttributeTypes" entity="AttributeType"/>
     <elements>
         <element name="Attribute" positionX="286" positionY="-222" width="128" height="133"/>
-        <element name="AttributeType" positionX="162" positionY="-108" width="128" height="88"/>
+        <element name="AttributeType" positionX="162" positionY="-108" width="128" height="103"/>
         <element name="Character" positionX="219" positionY="115" width="128" height="133"/>
         <element name="CharacterAttribute" positionX="462" positionY="-45" width="128" height="88"/>
         <element name="Game" positionX="-29" positionY="-260" width="128" height="148"/>
         <element name="Race" positionX="-44" positionY="154" width="128" height="118"/>
+        <element name="AttributeTypeSection" positionX="144" positionY="-117" width="128" height="103"/>
     </elements>
 </model>

@@ -51,11 +51,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
                     ("armor type", UUID(uuidString: "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8")!)
                 ]
+                
+                var types: [AttributeType] = []
 
                 for tuplet in attributeTypes {
                     let attributeType = AttributeType(context: context)
                     attributeType.id = tuplet.id
                     attributeType.name = tuplet.name
+                    
+                    types.append(attributeType)
+                }
+                
+                let attributeTypeSections: [(name: String, type: Int, priority: Int16)] = [
+                    ("Primary Skills", 0, 0),
+                    ("Major Skills", 0, 1),
+                    ("Minor Skills", 0, 2),
+                    ("High Priority", 2, 0),
+                    ("Low Priority", 2, 1),
+                    ("Primary Combat Style", 1, 0),
+                    ("Secondary Combat Style", 1, 1),
+                    ("Armor Type", 3, 0)
+                ]
+                
+                for tuplet in attributeTypeSections {
+                    let section = AttributeTypeSection(context: context)
+                    section.name = tuplet.name
+                    section.type = types[tuplet.type]
+                    section.maxPriority = tuplet.priority
+                    section.minPriority = tuplet.priority
                 }
                 
                 let games: [(name: String, index: Int16, mainline: Bool, id: UUID)] = [

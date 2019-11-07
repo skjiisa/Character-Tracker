@@ -15,6 +15,8 @@ protocol CharacterTrackerViewController: UIViewController {
 class TabBarController: UITabBarController {
     
     let gameReference = GameReference()
+    let attributeTypeController = AttributeTypeController()
+    let attributeTypeSectionController = AttributeTypeSectionController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +25,19 @@ class TabBarController: UITabBarController {
             for vc in viewControllers {
                 if let navigationVC = vc as? UINavigationController {
                     for vc in navigationVC.viewControllers {
+                        
                         if let characterTrackerVC = vc as? CharacterTrackerViewController {
                             characterTrackerVC.gameReference = gameReference
+                            
+                            if let settingsVC = characterTrackerVC as? SettingsTableViewController {
+                                settingsVC.attributeTypeController = attributeTypeController
+                            } else if let charactersVC = characterTrackerVC as? CharactersTableViewController {
+                                charactersVC.attributeTypeController = attributeTypeController
+                                charactersVC.attributeTypeSectionController = attributeTypeSectionController
+                            }
+                            
                         }
+                        
                     }
                 }
             }

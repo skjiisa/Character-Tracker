@@ -28,25 +28,21 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
     }
     
+    var attributeTypeController: AttributeTypeController?
+    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference?
     var race: Race?
     var female: Bool = false
     var femaleSegmentedControl: UISegmentedControl?
     var textField: UITextField?
-        
-    var sectionsForAttributeType: [(type: AttributeTypeKeys, sections: [String])] = [
-        (.skill, ["Primary Skills", "Major Skills", "Minor Skills"]),
-        (.objective, ["High Priority", "Low Priority"]),
-        (.combatStyle, ["Primary Combat Styles", "Secondary Combat Styles"]),
-        (.armorType,["Armor Type"])
-    ]
+
     var allSections: [String] {
         var sections: [String] = []
         
         sections.append("Character")
         
-        for type in sectionsForAttributeType {
-            sections.append(contentsOf: type.sections)
+        for section in attributeTypeSectionController?.sections ?? [] {
+            sections.append(section.name ?? "")
         }
         
         return sections
@@ -103,7 +99,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 cell.textLabel?.text = tempAttributes[indexPath.row].name
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                cell.textLabel?.text = "Add \(currentSubsection.type.rawValue)s"
+                if let typeName = currentSubsection.type.name {
+                    cell.textLabel?.text = "Add \(typeName)s"
+                }
             }
         } else {
             // Character section
@@ -174,7 +172,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
 
     /*
@@ -192,30 +190,34 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     */
     
-    func subsection(for section: Int) -> (type: AttributeTypeKeys, priority: Int16)? {
-        var i = 0
+    func subsection(for section: Int) -> (type: AttributeType, priority: Int16)? {
+//        var i = 0
+//
+//        if section == 0 {
+//            return nil
+//        }
+//
+//        var attributeType: AttributeTypeKeys?
+//        var priority: Int16?
+//
+//        for typeTuplet in sectionsForAttributeType {
+//            if section <= i + typeTuplet.sections.count {
+//                attributeType = typeTuplet.type
+//                priority = Int16(section - i - 1)
+//                break
+//            } else {
+//                i += typeTuplet.sections.count
+//            }
+//        }
+//
+//        guard let unwrappedAttributeType = attributeType,
+//            let unwrappedPriority = priority else { return nil }
+//
+//        return (unwrappedAttributeType, unwrappedPriority)
         
-        if section == 0 {
-            return nil
-        }
-        
-        var attributeType: AttributeTypeKeys?
-        var priority: Int16?
-        
-        for typeTuplet in sectionsForAttributeType {
-            if section <= i + typeTuplet.sections.count {
-                attributeType = typeTuplet.type
-                priority = Int16(section - i - 1)
-                break
-            } else {
-                i += typeTuplet.sections.count
-            }
-        }
-        
-        guard let unwrappedAttributeType = attributeType,
-            let unwrappedPriority = priority else { return nil }
-        
-        return (unwrappedAttributeType, unwrappedPriority)
+        guard let types = attributeTypeController?.types else { return nil }
+        let subsection = attributeTypeSectionController?.subsection(for: section, types: types)
+        return (subsection?.type, subsection?.minPriority) as? (type: AttributeType, priority: Int16) ?? nil
     }
     
     //MARK: Private
@@ -304,7 +306,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 attributesVC.checkedAttributes = selectedAttributes
                 
                 attributesVC.attributeController = attributeController
-                attributesVC.attributeType = attributeController.type(currentSubsection.type)
+                attributesVC.attributeType = currentSubsection.type
                 
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
