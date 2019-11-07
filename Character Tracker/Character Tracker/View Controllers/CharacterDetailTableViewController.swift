@@ -10,6 +10,10 @@ import UIKit
 
 class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
     //MARK: Properties
     
     let attributeController = AttributeController()
@@ -58,6 +62,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         updateViews()
+        saveButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -265,6 +270,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         navigationController?.popViewController(animated: true)
     }
     
+    private func characterHasBeenModified() {
+        gameReference?.isSafeToChangeGame = false
+        saveButton.isEnabled = true
+    }
+    
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
@@ -282,7 +292,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 racesVC.callbacks.append { race in
                     self.race = race
                     self.tableView.reloadData()
-                    self.gameReference?.isSafeToChangeGame = false
+                    self.characterHasBeenModified()
                     self.navigationController?.popViewController(animated: true)
                 }
             } else if let attributesVC = vc as? AttributesTableViewController,
@@ -298,9 +308,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
-                    //self.tableView.reloadData()
-                    self.gameReference?.isSafeToChangeGame = false
-                    //self.navigationController?.popViewController(animated: true)
+                    self.characterHasBeenModified()
                 }
             }
         }
@@ -313,7 +321,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 extension CharacterDetailTableViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text != character?.name {
-            gameReference?.isSafeToChangeGame = false
+            characterHasBeenModified()
         }
     }
     
@@ -328,7 +336,7 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
 
 extension CharacterDetailTableViewController: SegmentedControlDelegate {
     func valueChanged(_ sender: UISegmentedControl) {
-        gameReference?.isSafeToChangeGame = false
+        characterHasBeenModified()
         female = sender.selectedSegmentIndex == 0 ? false : true
     }
 }
