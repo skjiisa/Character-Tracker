@@ -15,6 +15,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     
     var raceController = RaceController()
     var gameReference: GameReference?
+    var showAll = false
     var callbacks: [( (Race) -> Void )] = []
     
     func choose(race: Race) {
@@ -33,7 +34,12 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         ]
         
         guard let game = gameReference?.game else { return nil }
-        fetchRequest.predicate = NSPredicate(format: "game == %@", game)
+        
+        if !showAll {
+            fetchRequest.predicate = NSPredicate(format: "game CONTAINS %@", game)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "NOT game CONTAINS %@", game)
+        }
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
@@ -42,6 +48,26 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         frc.delegate = self
         
+        do {
+            try frc.performFetch()
+        } catch {
+            fatalError("Error performing fetch for race frc: \(error)")
+        }
+        
+        return frc
+    }()
+    
+    lazy var gamesFRC: NSFetchedResultsController<Game> = {
+        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataStack.shared.mainContext,
+                                             sectionNameKeyPath: "name",
+                                             cacheName: nil)
+                
         do {
             try frc.performFetch()
         } catch {
@@ -80,9 +106,22 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RaceCell", for: indexPath)
-
-        cell.textLabel?.text = fetchedResultsController?.object(at: indexPath).name
+        let cell: UITableViewCell
+        
+        let race = fetchedResultsController?.object(at: indexPath)
+        
+        if !showAll {
+            cell = tableView.dequeueReusableCell(withIdentifier: "RaceCell", for: indexPath)
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "RaceGamesCell", for: indexPath)
+            if let allGames = gamesFRC.fetchedObjects,
+                let game = gameReference?.game {
+                let games = allGames.filter({ ($0.races?.contains(race!) ?? false) && $0 != game })
+                let gameNames = games.compactMap({ $0.name })
+                cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
+            }
+        }
+        cell.textLabel?.text = race?.name
 
         return cell
     }
@@ -121,15 +160,20 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let racesVC = segue.destination as? RacesTableViewController {
+            racesVC.showAll = true
+            racesVC.gameReference = gameReference
+            racesVC.callbacks.append { race in
+                guard let game = self.gameReference?.game else { return }
+                self.raceController.add(game: game, to: race, context: CoreDataStack.shared.mainContext)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let race = fetchedResultsController?.object(at: indexPath) else { return }
@@ -140,7 +184,27 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     //MARK: Actions
     
     @IBAction func addRace(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Add Race", message: nil, preferredStyle: .actionSheet)
         
+        let addExisting = UIAlertAction(title: "Add existing race", style: .default) { _ in
+            //self.present(RacesTableViewController(), animated: true, completion: nil)
+            self.performSegue(withIdentifier: "ModalShowRaces", sender: self)
+        }
+        
+        let addNew = UIAlertAction(title: "Add new race", style: .default) { _ in
+            self.showNewRaceAlert()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(addExisting)
+        alertController.addAction(addNew)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showNewRaceAlert() {
         guard let game = gameReference?.game else { return }
         
         let alertController = UIAlertController(title: "New Race", message: "", preferredStyle: .alert)
@@ -170,7 +234,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
-        
     }
     
 }
