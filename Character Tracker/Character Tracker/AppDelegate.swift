@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let attributeTypes: [(name: String, id: UUID)] = [
                     ("skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
                     ("combat style", UUID(uuidString: "C7D6EF66-DA61-480F-9508-13D1EF65F768")!),
-                    ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
+                    //("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
                     ("armor type", UUID(uuidString: "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8")!)
                 ]
                 
@@ -66,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     ("Primary Skills", 0, 0),
                     ("Major Skills", 0, 1),
                     ("Minor Skills", 0, 2),
-                    ("High Priority", 2, 0),
-                    ("Low Priority", 2, 1),
+//                    ("High Priority", 2, 0),
+//                    ("Low Priority", 2, 1),
                     ("Primary Combat Style", 1, 0),
                     ("Secondary Combat Style", 1, 1),
-                    ("Armor Type", 3, 0)
+                    ("Armor Type", 2, 0)
                 ]
                 
                 for tuplet in attributeTypeSections {

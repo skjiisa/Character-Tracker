@@ -63,6 +63,12 @@ class AttributeController {
         return sortedAttributes
     }
     
+    func getTempAttributes(from section: AttributeTypeSection) -> [Attribute]? {
+        guard let type = section.type else { return nil }
+        let priority = section.minPriority
+        return getTempAttributes(ofType: type, priority: priority)
+    }
+    
     //MARK: Character Attributes CRUD
     
     func saveTempAttributes(to character: Character, context: NSManagedObjectContext) {

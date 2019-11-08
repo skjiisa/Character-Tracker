@@ -41,7 +41,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         sections.append("Character")
         
-        for section in attributeTypeSectionController?.sections ?? [] {
+        for section in attributeTypeSectionController?.tempSectionsToShow ?? [] {
             sections.append(section.name ?? "")
         }
         
@@ -74,12 +74,12 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let currentSubsection = self.subsection(for: section) else {
+        guard let section = attributeTypeSectionController?.sectionToShow(section) else {
             // Character section
             return 2
         }
         
-        let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+        guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return 0 }
         
         return tempAttributes.count + 1
     }
@@ -91,15 +91,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         
-        if let currentSubsection = self.subsection(for: indexPath.section) {
-            let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+            guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return UITableViewCell() }
             
             if indexPath.row < tempAttributes.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
                 cell.textLabel?.text = tempAttributes[indexPath.row].name
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                if let typeName = currentSubsection.type.name {
+                if let typeName = section.type?.name {
                     cell.textLabel?.text = "Add \(typeName)s"
                 }
             }
@@ -141,8 +141,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
-        if let currentSubsection = self.subsection(for: indexPath.section) {
-            let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+            guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return false }
             
             if indexPath.row < tempAttributes.count {
                 // Attribute
@@ -161,8 +161,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            if let currentSubsection = self.subsection(for: indexPath.section) {
-                let tempAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
+            if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+                guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return }
                 
                 if indexPath.row < tempAttributes.count {
                     attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
@@ -189,36 +189,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         return true
     }
     */
-    
-    func subsection(for section: Int) -> (type: AttributeType, priority: Int16)? {
-//        var i = 0
-//
-//        if section == 0 {
-//            return nil
-//        }
-//
-//        var attributeType: AttributeTypeKeys?
-//        var priority: Int16?
-//
-//        for typeTuplet in sectionsForAttributeType {
-//            if section <= i + typeTuplet.sections.count {
-//                attributeType = typeTuplet.type
-//                priority = Int16(section - i - 1)
-//                break
-//            } else {
-//                i += typeTuplet.sections.count
-//            }
-//        }
-//
-//        guard let unwrappedAttributeType = attributeType,
-//            let unwrappedPriority = priority else { return nil }
-//
-//        return (unwrappedAttributeType, unwrappedPriority)
-        
-        guard let types = attributeTypeController?.types else { return nil }
-        let subsection = attributeTypeSectionController?.subsection(for: section, types: types)
-        return (subsection?.type, subsection?.minPriority) as? (type: AttributeType, priority: Int16) ?? nil
-    }
     
     //MARK: Private
     
@@ -300,19 +270,22 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             } else if let attributesVC = vc as? AttributesTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 
-                guard let currentSubsection = self.subsection(for: indexPath.section) else { return }
+                guard let section = attributeTypeSectionController?.sectionToShow(indexPath.section),
+                    let selectedAttributes = attributeController.getTempAttributes(from: section) else { return }
                 
-                let selectedAttributes = attributeController.getTempAttributes(ofType: currentSubsection.type, priority: currentSubsection.priority)
                 attributesVC.checkedAttributes = selectedAttributes
                 
                 attributesVC.attributeController = attributeController
-                attributesVC.attributeType = currentSubsection.type
+                attributesVC.attributeType = section.type
                 
                 attributesVC.callbacks.append { attribute in
-                    self.attributeController.add(tempAttribute: attribute, priority: currentSubsection.priority)
+                    self.attributeController.add(tempAttribute: attribute, priority: section.minPriority)
                     self.characterHasBeenModified()
                 }
             }
+        } else if let sectionsVC = segue.destination as? SectionsTableViewController {
+            sectionsVC.attributeTypeSectionController = attributeTypeSectionController
+            sectionsVC.delegate = self
         }
     }
 
@@ -340,5 +313,13 @@ extension CharacterDetailTableViewController: SegmentedControlDelegate {
     func valueChanged(_ sender: UISegmentedControl) {
         characterHasBeenModified()
         female = sender.selectedSegmentIndex == 0 ? false : true
+    }
+}
+
+//MARK: Sections table delegate
+
+extension CharacterDetailTableViewController: SectionsTableDelegate {
+    func updateSections() {
+        tableView.reloadData()
     }
 }
