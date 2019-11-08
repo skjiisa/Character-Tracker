@@ -25,6 +25,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             race = character.race
             female = character.female
             attributeController.fetchAttributes(for: character, context: CoreDataStack.shared.mainContext)
+            attributeTypeSectionController?.loadTempSections(for: character)
         }
     }
     
@@ -238,6 +239,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         attributeController.removeMissingTempAttributes(from: savedCharacter, context: CoreDataStack.shared.mainContext)
         attributeController.saveTempAttributes(to: savedCharacter, context: CoreDataStack.shared.mainContext)
         
+        attributeTypeSectionController?.saveTempSections(to: savedCharacter)
+        
         gameReference?.isSafeToChangeGame = true
         navigationController?.popViewController(animated: true)
     }
@@ -321,5 +324,6 @@ extension CharacterDetailTableViewController: SegmentedControlDelegate {
 extension CharacterDetailTableViewController: SectionsTableDelegate {
     func updateSections() {
         tableView.reloadData()
+        characterHasBeenModified()
     }
 }

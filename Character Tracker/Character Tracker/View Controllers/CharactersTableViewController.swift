@@ -136,6 +136,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
             vc.gameReference = gameReference
             vc.attributeTypeController = attributeTypeController
             vc.attributeTypeSectionController = attributeTypeSectionController
+            vc.attributeTypeSectionController?.clearTempSections()
             
             if segue.identifier == "ShowCharacterDetail",
                 let indexPath = tableView.indexPathForSelectedRow {

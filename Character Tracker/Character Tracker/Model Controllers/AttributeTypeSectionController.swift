@@ -14,6 +14,7 @@ class AttributeTypeSectionController {
     var sectionsByCharacter: [Character: [AttributeTypeSection]] = [:]
     
     init() {
+        loadFromPersistentStore()
         do {
             let fetchRequest: NSFetchRequest<AttributeTypeSection> = AttributeTypeSection.fetchRequest()
             fetchRequest.sortDescriptors = [
@@ -35,5 +36,27 @@ class AttributeTypeSectionController {
             return tempSectionsToShow[section]
         }
         return nil
+    }
+    
+    func clearTempSections() {
+        tempSectionsToShow = []
+    }
+    
+    func saveTempSections(to character: Character) {
+        sectionsByCharacter[character] = tempSectionsToShow
+        clearTempSections()
+        saveToPersistentStore()
+    }
+    
+    func loadTempSections(for character: Character) {
+        tempSectionsToShow = sectionsByCharacter[character] ?? []
+    }
+    
+    func saveToPersistentStore() {
+        
+    }
+    
+    func loadFromPersistentStore() {
+        
     }
 }
