@@ -10,11 +10,6 @@ import UIKit
 
 protocol SectionsTableDelegate {
     func updateSections()
-    func willDisappear()
-}
-
-extension SectionsTableDelegate {
-    func willDisappear() {}
 }
 
 class SectionsTableViewController: UITableViewController {
@@ -32,12 +27,7 @@ class SectionsTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        delegate?.willDisappear()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source

@@ -13,8 +13,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Properties
     
+    var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
-    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {

@@ -11,8 +11,8 @@ import UIKit
 class SettingsTableViewController: UITableViewController, CharacterTrackerViewController {
     
     var attributeController = AttributeController()
+    var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
-    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -130,7 +130,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             guard let game = gameReference?.game else { return }
-            attributeTypeSectionController?.loadTempSections(for: game)
+            attributeTypeSectionController.loadTempSections(for: game)
             sectionsVC.attributeTypeSectionController = attributeTypeSectionController
             sectionsVC.delegate = self
         }
@@ -141,10 +141,6 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
 extension SettingsTableViewController: SectionsTableDelegate {
     func updateSections() {
         guard let game = gameReference?.game else { return }
-        attributeTypeSectionController?.saveTempSections(to: game)
-    }
-    
-    func willDisappear() {
-        attributeTypeSectionController?.clearTempSections()
+        attributeTypeSectionController.saveTempSections(to: game)
     }
 }

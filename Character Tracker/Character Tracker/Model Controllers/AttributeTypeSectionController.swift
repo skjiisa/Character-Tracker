@@ -59,6 +59,7 @@ class AttributeTypeSectionController {
     }
     
     func loadTempSections(for game: Game) {
+        loadFromPersistentStore()
         tempSectionsToShow = defaultSectionsByGame[game] ?? []
     }
     
