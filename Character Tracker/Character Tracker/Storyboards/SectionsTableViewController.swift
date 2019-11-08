@@ -10,6 +10,11 @@ import UIKit
 
 protocol SectionsTableDelegate {
     func updateSections()
+    func willDisappear()
+}
+
+extension SectionsTableDelegate {
+    func willDisappear() {}
 }
 
 class SectionsTableViewController: UITableViewController {
@@ -28,6 +33,11 @@ class SectionsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.willDisappear()
     }
 
     // MARK: - Table view data source
@@ -104,15 +114,5 @@ class SectionsTableViewController: UITableViewController {
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

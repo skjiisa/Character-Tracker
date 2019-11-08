@@ -19,6 +19,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     let attributeController = AttributeController()
     let characterController = CharacterController()
     
+    var attributeTypeSectionController: AttributeTypeSectionController? {
+        didSet {
+            guard let game = gameReference?.game else { return }
+            attributeTypeSectionController?.loadTempSections(for: game)
+        }
+    }
+    
     var character: Character? {
         didSet {
             guard let character = character else { return }
@@ -30,7 +37,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     
     var attributeTypeController: AttributeTypeController?
-    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference?
     var race: Race?
     var female: Bool = false

@@ -31,6 +31,7 @@ class TabBarController: UITabBarController {
                             
                             if let settingsVC = characterTrackerVC as? SettingsTableViewController {
                                 settingsVC.attributeTypeController = attributeTypeController
+                                settingsVC.attributeTypeSectionController = attributeTypeSectionController
                             } else if let charactersVC = characterTrackerVC as? CharactersTableViewController {
                                 charactersVC.attributeTypeController = attributeTypeController
                                 charactersVC.attributeTypeSectionController = attributeTypeSectionController
