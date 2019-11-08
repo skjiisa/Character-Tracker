@@ -204,7 +204,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <state key="normal" title="Show/Hide Sections"/>
                                     <connections>
-                                        <segue destination="3QA-oY-hHd" kind="modal" id="0CQ-Wd-qaZ"/>
+                                        <segue destination="3QA-oY-hHd" kind="presentation" id="0CQ-Wd-qaZ"/>
                                     </connections>
                                 </button>
                             </subviews>
