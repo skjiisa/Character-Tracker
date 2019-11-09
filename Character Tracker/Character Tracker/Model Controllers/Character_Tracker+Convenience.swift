@@ -9,25 +9,25 @@
 import CoreData
 
 extension Race {
-    @discardableResult convenience init(name: String, vanilla: Bool, game: Game, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, game: Game, mod: Mod?, id: UUID = UUID(), context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
         self.id = id
-        self.vanilla = vanilla
         self.game = [game]
+        self.mod = mod
     }
 }
 
 extension Attribute {
-    @discardableResult convenience init(name: String, vanilla: Bool, game: Game, type: AttributeType, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, game: Game, type: AttributeType, id: UUID = UUID(), mod: Mod?, context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
         self.id = id
-        self.vanilla = vanilla
         self.game = game
         self.type = type
+        self.mod = mod
     }
 }
 

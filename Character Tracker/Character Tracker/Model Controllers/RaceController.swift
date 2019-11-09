@@ -10,8 +10,8 @@ import CoreData
 
 class RaceController {
     
-    func create(race name: String, vanilla: Bool, game: Game, context: NSManagedObjectContext) {
-        Race(name: name, vanilla: vanilla, game: game, context: context)
+    func create(race name: String, game: Game, mod: Mod? = nil, context: NSManagedObjectContext) {
+        Race(name: name, game: game, mod: mod, context: context)
         CoreDataStack.shared.save(context: context)
     }
     
@@ -27,6 +27,7 @@ class RaceController {
     
     func add(game: Game, to race: Race, context: NSManagedObjectContext) {
         race.mutableSetValue(forKey: "game").add(game)
+        print(race)
         CoreDataStack.shared.save(context: context)
     }
     

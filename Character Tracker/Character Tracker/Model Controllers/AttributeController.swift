@@ -21,8 +21,8 @@ class AttributeController {
     
     //MARK: Attribute CRUD
     
-    func create(attribute name: String, vanilla: Bool, game: Game, type: AttributeType, context: NSManagedObjectContext) {
-        Attribute(name: name, vanilla: vanilla, game: game, type: type, context: context)
+    func create(attribute name: String, game: Game, type: AttributeType, mod: Mod? = nil, context: NSManagedObjectContext) {
+        Attribute(name: name, game: game, type: type, mod: mod, context: context)
         CoreDataStack.shared.save(context: context)
     }
     

@@ -190,7 +190,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         let alertController = UIAlertController(title: "Add Race", message: nil, preferredStyle: .actionSheet)
         
         let addExisting = UIAlertAction(title: "Add existing race", style: .default) { _ in
-            //self.present(RacesTableViewController(), animated: true, completion: nil)
             self.performSegue(withIdentifier: "ModalShowRaces", sender: self)
         }
         
@@ -212,17 +211,10 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         let alertController = UIAlertController(title: "New Race", message: "", preferredStyle: .alert)
         
-        let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
+        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.raceController.create(race: name, vanilla: true, game: game, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
-        }
-        
-        let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
-            guard let name = alertController.textFields?[0].text else { return }
-            
-            self.raceController.create(race: name, vanilla: false, game: game, context: CoreDataStack.shared.mainContext )
+            self.raceController.create(race: name, game: game, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
@@ -233,7 +225,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         }
                 
         alertController.addAction(saveVanilla)
-        alertController.addAction(saveCustom)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)

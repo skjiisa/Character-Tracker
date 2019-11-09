@@ -42,7 +42,6 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         let fetchRequest: NSFetchRequest<Attribute> = Attribute.fetchRequest()
         
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "vanilla", ascending: false),
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
@@ -53,7 +52,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
 
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "vanilla",
+                                             sectionNameKeyPath: nil,
                                              cacheName: nil)
         
         frc.delegate = self
@@ -180,17 +179,10 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         let alertController = UIAlertController(title: "New \(attributeName)", message: "", preferredStyle: .alert)
         
-        let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
+        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.attributeController?.create(attribute: name, vanilla: true, game: game, type: type, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
-        }
-        
-        let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
-            guard let name = alertController.textFields?[0].text else { return }
-            
-            self.attributeController?.create(attribute: name, vanilla: false, game: game, type: type, context: CoreDataStack.shared.mainContext )
+            self.attributeController?.create(attribute: name, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
@@ -201,7 +193,6 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         }
                 
         alertController.addAction(saveVanilla)
-        alertController.addAction(saveCustom)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
