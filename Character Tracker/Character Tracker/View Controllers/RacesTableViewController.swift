@@ -140,9 +140,18 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
             if let race = fetchedResultsController?.object(at: indexPath) {
-            raceController.delete(race: race, context: CoreDataStack.shared.mainContext)
+                if race.game?.count ?? 0 > 1, // If this race is tied to other games
+                    !showAll { // and you aren't in the master list
+                    guard let game = gameReference?.game else { return }
+                    raceController.remove(game: game, from: race, context: CoreDataStack.shared.mainContext)
+                } else {
+                    raceController.delete(race: race, context: CoreDataStack.shared.mainContext)
+                }
             }
+            
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }

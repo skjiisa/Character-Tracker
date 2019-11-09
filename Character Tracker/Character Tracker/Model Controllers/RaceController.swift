@@ -27,7 +27,11 @@ class RaceController {
     
     func add(game: Game, to race: Race, context: NSManagedObjectContext) {
         race.mutableSetValue(forKey: "game").add(game)
-        print(race)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func remove(game: Game, from race: Race, context: NSManagedObjectContext) {
+        race.mutableSetValue(forKey: "game").remove(game)
         CoreDataStack.shared.save(context: context)
     }
     
