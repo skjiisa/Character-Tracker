@@ -29,21 +29,24 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         let fetchRequest: NSFetchRequest<Race> = Race.fetchRequest()
         
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "vanilla", ascending: false),
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
         guard let game = gameReference?.game else { return nil }
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "game CONTAINS %@", game)
+            print("Game contains game")
+            fetchRequest.predicate = NSPredicate(format: "ANY game == %@", game)
         } else {
-            fetchRequest.predicate = NSPredicate(format: "NOT game CONTAINS %@", game)
+            print("Game does not contain game")
+            if let gameRaces = game.races {
+                fetchRequest.predicate = NSPredicate(format: "NOT SELF in %@", gameRaces)
+            }
         }
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "vanilla",
+                                             sectionNameKeyPath: nil,
                                              cacheName: nil)
         
         frc.delegate = self
@@ -93,13 +96,13 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         return fetchedResultsController?.sections?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
-            return "Vanilla"
-        } else {
-            return "Custom"
-        }
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
+//            return "Vanilla"
+//        } else {
+//            return "Custom"
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
