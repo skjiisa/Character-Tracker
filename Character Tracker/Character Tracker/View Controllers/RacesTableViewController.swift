@@ -217,6 +217,8 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         alertController.addAction(addNew)
         alertController.addAction(cancelAction)
         
+        alertController.pruneNegativeWidthConstraints()
+                
         present(alertController, animated: true, completion: nil)
     }
     

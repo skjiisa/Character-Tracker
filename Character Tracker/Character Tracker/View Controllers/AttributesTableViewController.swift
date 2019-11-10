@@ -257,6 +257,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         alertController.addAction(addNew)
         alertController.addAction(cancelAction)
         
+        alertController.pruneNegativeWidthConstraints()
+        
         present(alertController, animated: true, completion: nil)
     }
     

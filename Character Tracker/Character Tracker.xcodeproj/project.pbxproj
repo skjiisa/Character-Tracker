@@ -30,6 +30,7 @@
 		59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */; };
 		59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D26236AA95700A4A14E /* CoreDataStack.swift */; };
 		59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D28236AAB2F00A4A14E /* AttributesTableViewController.swift */; };
+		59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF9412377D88C000E90B7 /* UIAlertController+Fixes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Character_Tracker+Convenience.swift"; path = "Character Tracker/Model Controllers/Character_Tracker+Convenience.swift"; sourceTree = SOURCE_ROOT; };
 		59BB3D26236AA95700A4A14E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		59BB3D28236AAB2F00A4A14E /* AttributesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesTableViewController.swift; sourceTree = "<group>"; };
+		59BCF9412377D88C000E90B7 /* UIAlertController+Fixes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Fixes.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				594D7ABE2371212100F0795D /* TextFieldTableViewCell.swift */,
+				59BCF9412377D88C000E90B7 /* UIAlertController+Fixes.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
+				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
 				594D7ABF2371212100F0795D /* TextFieldTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
