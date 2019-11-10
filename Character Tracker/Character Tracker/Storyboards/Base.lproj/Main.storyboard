@@ -489,7 +489,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="0UY-hy-SUx">
-                            <rect key="frame" x="0.0" y="117" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="172.5" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4T-KY-j4F">
@@ -499,13 +499,21 @@
                                         <action selector="addAttribute:" destination="s9Q-u2-klJ" eventType="touchUpInside" id="lJE-j2-G4z"/>
                                     </connections>
                                 </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S07-5U-2zJ">
+                                    <rect key="frame" x="192" y="7" width="30" height="30"/>
+                                    <connections>
+                                        <segue destination="s9Q-u2-klJ" kind="presentation" identifier="ModalShowAttributes" id="S6m-au-cel"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="width" secondItem="0UY-hy-SUx" secondAttribute="width" id="5ar-mQ-7As"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="height" secondItem="0UY-hy-SUx" secondAttribute="height" id="EH6-8P-Vmk"/>
+                                <constraint firstItem="S07-5U-2zJ" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="UP4-Ye-FAX"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="hps-S2-JQc"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="mRJ-St-2Pc"/>
+                                <constraint firstItem="S07-5U-2zJ" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="npl-WJ-OlH"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -520,6 +528,30 @@
                                             <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttributeGamesCell" textLabel="YL7-AZ-rSO" detailTextLabel="JAW-Ny-aqa" style="IBUITableViewCellStyleSubtitle" id="L4J-aP-0sJ">
+                                <rect key="frame" x="0.0" y="99" width="414" height="55.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L4J-aP-0sJ" id="jm0-rU-f68">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Attribute" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YL7-AZ-rSO">
+                                            <rect key="frame" x="20" y="10" width="67" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Games" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JAW-Ny-aqa">
+                                            <rect key="frame" x="20" y="31.5" width="39.5" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>

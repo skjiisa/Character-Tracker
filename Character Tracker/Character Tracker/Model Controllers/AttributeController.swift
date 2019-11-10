@@ -36,6 +36,16 @@ class AttributeController {
         CoreDataStack.shared.save(context: context)
     }
     
+    func add(game: Game, to attribute: Attribute, context: NSManagedObjectContext) {
+        attribute.mutableSetValue(forKey: "game").add(game)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
+        attribute.mutableSetValue(forKey: "game").remove(game)
+        CoreDataStack.shared.save(context: context)
+    }
+    
     //MARK: Temp Attributes
     
     func add(tempAttribute attribute: Attribute, priority: Int16) {

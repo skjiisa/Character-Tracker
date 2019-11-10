@@ -25,7 +25,7 @@ extension Attribute {
         
         self.name = name
         self.id = id
-        self.game = game
+        self.game = [game]
         self.type = type
         self.mod = mod
     }

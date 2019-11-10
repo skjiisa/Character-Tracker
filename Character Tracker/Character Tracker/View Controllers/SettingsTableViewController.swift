@@ -126,7 +126,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             } else if let attributesVC = vc as? AttributesTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 attributesVC.attributeController = attributeController
-                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
+                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 2]
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             guard let game = gameReference?.game else { return }

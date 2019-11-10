@@ -35,10 +35,8 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         guard let game = gameReference?.game else { return nil }
         
         if !showAll {
-            print("Game contains game")
             fetchRequest.predicate = NSPredicate(format: "ANY game == %@", game)
         } else {
-            print("Game does not contain game")
             if let gameRaces = game.races {
                 fetchRequest.predicate = NSPredicate(format: "NOT SELF in %@", gameRaces)
             }
@@ -171,6 +169,12 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         return true
     }
     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let race = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        choose(race: race)
+    }
 
     // MARK: - Navigation
 
@@ -185,12 +189,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
                 self.dismiss(animated: true, completion: nil)
             }
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let race = fetchedResultsController?.object(at: indexPath) else { return }
-        
-        choose(race: race)
     }
     
     //MARK: Actions
