@@ -13,8 +13,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Properties
     
+    var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
-    var attributeTypeSectionController: AttributeTypeSectionController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -136,6 +136,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
             vc.gameReference = gameReference
             vc.attributeTypeController = attributeTypeController
             vc.attributeTypeSectionController = attributeTypeSectionController
+            guard let game = gameReference?.game else { return }
+            vc.attributeTypeSectionController?.loadTempSections(for: game)
             
             if segue.identifier == "ShowCharacterDetail",
                 let indexPath = tableView.indexPathForSelectedRow {

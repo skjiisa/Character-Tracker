@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let attributeTypes: [(name: String, id: UUID)] = [
                     ("skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
                     ("combat style", UUID(uuidString: "C7D6EF66-DA61-480F-9508-13D1EF65F768")!),
-                    ("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
+                    //("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
                     ("armor type", UUID(uuidString: "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8")!)
                 ]
                 
@@ -62,15 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     types.append(attributeType)
                 }
                 
-                let attributeTypeSections: [(name: String, type: Int, priority: Int16)] = [
-                    ("Primary Skills", 0, 0),
-                    ("Major Skills", 0, 1),
-                    ("Minor Skills", 0, 2),
-                    ("High Priority", 2, 0),
-                    ("Low Priority", 2, 1),
-                    ("Primary Combat Style", 1, 0),
-                    ("Secondary Combat Style", 1, 1),
-                    ("Armor Type", 3, 0)
+                let attributeTypeSections: [(name: String, type: Int, priority: Int16, id: UUID)] = [
+                    ("Primary Skills", 0, 0, UUID(uuidString: "9FBF5691-B7FA-4DFD-BFEE-4AD5CCC673C4")!),
+                    ("Major Skills", 0, 1, UUID(uuidString: "74AC8FAF-3004-4CAD-B442-D89AA571A2B7")!),
+                    ("Minor Skills", 0, 2, UUID(uuidString: "1435E225-54B8-4FED-879E-9F08CB2EFB9F")!),
+//                    ("High Priority", 2, 0),
+//                    ("Low Priority", 2, 1),
+                    ("Primary Combat Style", 1, 0, UUID(uuidString: "1B69AADC-34E3-4067-9C83-FF78F7ECE2F3")!),
+                    ("Secondary Combat Style", 1, 1, UUID(uuidString: "D8555224-80E1-4565-8349-4A1409AB1B31")!),
+                    ("Armor Type", 2, 0, UUID(uuidString: "FC6F42BB-0CD0-4C54-8ED7-A5FEDB4F50D4")!)
                 ]
                 
                 for tuplet in attributeTypeSections {
@@ -79,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     section.type = types[tuplet.type]
                     section.maxPriority = tuplet.priority
                     section.minPriority = tuplet.priority
+                    section.id = tuplet.id
                 }
                 
                 let games: [(name: String, index: Int16, mainline: Bool, id: UUID)] = [

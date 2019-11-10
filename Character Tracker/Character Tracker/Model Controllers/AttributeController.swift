@@ -21,8 +21,8 @@ class AttributeController {
     
     //MARK: Attribute CRUD
     
-    func create(attribute name: String, vanilla: Bool, game: Game, type: AttributeType, context: NSManagedObjectContext) {
-        Attribute(name: name, vanilla: vanilla, game: game, type: type, context: context)
+    func create(attribute name: String, game: Game, type: AttributeType, mod: Mod? = nil, context: NSManagedObjectContext) {
+        Attribute(name: name, game: game, type: type, mod: mod, context: context)
         CoreDataStack.shared.save(context: context)
     }
     
@@ -33,6 +33,16 @@ class AttributeController {
     
     func delete(attribute: Attribute, context: NSManagedObjectContext) {
         context.delete(attribute)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func add(game: Game, to attribute: Attribute, context: NSManagedObjectContext) {
+        attribute.mutableSetValue(forKey: "game").add(game)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
+        attribute.mutableSetValue(forKey: "game").remove(game)
         CoreDataStack.shared.save(context: context)
     }
     
@@ -61,6 +71,12 @@ class AttributeController {
         }
         
         return sortedAttributes
+    }
+    
+    func getTempAttributes(from section: AttributeTypeSection) -> [Attribute]? {
+        guard let type = section.type else { return nil }
+        let priority = section.minPriority
+        return getTempAttributes(ofType: type, priority: priority)
     }
     
     //MARK: Character Attributes CRUD

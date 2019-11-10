@@ -11,6 +11,7 @@ import UIKit
 class SettingsTableViewController: UITableViewController, CharacterTrackerViewController {
     
     var attributeController = AttributeController()
+    var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
     var gameReference: GameReference? {
         didSet {
@@ -49,7 +50,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         if section == 0 {
             return 1
         } else {
-            return 1 + (attributeTypeController?.types.count ?? 0)
+            return 2 + (attributeTypeController?.types.count ?? 0)
         }
     }
 
@@ -61,11 +62,13 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             cell.textLabel?.text = gameReference?.name
         } else {
             if indexPath.row == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "DefaultSectionsCell", for: indexPath)
+            } else if indexPath.row == 1 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
                 cell.textLabel?.text = "Races"
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 1].name?.capitalized {
+                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 2].name?.capitalized {
                     cell.textLabel?.text = "\(attributeTypeName)s"
                 }
             }
@@ -123,12 +126,21 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             } else if let attributesVC = vc as? AttributesTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 attributesVC.attributeController = attributeController
-                
-                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
+                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 2]
             }
+        } else if let sectionsVC = segue.destination as? SectionsTableViewController {
+            guard let game = gameReference?.game else { return }
+            attributeTypeSectionController.loadTempSections(for: game)
+            sectionsVC.attributeTypeSectionController = attributeTypeSectionController
+            sectionsVC.delegate = self
         }
-        
-
     }
 
+}
+
+extension SettingsTableViewController: SectionsTableDelegate {
+    func updateSections() {
+        guard let game = gameReference?.game else { return }
+        attributeTypeSectionController.saveTempSections(to: game)
+    }
 }

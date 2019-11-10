@@ -14,6 +14,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     //MARK: Outlets
     
     @IBOutlet weak var addAttributeButton: UIButton!
+    @IBOutlet weak var addAttributeView: UIView!
     
     //MARK: Properties
     
@@ -21,6 +22,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     var attributeType: AttributeType?
     var checkedAttributes: [Attribute] = []
     var gameReference: GameReference?
+    var showAll = false
     var callbacks: [( (Attribute) -> Void )] = []
     
     var attributeName: String {
@@ -42,18 +44,23 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         let fetchRequest: NSFetchRequest<Attribute> = Attribute.fetchRequest()
         
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "vanilla", ascending: false),
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
         guard let game = gameReference?.game,
             let type = attributeType else { return nil }
         
-        fetchRequest.predicate = NSPredicate(format: "game == %@ AND type = %@", game, type)
+        if !showAll {
+            fetchRequest.predicate = NSPredicate(format: "ANY game == %@ AND type == %@", game, type)
+        } else {
+            if let gameAttributes = game.attributes {
+                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@) AND type == %@", gameAttributes, type)
+            }
+        }
 
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "vanilla",
+                                             sectionNameKeyPath: nil,
                                              cacheName: nil)
         
         frc.delegate = self
@@ -62,6 +69,26 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             try frc.performFetch()
         } catch {
             fatalError("Error performing fetch for attribute frc: \(error)")
+        }
+        
+        return frc
+    }()
+    
+    lazy var gamesFRC: NSFetchedResultsController<Game> = {
+        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataStack.shared.mainContext,
+                                             sectionNameKeyPath: "name",
+                                             cacheName: nil)
+                
+        do {
+            try frc.performFetch()
+        } catch {
+            fatalError("Error performing fetch for race frc: \(error)")
         }
         
         return frc
@@ -78,6 +105,10 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         title = "\(attributeName)s"
         addAttributeButton.setTitle("Add \(attributeName)", for: .normal)
+        
+        if showAll {
+            addAttributeView.isHidden = true
+        }
     }
 
     // MARK: - Table view data source
@@ -86,22 +117,38 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         return fetchedResultsController?.sections?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
-            return "Vanilla"
-        } else {
-            return "Custom"
-        }
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
+//            return "Vanilla"
+//        } else {
+//            return "Custom"
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+        let cell: UITableViewCell
+        
+        guard let attribute = fetchedResultsController?.object(at: indexPath) else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+            return cell
+        }
+        
+        if !showAll {
+            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeGamesCell", for: indexPath)
+            if let allGames = gamesFRC.fetchedObjects,
+                let game = gameReference?.game {
+                let games = allGames.filter({ ($0.attributes?.contains(attribute) ?? false) && $0 != game })
+                let gameNames = games.compactMap({ $0.name })
+                cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
+            }
+        }
 
-        guard let attribute = fetchedResultsController?.object(at: indexPath) else { return cell }
         cell.textLabel?.text = attribute.name
         
         if checkedAttributes.contains(attribute) {
@@ -121,10 +168,19 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        print("ayy lmao")
         if editingStyle == .delete {
+            print("delete")
             if let attribute = fetchedResultsController?.object(at: indexPath) {
-                attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
+                if attribute.game?.count ?? 0 > 1, // If this race is tied
+                    !showAll { // and you aren't in the master list
+                    guard let game = gameReference?.game else { return }
+                    attributeController?.remove(game: game, from: attribute, context: CoreDataStack.shared.mainContext)
+                } else {
+                    attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
+                }
             }
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -144,29 +200,40 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
         
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if let cell = tableView.cellForRow(at: indexPath) {
-            if cell.accessoryType == .none {
-                cell.accessoryType = .checkmark
-                choose(attribute: attribute)
-            } else {
-                cell.accessoryType = .none
-                attributeController?.remove(tempAttribute: attribute)
+        if !showAll {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            if let cell = tableView.cellForRow(at: indexPath) {
+                if cell.accessoryType == .none {
+                    cell.accessoryType = .checkmark
+                    choose(attribute: attribute)
+                } else {
+                    cell.accessoryType = .none
+                    attributeController?.remove(tempAttribute: attribute)
+                }
+            }
+        } else {
+            choose(attribute: attribute)
+        }
+    }
+
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let attributesVC = segue.destination as? AttributesTableViewController {
+            attributesVC.showAll = true
+            attributesVC.gameReference = gameReference
+            attributesVC.attributeController = attributeController
+            attributesVC.attributeType = attributeType
+            attributesVC.callbacks.append { attribute in
+                guard let game = self.gameReference?.game else { return }
+                self.attributeController?.add(game: game, to: attribute, context: CoreDataStack.shared.mainContext)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -174,23 +241,35 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     //MARK: Actions
     
     @IBAction func addAttribute(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Add \(attributeName)", message: nil, preferredStyle: .actionSheet)
         
+        let addExisting = UIAlertAction(title: "Add existing \(attributeName)", style: .default) { _ in
+            self.performSegue(withIdentifier: "ModalShowAttributes", sender: self)
+        }
+        
+        let addNew = UIAlertAction(title: "Add new \(attributeName)", style: .default) { _ in
+            self.showNewAttributeAlert()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(addExisting)
+        alertController.addAction(addNew)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showNewAttributeAlert() {
         guard let game = gameReference?.game,
             let type = attributeType else { return }
         
         let alertController = UIAlertController(title: "New \(attributeName)", message: "", preferredStyle: .alert)
         
-        let saveVanilla = UIAlertAction(title: "Save as Vanilla", style: .default) { (_) in
+        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.attributeController?.create(attribute: name, vanilla: true, game: game, type: type, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
-        }
-        
-        let saveCustom = UIAlertAction(title: "Save as Custom", style: .default) { (_) in
-            guard let name = alertController.textFields?[0].text else { return }
-            
-            self.attributeController?.create(attribute: name, vanilla: false, game: game, type: type, context: CoreDataStack.shared.mainContext )
+            self.attributeController?.create(attribute: name, game: game, type: type, context: CoreDataStack.shared.mainContext )
             self.tableView.reloadData()
         }
         
@@ -201,11 +280,9 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         }
                 
         alertController.addAction(saveVanilla)
-        alertController.addAction(saveCustom)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
-        
     }
     
 }
