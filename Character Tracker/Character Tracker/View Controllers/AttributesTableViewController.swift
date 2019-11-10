@@ -279,6 +279,9 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         alertController.addTextField { (textField) in
             textField.placeholder = "\(self.attributeName) name"
+            textField.autocapitalizationType = .words
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .done
         }
                 
         alertController.addAction(saveVanilla)

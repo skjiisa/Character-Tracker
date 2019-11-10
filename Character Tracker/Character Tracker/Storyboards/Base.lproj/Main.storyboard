@@ -247,7 +247,7 @@
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4qg-cw-6ml">
                                             <rect key="frame" x="20" y="11" width="239" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="name"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done" textContentType="name"/>
                                         </textField>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZEI-GH-c5x">
                                             <rect key="frame" x="267" y="6.5" width="127" height="32"/>
@@ -621,8 +621,8 @@
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7MN-57-o6h"/>
-        <segue reference="GZ6-Pz-ZgO"/>
+        <segue reference="Hak-ez-6fv"/>
+        <segue reference="9dZ-mf-KGH"/>
         <segue reference="0CQ-Wd-qaZ"/>
         <segue reference="hwD-cT-7uC"/>
     </inferredMetricsTieBreakers>

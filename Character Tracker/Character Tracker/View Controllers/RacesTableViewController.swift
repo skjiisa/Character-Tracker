@@ -238,6 +238,9 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         alertController.addTextField { (textField) in
             textField.placeholder = "Race name"
+            textField.autocapitalizationType = .words
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .done
         }
                 
         alertController.addAction(saveVanilla)
