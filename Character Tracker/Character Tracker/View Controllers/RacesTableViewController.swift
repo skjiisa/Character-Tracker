@@ -11,6 +11,10 @@ import CoreData
 
 class RacesTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var addRaceView: UIView!
+    
     //MARK: Properties
     
     var raceController = RaceController()
@@ -86,6 +90,9 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        if showAll {
+            addRaceView.isHidden = true
+        }
     }
 
     // MARK: - Table view data source

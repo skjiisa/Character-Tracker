@@ -14,6 +14,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     //MARK: Outlets
     
     @IBOutlet weak var addAttributeButton: UIButton!
+    @IBOutlet weak var addAttributeView: UIView!
     
     //MARK: Properties
     
@@ -104,6 +105,10 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         title = "\(attributeName)s"
         addAttributeButton.setTitle("Add \(attributeName)", for: .normal)
+        
+        if showAll {
+            addAttributeView.isHidden = true
+        }
     }
 
     // MARK: - Table view data source

@@ -409,7 +409,7 @@
                                         <action selector="addRace:" destination="hEt-7s-HJP" eventType="touchUpInside" id="wwb-2q-GE0"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPa-lb-Rk9">
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPa-lb-Rk9">
                                     <rect key="frame" x="192" y="7" width="30" height="30"/>
                                     <connections>
                                         <segue destination="hEt-7s-HJP" kind="presentation" identifier="ModalShowRaces" id="mKa-eA-sdu"/>
@@ -475,6 +475,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Races" id="vPP-wE-gQe"/>
+                    <connections>
+                        <outlet property="addRaceView" destination="VpU-9Q-wIR" id="pov-CU-Tdb"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cYT-NS-dSQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -567,6 +570,7 @@
                     <navigationItem key="navigationItem" title="Attributes" id="xP0-eT-Ud1"/>
                     <connections>
                         <outlet property="addAttributeButton" destination="o4T-KY-j4F" id="b3c-wT-iis"/>
+                        <outlet property="addAttributeView" destination="0UY-hy-SUx" id="rYr-WS-8PH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ALI-1v-fRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
