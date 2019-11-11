@@ -13,6 +13,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Properties
     
+    let characterController = CharacterController()
     var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
     var gameReference: GameReference? {
@@ -74,17 +75,19 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            guard let character = fetchedResultsController?.object(at: indexPath) else { return }
+            do {
+                try characterController.delete(character: character, context: CoreDataStack.shared.mainContext)
+            } catch {
+                NSLog("Could not delete character: \(error)")
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -134,6 +137,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterDetailTableViewController {
             vc.gameReference = gameReference
+            vc.characterController = characterController
             vc.attributeTypeController = attributeTypeController
             vc.attributeTypeSectionController = attributeTypeSectionController
             guard let game = gameReference?.game else { return }

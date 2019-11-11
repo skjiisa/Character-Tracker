@@ -23,4 +23,26 @@ class CharacterController {
         CoreDataStack.shared.save(context: context)
     }
     
+    func delete(character: Character, context: NSManagedObjectContext) throws {
+        let attributesFetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
+        attributesFetchRequest.predicate = NSPredicate(format: "character == %@", character)
+        let thisCharacterAttributes = try context.fetch(attributesFetchRequest)
+        
+        let modulesFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        modulesFetchRequest.predicate = NSPredicate(format: "character == %@", character)
+        let thisCharacterModules = try context.fetch(modulesFetchRequest)
+        
+        for characterAttribute in thisCharacterAttributes {
+            context.delete(characterAttribute)
+        }
+        
+        for characterModule in thisCharacterModules {
+            context.delete(characterModule)
+        }
+        
+        context.delete(character)
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
 }

@@ -138,13 +138,14 @@
     </entity>
     <fetchRequest name="testAttributeTypes" entity="AttributeType"/>
     <elements>
-        <element name="Attribute" positionX="467" positionY="-167" width="128" height="148"/>
+        <element name="Attribute" positionX="473" positionY="-155" width="128" height="148"/>
         <element name="AttributeType" positionX="636" positionY="-90" width="128" height="103"/>
         <element name="AttributeTypeSection" positionX="826" positionY="-76" width="128" height="118"/>
         <element name="Author" positionX="-60" positionY="-57" width="128" height="133"/>
         <element name="Category" positionX="-88" positionY="194" width="128" height="103"/>
         <element name="Character" positionX="157" positionY="-242" width="128" height="178"/>
         <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
+        <element name="CharacterModule" positionX="371" positionY="3" width="128" height="103"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
         <element name="Image" positionX="178" positionY="370" width="128" height="103"/>
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="118"/>
@@ -154,6 +155,5 @@
         <element name="ModuleIngredient" positionX="564" positionY="216" width="128" height="88"/>
         <element name="ModuleType" positionX="404" positionY="400" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>
-        <element name="CharacterModule" positionX="360" positionY="-81" width="128" height="103"/>
     </elements>
 </model>

@@ -17,7 +17,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     //MARK: Properties
     
     let attributeController = AttributeController()
-    let characterController = CharacterController()
+    var characterController: CharacterController?
     
     var attributeTypeSectionController: AttributeTypeSectionController? {
         didSet {
@@ -236,10 +236,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         let savedCharacter: Character
         
         if let character = character {
-            characterController.edit(character: character, name: name, race: race, female: female, context: CoreDataStack.shared.mainContext)
+            characterController?.edit(character: character, name: name, race: race, female: female, context: CoreDataStack.shared.mainContext)
             savedCharacter = character
         } else {
-            savedCharacter = characterController.create(character: name, race: race, female: female, game: game, context: CoreDataStack.shared.mainContext)
+            guard let character = characterController?.create(character: name, race: race, female: female, game: game, context: CoreDataStack.shared.mainContext) else { return }
+            savedCharacter = character
         }
         
         attributeController.removeMissingTempAttributes(from: savedCharacter, context: CoreDataStack.shared.mainContext)
