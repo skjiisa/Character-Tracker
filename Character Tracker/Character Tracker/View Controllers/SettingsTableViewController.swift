@@ -136,7 +136,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             } else if let attributesVC = vc as? AttributesTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 attributesVC.attributeController = attributeController
-                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 2]
+                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
                 attributesVC.tableView.allowsSelection = false
             } else if let racesVC = vc as? RacesTableViewController {
                 racesVC.tableView.allowsSelection = false
