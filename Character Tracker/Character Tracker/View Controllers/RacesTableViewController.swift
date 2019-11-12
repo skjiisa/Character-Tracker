@@ -76,7 +76,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         do {
             try frc.performFetch()
         } catch {
-            fatalError("Error performing fetch for race frc: \(error)")
+            fatalError("Error performing fetch for game frc: \(error)")
         }
         
         return frc
@@ -114,22 +114,22 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RaceCell", for: indexPath)
         
         let race = fetchedResultsController?.object(at: indexPath)
         
-        if !showAll {
-            cell = tableView.dequeueReusableCell(withIdentifier: "RaceCell", for: indexPath)
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "RaceGamesCell", for: indexPath)
+        cell.textLabel?.text = race?.name
+        
+        if showAll {
             if let allGames = gamesFRC.fetchedObjects,
                 let game = gameReference?.game {
                 let games = allGames.filter({ ($0.races?.contains(race!) ?? false) && $0 != game })
                 let gameNames = games.compactMap({ $0.name })
                 cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
             }
+        } else {
+            cell.detailTextLabel?.text = nil
         }
-        cell.textLabel?.text = race?.name
 
         return cell
     }

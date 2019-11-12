@@ -25,17 +25,11 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     var showAll = false
     var callbacks: [( (Attribute) -> Void )] = []
     
-    var attributeName: String {
+    var typeName: String {
         if let name = attributeType?.name {
             return name.capitalized
         } else {
             return "Attribute"
-        }
-    }
-    
-    func choose(attribute: Attribute) {
-        for callback in callbacks {
-            callback(attribute)
         }
     }
     
@@ -88,7 +82,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         do {
             try frc.performFetch()
         } catch {
-            fatalError("Error performing fetch for race frc: \(error)")
+            fatalError("Error performing fetch for game frc: \(error)")
         }
         
         return frc
@@ -103,8 +97,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        title = "\(attributeName)s"
-        addAttributeButton.setTitle("Add \(attributeName)", for: .normal)
+        title = "\(typeName)s"
+        addAttributeButton.setTitle("Add \(typeName)", for: .normal)
         
         if showAll {
             addAttributeView.isHidden = true
@@ -130,26 +124,24 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
         
         guard let attribute = fetchedResultsController?.object(at: indexPath) else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
             return cell
         }
         
-        if !showAll {
-            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeGamesCell", for: indexPath)
+        cell.textLabel?.text = attribute.name
+        
+        if showAll {
             if let allGames = gamesFRC.fetchedObjects,
                 let game = gameReference?.game {
                 let games = allGames.filter({ ($0.attributes?.contains(attribute) ?? false) && $0 != game })
                 let gameNames = games.compactMap({ $0.name })
                 cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
             }
+        } else {
+            cell.detailTextLabel?.text = nil
         }
-
-        cell.textLabel?.text = attribute.name
         
         if checkedAttributes.contains(attribute) {
             cell.accessoryType = .checkmark
@@ -168,9 +160,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        print("ayy lmao")
         if editingStyle == .delete {
-            print("delete")
             if let attribute = fetchedResultsController?.object(at: indexPath) {
                 if attribute.game?.count ?? 0 > 1, // If this race is tied
                     !showAll { // and you aren't in the master list
@@ -220,6 +210,14 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             choose(attribute: attribute)
         }
     }
+    
+    //MARK: Private
+    
+    func choose(attribute: Attribute) {
+        for callback in callbacks {
+            callback(attribute)
+        }
+    }
 
     // MARK: - Navigation
 
@@ -241,13 +239,13 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     //MARK: Actions
     
     @IBAction func addAttribute(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Add \(attributeName)", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Add \(typeName)", message: nil, preferredStyle: .actionSheet)
         
-        let addExisting = UIAlertAction(title: "Add existing \(attributeName)", style: .default) { _ in
+        let addExisting = UIAlertAction(title: "Add existing \(typeName)", style: .default) { _ in
             self.performSegue(withIdentifier: "ModalShowAttributes", sender: self)
         }
         
-        let addNew = UIAlertAction(title: "Add new \(attributeName)", style: .default) { _ in
+        let addNew = UIAlertAction(title: "Add new \(typeName)", style: .default) { _ in
             self.showNewAttributeAlert()
         }
         
@@ -266,7 +264,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         guard let game = gameReference?.game,
             let type = attributeType else { return }
         
-        let alertController = UIAlertController(title: "New \(attributeName)", message: "", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "New \(typeName)", message: "", preferredStyle: .alert)
         
         let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
             guard let name = alertController.textFields?[0].text else { return }
@@ -278,7 +276,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { (textField) in
-            textField.placeholder = "\(self.attributeName) name"
+            textField.placeholder = "\(self.typeName) name"
             textField.autocapitalizationType = .words
             textField.autocorrectionType = .no
             textField.returnKeyType = .done

@@ -8,13 +8,6 @@
 
 import CoreData
 
-//enum AttributeTypeKeys: String, CaseIterable {
-//    case skill
-//    case objective
-//    case combatStyle = "combat style"
-//    case armorType = "armor type"
-//}
-
 class AttributeController {
     
     var tempAttributes: [Attribute: Int16] = [:]
