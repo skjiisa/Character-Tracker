@@ -108,6 +108,7 @@
         <relationship name="race" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="mod" inverseEntity="Race"/>
     </entity>
     <entity name="Module" representedClassName="Module" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
@@ -151,7 +152,7 @@
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="118"/>
         <element name="Link" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="208"/>
-        <element name="Module" positionX="342" positionY="202" width="128" height="178"/>
+        <element name="Module" positionX="342" positionY="202" width="128" height="193"/>
         <element name="ModuleIngredient" positionX="564" positionY="216" width="128" height="88"/>
         <element name="ModuleType" positionX="404" positionY="400" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>

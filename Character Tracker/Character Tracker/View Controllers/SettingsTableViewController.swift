@@ -12,6 +12,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     
     var attributeController = AttributeController()
     var attributeTypeSectionController = AttributeTypeSectionController()
+    var moduleController = ModuleController()
     var attributeTypeController: AttributeTypeController?
     var moduleTypeController: ModuleTypeController?
     var gameReference: GameReference? {
@@ -133,13 +134,20 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             
             if let gamesTableVC = segue.destination as? GamesTableViewController {
                 gamesTableVC.gameReference = self.gameReference
-            } else if let attributesVC = vc as? AttributesTableViewController,
-                let indexPath = tableView.indexPathForSelectedRow {
-                attributesVC.attributeController = attributeController
-                attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
-                attributesVC.tableView.allowsSelection = false
             } else if let racesVC = vc as? RacesTableViewController {
                 racesVC.tableView.allowsSelection = false
+            } else if let indexPath = tableView.indexPathForSelectedRow {
+                
+                if let attributesVC = vc as? AttributesTableViewController {
+                    attributesVC.attributeController = attributeController
+                    attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
+                    attributesVC.tableView.allowsSelection = false
+                } else if let modulesVC = vc as? ModulesTableViewController {
+                    modulesVC.moduleController = moduleController
+                    modulesVC.moduleType = moduleTypeController?.types[indexPath.row]
+                    modulesVC.tableView.allowsSelection = false
+                }
+                
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             guard let game = gameReference?.game else { return }

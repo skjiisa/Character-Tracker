@@ -52,3 +52,15 @@ extension CharacterAttribute {
         self.priority = priority
     }
 }
+
+extension Module {
+    @discardableResult convenience init(name: String, game: Game, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.name = name
+        self.games = [game]
+        self.type = type
+        self.mod = mod
+        self.id = id
+    }
+}
