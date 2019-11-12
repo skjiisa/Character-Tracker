@@ -31,4 +31,9 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
     }
     
+    func remove(game: Game, from module: Module, context: NSManagedObjectContext) {
+        module.mutableSetValue(forKey: "games").remove(game)
+        CoreDataStack.shared.save(context: context)
+    }
+    
 }

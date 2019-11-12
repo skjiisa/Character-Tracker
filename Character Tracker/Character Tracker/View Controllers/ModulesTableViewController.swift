@@ -146,17 +146,22 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            guard let module = fetchedResultsController?.object(at: indexPath) else { return }
+            
+            if module.games?.count ?? 0 > 1, // If this module is tied to other games
+                !showAll { // and you aren't on the master list
+                guard let game = gameReference?.game else { return }
+                moduleController?.remove(game: game, from: module, context: CoreDataStack.shared.mainContext)
+            } else {
+                moduleController?.delete(module: module, context: CoreDataStack.shared.mainContext)
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
