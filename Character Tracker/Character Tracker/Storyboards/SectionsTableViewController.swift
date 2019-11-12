@@ -43,7 +43,7 @@ class SectionsTableViewController: UITableViewController {
         if let section = attributeTypeSectionController?.sections[indexPath.row] {
             cell.textLabel?.text = section.name
             
-            if attributeTypeSectionController?.tempSectionsToShow.contains(section) ?? false {
+            if attributeTypeSectionController?.contains(section: section) ?? false {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -99,7 +99,7 @@ class SectionsTableViewController: UITableViewController {
                 delegate?.updateSections()
             } else {
                 cell.accessoryType = .none
-                attributeTypeSectionController?.tempSectionsToShow.removeAll(where: { $0 == section })
+                attributeTypeSectionController?.remove(section: section)
                 delegate?.updateSections()
             }
         }
