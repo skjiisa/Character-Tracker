@@ -31,6 +31,7 @@
 		59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D26236AA95700A4A14E /* CoreDataStack.swift */; };
 		59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D28236AAB2F00A4A14E /* AttributesTableViewController.swift */; };
 		59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF9412377D88C000E90B7 /* UIAlertController+Fixes.swift */; };
+		59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		59BB3D26236AA95700A4A14E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		59BB3D28236AAB2F00A4A14E /* AttributesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesTableViewController.swift; sourceTree = "<group>"; };
 		59BCF9412377D88C000E90B7 /* UIAlertController+Fixes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Fixes.swift"; sourceTree = "<group>"; };
+		59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTypeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			children = (
 				59B8EA132373A5110008ED11 /* AttributeTypeSectionController.swift */,
 				59B8EA112373A0360008ED11 /* AttributeTypeController.swift */,
+				59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */,
 				59BB3D22236AA8FD00A4A14E /* RaceController.swift */,
 				594D7AC0237124AD00F0795D /* CharacterController.swift */,
 				59B3A796236D506000B3D33B /* AttributeController.swift */,
@@ -255,6 +258,7 @@
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
 				59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */,
 				597AC99E2374E04800DC18E6 /* SectionsTableViewController.swift in Sources */,
+				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,

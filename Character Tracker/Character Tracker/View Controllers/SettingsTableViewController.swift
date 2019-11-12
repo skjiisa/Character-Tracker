@@ -13,6 +13,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     var attributeController = AttributeController()
     var attributeTypeSectionController = AttributeTypeSectionController()
     var attributeTypeController: AttributeTypeController?
+    var moduleTypeController: ModuleTypeController?
     var gameReference: GameReference? {
         didSet {
             gameReference?.callbacks.append {
@@ -35,22 +36,24 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Game"
-        } else {
+        if section == 1 {
             return "\(gameReference?.name ?? "") Settings"
         }
+        
+        return nil
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section < 2 {
             return 1
+        } else if section == 2 {
+            return 1 + (attributeTypeController?.types.count ?? 0)
         } else {
-            return 2 + (attributeTypeController?.types.count ?? 0)
+            return moduleTypeController?.types.count ?? 0
         }
     }
 
@@ -60,21 +63,28 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
             cell.textLabel?.text = gameReference?.name
-        } else {
+        } else if indexPath.section == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
+            cell.textLabel?.text = "Races"
+        } else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: "DefaultSectionsCell", for: indexPath)
-            } else if indexPath.row == 1 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
-                cell.textLabel?.text = "Races"
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 2].name?.capitalized {
+                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 1].name?.capitalized {
                     cell.textLabel?.text = "\(attributeTypeName)s"
                 }
             }
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
+            if let moduleTypeName = moduleTypeController?.types[indexPath.row].name {
+                if moduleTypeName != "Equipment" {
+                    cell.textLabel?.text = "\(moduleTypeName)s"
+                } else {
+                    cell.textLabel?.text = moduleTypeName
+                }
+            }
         }
-
-        
 
         return cell
     }

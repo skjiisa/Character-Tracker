@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
     
     let gameReference = GameReference()
     let attributeTypeController = AttributeTypeController()
-    //let attributeTypeSectionController = AttributeTypeSectionController()
+    let moduleTypeController = ModuleTypeController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +31,9 @@ class TabBarController: UITabBarController {
                             
                             if let settingsVC = characterTrackerVC as? SettingsTableViewController {
                                 settingsVC.attributeTypeController = attributeTypeController
-                                //settingsVC.attributeTypeSectionController = attributeTypeSectionController
+                                settingsVC.moduleTypeController = moduleTypeController
                             } else if let charactersVC = characterTrackerVC as? CharactersTableViewController {
                                 charactersVC.attributeTypeController = attributeTypeController
-                                //charactersVC.attributeTypeSectionController = attributeTypeSectionController
                             }
                             
                         }

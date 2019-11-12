@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let attributeTypes: [(name: String, id: UUID)] = [
                     ("skill", UUID(uuidString: "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54")!),
                     ("combat style", UUID(uuidString: "C7D6EF66-DA61-480F-9508-13D1EF65F768")!),
-                    //("objective", UUID(uuidString: "0603FAB8-2053-4A7F-A01F-F825B687AB6B")!),
                     ("armor type", UUID(uuidString: "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8")!)
                 ]
                 
@@ -66,8 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     ("Primary Skills", 0, 0, UUID(uuidString: "9FBF5691-B7FA-4DFD-BFEE-4AD5CCC673C4")!),
                     ("Major Skills", 0, 1, UUID(uuidString: "74AC8FAF-3004-4CAD-B442-D89AA571A2B7")!),
                     ("Minor Skills", 0, 2, UUID(uuidString: "1435E225-54B8-4FED-879E-9F08CB2EFB9F")!),
-//                    ("High Priority", 2, 0),
-//                    ("Low Priority", 2, 1),
                     ("Primary Combat Style", 1, 0, UUID(uuidString: "1B69AADC-34E3-4067-9C83-FF78F7ECE2F3")!),
                     ("Secondary Combat Style", 1, 1, UUID(uuidString: "D8555224-80E1-4565-8349-4A1409AB1B31")!),
                     ("Armor Type", 2, 0, UUID(uuidString: "FC6F42BB-0CD0-4C54-8ED7-A5FEDB4F50D4")!)
@@ -96,25 +93,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     game.index = tuplet.index
                     game.mainline = tuplet.mainline
                 }
+                
+                let moduleTypes: [(name: String, id: UUID)] = [
+                    ("Questline", UUID(uuidString: "60A0B797-9326-44C1-BB79-0B2F6AF8231E")!),
+                    ("Objective", UUID(uuidString: "E80837B9-4F26-41BA-93ED-A1ED46A88A05")!),
+                    ("Follower", UUID(uuidString: "5DC0190E-4F18-4B72-8E24-B1DE80569BE4")!),
+                    ("Equipment", UUID(uuidString: "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE")!),
+                    ("House", UUID(uuidString: "D453D642-DE13-41F2-B129-A89D447E2863")!)
+                ]
+                
+                for tuplet in moduleTypes {
+                    let moduleType = ModuleType(context: context)
+                    moduleType.name = tuplet.name
+                    moduleType.id = tuplet.id
+                }
 
                 try context.save()
                 
-                // Below is a failed attempt to preload an existing .sqlite database extracted from a simulator
-//                let fileManager = FileManager.default
-//                guard let applicationSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return }
-//
-//                let databaseURL = applicationSupport.appendingPathComponent("Character_Tracker.sqlite")
-//
-//                print(databaseURL)
-//
-//                guard let dbFilePath = Bundle.main.url(forResource: "Character_Tracker", withExtension: "sqlite") else { return }
-//
-//                let dbFile = try FileHandle(forReadingFrom: dbFilePath)
-//
-//                print(dbFile)
-//                let data = dbFile.readDataToEndOfFile()
-//                try data.write(to: databaseURL)
-//
                 userDefaults.set(true, forKey: preloadedDataKey)
             } catch {
                 fatalError("Undable to preload data: \(error)")
