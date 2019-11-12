@@ -161,16 +161,15 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let attribute = fetchedResultsController?.object(at: indexPath) {
-                if attribute.game?.count ?? 0 > 1, // If this race is tied
-                    !showAll { // and you aren't in the master list
-                    guard let game = gameReference?.game else { return }
-                    attributeController?.remove(game: game, from: attribute, context: CoreDataStack.shared.mainContext)
-                } else {
-                    attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
-                }
-            }
+            guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
             
+            if attribute.game?.count ?? 0 > 1, // If this attribute is tied to other games
+                !showAll { // and you aren't in the master list
+                guard let game = gameReference?.game else { return }
+                attributeController?.remove(game: game, from: attribute, context: CoreDataStack.shared.mainContext)
+            } else {
+                attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
