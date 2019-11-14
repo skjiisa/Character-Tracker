@@ -21,7 +21,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        print("ayy lmao")
         if let module = module {
             title = module.name
         } else {
@@ -32,24 +31,38 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if section == 0 {
+            return 2
+        } else {
+            return 1
+        }
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell: UITableViewCell
+        
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                if let nameCell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath) as? ModuleNameTableViewCell {
+                    nameCell.textField.text = module?.name
+                    cell = nameCell
+                } else {
+                    // This shouldn't ever be called
+                    cell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath)
+                }
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath)
+            }
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
+        }
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
