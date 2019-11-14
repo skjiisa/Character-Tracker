@@ -37,11 +37,13 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
+        if section == 0 {
+            return "Game"
+        } else if section == 1 {
             return "\(gameReference?.name ?? "") Settings"
         }
         
@@ -49,10 +51,10 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < 2 {
+        if section < 3 {
             return 1
-        } else if section == 2 {
-            return 1 + (attributeTypeController?.types.count ?? 0)
+        } else if section == 3 {
+            return attributeTypeController?.types.count ?? 0
         } else {
             return moduleTypeController?.types.count ?? 0
         }
@@ -68,13 +70,11 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
             cell.textLabel?.text = "Races"
         } else if indexPath.section == 2 {
-            if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "DefaultSectionsCell", for: indexPath)
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                if let attributeTypeName = attributeTypeController?.types[indexPath.row - 1].name?.capitalized {
-                    cell.textLabel?.text = "\(attributeTypeName)s"
-                }
+            cell = tableView.dequeueReusableCell(withIdentifier: "DefaultSectionsCell", for: indexPath)
+        } else if indexPath.section == 3 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+            if let attributeTypeName = attributeTypeController?.types[indexPath.row].name?.capitalized {
+                cell.textLabel?.text = "\(attributeTypeName)s"
             }
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
@@ -140,7 +140,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
                 
                 if let attributesVC = vc as? AttributesTableViewController {
                     attributesVC.attributeController = attributeController
-                    attributesVC.attributeType = attributeTypeController?.types[indexPath.row - 1]
+                    attributesVC.attributeType = attributeTypeController?.types[indexPath.row]
                     attributesVC.tableView.allowsSelection = false
                 } else if let modulesVC = vc as? ModulesTableViewController {
                     modulesVC.moduleController = moduleController
