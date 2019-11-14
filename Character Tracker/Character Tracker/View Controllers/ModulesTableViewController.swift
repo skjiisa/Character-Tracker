@@ -243,8 +243,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alertController.addAction(addExisting)
         alertController.addAction(addNew)
+        alertController.addAction(addExisting)
         alertController.addAction(cancelAction)
         
         alertController.pruneNegativeWidthConstraints()
