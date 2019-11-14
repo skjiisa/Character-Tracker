@@ -12,6 +12,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     var gameReference: GameReference?
     var module: Module?
+    
+    var nameTextField: UITextField?
+    var levelTextField: UITextField?
+    var levelStepper: UIStepper?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,14 +52,27 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 if let nameCell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath) as? ModuleNameTableViewCell {
-                    nameCell.textField.text = module?.name
+                    nameTextField = nameCell.textField
+                    nameTextField?.delegate = self
+                    nameTextField?.text = module?.name
+                    
                     cell = nameCell
                 } else {
                     // This shouldn't ever be called
                     cell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath)
                 }
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath)
+                if let levelCell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath) as? LevelTableViewCell {
+                    levelTextField = levelCell.textField
+                    levelTextField?.delegate = self
+                    
+                    levelStepper = levelCell.stepper
+                    
+                    cell = levelCell
+                } else {
+                    // This shouldn't ever be called
+                    cell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath)
+                }
             }
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
@@ -109,4 +126,30 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     */
 
+}
+
+extension ModuleDetailTableViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == levelTextField {
+            if let level = Int(textField.text ?? "") {
+                // Valid integer. Set the stepper to it
+                levelStepper?.value = Double(level)
+            } else if textField.text == "" {
+                // Empty. Set the stepper to 0
+                levelStepper?.value = 0
+            } else {
+                // Garbage. Set the text field back to what the stepper is
+                if let level = levelStepper?.value {
+                    textField.text = String(Int(level))
+                } else {
+                    textField.text = ""
+                }
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
 }

@@ -23,7 +23,12 @@ class LevelTableViewCell: UITableViewCell {
     //MARK: Actions
 
     @IBAction func changeLevel(_ sender: UIStepper) {
-        textField.text = String(Int(sender.value))
+        let level = Int(sender.value)
+        if level == 0 {
+            textField.text = ""
+        } else {
+            textField.text = String(level)
+        }
     }
     
 }
