@@ -32,7 +32,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             guard let character = character else { return }
             race = character.race
             female = character.female
-            attributeController.fetchAttributes(for: character, context: CoreDataStack.shared.mainContext)
+            attributeController.fetchTempAttributes(for: character, context: CoreDataStack.shared.mainContext)
+            moduleController.fetchTempModules(for: character, context: CoreDataStack.shared.mainContext)
             attributeTypeSectionController?.loadTempSections(for: character)
         }
     }
@@ -249,18 +250,22 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         guard let selectedSegmentIndex = femaleSegmentedControl?.selectedSegmentIndex else { return }
         let female: Bool = selectedSegmentIndex == 0 ? false : true
         
+        let context = CoreDataStack.shared.mainContext
         let savedCharacter: Character
         
         if let character = character {
-            characterController?.edit(character: character, name: name, race: race, female: female, context: CoreDataStack.shared.mainContext)
+            characterController?.edit(character: character, name: name, race: race, female: female, context: context)
             savedCharacter = character
         } else {
-            guard let character = characterController?.create(character: name, race: race, female: female, game: game, context: CoreDataStack.shared.mainContext) else { return }
+            guard let character = characterController?.create(character: name, race: race, female: female, game: game, context: context) else { return }
             savedCharacter = character
         }
         
-        attributeController.removeMissingTempAttributes(from: savedCharacter, context: CoreDataStack.shared.mainContext)
-        attributeController.saveTempAttributes(to: savedCharacter, context: CoreDataStack.shared.mainContext)
+        attributeController.removeMissingTempAttributes(from: savedCharacter, context: context)
+        attributeController.saveTempAttributes(to: savedCharacter, context: context)
+        
+        moduleController.removeMissingTempModules(from: savedCharacter, context: context)
+        moduleController.saveTempModules(to: savedCharacter, context: context)
         
         attributeTypeSectionController?.saveTempSections(to: savedCharacter)
         

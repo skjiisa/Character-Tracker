@@ -10,7 +10,7 @@ import CoreData
 
 class ModuleController {
     
-    private(set) var tempModules: [Module] = []
+    private(set) var tempModules: [Module: Bool] = [:]
     
     //MARK: Module CRUD
     
@@ -43,15 +43,15 @@ class ModuleController {
     //MARK: Temp Modules
     
     func add(tempModule module: Module) {
-        tempModules.append(module)
+        tempModules[module] = false
     }
     
     func remove(tempModule module: Module) {
-        tempModules.removeAll(where: { $0 == module })
+        tempModules.removeValue(forKey: module)
     }
     
     func getTempModules(ofType type: ModuleType) -> [Module] {
-        return tempModules.filter { $0.type == type }
+        return tempModules.keys.filter { $0.type == type }
     }
     
     func getTempModules(from section: Section) -> [Module]? {
@@ -60,6 +60,72 @@ class ModuleController {
         }
         
         return nil
+    }
+    
+    //MARK: Character Modules CRUD
+    
+    func saveTempModules(to character: Character, context: NSManagedObjectContext) {
+        let currentCharacterModules = fetchCharacterModules(for: character, context: context)
+        
+        for modulePair in tempModules {
+            if let characterModule = currentCharacterModules.first(where: { $0.module == modulePair.key }) {
+                characterModule.completed = modulePair.value
+            } else {
+                CharacterModule(character: character, module: modulePair.key, completed: modulePair.value, context: context)
+            }
+        }
+        
+        tempModules = [:]
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
+        let characterModules = fetchCharacterModules(for: character, context: context)
+        
+        for characterModule in characterModules {
+            guard let module = characterModule.module else { continue }
+            tempModules[module] = characterModule.completed
+        }
+    }
+    
+    func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
+        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "character = %@", character)
+        
+        do {
+            let characterAttributes = try context.fetch(fetchRequest)
+            
+            return characterAttributes
+        } catch {
+            if let name = character.name {
+                NSLog("Could not fetch \(name)'s modules: \(error)")
+            } else {
+                NSLog("Could not fetch character's modules: \(error)")
+            }
+            
+            return []
+        }
+    }
+    
+    func removeMissingTempModules(from character: Character, context: NSManagedObjectContext) {
+        let modules: [Module] = tempModules.map({ $0.key })
+        
+        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (module IN %@)", character, modules)
+        
+        do {
+            let characterModules = try context.fetch(fetchRequest)
+            for characterModule in characterModules {
+                context.delete(characterModule)
+            }
+        } catch {
+            if let name = character.name {
+                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
+            } else {
+                NSLog("Could not fetch character's attributes for removal: \(error)")
+            }
+        }
     }
     
 }

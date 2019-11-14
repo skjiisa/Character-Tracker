@@ -94,7 +94,7 @@ class AttributeController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchAttributes(for character: Character, context: NSManagedObjectContext) {
+    func fetchTempAttributes(for character: Character, context: NSManagedObjectContext) {
         let characterAttributes = fetchCharacterAttributes(for: character, context: context)
         
         for characterAttribute in characterAttributes {

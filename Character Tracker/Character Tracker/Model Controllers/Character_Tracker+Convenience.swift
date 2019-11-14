@@ -64,3 +64,13 @@ extension Module {
         self.id = id
     }
 }
+
+extension CharacterModule {
+    @discardableResult convenience init(character: Character, module: Module, completed: Bool = false, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.character = character
+        self.module = module
+        self.completed = completed
+    }
+}
