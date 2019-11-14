@@ -20,6 +20,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     
     var moduleController: ModuleController?
     var moduleType: ModuleType?
+    var checkedModules: [Module] = []
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
@@ -134,6 +135,10 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         } else {
             cell.detailTextLabel?.text = nil
         }
+        
+        if checkedModules.contains(module) {
+            cell.accessoryType = .checkmark
+        }
 
         return cell
     }
@@ -182,7 +187,17 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         guard let module = fetchedResultsController?.object(at: indexPath) else { return }
         
         if !showAll {
+            tableView.deselectRow(at: indexPath, animated: true)
             
+            if let cell = tableView.cellForRow(at: indexPath) {
+                if cell.accessoryType == .none {
+                    cell.accessoryType = .checkmark
+                    choose(module: module)
+                } else {
+                    cell.accessoryType = .none
+                    moduleController?.remove(tempModule: module)
+                }
+            }
         } else {
             choose(module: module)
         }

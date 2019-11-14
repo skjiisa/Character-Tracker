@@ -34,6 +34,8 @@
 		59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */; };
 		59BCF975237A4488000E90B7 /* ModulesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF974237A4488000E90B7 /* ModulesTableViewController.swift */; };
 		59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF976237A450D000E90B7 /* ModuleController.swift */; };
+		59BCF979237A5968000E90B7 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF978237A5968000E90B7 /* Section.swift */; };
+		59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTypeController.swift; sourceTree = "<group>"; };
 		59BCF974237A4488000E90B7 /* ModulesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModulesTableViewController.swift; path = "Character Tracker/View Controllers/ModulesTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		59BCF976237A450D000E90B7 /* ModuleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleController.swift; sourceTree = "<group>"; };
+		59BCF978237A5968000E90B7 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Section.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,8 @@
 				59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */,
 				59BB3D26236AA95700A4A14E /* CoreDataStack.swift */,
 				59B3A78E236CF68E00B3D33B /* GameReference.swift */,
+				59BCF978237A5968000E90B7 /* Section.swift */,
+				59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59BCF979237A5968000E90B7 /* Section.swift in Sources */,
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
@@ -258,6 +265,7 @@
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
+				59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,

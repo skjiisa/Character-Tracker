@@ -10,7 +10,7 @@ import CoreData
 
 class AttributeController {
     
-    var tempAttributes: [Attribute: Int16] = [:]
+    private(set) var tempAttributes: [Attribute: Int16] = [:]
     
     //MARK: Attribute CRUD
     
@@ -66,10 +66,14 @@ class AttributeController {
         return sortedAttributes
     }
     
-    func getTempAttributes(from section: AttributeTypeSection) -> [Attribute]? {
-        guard let type = section.type else { return nil }
-        let priority = section.minPriority
-        return getTempAttributes(ofType: type, priority: priority)
+    func getTempAttributes(from section: Section) -> [Attribute]? {
+        if let typeSection = section as? AttributeTypeSection,
+            let type = typeSection.type {
+            let priority = typeSection.minPriority
+            return getTempAttributes(ofType: type, priority: priority)
+        } else {
+            return nil
+        }
     }
     
     //MARK: Character Attributes CRUD
@@ -90,7 +94,7 @@ class AttributeController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchAttributes(for character: Character, context: NSManagedObjectContext) {
+    func fetchTempAttributes(for character: Character, context: NSManagedObjectContext) {
         let characterAttributes = fetchCharacterAttributes(for: character, context: context)
         
         for characterAttribute in characterAttributes {
