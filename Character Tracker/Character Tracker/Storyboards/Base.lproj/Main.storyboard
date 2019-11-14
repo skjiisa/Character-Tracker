@@ -368,7 +368,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="FcM-PG-5WN" kind="show" trigger="accessoryAction" id="0PR-x8-J4n"/>
+                                    <segue destination="FcM-PG-5WN" kind="show" id="DTF-qi-Fya"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectModuleCell" textLabel="qow-Ze-wg5" style="IBUITableViewCellStyleDefault" id="TXf-73-6TO">
@@ -416,13 +416,13 @@
         <scene sceneID="KSm-Lo-ZiY">
             <objects>
                 <tableViewController id="3QA-oY-hHd" customClass="SectionsTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="6QK-DL-hC5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="6QK-DL-hC5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SectionCell" textLabel="90h-qc-oJj" style="IBUITableViewCellStyleDefault" id="BOe-Vf-Dtl">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BOe-Vf-Dtl" id="Mdp-q6-hBY">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -794,26 +794,26 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LevelCell" id="GBd-ia-B5i" customClass="LevelTableViewCell" customModule="Character_Tracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="143" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="143" width="414" height="43"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GBd-ia-B5i" id="jZk-6N-d6Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fm4-HM-evh">
-                                            <rect key="frame" x="20" y="11" width="40" height="21.5"/>
+                                            <rect key="frame" x="20" y="11" width="40" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="4Pw-IR-9At">
-                                            <rect key="frame" x="300" y="6" width="94" height="32"/>
+                                            <rect key="frame" x="300" y="5.5" width="94" height="32"/>
                                             <connections>
                                                 <action selector="changeLevel:" destination="GBd-ia-B5i" eventType="valueChanged" id="ua4-Hr-o1E"/>
                                             </connections>
                                         </stepper>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Level" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CUd-EM-ZIp">
-                                            <rect key="frame" x="230" y="5" width="62" height="34"/>
+                                            <rect key="frame" x="230" y="4.5" width="62" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -835,7 +835,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" id="MeJ-Qi-hWY">
-                                <rect key="frame" x="0.0" y="186.5" width="414" height="206"/>
+                                <rect key="frame" x="0.0" y="186" width="414" height="206"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MeJ-Qi-hWY" id="uEH-1e-h0Y">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="206"/>
@@ -882,7 +882,7 @@
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0PR-x8-J4n"/>
+        <segue reference="DTF-qi-Fya"/>
         <segue reference="FDA-d5-RMw"/>
         <segue reference="Hak-ez-6fv"/>
         <segue reference="9dZ-mf-KGH"/>

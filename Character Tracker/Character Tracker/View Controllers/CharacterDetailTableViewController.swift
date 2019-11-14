@@ -117,7 +117,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             } else if let moduleSection = section as? ModuleType,
                 let tempModules = moduleController.getTempModules(from: moduleSection) {
                 if indexPath.row < tempModules.count {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+                    cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
                     cell.textLabel?.text = tempModules[indexPath.row].name
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
@@ -315,19 +315,26 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                         self.attributeController.toggle(tempAttribute: attribute, priority: attributesSection.minPriority)
                         self.characterHasBeenModified()
                     }
-                } else if let modulesVC = vc as? ModulesTableViewController {
-                    guard let modulesSection = section as? ModuleType,
-                        let selectedModules = moduleController.getTempModules(from: section) else { return }
+                } else if let modulesSection = section as? ModuleType,
+                    let selectedModules = moduleController.getTempModules(from: section) {
                     
-                    modulesVC.checkedModules = selectedModules
-                    
-                    modulesVC.moduleController = moduleController
-                    modulesVC.moduleType = modulesSection
-                    
-                    modulesVC.callbacks.append { module in
-                        self.moduleController.toggle(tempModule: module)
-                        self.characterHasBeenModified()
+                    if let modulesVC = vc as? ModulesTableViewController {
+                        
+                        modulesVC.checkedModules = selectedModules
+                        
+                        modulesVC.moduleController = moduleController
+                        modulesVC.moduleType = modulesSection
+                        
+                        modulesVC.callbacks.append { module in
+                            self.moduleController.toggle(tempModule: module)
+                            self.characterHasBeenModified()
+                        }
+                    } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
+                        moduleDetailVC.module = selectedModules[indexPath.row]
+                        moduleDetailVC.moduleController = moduleController
+                        moduleDetailVC.moduleType = modulesSection
                     }
+                    
                 }
                 
             }
