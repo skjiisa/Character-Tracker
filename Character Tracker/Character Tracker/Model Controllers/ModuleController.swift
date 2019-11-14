@@ -14,13 +14,14 @@ class ModuleController {
     
     //MARK: Module CRUD
     
-    func create(module name: String, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) {
-        Module(name: name, game: game, type: type, mod: mod, context: context)
+    func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) {
+        Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
         CoreDataStack.shared.save(context: context)
     }
     
-    func edit(module: Module, name: String, type: ModuleType, context: NSManagedObjectContext) {
+    func edit(module: Module, name: String, notes: String? = nil, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
         module.name = name
+        module.level = level
         module.type = type
         CoreDataStack.shared.save(context: context)
     }

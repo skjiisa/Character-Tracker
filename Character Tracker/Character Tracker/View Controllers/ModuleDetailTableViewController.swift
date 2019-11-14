@@ -11,11 +11,14 @@ import UIKit
 class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
     var gameReference: GameReference?
+    var moduleType: ModuleType?
     var module: Module?
+    var moduleController: ModuleController?
     
     var nameTextField: UITextField?
     var levelTextField: UITextField?
     var levelStepper: UIStepper?
+    var notesTextView: UITextView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         if let module = module {
             title = module.name
+            print(module.level)
         } else {
             title = "New Module"
         }
@@ -67,6 +71,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     levelTextField?.delegate = self
                     
                     levelStepper = levelCell.stepper
+                    
+                    if let level = module?.level {
+                        levelTextField?.text = String(level)
+                        levelStepper?.value = Double(level)
+                    }
                     
                     cell = levelCell
                 } else {
@@ -115,7 +124,44 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return true
     }
     */
-
+    
+    //MARK: Private
+    
+    private func prompt(message: String) {
+        let alertController = UIAlertController(title: "Could not save module", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func save() {
+        guard let game = gameReference?.game,
+            let type = moduleType else { return }
+        let context = CoreDataStack.shared.mainContext
+        
+        guard let name = nameTextField?.text,
+            !name.isEmpty else {
+                prompt(message: "Please enter a module name.")
+                return
+        }
+        
+        let level = Int16(levelTextField?.text ?? "")
+        
+        if let module = module {
+            moduleController?.edit(module: module, name: name, notes: notesTextView?.text, level: level ?? 0, type: type, context: context)
+        } else {
+            moduleController?.create(module: name, notes: notesTextView?.text, level: level ?? 0, game: game, type: type, context: context)
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: Actions
+    
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+        save()
+    }
+    
     /*
     // MARK: - Navigation
 

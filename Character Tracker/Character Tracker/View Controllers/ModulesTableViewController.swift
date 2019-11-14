@@ -237,6 +237,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
                 moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
+                moduleDetailVC.moduleController = moduleController
+                moduleDetailVC.moduleType = moduleType
             }
         }
     }

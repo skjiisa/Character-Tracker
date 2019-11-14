@@ -54,10 +54,12 @@ extension CharacterAttribute {
 }
 
 extension Module {
-    @discardableResult convenience init(name: String, game: Game, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
+        self.notes = notes
+        self.level = level
         self.games = [game]
         self.type = type
         self.mod = mod

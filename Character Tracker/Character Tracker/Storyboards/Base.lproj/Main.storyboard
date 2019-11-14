@@ -865,7 +865,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Module" id="PCH-yn-U2J">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="287-Z9-Yf9"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="287-Z9-Yf9">
+                            <connections>
+                                <action selector="saveTapped:" destination="FcM-PG-5WN" id="Gk1-z1-yO4"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51Y-LM-7dC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
