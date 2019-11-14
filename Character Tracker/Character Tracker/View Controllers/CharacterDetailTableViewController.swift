@@ -355,7 +355,7 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: Segmented control delegate
+//MARK: Character name cell delegate
 
 extension CharacterDetailTableViewController: CharacterNameCellDelegate {
     func valueChanged(_ sender: UISegmentedControl) {
