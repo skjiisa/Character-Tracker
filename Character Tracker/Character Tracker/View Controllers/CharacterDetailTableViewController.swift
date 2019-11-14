@@ -130,7 +130,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         } else {
             // Character section
             if indexPath.row == 0 {
-                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? TextFieldTableViewCell {
+                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
                     textField = textFieldCell.textField
                     textField?.delegate = self
 
@@ -357,7 +357,7 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
 
 //MARK: Segmented control delegate
 
-extension CharacterDetailTableViewController: SegmentedControlDelegate {
+extension CharacterDetailTableViewController: CharacterNameCellDelegate {
     func valueChanged(_ sender: UISegmentedControl) {
         characterHasBeenModified()
         female = sender.selectedSegmentIndex == 0 ? false : true
