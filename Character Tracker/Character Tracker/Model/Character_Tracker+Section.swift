@@ -8,6 +8,22 @@
 
 import Foundation
 
-extension AttributeTypeSection: Section {}
+extension AttributeTypeSection: Section {
+    var typeName: String {
+        if let typeName = self.type?.name {
+            return typeName
+        }
+        
+        return ""
+    }
+}
 
-extension ModuleType: Section {}
+extension ModuleType: Section {
+    var typeName: String {
+        if let typeName = self.name {
+            return typeName
+        }
+        
+        return ""
+    }
+}

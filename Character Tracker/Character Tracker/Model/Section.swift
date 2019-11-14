@@ -11,4 +11,5 @@ import Foundation
 protocol Section {
     var name: String? { get set }
     var id: UUID? { get set }
+    var typeName: String { get }
 }

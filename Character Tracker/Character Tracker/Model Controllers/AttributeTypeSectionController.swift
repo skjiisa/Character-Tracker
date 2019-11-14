@@ -16,26 +16,33 @@ class AttributeTypeSectionController {
     
     init() {
         do {
-            let fetchRequest: NSFetchRequest<AttributeTypeSection> = AttributeTypeSection.fetchRequest()
-            fetchRequest.sortDescriptors = [
+            let sectionsFetchRequest: NSFetchRequest<AttributeTypeSection> = AttributeTypeSection.fetchRequest()
+            sectionsFetchRequest.sortDescriptors = [
                 NSSortDescriptor(key: "type", ascending: true),
                 NSSortDescriptor(key: "minPriority", ascending: true)
             ]
             
-            let allSections = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
+            let allSections = try CoreDataStack.shared.mainContext.fetch(sectionsFetchRequest)
             self.sections = allSections
+            
+            let moduleTypesFetchRequest: NSFetchRequest<ModuleType> = ModuleType.fetchRequest()
+            moduleTypesFetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: "name", ascending: true)
+            ]
+            
+            let allModuleTypes = try CoreDataStack.shared.mainContext.fetch(moduleTypesFetchRequest)
+            self.sections.append(contentsOf: allModuleTypes)
         } catch {
             NSLog("Could not fetch attribute type sections: \(error)")
         }
         loadFromPersistentStore()
     }
     
-    func sectionToShow(_ index: Int) -> AttributeTypeSection? {
+    func sectionToShow(_ index: Int) -> Section? {
         let section = index - 1
         if section >= 0,
-            section < tempSectionsToShow.count,
-            let attributeTypeSection = tempSectionsToShow[section] as? AttributeTypeSection {
-            return attributeTypeSection
+            section < tempSectionsToShow.count {
+            return tempSectionsToShow[section]
         }
         return nil
     }

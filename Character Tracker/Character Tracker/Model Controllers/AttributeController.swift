@@ -10,7 +10,7 @@ import CoreData
 
 class AttributeController {
     
-    var tempAttributes: [Attribute: Int16] = [:]
+    private(set) var tempAttributes: [Attribute: Int16] = [:]
     
     //MARK: Attribute CRUD
     

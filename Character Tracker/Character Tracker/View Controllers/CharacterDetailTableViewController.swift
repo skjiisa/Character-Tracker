@@ -17,6 +17,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     //MARK: Properties
     
     let attributeController = AttributeController()
+    let moduleController = ModuleController()
     var characterController: CharacterController?
     
     var attributeTypeSectionController: AttributeTypeSectionController? {
@@ -86,9 +87,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             return 2
         }
         
-        guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return 0 }
+        if let tempAttributes = attributeController.getTempAttributes(from: section) {
+            return tempAttributes.count + 1
+        } else if let tempModules = moduleController.getTempModules(from: section) {
+            return tempModules.count + 1
+        }
         
-        return tempAttributes.count + 1
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -99,16 +104,27 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         let cell: UITableViewCell
         
         if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-            guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return UITableViewCell() }
-            
-            if indexPath.row < tempAttributes.count {
-                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
-                cell.textLabel?.text = tempAttributes[indexPath.row].name
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                if let typeName = section.type?.name {
-                    cell.textLabel?.text = "Add \(typeName)s"
+            if let attributeSection = section as? AttributeTypeSection,
+                let tempAttributes = attributeController.getTempAttributes(from: attributeSection) {
+                if indexPath.row < tempAttributes.count {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+                    cell.textLabel?.text = tempAttributes[indexPath.row].name
+                } else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+                    cell.textLabel?.text = "Add \(attributeSection.typeName)s"
                 }
+            } else if let moduleSection = section as? ModuleType,
+                let tempModules = moduleController.getTempModules(from: moduleSection) {
+                if indexPath.row < tempModules.count {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+                    cell.textLabel?.text = tempModules[indexPath.row].name
+                } else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
+                    cell.textLabel?.text = "Add \(moduleSection.typeName)s"
+                }
+            } else {
+                // This shouldn't happen and is just a fallback in case something breaks
+                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
             }
         } else {
             // Character section
@@ -277,21 +293,37 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     self.characterHasBeenModified()
                     self.navigationController?.popViewController(animated: true)
                 }
-            } else if let attributesVC = vc as? AttributesTableViewController,
-                let indexPath = tableView.indexPathForSelectedRow {
+            } else if let indexPath = tableView.indexPathForSelectedRow,
+                let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
                 
-                guard let section = attributeTypeSectionController?.sectionToShow(indexPath.section),
-                    let selectedAttributes = attributeController.getTempAttributes(from: section) else { return }
-                
-                attributesVC.checkedAttributes = selectedAttributes
-                
-                attributesVC.attributeController = attributeController
-                attributesVC.attributeType = section.type
-                
-                attributesVC.callbacks.append { attribute in
-                    self.attributeController.add(tempAttribute: attribute, priority: section.minPriority)
-                    self.characterHasBeenModified()
+                if let attributesVC = vc as? AttributesTableViewController {
+                    guard let attributesSection = section as? AttributeTypeSection,
+                        let selectedAttributes = attributeController.getTempAttributes(from: section) else { return }
+                    
+                    attributesVC.checkedAttributes = selectedAttributes
+                    
+                    attributesVC.attributeController = attributeController
+                    attributesVC.attributeType = attributesSection.type
+                    
+                    attributesVC.callbacks.append { attribute in
+                        self.attributeController.add(tempAttribute: attribute, priority: attributesSection.minPriority)
+                        self.characterHasBeenModified()
+                    }
+                } else if let modulesVC = vc as? ModulesTableViewController {
+                    guard let modulesSection = section as? ModuleType,
+                        let selectedModules = moduleController.getTempModules(from: section) else { return }
+                    
+                    modulesVC.checkedModules = selectedModules
+                    
+                    modulesVC.moduleController = moduleController
+                    modulesVC.moduleType = modulesSection
+                    
+                    modulesVC.callbacks.append { module in
+                        self.moduleController.add(tempModule: module)
+                        self.characterHasBeenModified()
+                    }
                 }
+                
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             sectionsVC.attributeTypeSectionController = attributeTypeSectionController
