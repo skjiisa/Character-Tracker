@@ -20,7 +20,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     
     var moduleController: ModuleController?
     var moduleType: ModuleType?
-    var checkedModules: [Module] = []
+    var checkedModules: [Module]?
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
@@ -118,7 +118,15 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ModuleCell", for: indexPath)
+        let cellIdentifier: String
+        
+        if checkedModules == nil {
+            cellIdentifier = "ModuleDetailCell"
+        } else {
+            cellIdentifier = "ModuleCell"
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         guard let module = fetchedResultsController?.object(at: indexPath) else {
             return cell
@@ -136,7 +144,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             cell.detailTextLabel?.text = nil
         }
         
-        if checkedModules.contains(module) {
+        if checkedModules?.contains(module) ?? false {
             cell.accessoryType = .checkmark
         }
 
@@ -184,12 +192,13 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let module = fetchedResultsController?.object(at: indexPath) else { return }
+        tableView.deselectRow(at: indexPath, animated: true)
         
+        guard let module = fetchedResultsController?.object(at: indexPath) else { return }
         choose(module: module)
         
-        if !showAll {
-            tableView.deselectRow(at: indexPath, animated: true)
+        if !showAll,
+            checkedModules != nil {
             
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .none {
@@ -213,15 +222,21 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let modulesVC = segue.destination as? ModulesTableViewController {
-            modulesVC.showAll = true
-            modulesVC.gameReference = gameReference
-            modulesVC.moduleController = moduleController
-            modulesVC.moduleType = moduleType
-            modulesVC.callbacks.append { module in
-                guard let game = self.gameReference?.game else { return }
-                self.moduleController?.add(game: game, to: module, context: CoreDataStack.shared.mainContext)
-                self.dismiss(animated: true, completion: nil)
+        if let vc = segue.destination as? CharacterTrackerViewController {
+            vc.gameReference = gameReference
+            
+            if let modulesVC = vc as? ModulesTableViewController {
+                modulesVC.showAll = true
+                modulesVC.moduleController = moduleController
+                modulesVC.moduleType = moduleType
+                modulesVC.callbacks.append { module in
+                    guard let game = self.gameReference?.game else { return }
+                    self.moduleController?.add(game: game, to: module, context: CoreDataStack.shared.mainContext)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
             }
         }
     }

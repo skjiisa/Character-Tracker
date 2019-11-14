@@ -16,6 +16,7 @@
 		595F7727236A55F300151209 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595F7726236A55F300151209 /* Assets.xcassets */; };
 		595F772A236A55F300151209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7728236A55F300151209 /* LaunchScreen.storyboard */; };
 		597AC99E2374E04800DC18E6 /* SectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */; };
+		59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59850F41237D061500286067 /* ModuleDetailTableViewController.swift */; };
 		59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78A236CF29900B3D33B /* TabBarController.swift */; };
 		59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */; };
 		59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78E236CF68E00B3D33B /* GameReference.swift */; };
@@ -50,6 +51,7 @@
 		595F7729236A55F300151209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		595F772B236A55F300151209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SectionsTableViewController.swift; path = "Character Tracker/Storyboards/SectionsTableViewController.swift"; sourceTree = SOURCE_ROOT; };
+		59850F41237D061500286067 /* ModuleDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailTableViewController.swift; sourceTree = "<group>"; };
 		59B3A78A236CF29900B3D33B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		59B3A78E236CF68E00B3D33B /* GameReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReference.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */,
 				59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */,
 				59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */,
+				59850F41237D061500286067 /* ModuleDetailTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
+				59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */,
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
 				59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */,
 				597AC99E2374E04800DC18E6 /* SectionsTableViewController.swift in Sources */,

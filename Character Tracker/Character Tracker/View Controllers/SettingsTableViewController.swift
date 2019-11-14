@@ -145,7 +145,6 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
                 } else if let modulesVC = vc as? ModulesTableViewController {
                     modulesVC.moduleController = moduleController
                     modulesVC.moduleType = moduleTypeController?.types[indexPath.row]
-                    modulesVC.tableView.allowsSelection = false
                 }
                 
             }
