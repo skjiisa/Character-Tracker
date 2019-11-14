@@ -194,6 +194,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
+            characterHasBeenModified()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -311,7 +312,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     attributesVC.attributeType = attributesSection.type
                     
                     attributesVC.callbacks.append { attribute in
-                        self.attributeController.add(tempAttribute: attribute, priority: attributesSection.minPriority)
+                        self.attributeController.toggle(tempAttribute: attribute, priority: attributesSection.minPriority)
                         self.characterHasBeenModified()
                     }
                 } else if let modulesVC = vc as? ModulesTableViewController {
@@ -324,7 +325,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     modulesVC.moduleType = modulesSection
                     
                     modulesVC.callbacks.append { module in
-                        self.moduleController.add(tempModule: module)
+                        self.moduleController.toggle(tempModule: module)
                         self.characterHasBeenModified()
                     }
                 }

@@ -46,6 +46,14 @@ class ModuleController {
         tempModules[module] = false
     }
     
+    func toggle(tempModule module: Module) {
+        if tempModules.contains(where: { $0.key == module }) {
+            remove(tempModule: module)
+        } else {
+            add(tempModule: module)
+        }
+    }
+    
     func remove(tempModule module: Module) {
         tempModules.removeValue(forKey: module)
     }

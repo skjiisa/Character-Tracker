@@ -193,20 +193,18 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
         
+        choose(attribute: attribute)
+        
         if !showAll {
             tableView.deselectRow(at: indexPath, animated: true)
             
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .none {
                     cell.accessoryType = .checkmark
-                    choose(attribute: attribute)
                 } else {
                     cell.accessoryType = .none
-                    attributeController?.remove(tempAttribute: attribute)
                 }
             }
-        } else {
-            choose(attribute: attribute)
         }
     }
     

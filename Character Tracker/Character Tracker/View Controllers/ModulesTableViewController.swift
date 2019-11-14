@@ -186,20 +186,18 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let module = fetchedResultsController?.object(at: indexPath) else { return }
         
+        choose(module: module)
+        
         if !showAll {
             tableView.deselectRow(at: indexPath, animated: true)
             
             if let cell = tableView.cellForRow(at: indexPath) {
                 if cell.accessoryType == .none {
                     cell.accessoryType = .checkmark
-                    choose(module: module)
                 } else {
                     cell.accessoryType = .none
-                    moduleController?.remove(tempModule: module)
                 }
             }
-        } else {
-            choose(module: module)
         }
     }
     

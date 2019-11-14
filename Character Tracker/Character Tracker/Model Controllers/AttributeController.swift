@@ -45,6 +45,14 @@ class AttributeController {
         tempAttributes[attribute] = priority
     }
     
+    func toggle(tempAttribute attribute: Attribute, priority: Int16) {
+        if tempAttributes.contains(where: { $0.key == attribute }) {
+            remove(tempAttribute: attribute)
+        } else {
+            add(tempAttribute: attribute, priority: priority)
+        }
+    }
+    
     func remove(tempAttribute attribute: Attribute) {
         tempAttributes.removeValue(forKey: attribute)
     }
