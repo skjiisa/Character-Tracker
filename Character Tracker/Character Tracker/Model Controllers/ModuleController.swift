@@ -113,7 +113,7 @@ class ModuleController {
     
     func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
         let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character = %@", character)
+        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
         
         do {
             let characterAttributes = try context.fetch(fetchRequest)
@@ -125,8 +125,37 @@ class ModuleController {
             } else {
                 NSLog("Could not fetch character's modules: \(error)")
             }
+        }
+        
+        return []
+    }
+    
+    func fetchCharacterModule(for character: Character, module: Module, context: NSManagedObjectContext) -> CharacterModule? {
+        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
+        
+        do {
+            let characterAttribute = try context.fetch(fetchRequest)
             
-            return []
+            return characterAttribute.first
+        } catch {
+            if let name = character.name {
+                NSLog("Could not fetch \(name)'s modules: \(error)")
+            } else {
+                NSLog("Could not fetch character's modules: \(error)")
+            }
+        }
+        
+        return nil
+    }
+    
+    func setCompleted(characterModule: CharacterModule, completed: Bool, context: NSManagedObjectContext) {
+        characterModule.completed = completed
+        CoreDataStack.shared.save(context: context)
+        
+        if let module = characterModule.module,
+            tempModules.keys.contains(module) {
+            tempModules[module] = completed
         }
     }
     

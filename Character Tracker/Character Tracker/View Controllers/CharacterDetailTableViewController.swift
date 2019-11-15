@@ -118,7 +118,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 let tempModules = moduleController.getTempModules(from: moduleSection) {
                 if indexPath.row < tempModules.count {
                     cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
-                    cell.textLabel?.text = tempModules[indexPath.row].name
+                    let module = tempModules[indexPath.row]
+                    cell.textLabel?.text = module.name
+                    if moduleController.tempModules[module] ?? false {
+                        cell.accessoryType = .checkmark
+                    } else {
+                        cell.accessoryType = .disclosureIndicator
+                    }
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                     cell.textLabel?.text = "Add \(moduleSection.typeName)s"
@@ -330,7 +336,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                             self.characterHasBeenModified()
                         }
                     } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
-                        moduleDetailVC.module = selectedModules[indexPath.row]
+                        let module = selectedModules[indexPath.row]
+                        moduleDetailVC.module = module
+                        
+                        if let character = character {
+                            let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
+                            moduleDetailVC.characterModule = characterModule
+                        }
+                        
                         moduleDetailVC.moduleController = moduleController
                         moduleDetailVC.moduleType = modulesSection
                     }

@@ -10,9 +10,18 @@ import UIKit
 
 class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var completeView: UIView!
+    @IBOutlet weak var completeButton: UIButton!
+    @IBOutlet weak var undoButton: UIButton!
+    
+    //MARK: Properties
+    
     var gameReference: GameReference?
     var moduleType: ModuleType?
     var module: Module?
+    var characterModule: CharacterModule?
     var moduleController: ModuleController?
     
     var nameTextField: UITextField?
@@ -28,12 +37,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        if let module = module {
-            title = module.name
-            print(module.level)
-        } else {
-            title = "New Module"
-        }
+        
+        completeButton.setTitle("Completed", for: .disabled)
+        completeButton.setTitle("Complete", for: .normal)
+        
+        updateViews()
     }
 
     // MARK: - Table view data source
@@ -127,6 +135,28 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     //MARK: Private
     
+    private func updateViews() {
+        
+        if let module = module {
+            title = module.name
+        } else {
+            title = "New Module"
+        }
+        
+        if let completed = characterModule?.completed {
+            if completed {
+                completeButton.isEnabled = false
+                undoButton.isHidden = false
+            } else {
+                completeButton.isEnabled = true
+                undoButton.isHidden = true
+            }
+        } else {
+            completeView.isHidden = true
+        }
+        
+    }
+    
     private func prompt(message: String) {
         let alertController = UIAlertController(title: "Could not save module", message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -156,10 +186,28 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         navigationController?.popViewController(animated: true)
     }
     
+    private func setCompleted(_ completed: Bool) {
+        if let characterModule = characterModule {
+            moduleController?.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+        }
+    }
+    
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
+    }
+    
+    @IBAction func completeTapped(_ sender: UIButton) {
+        setCompleted(true)
+        updateViews()
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func undoTapped(_ sender: UIButton) {
+        setCompleted(false)
+        updateViews()
+        navigationController?.popViewController(animated: true)
     }
     
     /*
