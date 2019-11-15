@@ -15,6 +15,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBOutlet weak var completeView: UIView!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: Properties
     
@@ -40,6 +41,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         completeButton.setTitle("Completed", for: .disabled)
         completeButton.setTitle("Complete", for: .normal)
+        
+        saveButton.isEnabled = false
         
         updateViews()
     }
@@ -85,12 +88,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else {
                 if let levelCell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath) as? LevelTableViewCell {
+                    levelCell.callback = moduleHasBeenModified
+                    
                     levelTextField = levelCell.textField
                     levelTextField?.delegate = self
                     
                     levelStepper = levelCell.stepper
                     
-                    if let level = module?.level {
+                    if let level = module?.level,
+                        level > 0 {
                         levelTextField?.text = String(level)
                         levelStepper?.value = Double(level)
                     }
@@ -195,7 +201,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let numLines = Int(textView.contentSize.height / textView.font!.lineHeight)
         
         if numLines < 3, textView.font!.pointSize < 17.0 {
-            print("Setting font large")
             textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 17.0)
         } else if numLines > 3, textView.font!.pointSize > 14.0 {
             textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 14.0)
@@ -240,6 +245,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
     }
     
+    private func moduleHasBeenModified() {
+        //gameReference?.isSafeToChangeGame = false
+        saveButton.isEnabled = true
+    }
+    
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
@@ -274,16 +284,23 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
             if let level = Int(textField.text ?? "") {
                 // Valid integer. Set the stepper to it
                 levelStepper?.value = Double(level)
+                moduleHasBeenModified()
             } else if textField.text == "" {
                 // Empty. Set the stepper to 0
                 levelStepper?.value = 0
+                moduleHasBeenModified()
             } else {
                 // Garbage. Set the text field back to what the stepper is
-                if let level = levelStepper?.value {
+                if let level = levelStepper?.value,
+                    level > 0 {
                     textField.text = String(Int(level))
                 } else {
                     textField.text = ""
                 }
+            }
+        } else if textField == nameTextField {
+            if textField.text != module?.name {
+                moduleHasBeenModified()
             }
         }
     }
@@ -298,6 +315,7 @@ extension ModuleDetailTableViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         setTextViewFontSize(textView)
+        moduleHasBeenModified()
     }
     
 }

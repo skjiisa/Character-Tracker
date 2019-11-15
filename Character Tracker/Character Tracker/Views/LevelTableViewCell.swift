@@ -15,6 +15,10 @@ class LevelTableViewCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var stepper: UIStepper!
     
+    //MARK: Properties
+    
+    var callback: ( () -> Void )?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -29,6 +33,7 @@ class LevelTableViewCell: UITableViewCell {
         } else {
             textField.text = String(level)
         }
+        callback?()
     }
     
 }
