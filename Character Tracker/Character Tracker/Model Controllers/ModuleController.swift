@@ -60,7 +60,20 @@ class ModuleController {
     }
     
     func getTempModules(ofType type: ModuleType) -> [Module] {
-        return tempModules.keys.filter { $0.type == type }
+        var modules = tempModules.keys.filter { $0.type == type }
+        modules.sort { (module1, module2) -> Bool in
+            if module1.level < module2.level {
+                return true
+            } else if module1.level > module2.level {
+                return false
+            } else if module1.name ?? "" < module2.name ?? "" {
+                return true
+            }
+            
+            return false
+        }
+        
+        return modules
     }
     
     func getTempModules(from section: Section) -> [Module]? {
