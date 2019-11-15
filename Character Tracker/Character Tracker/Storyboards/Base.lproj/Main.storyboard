@@ -750,23 +750,28 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7y-p6-Hg9">
-                                    <rect key="frame" x="16" y="11.5" width="89" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eWY-7n-ZF4">
-                                    <rect key="frame" x="349" y="6.5" width="51" height="31"/>
-                                </switch>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QX2-Wz-KHe">
+                                    <rect key="frame" x="173.5" y="7" width="67" height="30"/>
+                                    <state key="normal" title="Complete"/>
+                                    <connections>
+                                        <action selector="completeTapped:" destination="FcM-PG-5WN" eventType="touchUpInside" id="gK0-fr-4fR"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Dj-7M-JjO">
+                                    <rect key="frame" x="369" y="7" width="37" height="30"/>
+                                    <state key="normal" title="Undo"/>
+                                    <connections>
+                                        <action selector="undoTapped:" destination="FcM-PG-5WN" eventType="touchUpInside" id="6tf-hn-IyY"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstItem="g7y-p6-Hg9" firstAttribute="centerY" secondItem="Lgi-Q9-F3h" secondAttribute="centerY" id="4tc-g9-shk"/>
-                                <constraint firstItem="eWY-7n-ZF4" firstAttribute="trailing" secondItem="Lgi-Q9-F3h" secondAttribute="trailingMargin" constant="-8" id="Dsh-7w-1US"/>
-                                <constraint firstItem="eWY-7n-ZF4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g7y-p6-Hg9" secondAttribute="trailing" constant="8" id="OfE-0e-VjZ"/>
-                                <constraint firstItem="g7y-p6-Hg9" firstAttribute="leading" secondItem="Lgi-Q9-F3h" secondAttribute="leadingMargin" constant="8" id="PRx-cY-6fp"/>
-                                <constraint firstItem="eWY-7n-ZF4" firstAttribute="centerY" secondItem="Lgi-Q9-F3h" secondAttribute="centerY" id="Tm7-GW-zJt"/>
+                                <constraint firstItem="QX2-Wz-KHe" firstAttribute="centerX" secondItem="Lgi-Q9-F3h" secondAttribute="centerX" id="7r5-Rw-H6u"/>
+                                <constraint firstItem="2Dj-7M-JjO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QX2-Wz-KHe" secondAttribute="trailing" constant="8" id="XZ3-1g-sCj"/>
+                                <constraint firstItem="2Dj-7M-JjO" firstAttribute="centerY" secondItem="Lgi-Q9-F3h" secondAttribute="centerY" id="jO2-9O-M1e"/>
+                                <constraint firstItem="2Dj-7M-JjO" firstAttribute="trailing" secondItem="Lgi-Q9-F3h" secondAttribute="trailingMargin" id="mYR-8P-xzq"/>
+                                <constraint firstItem="QX2-Wz-KHe" firstAttribute="centerY" secondItem="Lgi-Q9-F3h" secondAttribute="centerY" id="yqz-cM-GNH"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -871,6 +876,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="completeButton" destination="QX2-Wz-KHe" id="sVu-z7-Uim"/>
+                        <outlet property="completeView" destination="Lgi-Q9-F3h" id="VBh-G5-8KQ"/>
+                        <outlet property="undoButton" destination="2Dj-7M-JjO" id="lQ1-ur-zFx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51Y-LM-7dC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
