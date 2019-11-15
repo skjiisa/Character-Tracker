@@ -19,8 +19,9 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func edit(module: Module, name: String, notes: String? = nil, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
+    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
         module.name = name
+        module.notes = notes
         module.level = level
         module.type = type
         CoreDataStack.shared.save(context: context)

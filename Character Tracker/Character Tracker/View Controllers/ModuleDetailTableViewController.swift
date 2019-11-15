@@ -47,7 +47,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,6 +56,16 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         } else {
             return 1
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Notes"
+        } else if section == 2 {
+            return "Ingredients"
+        }
+        
+        return nil
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,8 +101,24 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     cell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath)
                 }
             }
+        } else if indexPath.section == 1 {
+            if let notesCell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath) as? NotesTableViewCell {
+                notesTextView = notesCell.textView
+                notesTextView?.delegate = self
+                
+                if let notes = module?.notes {
+                    notesTextView?.text = notes
+                } else {
+                    notesTextView?.text = nil
+                }
+                
+                cell = notesCell
+            } else {
+                // This shouldn't ever be called
+                cell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
+            }
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
         }
 
         return cell
@@ -133,6 +159,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     */
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath == IndexPath(row: 0, section: 2) {
+            if let textView = notesTextView {
+                setTextViewFontSize(textView)
+            }
+        }
+    }
+    
     //MARK: Private
     
     private func updateViews() {
@@ -155,6 +189,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             completeView.isHidden = true
         }
         
+    }
+    
+    private func setTextViewFontSize(_ textView: UITextView) {
+        let numLines = Int(textView.contentSize.height / textView.font!.lineHeight)
+        
+        if numLines < 3, textView.font!.pointSize < 17.0 {
+            print("Setting font large")
+            textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 17.0)
+        } else if numLines > 3, textView.font!.pointSize > 14.0 {
+            textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 14.0)
+        }
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     private func prompt(message: String) {
@@ -200,14 +248,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func completeTapped(_ sender: UIButton) {
         setCompleted(true)
-        updateViews()
         navigationController?.popViewController(animated: true)
     }
     
     @IBAction func undoTapped(_ sender: UIButton) {
         setCompleted(false)
         updateViews()
-        navigationController?.popViewController(animated: true)
     }
     
     /*
@@ -246,4 +292,12 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return false
     }
+}
+
+extension ModuleDetailTableViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        setTextViewFontSize(textView)
+    }
+    
 }
