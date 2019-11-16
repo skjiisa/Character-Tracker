@@ -76,3 +76,24 @@ extension CharacterModule {
         self.completed = completed
     }
 }
+
+extension Ingredient {
+    @discardableResult convenience init(name: String, game: Game, id: String = UUID().uuidString, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.name = name
+        self.id = id
+        self.game = game
+    }
+}
+
+extension ModuleIngredient {
+    @discardableResult convenience init(module: Module, ingredient: Ingredient, quantity: Int16, completed: Bool = false, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.module = module
+        self.ingredient = ingredient
+        self.quantity = quantity
+        self.completed = completed
+    }
+}

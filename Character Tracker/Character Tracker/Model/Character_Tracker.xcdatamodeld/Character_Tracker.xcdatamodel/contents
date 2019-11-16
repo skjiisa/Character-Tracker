@@ -78,7 +78,7 @@
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="images" inverseEntity="Module"/>
     </entity>
     <entity name="Ingredient" representedClassName="Ingredient" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="ingredients" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="ingredients" inverseEntity="Link"/>
@@ -120,6 +120,7 @@
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModuleType" inverseName="modules" inverseEntity="ModuleType"/>
     </entity>
     <entity name="ModuleIngredient" representedClassName="ModuleIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="modules" inverseEntity="Ingredient"/>
         <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="ingredients" inverseEntity="Module"/>
@@ -153,7 +154,7 @@
         <element name="Link" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="208"/>
         <element name="Module" positionX="342" positionY="202" width="128" height="193"/>
-        <element name="ModuleIngredient" positionX="564" positionY="216" width="128" height="88"/>
+        <element name="ModuleIngredient" positionX="564" positionY="216" width="128" height="103"/>
         <element name="ModuleType" positionX="404" positionY="400" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>
     </elements>

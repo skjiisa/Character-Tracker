@@ -26,6 +26,8 @@
 		59B3A793236D01B300B3D33B /* CharactersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */; };
 		59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A794236D063C00B3D33B /* RacesTableViewController.swift */; };
 		59B3A797236D506000B3D33B /* AttributeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A796236D506000B3D33B /* AttributeController.swift */; };
+		59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */; };
+		59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D942237F8F6C00C7A28F /* IngredientController.swift */; };
 		59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8EA112373A0360008ED11 /* AttributeTypeController.swift */; };
 		59B8EA142373A5110008ED11 /* AttributeTypeSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8EA132373A5110008ED11 /* AttributeTypeSectionController.swift */; };
 		59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB3D1F236AA1C400A4A14E /* CharacterDetailTableViewController.swift */; };
@@ -64,6 +66,8 @@
 		59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersTableViewController.swift; sourceTree = "<group>"; };
 		59B3A794236D063C00B3D33B /* RacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacesTableViewController.swift; sourceTree = "<group>"; };
 		59B3A796236D506000B3D33B /* AttributeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeController.swift; sourceTree = "<group>"; };
+		59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsTableViewController.swift; sourceTree = "<group>"; };
+		59B8D942237F8F6C00C7A28F /* IngredientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientController.swift; sourceTree = "<group>"; };
 		59B8EA112373A0360008ED11 /* AttributeTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTypeController.swift; sourceTree = "<group>"; };
 		59B8EA132373A5110008ED11 /* AttributeTypeSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTypeSectionController.swift; sourceTree = "<group>"; };
 		59BB3D1F236AA1C400A4A14E /* CharacterDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */,
 				59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */,
 				59850F41237D061500286067 /* ModuleDetailTableViewController.swift */,
+				59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				594D7AC0237124AD00F0795D /* CharacterController.swift */,
 				59B3A796236D506000B3D33B /* AttributeController.swift */,
 				59BCF976237A450D000E90B7 /* ModuleController.swift */,
+				59B8D942237F8F6C00C7A28F /* IngredientController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 			files = (
 				59BCF979237A5968000E90B7 /* Section.swift in Sources */,
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
+				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
@@ -282,6 +289,7 @@
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
+				59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */,
 				59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */,
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
 				59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */,

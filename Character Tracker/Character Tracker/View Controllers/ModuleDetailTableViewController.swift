@@ -24,6 +24,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var module: Module?
     var characterModule: CharacterModule?
     var moduleController: ModuleController?
+    var ingredientController = IngredientController()
     
     var nameTextField: UITextField?
     var levelTextField: UITextField?
@@ -56,9 +57,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
-        } else {
+        } else if section == 1 {
             return 1
         }
+        
+        return ingredientController.tempIngredients.count + 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -124,7 +127,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
             }
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+            if indexPath.row < ingredientController.tempIngredients.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                
+                let tempIngredient = ingredientController.tempIngredients[indexPath.row]
+                cell.textLabel?.text = tempIngredient.ingredient.name
+                cell.detailTextLabel?.text = "\(tempIngredient.quantity)"
+                if tempIngredient.completed {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
+            }
         }
 
         return cell
@@ -266,15 +282,18 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         updateViews()
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let vc = segue.destination as? CharacterTrackerViewController {
+            vc.gameReference = gameReference
+            
+            if let ingredientsVC = vc as? IngredientsTableViewController {
+                ingredientsVC.ingredientController = ingredientController
+            }
+        }
     }
-    */
 
 }
 
