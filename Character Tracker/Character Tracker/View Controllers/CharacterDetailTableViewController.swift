@@ -277,7 +277,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         attributeTypeSectionController?.saveTempSections(to: savedCharacter)
         
         gameReference?.isSafeToChangeGame = true
-        navigationController?.popViewController(animated: true)
     }
     
     private func characterHasBeenModified() {
@@ -289,6 +288,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Navigation

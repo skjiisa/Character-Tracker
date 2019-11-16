@@ -14,9 +14,10 @@ class ModuleController {
     
     //MARK: Module CRUD
     
-    func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) {
-        Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
+    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
+        let module = Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
         CoreDataStack.shared.save(context: context)
+        return module
     }
     
     func edit(module: Module, name: String, notes: String?, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
@@ -98,14 +99,13 @@ class ModuleController {
             }
         }
         
-        tempModules = [:]
-        
         CoreDataStack.shared.save(context: context)
     }
     
     func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
-        let characterModules = fetchCharacterModules(for: character, context: context)
+        tempModules = [:]
         
+        let characterModules = fetchCharacterModules(for: character, context: context)
         for characterModule in characterModules {
             guard let module = characterModule.module else { continue }
             tempModules[module] = characterModule.completed
@@ -173,9 +173,9 @@ class ModuleController {
             }
         } catch {
             if let name = character.name {
-                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
+                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
             } else {
-                NSLog("Could not fetch character's attributes for removal: \(error)")
+                NSLog("Could not fetch character's modules for removal: \(error)")
             }
         }
     }

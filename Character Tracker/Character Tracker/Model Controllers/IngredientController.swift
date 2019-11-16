@@ -28,7 +28,7 @@ class IngredientController {
         CoreDataStack.shared.save(context: context)
     }
     
-    //MARK: ModuleIngredient CRUD
+    //MARK: Temp Ingredients
     
     func add(tempIngredient ingredient: Ingredient, quantity: Int16 = 0, completed: Bool = false) {
         if !tempIngredients.contains(where: { $0.ingredient == ingredient }) {
@@ -54,6 +54,76 @@ class IngredientController {
     
     func remove(tempIngredient ingredient: Ingredient) {
         tempIngredients.removeAll(where: { $0.ingredient == ingredient })
+    }
+    
+    //MARK: Module Ingredients CRUD
+    
+    func saveTempIngredients(to module: Module, context: NSManagedObjectContext) {
+        let currentModuleIngredients = fetchModuleIngredients(for: module, context: context)
+        
+        for tempIngredient in tempIngredients {
+            if let moduleIngredient = currentModuleIngredients.first(where: { $0.ingredient == tempIngredient.ingredient }) {
+                // If the module already has the ingredient, make sure the quantity and completed state are up-to-date
+                moduleIngredient.quantity = tempIngredient.quantity
+                moduleIngredient.completed = tempIngredient.completed
+            } else {
+                // Add the Module Ingredient
+                ModuleIngredient(module: module, ingredient: tempIngredient.ingredient, quantity: tempIngredient.quantity, completed: tempIngredient.completed, context: context)
+            }
+        }
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func fetchTempIngredients(for module: Module, context: NSManagedObjectContext) {
+        tempIngredients = []
+        
+        let moduleIngredients = fetchModuleIngredients(for: module, context: context)
+        for moduleIngredient in moduleIngredients {
+            guard let ingredient = moduleIngredient.ingredient else { continue }
+            let quantity = moduleIngredient.quantity
+            let completed = moduleIngredient.completed
+            tempIngredients.append((ingredient, quantity, completed))
+        }
+    }
+    
+    func fetchModuleIngredients(for module: Module, context: NSManagedObjectContext) -> [ModuleIngredient] {
+        let fetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let characterAttributes = try context.fetch(fetchRequest)
+            
+            return characterAttributes
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s ingredients: \(error)")
+            } else {
+                NSLog("Could not fetch module's ingredients: \(error)")
+            }
+        }
+        
+        return []
+    }
+    
+    func removeMissingTempIngredients(from module: Module, context: NSManagedObjectContext) {
+        let ingredients: [Ingredient] = tempIngredients.map({ $0.ingredient })
+        
+        let fetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (ingredient IN %@)", module, ingredients)
+        
+        do {
+            let moduleIngredients = try context.fetch(fetchRequest)
+            for moduleIngredient in moduleIngredients {
+                context.delete(moduleIngredient)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's ingredients for removal: \(error)")
+            }
+        }
     }
     
 }

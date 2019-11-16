@@ -101,6 +101,12 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     }
     */
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let ingredient = fetchedResultsController.object(at: indexPath)
+        ingredientController?.add(tempIngredient: ingredient)
+        navigationController?.popViewController(animated: true)
+    }
+    
     //MARK: Actions
     
     @IBAction func addIngredient(_ sender: UIBarButtonItem) {

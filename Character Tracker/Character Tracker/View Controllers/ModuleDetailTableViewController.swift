@@ -19,12 +19,18 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     //MARK: Properties
     
+    var ingredientController = IngredientController()
     var gameReference: GameReference?
     var moduleType: ModuleType?
-    var module: Module?
+    var module: Module? {
+        didSet {
+            if let module = module {
+                ingredientController.fetchTempIngredients(for: module, context: CoreDataStack.shared.mainContext)
+            }
+        }
+    }
     var characterModule: CharacterModule?
     var moduleController: ModuleController?
-    var ingredientController = IngredientController()
     
     var nameTextField: UITextField?
     var levelTextField: UITextField?
@@ -46,6 +52,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         saveButton.isEnabled = false
         
         updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -146,25 +158,26 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return cell
     }
 
-    /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        if indexPath.section == 2,
+            indexPath.row < ingredientController.tempIngredients.count {
+            return true
+        }
+        
+        return false
     }
-    */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
+            ingredientController.remove(tempIngredient: ingredient)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -246,13 +259,18 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         let level = Int16(levelTextField?.text ?? "")
         
+        let savedModule: Module
+        
         if let module = module {
             moduleController?.edit(module: module, name: name, notes: notesTextView?.text, level: level ?? 0, type: type, context: context)
+            savedModule = module
         } else {
-            moduleController?.create(module: name, notes: notesTextView?.text, level: level ?? 0, game: game, type: type, context: context)
+            guard let module = moduleController?.create(module: name, notes: notesTextView?.text, level: level ?? 0, game: game, type: type, context: context) else { return }
+            savedModule = module
         }
         
-        navigationController?.popViewController(animated: true)
+        ingredientController.removeMissingTempIngredients(from: savedModule, context: context)
+        ingredientController.saveTempIngredients(to: savedModule, context: context)
     }
     
     private func setCompleted(_ completed: Bool) {
@@ -270,6 +288,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func completeTapped(_ sender: UIButton) {
@@ -296,6 +315,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
 
 }
+
+// MARK: Text Field Delegate
 
 extension ModuleDetailTableViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -329,6 +350,8 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
         return false
     }
 }
+
+//MARK: Text View Delegate
 
 extension ModuleDetailTableViewController: UITextViewDelegate {
     
