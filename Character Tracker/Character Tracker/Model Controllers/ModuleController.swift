@@ -44,15 +44,15 @@ class ModuleController {
     
     //MARK: Temp Modules
     
-    func add(tempModule module: Module) {
-        tempModules[module] = false
+    func add(tempModule module: Module, completed: Bool = false) {
+        tempModules[module] = completed
     }
     
     func toggle(tempModule module: Module) {
         if tempModules.contains(where: { $0.key == module }) {
             remove(tempModule: module)
         } else {
-            add(tempModule: module)
+            add(tempModule: module, completed: true)
         }
     }
     
