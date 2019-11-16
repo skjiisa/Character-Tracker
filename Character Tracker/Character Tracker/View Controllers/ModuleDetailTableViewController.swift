@@ -174,6 +174,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
             ingredientController.remove(tempIngredient: ingredient)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            moduleHasBeenModified()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -310,6 +311,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             
             if let ingredientsVC = vc as? IngredientsTableViewController {
                 ingredientsVC.ingredientController = ingredientController
+                ingredientsVC.callbacks.append { ingredient in
+                    self.ingredientController.add(tempIngredient: ingredient)
+                    self.moduleHasBeenModified()
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }

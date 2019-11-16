@@ -15,6 +15,7 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     
     var gameReference: GameReference?
     var ingredientController: IngredientController?
+    var callbacks: [( (Ingredient) -> Void )] = []
     
     lazy var fetchedResultsController: NSFetchedResultsController<Ingredient> = {
         let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
@@ -103,8 +104,15 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ingredient = fetchedResultsController.object(at: indexPath)
-        ingredientController?.add(tempIngredient: ingredient)
-        navigationController?.popViewController(animated: true)
+        choose(ingredient: ingredient)
+    }
+    
+    //MARK: Private
+    
+    func choose(ingredient: Ingredient) {
+        for callback in callbacks {
+            callback(ingredient)
+        }
     }
     
     //MARK: Actions
