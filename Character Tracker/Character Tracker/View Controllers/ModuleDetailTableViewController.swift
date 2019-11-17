@@ -143,8 +143,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
                 
                 let tempIngredient = ingredientController.tempIngredients[indexPath.row]
+                
                 cell.textLabel?.text = tempIngredient.ingredient.name
-                cell.detailTextLabel?.text = "\(tempIngredient.quantity)"
+                
+                if tempIngredient.quantity != 0 {
+                    cell.detailTextLabel?.text = "Qty: \(tempIngredient.quantity)"
+                } else {
+                    cell.detailTextLabel?.text = nil
+                }
+                
                 if tempIngredient.completed {
                     cell.accessoryType = .checkmark
                 } else {
@@ -312,9 +319,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if let ingredientsVC = vc as? IngredientsTableViewController {
                 ingredientsVC.ingredientController = ingredientController
                 ingredientsVC.callbacks.append { ingredient in
-                    self.ingredientController.add(tempIngredient: ingredient)
-                    self.moduleHasBeenModified()
-                    self.navigationController?.popViewController(animated: true)
+                    ingredientsVC.askForQuantity { quantity in
+                        if let quantity = quantity {
+                            self.ingredientController.add(tempIngredient: ingredient, quantity: quantity)
+                            self.moduleHasBeenModified()
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
                 }
             }
         }

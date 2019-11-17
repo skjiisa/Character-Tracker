@@ -109,10 +109,41 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     
     //MARK: Private
     
-    func choose(ingredient: Ingredient) {
+    private func choose(ingredient: Ingredient) {
         for callback in callbacks {
             callback(ingredient)
         }
+    }
+    
+    //MARK: Public
+    
+    func askForQuantity(completion: @escaping (Int16?) -> Void ) {
+        let alertController = UIAlertController(title: "How many?", message: nil, preferredStyle: .alert)
+        
+        let add = UIAlertAction(title: "Add", style: .default) { _ in
+            guard let quantityText = alertController.textFields?[0].text,
+                let quantity = Int16(quantityText) else {
+                completion(0)
+                return
+            }
+            
+            completion(quantity)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            completion(nil)
+        }
+        
+        alertController.addTextField { textField in
+            textField.placeholder = "Quantity (optional)"
+            textField.keyboardType = .numberPad
+            textField.returnKeyType = .done
+        }
+        
+        alertController.addAction(add)
+        alertController.addAction(cancel)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //MARK: Actions
@@ -120,9 +151,9 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     @IBAction func addIngredient(_ sender: UIBarButtonItem) {
         guard let game = gameReference?.game else { return }
         
-        let alertController = UIAlertController(title: "New Ingredient", message: "", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "New Ingredient", message: nil, preferredStyle: .alert)
         
-        let save = UIAlertAction(title: "Save", style: .default) { (_) in
+        let save = UIAlertAction(title: "Save", style: .default) { _ in
             guard let name = alertController.textFields?[0].text else { return }
             
             let id: String? = alertController.textFields?[1].text
