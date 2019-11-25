@@ -56,8 +56,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        tableView.reloadData()
+
+        tableView.reloadSections([2], with: .automatic)
     }
 
     // MARK: - Table view data source
