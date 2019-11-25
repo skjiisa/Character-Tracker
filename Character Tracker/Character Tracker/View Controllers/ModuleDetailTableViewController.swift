@@ -218,6 +218,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             title = module.name
         } else {
             title = "New Module"
+            completeView.isHidden = true
         }
         
         if let completed = characterModule?.completed {
@@ -229,7 +230,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 undoButton.isHidden = true
             }
         } else {
-            completeView.isHidden = true
+            undoButton.isHidden = true
+            completeButton.isEnabled = false
+            completeButton.setTitle("Save character to mark as complete", for: .disabled)
         }
         
     }
