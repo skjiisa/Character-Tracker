@@ -53,7 +53,7 @@ class ModuleController {
         if tempModules.contains(where: { $0.key == module }) {
             remove(tempModule: module)
         } else {
-            add(tempModule: module, completed: true)
+            add(tempModule: module, completed: false)
         }
     }
     
