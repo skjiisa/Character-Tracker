@@ -234,11 +234,14 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
                     self.moduleController?.add(game: game, to: module, context: CoreDataStack.shared.mainContext)
                     self.dismiss(animated: true, completion: nil)
                 }
-            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
-                let indexPath = tableView.indexPathForSelectedRow {
-                moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
+            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
                 moduleDetailVC.moduleController = moduleController
                 moduleDetailVC.moduleType = moduleType
+                
+                if segue.identifier == "ShowModuleDetail",
+                    let indexPath = tableView.indexPathForSelectedRow {
+                    moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
+                }
             }
         }
     }
@@ -253,7 +256,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
         
         let addNew = UIAlertAction(title: "Add new \(typeName)", style: .default) { _ in
-            self.showNewModuleAlert()
+            self.performSegue(withIdentifier: "ShowNewModule", sender: self)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -265,34 +268,6 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         alertController.pruneNegativeWidthConstraints()
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    private func showNewModuleAlert() {
-        guard let game = gameReference?.game,
-            let type = moduleType else { return }
-        
-        let alertController = UIAlertController(title: "New \(typeName)", message: "", preferredStyle: .alert)
-        
-        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
-            guard let name = alertController.textFields?[0].text else { return }
-            
-            self.moduleController?.create(module: name, game: game, type: type, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alertController.addTextField { (textField) in
-            textField.placeholder = "\(self.typeName) name"
-            textField.autocapitalizationType = .words
-            textField.autocorrectionType = .no
-            textField.returnKeyType = .done
-        }
-                
-        alertController.addAction(saveVanilla)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
     }
     
 }
