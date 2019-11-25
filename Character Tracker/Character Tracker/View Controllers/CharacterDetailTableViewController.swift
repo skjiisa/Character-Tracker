@@ -172,13 +172,23 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-            guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return false }
-            
-            if indexPath.row < tempAttributes.count {
-                // Attribute
-                return true
+            if let tempAttributes = attributeController.getTempAttributes(from: section) {
+                if indexPath.row < tempAttributes.count {
+                    // Attribute
+                    return true
+                } else {
+                    // "Add attribute" cell
+                    return false
+                }
+            } else if let tempModules = moduleController.getTempModules(from: section) {
+                if indexPath.row < tempModules.count {
+                    // Module
+                    return true
+                } else {
+                    // "Add module" cell
+                    return false
+                }
             } else {
-                // "Add attribute" cell
                 return false
             }
         } else {
@@ -192,10 +202,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         if editingStyle == .delete {
             
             if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-                guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return }
-                
-                if indexPath.row < tempAttributes.count {
+                if let tempAttributes = attributeController.getTempAttributes(from: section),
+                    indexPath.row < tempAttributes.count {
                     attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
+                } else if let tempModules = moduleController.getTempModules(from: section),
+                    indexPath.row < tempModules.count {
+                    moduleController.remove(tempModule: tempModules[indexPath.row])
+                } else {
+                    return
                 }
             }
             
