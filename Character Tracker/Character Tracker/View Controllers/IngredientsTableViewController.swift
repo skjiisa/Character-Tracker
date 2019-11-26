@@ -25,7 +25,7 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         ]
         
         if let game = gameReference?.game {
-            fetchRequest.predicate = NSPredicate(format: "game == %@", game)
+            fetchRequest.predicate = NSPredicate(format: "ANY games == %@", game)
         }
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,

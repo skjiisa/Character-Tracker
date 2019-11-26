@@ -83,7 +83,7 @@ extension Ingredient {
         
         self.name = name
         self.id = id
-        self.game = game
+        self.games = [game]
     }
 }
 

@@ -29,6 +29,46 @@ class ModuleController {
     }
     
     func delete(module: Module, context: NSManagedObjectContext) {
+        // Remove CharacterModules
+        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let characterModules = try context.fetch(characterFetchRequest)
+            
+            for characterModule in characterModules {
+                context.delete(characterModule)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character modules for removal: \(error)")
+            }
+            return
+        }
+        
+        // Remove ModuleIngredients
+        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let moduleIngredients = try context.fetch(ingredientFetchRequest)
+            
+            for moduleIngredient in moduleIngredients {
+                context.delete(moduleIngredient)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's module ingredients for removal: \(error)")
+            }
+            return
+        }
+        
+        tempModules.removeValue(forKey: module)
+        
         context.delete(module)
         CoreDataStack.shared.save(context: context)
     }
@@ -39,7 +79,53 @@ class ModuleController {
     }
     
     func remove(game: Game, from module: Module, context: NSManagedObjectContext) {
-        module.mutableSetValue(forKey: "games").remove(game)
+        // Remove CharacterModules
+        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "module == %@ AND character.game == %@", module, game)
+        
+        do {
+            let characterModules = try context.fetch(characterFetchRequest)
+            
+            for characterModule in characterModules {
+                context.delete(characterModule)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character modules for removal: \(error)")
+            }
+            return
+        }
+        
+        // Remove ModuleIngredients
+        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@ AND ANY ingredient.games == %@", module, game)
+        
+        let moduleGamesSet = module.mutableSetValue(forKey: "games")
+        moduleGamesSet.remove(game)
+        
+        do {
+            let moduleIngredients = try context.fetch(ingredientFetchRequest)
+            
+            for moduleIngredient in moduleIngredients {
+                if let ingredientGamesSet = moduleIngredient.ingredient?.mutableSetValue(forKey: "games"),
+                    ingredientGamesSet.count == 1,
+                    ingredientGamesSet.contains(game){
+                    context.delete(moduleIngredient)
+                }
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's module ingredients for removal: \(error)")
+            }
+            return
+        }
+        
+        tempModules.removeValue(forKey: module)
+        
         CoreDataStack.shared.save(context: context)
     }
     
