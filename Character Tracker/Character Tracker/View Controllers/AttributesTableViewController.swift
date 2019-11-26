@@ -111,14 +111,6 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         return fetchedResultsController?.sections?.count ?? 0
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
-//            return "Vanilla"
-//        } else {
-//            return "Custom"
-//        }
-//    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
     }

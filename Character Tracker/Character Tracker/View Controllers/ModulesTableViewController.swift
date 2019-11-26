@@ -120,7 +120,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String
         
-        if checkedModules == nil {
+        if checkedModules == nil,
+            !showAll {
             cellIdentifier = "ModuleDetailCell"
         } else {
             cellIdentifier = "ModuleCell"
@@ -173,7 +174,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
 
     /*
