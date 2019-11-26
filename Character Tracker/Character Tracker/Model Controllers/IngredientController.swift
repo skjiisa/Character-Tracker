@@ -65,14 +65,6 @@ class IngredientController {
         }
     }
     
-//    func toggle(tempIngredient ingredient: Ingredient) {
-//        if let index = tempIngredients.firstIndex(where: { $0.ingredient == ingredient }) {
-//            tempIngredients[index].completed.toggle()
-//        } else {
-//            add(tempIngredient: ingredient, completed: true)
-//        }
-//    }
-    
     func remove(tempIngredient ingredient: Ingredient) {
         tempIngredients.removeAll(where: { $0.ingredient == ingredient })
     }
