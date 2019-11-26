@@ -88,12 +88,11 @@ extension Ingredient {
 }
 
 extension ModuleIngredient {
-    @discardableResult convenience init(module: Module, ingredient: Ingredient, quantity: Int16, completed: Bool = false, context: NSManagedObjectContext) {
+    @discardableResult convenience init(module: Module, ingredient: Ingredient, quantity: Int16, context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.module = module
         self.ingredient = ingredient
         self.quantity = quantity
-        self.completed = completed
     }
 }

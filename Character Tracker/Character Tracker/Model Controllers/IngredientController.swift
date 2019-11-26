@@ -10,7 +10,7 @@ import CoreData
 
 class IngredientController {
     
-    private(set) var tempIngredients: [(ingredient: Ingredient, quantity: Int16, completed: Bool)] = []
+    private(set) var tempIngredients: [(ingredient: Ingredient, quantity: Int16)] = []
     
     //MARK: Ingredient CRUD
     
@@ -30,9 +30,9 @@ class IngredientController {
     
     //MARK: Temp Ingredients
     
-    func add(tempIngredient ingredient: Ingredient, quantity: Int16 = 0, completed: Bool = false) {
+    func add(tempIngredient ingredient: Ingredient, quantity: Int16 = 0) {
         if !tempIngredients.contains(where: { $0.ingredient == ingredient }) {
-            tempIngredients.append((ingredient: ingredient, quantity: quantity, completed: completed))
+            tempIngredients.append((ingredient: ingredient, quantity: quantity))
         }
     }
     
@@ -44,13 +44,13 @@ class IngredientController {
         }
     }
     
-    func toggle(tempIngredient ingredient: Ingredient) {
-        if let index = tempIngredients.firstIndex(where: { $0.ingredient == ingredient }) {
-            tempIngredients[index].completed.toggle()
-        } else {
-            add(tempIngredient: ingredient, completed: true)
-        }
-    }
+//    func toggle(tempIngredient ingredient: Ingredient) {
+//        if let index = tempIngredients.firstIndex(where: { $0.ingredient == ingredient }) {
+//            tempIngredients[index].completed.toggle()
+//        } else {
+//            add(tempIngredient: ingredient, completed: true)
+//        }
+//    }
     
     func remove(tempIngredient ingredient: Ingredient) {
         tempIngredients.removeAll(where: { $0.ingredient == ingredient })
@@ -65,10 +65,9 @@ class IngredientController {
             if let moduleIngredient = currentModuleIngredients.first(where: { $0.ingredient == tempIngredient.ingredient }) {
                 // If the module already has the ingredient, make sure the quantity and completed state are up-to-date
                 moduleIngredient.quantity = tempIngredient.quantity
-                moduleIngredient.completed = tempIngredient.completed
             } else {
                 // Add the Module Ingredient
-                ModuleIngredient(module: module, ingredient: tempIngredient.ingredient, quantity: tempIngredient.quantity, completed: tempIngredient.completed, context: context)
+                ModuleIngredient(module: module, ingredient: tempIngredient.ingredient, quantity: tempIngredient.quantity, context: context)
             }
         }
         
@@ -82,8 +81,7 @@ class IngredientController {
         for moduleIngredient in moduleIngredients {
             guard let ingredient = moduleIngredient.ingredient else { continue }
             let quantity = moduleIngredient.quantity
-            let completed = moduleIngredient.completed
-            tempIngredients.append((ingredient, quantity, completed))
+            tempIngredients.append((ingredient, quantity))
         }
     }
     

@@ -151,12 +151,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 } else {
                     cell.detailTextLabel?.text = nil
                 }
-                
-                if tempIngredient.completed {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
             }
