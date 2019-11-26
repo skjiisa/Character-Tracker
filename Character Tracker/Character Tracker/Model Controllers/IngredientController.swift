@@ -24,6 +24,27 @@ class IngredientController {
     }
     
     func delete(ingredient: Ingredient, context: NSManagedObjectContext) {
+        // Remove ModuleIngredients
+        let modulesFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        modulesFetchRequest.predicate = NSPredicate(format: "ingredient == %@", ingredient)
+        
+        do {
+            let moduleIngredients = try context.fetch(modulesFetchRequest)
+            
+            for moduleIngredient in moduleIngredients {
+                context.delete(moduleIngredient)
+            }
+        } catch {
+            if let name = ingredient.name {
+                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's module ingredients for removal: \(error)")
+            }
+            return
+        }
+        
+        tempIngredients.removeAll(where: { $0.ingredient == ingredient })
+        
         context.delete(ingredient)
         CoreDataStack.shared.save(context: context)
     }
