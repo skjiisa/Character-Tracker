@@ -54,10 +54,12 @@ extension CharacterAttribute {
 }
 
 extension Module {
-    @discardableResult convenience init(name: String, game: Game, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
+    @discardableResult convenience init(name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
         self.init(context: context)
         
         self.name = name
+        self.notes = notes
+        self.level = level
         self.games = [game]
         self.type = type
         self.mod = mod
@@ -72,5 +74,25 @@ extension CharacterModule {
         self.character = character
         self.module = module
         self.completed = completed
+    }
+}
+
+extension Ingredient {
+    @discardableResult convenience init(name: String, game: Game, id: String = UUID().uuidString, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.name = name
+        self.id = id
+        self.games = [game]
+    }
+}
+
+extension ModuleIngredient {
+    @discardableResult convenience init(module: Module, ingredient: Ingredient, quantity: Int16, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.module = module
+        self.ingredient = ingredient
+        self.quantity = quantity
     }
 }

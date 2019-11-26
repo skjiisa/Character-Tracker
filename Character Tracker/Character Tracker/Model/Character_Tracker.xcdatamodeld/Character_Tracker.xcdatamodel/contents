@@ -65,7 +65,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="game" inverseEntity="Attribute"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character"/>
-        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="game" inverseEntity="Ingredient"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="games" inverseEntity="Ingredient"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="games" inverseEntity="Link"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="games" inverseEntity="Mod"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="games" inverseEntity="Module"/>
@@ -78,9 +78,9 @@
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="images" inverseEntity="Module"/>
     </entity>
     <entity name="Ingredient" representedClassName="Ingredient" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="ingredients" inverseEntity="Game"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="ingredients" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="ingredients" inverseEntity="Link"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="ingredient" inverseEntity="ModuleIngredient"/>
     </entity>

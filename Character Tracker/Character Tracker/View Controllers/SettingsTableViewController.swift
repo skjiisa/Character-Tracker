@@ -49,6 +49,16 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         
         return nil
     }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 3 {
+            return "Character Attributes"
+        } else if section == 4 {
+            return "Modules"
+        }
+        
+        return nil
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < 3 {
@@ -145,7 +155,6 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
                 } else if let modulesVC = vc as? ModulesTableViewController {
                     modulesVC.moduleController = moduleController
                     modulesVC.moduleType = moduleTypeController?.types[indexPath.row]
-                    modulesVC.tableView.allowsSelection = false
                 }
                 
             }

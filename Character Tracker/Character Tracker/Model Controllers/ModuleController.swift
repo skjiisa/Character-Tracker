@@ -14,18 +14,61 @@ class ModuleController {
     
     //MARK: Module CRUD
     
-    func create(module name: String, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) {
-        Module(name: name, game: game, type: type, mod: mod, context: context)
+    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
+        let module = Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
         CoreDataStack.shared.save(context: context)
+        return module
     }
     
-    func edit(module: Module, name: String, type: ModuleType, context: NSManagedObjectContext) {
+    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
         module.name = name
+        module.notes = notes
+        module.level = level
         module.type = type
         CoreDataStack.shared.save(context: context)
     }
     
     func delete(module: Module, context: NSManagedObjectContext) {
+        // Remove CharacterModules
+        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let characterModules = try context.fetch(characterFetchRequest)
+            
+            for characterModule in characterModules {
+                context.delete(characterModule)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character modules for removal: \(error)")
+            }
+            return
+        }
+        
+        // Remove ModuleIngredients
+        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let moduleIngredients = try context.fetch(ingredientFetchRequest)
+            
+            for moduleIngredient in moduleIngredients {
+                context.delete(moduleIngredient)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's module ingredients for removal: \(error)")
+            }
+            return
+        }
+        
+        tempModules.removeValue(forKey: module)
+        
         context.delete(module)
         CoreDataStack.shared.save(context: context)
     }
@@ -36,21 +79,67 @@ class ModuleController {
     }
     
     func remove(game: Game, from module: Module, context: NSManagedObjectContext) {
-        module.mutableSetValue(forKey: "games").remove(game)
+        // Remove CharacterModules
+        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "module == %@ AND character.game == %@", module, game)
+        
+        do {
+            let characterModules = try context.fetch(characterFetchRequest)
+            
+            for characterModule in characterModules {
+                context.delete(characterModule)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character modules for removal: \(error)")
+            }
+            return
+        }
+        
+        // Remove ModuleIngredients
+        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
+        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@ AND ANY ingredient.games == %@", module, game)
+        
+        let moduleGamesSet = module.mutableSetValue(forKey: "games")
+        moduleGamesSet.remove(game)
+        
+        do {
+            let moduleIngredients = try context.fetch(ingredientFetchRequest)
+            
+            for moduleIngredient in moduleIngredients {
+                if let ingredientGamesSet = moduleIngredient.ingredient?.mutableSetValue(forKey: "games"),
+                    ingredientGamesSet.count == 1,
+                    ingredientGamesSet.contains(game){
+                    context.delete(moduleIngredient)
+                }
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's module ingredients for removal: \(error)")
+            }
+            return
+        }
+        
+        tempModules.removeValue(forKey: module)
+        
         CoreDataStack.shared.save(context: context)
     }
     
     //MARK: Temp Modules
     
-    func add(tempModule module: Module) {
-        tempModules[module] = false
+    func add(tempModule module: Module, completed: Bool = false) {
+        tempModules[module] = completed
     }
     
     func toggle(tempModule module: Module) {
         if tempModules.contains(where: { $0.key == module }) {
             remove(tempModule: module)
         } else {
-            add(tempModule: module)
+            add(tempModule: module, completed: false)
         }
     }
     
@@ -59,7 +148,20 @@ class ModuleController {
     }
     
     func getTempModules(ofType type: ModuleType) -> [Module] {
-        return tempModules.keys.filter { $0.type == type }
+        var modules = tempModules.keys.filter { $0.type == type }
+        modules.sort { (module1, module2) -> Bool in
+            if module1.level < module2.level {
+                return true
+            } else if module1.level > module2.level {
+                return false
+            } else if module1.name ?? "" < module2.name ?? "" {
+                return true
+            }
+            
+            return false
+        }
+        
+        return modules
     }
     
     func getTempModules(from section: Section) -> [Module]? {
@@ -83,14 +185,13 @@ class ModuleController {
             }
         }
         
-        tempModules = [:]
-        
         CoreDataStack.shared.save(context: context)
     }
     
     func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
-        let characterModules = fetchCharacterModules(for: character, context: context)
+        tempModules = [:]
         
+        let characterModules = fetchCharacterModules(for: character, context: context)
         for characterModule in characterModules {
             guard let module = characterModule.module else { continue }
             tempModules[module] = characterModule.completed
@@ -99,7 +200,7 @@ class ModuleController {
     
     func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
         let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character = %@", character)
+        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
         
         do {
             let characterAttributes = try context.fetch(fetchRequest)
@@ -111,8 +212,37 @@ class ModuleController {
             } else {
                 NSLog("Could not fetch character's modules: \(error)")
             }
+        }
+        
+        return []
+    }
+    
+    func fetchCharacterModule(for character: Character, module: Module, context: NSManagedObjectContext) -> CharacterModule? {
+        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
+        
+        do {
+            let characterAttribute = try context.fetch(fetchRequest)
             
-            return []
+            return characterAttribute.first
+        } catch {
+            if let name = character.name {
+                NSLog("Could not fetch \(name)'s modules: \(error)")
+            } else {
+                NSLog("Could not fetch character's modules: \(error)")
+            }
+        }
+        
+        return nil
+    }
+    
+    func setCompleted(characterModule: CharacterModule, completed: Bool, context: NSManagedObjectContext) {
+        characterModule.completed = completed
+        CoreDataStack.shared.save(context: context)
+        
+        if let module = characterModule.module,
+            tempModules.keys.contains(module) {
+            tempModules[module] = completed
         }
     }
     
@@ -129,9 +259,9 @@ class ModuleController {
             }
         } catch {
             if let name = character.name {
-                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
+                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
             } else {
-                NSLog("Could not fetch character's attributes for removal: \(error)")
+                NSLog("Could not fetch character's modules for removal: \(error)")
             }
         }
     }

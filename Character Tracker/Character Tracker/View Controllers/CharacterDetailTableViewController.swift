@@ -117,8 +117,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             } else if let moduleSection = section as? ModuleType,
                 let tempModules = moduleController.getTempModules(from: moduleSection) {
                 if indexPath.row < tempModules.count {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
-                    cell.textLabel?.text = tempModules[indexPath.row].name
+                    cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
+                    let module = tempModules[indexPath.row]
+                    cell.textLabel?.text = module.name
+                    if moduleController.tempModules[module] ?? false {
+                        cell.accessoryType = .checkmark
+                    } else {
+                        cell.accessoryType = .disclosureIndicator
+                    }
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                     cell.textLabel?.text = "Add \(moduleSection.typeName)s"
@@ -130,7 +136,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         } else {
             // Character section
             if indexPath.row == 0 {
-                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? TextFieldTableViewCell {
+                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
                     textField = textFieldCell.textField
                     textField?.delegate = self
 
@@ -166,13 +172,23 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-            guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return false }
-            
-            if indexPath.row < tempAttributes.count {
-                // Attribute
-                return true
+            if let tempAttributes = attributeController.getTempAttributes(from: section) {
+                if indexPath.row < tempAttributes.count {
+                    // Attribute
+                    return true
+                } else {
+                    // "Add attribute" cell
+                    return false
+                }
+            } else if let tempModules = moduleController.getTempModules(from: section) {
+                if indexPath.row < tempModules.count {
+                    // Module
+                    return true
+                } else {
+                    // "Add module" cell
+                    return false
+                }
             } else {
-                // "Add attribute" cell
                 return false
             }
         } else {
@@ -186,10 +202,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         if editingStyle == .delete {
             
             if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-                guard let tempAttributes = attributeController.getTempAttributes(from: section) else { return }
-                
-                if indexPath.row < tempAttributes.count {
+                if let tempAttributes = attributeController.getTempAttributes(from: section),
+                    indexPath.row < tempAttributes.count {
                     attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
+                } else if let tempModules = moduleController.getTempModules(from: section),
+                    indexPath.row < tempModules.count {
+                    moduleController.remove(tempModule: tempModules[indexPath.row])
+                } else {
+                    return
                 }
             }
             
@@ -271,7 +291,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         attributeTypeSectionController?.saveTempSections(to: savedCharacter)
         
         gameReference?.isSafeToChangeGame = true
-        navigationController?.popViewController(animated: true)
     }
     
     private func characterHasBeenModified() {
@@ -283,6 +302,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Navigation
@@ -315,19 +335,33 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                         self.attributeController.toggle(tempAttribute: attribute, priority: attributesSection.minPriority)
                         self.characterHasBeenModified()
                     }
-                } else if let modulesVC = vc as? ModulesTableViewController {
-                    guard let modulesSection = section as? ModuleType,
-                        let selectedModules = moduleController.getTempModules(from: section) else { return }
+                } else if let modulesSection = section as? ModuleType,
+                    let selectedModules = moduleController.getTempModules(from: section) {
                     
-                    modulesVC.checkedModules = selectedModules
-                    
-                    modulesVC.moduleController = moduleController
-                    modulesVC.moduleType = modulesSection
-                    
-                    modulesVC.callbacks.append { module in
-                        self.moduleController.toggle(tempModule: module)
-                        self.characterHasBeenModified()
+                    if let modulesVC = vc as? ModulesTableViewController {
+                        
+                        modulesVC.checkedModules = selectedModules
+                        
+                        modulesVC.moduleController = moduleController
+                        modulesVC.moduleType = modulesSection
+                        
+                        modulesVC.callbacks.append { module in
+                            self.moduleController.toggle(tempModule: module)
+                            self.characterHasBeenModified()
+                        }
+                    } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
+                        let module = selectedModules[indexPath.row]
+                        moduleDetailVC.module = module
+                        
+                        if let character = character {
+                            let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
+                            moduleDetailVC.characterModule = characterModule
+                        }
+                        
+                        moduleDetailVC.moduleController = moduleController
+                        moduleDetailVC.moduleType = modulesSection
                     }
+                    
                 }
                 
             }
@@ -355,9 +389,9 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: Segmented control delegate
+//MARK: Character name cell delegate
 
-extension CharacterDetailTableViewController: SegmentedControlDelegate {
+extension CharacterDetailTableViewController: CharacterNameCellDelegate {
     func valueChanged(_ sender: UISegmentedControl) {
         characterHasBeenModified()
         female = sender.selectedSegmentIndex == 0 ? false : true

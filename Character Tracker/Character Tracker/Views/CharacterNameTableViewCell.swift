@@ -1,5 +1,5 @@
 //
-//  TextFieldTableViewCell.swift
+//  CharacterNameTableViewCell.swift
 //  Character Tracker
 //
 //  Created by Isaac Lyons on 11/4/19.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol SegmentedControlDelegate {
+protocol CharacterNameCellDelegate {
     func valueChanged(_ sender: UISegmentedControl)
 }
 
-class TextFieldTableViewCell: UITableViewCell {
+class CharacterNameTableViewCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var femaleSegmentedControl: UISegmentedControl!
     
-    var delegate: SegmentedControlDelegate?
+    var delegate: CharacterNameCellDelegate?
     
     @IBAction func femaleChanged(_ sender: UISegmentedControl) {
         delegate?.valueChanged(sender)

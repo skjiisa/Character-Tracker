@@ -25,6 +25,27 @@ class AttributeController {
     }
     
     func delete(attribute: Attribute, context: NSManagedObjectContext) {
+        // Remove CharacterAttributes
+        let characterFetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "attribute == %@", attribute)
+        
+        do {
+            let characterAttributes = try context.fetch(characterFetchRequest)
+            
+            for characterAttribute in characterAttributes {
+                context.delete(characterAttribute)
+            }
+        } catch {
+            if let name = attribute.name {
+                NSLog("Could not fetch \(name)'s character attributes for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character attributes for removal: \(error)")
+            }
+            return
+        }
+        
+        tempAttributes.removeValue(forKey: attribute)
+        
         context.delete(attribute)
         CoreDataStack.shared.save(context: context)
     }
@@ -35,6 +56,27 @@ class AttributeController {
     }
     
     func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
+        // Remove CharacterModules
+        let characterFetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "attribute == %@ AND character.game == %@", attribute, game)
+        
+        do {
+            let characterAttributes = try context.fetch(characterFetchRequest)
+            
+            for characterAttribute in characterAttributes {
+                context.delete(characterAttribute)
+            }
+        } catch {
+            if let name = attribute.name {
+                NSLog("Could not fetch \(name)'s character attributes for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's character attributes for removal: \(error)")
+            }
+            return
+        }
+        
+        tempAttributes.removeValue(forKey: attribute)
+        
         attribute.mutableSetValue(forKey: "game").remove(game)
         CoreDataStack.shared.save(context: context)
     }
