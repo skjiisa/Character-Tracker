@@ -157,7 +157,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
-                if let race = race {
+                if let race = race,
+                    race.managedObjectContext != nil {
                     cell.textLabel?.text = race.name
                 } else {
                     cell.textLabel?.text = "Select Race"
