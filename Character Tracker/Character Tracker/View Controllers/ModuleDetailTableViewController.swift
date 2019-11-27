@@ -71,7 +71,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        tableView.reloadSections([2], with: .automatic)
+        guard let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) else { return }
+        tableView.reloadSections([ingredientsSectionIndex], with: .automatic)
     }
 
     // MARK: - Table view data source

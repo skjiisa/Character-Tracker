@@ -91,7 +91,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         if let tempAttributes = attributeController.getTempAttributes(from: section) {
             return tempAttributes.count + 1
         } else if let tempModules = moduleController.getTempModules(from: section) {
-            return tempModules.count + 1
+            return tempModules.count + 2
         }
         
         return 0
@@ -120,14 +120,23 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
                     let module = tempModules[indexPath.row]
                     cell.textLabel?.text = module.name
+                    
+                    if module.level > 0 {
+                        cell.detailTextLabel?.text = "Level \(module.level)"
+                    } else {
+                        cell.detailTextLabel?.text = nil
+                    }
+                    
                     if moduleController.tempModules[module] ?? false {
                         cell.accessoryType = .checkmark
                     } else {
                         cell.accessoryType = .disclosureIndicator
                     }
-                } else {
+                } else if indexPath.row == tempModules.count {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                     cell.textLabel?.text = "Add \(moduleSection.typeName)s"
+                } else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
                 }
             } else {
                 // This shouldn't happen and is just a fallback in case something breaks
@@ -361,6 +370,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                         
                         moduleDetailVC.moduleController = moduleController
                         moduleDetailVC.moduleType = modulesSection
+                    } else if let characterIngredientsVC = vc as? CharacterIngredientsTableViewController {
+                        characterIngredientsVC.moduleController = moduleController
+                        characterIngredientsVC.moduleType = modulesSection
                     }
                     
                 }
