@@ -11,6 +11,10 @@ import CoreData
 
 class CharacterIngredientsTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var accumulateButton: UIButton!
+    
     //MARK: Properties
     
     var gameReference: GameReference?
@@ -63,7 +67,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
             
             if module1Level > module2Level {
                 return false
-            } else if module2Level < module1Level {
+            } else if module2Level > module1Level {
                 return true
             }
             
@@ -107,17 +111,43 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
 
         let module = modules[indexPath.section]
         
-        for moduleIngredient in module.mutableSetValue(forKey: "ingredients") {
-            guard let moduleIngredient = moduleIngredient as? ModuleIngredient else { continue }
+        var moduleIngredients = module.mutableSetValue(forKey: "ingredients").compactMap({ $0 as? ModuleIngredient })
+        moduleIngredients.sort { moduleIngredient1, moduleIngredient2 -> Bool in
+            guard let ingredient1Name = moduleIngredient1.ingredient?.name,
+                let ingredient2Name = moduleIngredient2.ingredient?.name else { return true }
             
-            cell.textLabel?.text = moduleIngredient.ingredient?.name
-            
-            let quantity = moduleIngredient.quantity
-            if quantity > 0 {
-                cell.detailTextLabel?.text = "Qty: \(quantity)"
-            } else {
-                cell.detailTextLabel?.text = nil
+            return ingredient1Name < ingredient2Name
+        }
+        guard indexPath.row < moduleIngredients.count else { return cell }
+        let moduleIngredient = moduleIngredients[indexPath.row]
+        
+        //guard let moduleIngredient = moduleIngredient as? ModuleIngredient else { continue }
+        
+        cell.textLabel?.text = moduleIngredient.ingredient?.name
+        
+        var quantity = moduleIngredient.quantity
+        
+        if accumulateButton.isSelected,
+            module.level != 0 {
+            for i in 0..<indexPath.section {
+                let lowerLevelModule = modules[i]
+                guard lowerLevelModule.level < module.level else { break }
+                
+                for lowerLevelModuleIngredient in lowerLevelModule.mutableSetValue(forKey: "ingredients") {
+                    guard let lowerLevelModuleIngredient = lowerLevelModuleIngredient as? ModuleIngredient else { continue }
+                    
+                    if lowerLevelModuleIngredient.ingredient == moduleIngredient.ingredient {
+                        quantity += lowerLevelModuleIngredient.quantity
+                        break
+                    }
+                }
             }
+        }
+        
+        if quantity > 0 {
+            cell.detailTextLabel?.text = "Qty: \(quantity)"
+        } else {
+            cell.detailTextLabel?.text = nil
         }
 
         return cell
@@ -158,14 +188,11 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: Actions
+    
+    @IBAction func toggleAccumulate(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        tableView.reloadData()
     }
-    */
-
+    
 }
