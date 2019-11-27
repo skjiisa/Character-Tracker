@@ -36,7 +36,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
     //MARK: Private
     
     private func setModules() {
-        let uncheckedModulesDictionary = moduleController?.tempModules.filter({ $0.value == false }) ?? [:]
+        let uncheckedModulesDictionary = moduleController?.tempModules.filter({ $0.value == false && $0.key.type == moduleType }) ?? [:]
         let uncheckedModules = uncheckedModulesDictionary.map({ $0.key })
         
         modules = uncheckedModules.sorted(by: { module1, module2 -> Bool in
