@@ -45,13 +45,17 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     var femaleSegmentedControl: UISegmentedControl?
     var textField: UITextField?
 
-    var allSections: [String] {
-        var sections: [String] = []
+    var allSections: [String?] {
+        var sections: [String?] = []
         
         sections.append("Character")
         
         for section in attributeTypeSectionController?.tempSectionsToShow ?? [] {
-            sections.append(section.name ?? "")
+            sections.append(section.name)
+            
+            if section is ModuleType {
+                sections.append(nil)
+            }
         }
         
         return sections
@@ -84,14 +88,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let section = attributeTypeSectionController?.sectionToShow(section) else {
-            // Character section
+            // Character section or module options section
             return 2
         }
         
         if let tempAttributes = attributeController.getTempAttributes(from: section) {
             return tempAttributes.count + 1
         } else if let tempModules = moduleController.getTempModules(from: section) {
-            return tempModules.count + 2
+            return tempModules.count
         }
         
         return 0
@@ -116,31 +120,31 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 }
             } else if let moduleSection = section as? ModuleType,
                 let tempModules = moduleController.getTempModules(from: moduleSection) {
-                if indexPath.row < tempModules.count {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
-                    let module = tempModules[indexPath.row]
-                    cell.textLabel?.text = module.name
-                    
-                    if module.level > 0 {
-                        cell.detailTextLabel?.text = "Level \(module.level)"
-                    } else {
-                        cell.detailTextLabel?.text = nil
-                    }
-                    
-                    if moduleController.tempModules[module] ?? false {
-                        cell.accessoryType = .checkmark
-                    } else {
-                        cell.accessoryType = .disclosureIndicator
-                    }
-                } else if indexPath.row == tempModules.count {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
-                    cell.textLabel?.text = "Add \(moduleSection.typeName)s"
+                cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
+                let module = tempModules[indexPath.row]
+                cell.textLabel?.text = module.name
+                
+                if module.level > 0 {
+                    cell.detailTextLabel?.text = "Level \(module.level)"
                 } else {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
+                    cell.detailTextLabel?.text = nil
+                }
+                
+                if moduleController.tempModules[module] ?? false {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .disclosureIndicator
                 }
             } else {
                 // This shouldn't happen and is just a fallback in case something breaks
                 cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+            }
+        } else if let moduleSection = attributeTypeSectionController?.sectionToShow(indexPath.section - 1) as? ModuleType {
+            if indexPath.row == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
+                cell.textLabel?.text = "Add \(moduleSection.typeName)s"
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
             }
         } else {
             // Character section
@@ -329,26 +333,42 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     self.characterHasBeenModified()
                     self.navigationController?.popViewController(animated: true)
                 }
-            } else if let indexPath = tableView.indexPathForSelectedRow,
-                let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-                
-                if let attributesVC = vc as? AttributesTableViewController {
-                    guard let attributesSection = section as? AttributeTypeSection,
-                        let selectedAttributes = attributeController.getTempAttributes(from: section) else { return }
-                    
-                    attributesVC.checkedAttributes = selectedAttributes
-                    
-                    attributesVC.attributeController = attributeController
-                    attributesVC.attributeType = attributesSection.type
-                    
-                    attributesVC.callbacks.append { attribute in
-                        self.attributeController.toggle(tempAttribute: attribute, priority: attributesSection.minPriority)
-                        self.characterHasBeenModified()
+            } else if let indexPath = tableView.indexPathForSelectedRow {
+                if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+                    if let attributesVC = vc as? AttributesTableViewController {
+                        guard let attributesSection = section as? AttributeTypeSection,
+                            let selectedAttributes = attributeController.getTempAttributes(from: section) else { return }
+                        
+                        attributesVC.checkedAttributes = selectedAttributes
+                        
+                        attributesVC.attributeController = attributeController
+                        attributesVC.attributeType = attributesSection.type
+                        
+                        attributesVC.callbacks.append { attribute in
+                            self.attributeController.toggle(tempAttribute: attribute, priority: attributesSection.minPriority)
+                            self.characterHasBeenModified()
+                        }
+                    } else if let modulesSection = section as? ModuleType,
+                        let selectedModules = moduleController.getTempModules(from: section) {
+                        
+                        if let moduleDetailVC = vc as? ModuleDetailTableViewController {
+                            let module = selectedModules[indexPath.row]
+                            moduleDetailVC.module = module
+                            
+                            if let character = character {
+                                let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
+                                moduleDetailVC.characterModule = characterModule
+                            }
+                            
+                            moduleDetailVC.moduleController = moduleController
+                            moduleDetailVC.moduleType = modulesSection
+                        }
+                        
                     }
-                } else if let modulesSection = section as? ModuleType,
-                    let selectedModules = moduleController.getTempModules(from: section) {
-                    
-                    if let modulesVC = vc as? ModulesTableViewController {
+                } else if let section = attributeTypeSectionController?.sectionToShow(indexPath.section - 1),
+                    let modulesSection = section as? ModuleType {
+                    if let modulesVC = vc as? ModulesTableViewController,
+                        let selectedModules = moduleController.getTempModules(from: section) {
                         
                         modulesVC.checkedModules = selectedModules
                         
@@ -359,24 +379,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                             self.moduleController.toggle(tempModule: module)
                             self.characterHasBeenModified()
                         }
-                    } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
-                        let module = selectedModules[indexPath.row]
-                        moduleDetailVC.module = module
-                        
-                        if let character = character {
-                            let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
-                            moduleDetailVC.characterModule = characterModule
-                        }
-                        
-                        moduleDetailVC.moduleController = moduleController
-                        moduleDetailVC.moduleType = modulesSection
                     } else if let characterIngredientsVC = vc as? CharacterIngredientsTableViewController {
-                        characterIngredientsVC.moduleController = moduleController
                         characterIngredientsVC.moduleType = modulesSection
+                        characterIngredientsVC.moduleController = moduleController
                     }
-                    
                 }
-                
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             sectionsVC.attributeTypeSectionController = attributeTypeSectionController

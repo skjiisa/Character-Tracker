@@ -39,10 +39,20 @@ class AttributeTypeSectionController {
     }
     
     func sectionToShow(_ index: Int) -> Section? {
-        let section = index - 1
-        if section >= 0,
-            section < tempSectionsToShow.count {
-            return tempSectionsToShow[section]
+        var totalSections = 0
+        
+        for section in tempSectionsToShow {
+            totalSections += 1
+            
+            if totalSections == index {
+                return section
+            } else if totalSections > index {
+                return nil
+            }
+            
+            if section is ModuleType {
+                totalSections += 1
+            }
         }
         return nil
     }
