@@ -104,6 +104,25 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return allSections[section]
     }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if attributeTypeSectionController?.sectionToShow(section - 1) is ModuleType {
+            return 2
+        }
+        
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if let section = attributeTypeSectionController?.sectionToShow(section) as? ModuleType {
+            if let tempModules = moduleController.getTempModules(from: section),
+                tempModules.count == 0 {
+                return 2
+            }
+        }
+        
+        return UITableView.automaticDimension
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
