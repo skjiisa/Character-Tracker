@@ -319,6 +319,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     @objc private func toggleSection(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
+        characterHasBeenModified()
         
         attributeTypeSectionController?.toggleSection(index)
         if index < tableView.numberOfSections {
