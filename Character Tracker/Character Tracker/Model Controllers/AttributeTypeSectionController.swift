@@ -11,8 +11,8 @@ import CoreData
 class AttributeTypeSectionController {
     var sections: [Section] = []
     var tempSectionsToShow: [TempSection] = []
-    var sectionsByCharacter: [Character: [Section]] = [:]
-    var defaultSectionsByGame: [Game: [Section]] = [:]
+    var sectionsByCharacter: [Character: [TempSection]] = [:]
+    var defaultSectionsByGame: [Game: [TempSection]] = [:]
     
     init() {
         do {
@@ -82,33 +82,23 @@ class AttributeTypeSectionController {
     }
     
     func saveTempSections(to character: Character) {
-        sectionsByCharacter[character] = tempSectionsToShow.map({ $0.section })
+        sectionsByCharacter[character] = tempSectionsToShow
         clearTempSections()
         saveToPersistentStore()
     }
     
     func saveTempSections(to game: Game) {
-        defaultSectionsByGame[game] = tempSectionsToShow.map({ $0.section })
+        defaultSectionsByGame[game] = tempSectionsToShow
         saveToPersistentStore()
     }
     
     func loadTempSections(for character: Character) {
-        //tempSectionsToShow = sectionsByCharacter[character] ?? []
-        if let sectionsForCharacter = sectionsByCharacter[character] {
-            tempSectionsToShow = sectionsForCharacter.map({ TempSection(section: $0) })
-        } else {
-            tempSectionsToShow = []
-        }
+        tempSectionsToShow = sectionsByCharacter[character] ?? []
     }
     
     func loadTempSections(for game: Game) {
         loadFromPersistentStore()
-        //tempSectionsToShow = defaultSectionsByGame[game] ?? []
-        if let sectionsForGame = defaultSectionsByGame[game] {
-            tempSectionsToShow = sectionsForGame.map({ TempSection(section: $0) })
-        } else {
-            tempSectionsToShow = []
-        }
+        tempSectionsToShow = defaultSectionsByGame[game] ?? []
     }
     
     func contains(section: Section) -> Bool {
@@ -164,16 +154,16 @@ class AttributeTypeSectionController {
         guard let sectionsUrl = persistentFileURL(file: .sections),
             let defaultsUrl = persistentFileURL(file: .defaults) else { return }
         
-        var sectionsByCharacterID: [UUID: [UUID]] = [:]
-        var sectionsByGameID: [UUID: [UUID]] = [:]
+        var sectionsByCharacterID: [UUID: [TempSectionRepresentation]] = [:]
+        var sectionsByGameID: [UUID: [TempSectionRepresentation]] = [:]
         
         // Extract IDs for characters
         for character in sectionsByCharacter {
             guard let sections = sectionsByCharacter[character.key],
                 let characterID = character.key.id else { continue }
             
-            let sectionIDs = sections.compactMap({ $0.id })
-            sectionsByCharacterID[characterID] = sectionIDs
+            let sectionRepresentations = sections.compactMap({ TempSectionRepresentation(tempSection: $0) })
+            sectionsByCharacterID[characterID] = sectionRepresentations
         }
         
         // Extract IDs for games
@@ -181,8 +171,8 @@ class AttributeTypeSectionController {
             guard let sections = defaultSectionsByGame[game.key],
                 let gameID = game.key.id else { continue }
             
-            let sectionIDs = sections.compactMap({ $0.id })
-            sectionsByGameID[gameID] = sectionIDs
+            let sectionRepresentations = sections.compactMap({ TempSectionRepresentation(tempSection: $0) })
+            sectionsByGameID[gameID] = sectionRepresentations
         }
         
         do {
@@ -206,7 +196,7 @@ class AttributeTypeSectionController {
         do {
             // Decode characters
             let charactersData = try Data(contentsOf: sectionsUrl)
-            let sectionsByCharacterID = try PropertyListDecoder().decode([UUID: [UUID]].self, from: charactersData)
+            let sectionsByCharacterID = try PropertyListDecoder().decode([UUID: [TempSectionRepresentation]].self, from: charactersData)
 
             let charactersFetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
             let allCharacters = try CoreDataStack.shared.mainContext.fetch(charactersFetchRequest)
@@ -214,10 +204,10 @@ class AttributeTypeSectionController {
             for characterID in sectionsByCharacterID {
                 guard let character = allCharacters.first(where: { $0.id == characterID.key }) else { continue }
 
-                var sections: [Section] = []
-                for sectionID in characterID.value {
-                    guard let section = self.sections.first(where: { $0.id == sectionID }) else { continue }
-                    sections.append(section)
+                var sections: [TempSection] = []
+                for tempSectionRepresentation in characterID.value {
+                    guard let section = self.sections.first(where: { $0.id == tempSectionRepresentation.section }) else { continue }
+                    sections.append(TempSection(section: section, collapsed: tempSectionRepresentation.collapsed))
                 }
 
                 self.sectionsByCharacter[character] = sections
@@ -225,7 +215,7 @@ class AttributeTypeSectionController {
             
             // Decode games
             let gamesData = try Data(contentsOf: defaultsUrl)
-            let sectionsByGameID = try PropertyListDecoder().decode([UUID: [UUID]].self, from: gamesData)
+            let sectionsByGameID = try PropertyListDecoder().decode([UUID: [TempSectionRepresentation]].self, from: gamesData)
 
             let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
             let allGames = try CoreDataStack.shared.mainContext.fetch(gamesFetchRequest)
@@ -233,10 +223,10 @@ class AttributeTypeSectionController {
             for gameID in sectionsByGameID {
                 guard let game = allGames.first(where: { $0.id == gameID.key }) else { continue }
 
-                var sections: [Section] = []
-                for sectionID in gameID.value {
-                    guard let section = self.sections.first(where: { $0.id == sectionID }) else { continue }
-                    sections.append(section)
+                var sections: [TempSection] = []
+                for tempSectionRepresentation in gameID.value {
+                    guard let section = self.sections.first(where: { $0.id == tempSectionRepresentation.section }) else { continue }
+                    sections.append(TempSection(section: section, collapsed: tempSectionRepresentation.collapsed))
                 }
 
                 self.defaultSectionsByGame[game] = sections
