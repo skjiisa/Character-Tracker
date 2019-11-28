@@ -150,6 +150,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         return UITableView.automaticDimension
     }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UITableViewHeaderFooterView()
+        view.tag = section + 1
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+        view.addGestureRecognizer(tap)
+        
+        return view
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
