@@ -106,7 +106,18 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return allSections[section]
+        let title = allSections[section]
+        
+        if let title = title,
+            let tempSection = attributeTypeSectionController?.sectionToShow(section) {
+            if tempSection.collapsed {
+                return "\(title)\n▲"
+            }
+            
+            return "\(title)\n▼"
+        }
+        
+        return title
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -300,7 +311,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         guard let index = sender.view?.tag else { return }
         
         attributeTypeSectionController?.toggleSection(index)
-        tableView.reloadSections([index], with: .automatic)
+        if index < tableView.numberOfSections {
+            tableView.reloadSections([index], with: .automatic)
+        }
     }
     
     private func prompt(message: String) {
