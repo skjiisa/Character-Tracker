@@ -95,7 +95,7 @@ class SectionsTableViewController: UITableViewController {
         if let cell = tableView.cellForRow(at: indexPath) {
             if cell.accessoryType == .none {
                 cell.accessoryType = .checkmark
-                attributeTypeSectionController?.tempSectionsToShow.append(section)
+                attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
                 delegate?.updateSections()
             } else {
                 cell.accessoryType = .none

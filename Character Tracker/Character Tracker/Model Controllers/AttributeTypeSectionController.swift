@@ -10,7 +10,7 @@ import CoreData
 
 class AttributeTypeSectionController {
     var sections: [Section] = []
-    var tempSectionsToShow: [Section] = []
+    var tempSectionsToShow: [TempSection] = []
     var sectionsByCharacter: [Character: [Section]] = [:]
     var defaultSectionsByGame: [Game: [Section]] = [:]
     
@@ -38,7 +38,7 @@ class AttributeTypeSectionController {
         loadFromPersistentStore()
     }
     
-    func sectionToShow(_ index: Int) -> Section? {
+    func sectionToShow(_ index: Int) -> TempSection? {
         var totalSections = 0
         
         for section in tempSectionsToShow {
@@ -50,11 +50,31 @@ class AttributeTypeSectionController {
                 return nil
             }
             
-            if section is ModuleType {
+            if section.section is ModuleType {
                 totalSections += 1
             }
         }
         return nil
+    }
+    
+    func toggleSection(_ index: Int) {
+        var totalSections = 0
+        
+        for i in 0..<tempSectionsToShow.count {
+            let section = tempSectionsToShow[i]
+            totalSections += 1
+            
+            if totalSections == index {
+                section.collapsed.toggle()
+                return
+            } else if totalSections > index {
+                return
+            }
+            
+            if section.section is ModuleType {
+                totalSections += 1
+            }
+        }
     }
     
     func clearTempSections() {
@@ -62,34 +82,44 @@ class AttributeTypeSectionController {
     }
     
     func saveTempSections(to character: Character) {
-        sectionsByCharacter[character] = tempSectionsToShow
+        sectionsByCharacter[character] = tempSectionsToShow.map({ $0.section })
         clearTempSections()
         saveToPersistentStore()
     }
     
     func saveTempSections(to game: Game) {
-        defaultSectionsByGame[game] = tempSectionsToShow
+        defaultSectionsByGame[game] = tempSectionsToShow.map({ $0.section })
         saveToPersistentStore()
     }
     
     func loadTempSections(for character: Character) {
-        tempSectionsToShow = sectionsByCharacter[character] ?? []
+        //tempSectionsToShow = sectionsByCharacter[character] ?? []
+        if let sectionsForCharacter = sectionsByCharacter[character] {
+            tempSectionsToShow = sectionsForCharacter.map({ TempSection(section: $0) })
+        } else {
+            tempSectionsToShow = []
+        }
     }
     
     func loadTempSections(for game: Game) {
         loadFromPersistentStore()
-        tempSectionsToShow = defaultSectionsByGame[game] ?? []
+        //tempSectionsToShow = defaultSectionsByGame[game] ?? []
+        if let sectionsForGame = defaultSectionsByGame[game] {
+            tempSectionsToShow = sectionsForGame.map({ TempSection(section: $0) })
+        } else {
+            tempSectionsToShow = []
+        }
     }
     
     func contains(section: Section) -> Bool {
         for item in tempSectionsToShow {
             if let inputAttributeTypeSection = section as? AttributeTypeSection {
-                if let itemAttributeTypeSection = item as? AttributeTypeSection,
+                if let itemAttributeTypeSection = item.section as? AttributeTypeSection,
                     inputAttributeTypeSection == itemAttributeTypeSection {
                     return true
                 }
             } else if let inputModuleType = section as? ModuleType {
-                if let itemModuleType = item as? ModuleType,
+                if let itemModuleType = item.section as? ModuleType,
                     inputModuleType == itemModuleType {
                     return true
                 }
@@ -101,13 +131,13 @@ class AttributeTypeSectionController {
     func remove(section: Section) {
         for i in 0..<tempSectionsToShow.count {
             if let inputAttributeTypeSection = section as? AttributeTypeSection {
-                if let iAttributeTypeSection = tempSectionsToShow[i] as? AttributeTypeSection,
+                if let iAttributeTypeSection = tempSectionsToShow[i].section as? AttributeTypeSection,
                     inputAttributeTypeSection == iAttributeTypeSection {
                     tempSectionsToShow.remove(at: i)
                     return
                 }
             } else if let inputModuleType = section as? ModuleType {
-                if let iModuleType = tempSectionsToShow[i] as? ModuleType,
+                if let iModuleType = tempSectionsToShow[i].section as? ModuleType,
                     inputModuleType == iModuleType {
                     tempSectionsToShow.remove(at: i)
                     return

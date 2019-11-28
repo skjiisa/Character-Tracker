@@ -13,3 +13,13 @@ protocol Section {
     var id: UUID? { get set }
     var typeName: String { get }
 }
+
+class TempSection {
+    var section: Section
+    var collapsed: Bool
+    
+    init(section: Section, collapsed: Bool = false) {
+        self.section = section
+        self.collapsed = collapsed
+    }
+}
