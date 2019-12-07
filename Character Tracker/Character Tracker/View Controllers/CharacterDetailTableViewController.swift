@@ -111,10 +111,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         if let title = title,
             let tempSection = attributeTypeSectionController?.sectionToShow(section) {
             if tempSection.collapsed {
-                return "\(title)\n▲"
+                return "\(title)\n▼"
             }
             
-            return "\(title)\n▼"
+            return "\(title)\n▲"
         }
         
         return title
