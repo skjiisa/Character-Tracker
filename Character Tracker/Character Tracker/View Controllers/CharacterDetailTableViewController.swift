@@ -111,10 +111,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         if let title = title,
             let tempSection = attributeTypeSectionController?.sectionToShow(section) {
             if tempSection.collapsed {
-                return "\(title)\n▼"
+                return "▼\t\(title)"
             }
             
-            return "\(title)\n▲"
+            return "▲\t\(title)"
         }
         
         return title
@@ -128,14 +128,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         return UITableView.automaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UITableViewHeaderFooterView()
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? UITableViewHeaderFooterView else { return }
+        
         view.tag = section
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
         view.addGestureRecognizer(tap)
         
-        return view
+        view.textLabel?.font = .preferredFont(forTextStyle: .subheadline)
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
