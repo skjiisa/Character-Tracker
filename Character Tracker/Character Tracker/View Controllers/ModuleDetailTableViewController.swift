@@ -24,8 +24,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
-            if let module = module {
-                ingredientController.fetchTempIngredients(for: module, context: CoreDataStack.shared.mainContext)
+            if let module = module, let game = gameReference?.game {
+                ingredientController.fetchTempIngredients(for: module, in: game, context: CoreDataStack.shared.mainContext)
             }
         }
     }

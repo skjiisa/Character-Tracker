@@ -87,12 +87,14 @@ class IngredientController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempIngredients(for module: Module, context: NSManagedObjectContext) {
+    func fetchTempIngredients(for module: Module, in game: Game, context: NSManagedObjectContext) {
         tempIngredients = []
         
         let moduleIngredients = fetchModuleIngredients(for: module, context: context)
         for moduleIngredient in moduleIngredients {
-            guard let ingredient = moduleIngredient.ingredient else { continue }
+            guard let ingredient = moduleIngredient.ingredient,
+                let games = ingredient.games,
+                games.contains(game) else { continue }
             let quantity = moduleIngredient.quantity
             tempIngredients.append((ingredient, quantity))
         }
