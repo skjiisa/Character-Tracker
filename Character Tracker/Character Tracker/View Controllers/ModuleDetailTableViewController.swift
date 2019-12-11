@@ -24,8 +24,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
-            if let module = module {
-                ingredientController.fetchTempIngredients(for: module, context: CoreDataStack.shared.mainContext)
+            if let module = module, let game = gameReference?.game {
+                ingredientController.fetchTempIngredients(for: module, in: game, context: CoreDataStack.shared.mainContext)
             }
         }
     }
@@ -248,6 +248,25 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 //                setTextViewFontSize(textView)
 //            }
 //        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        
+        switch section.type {
+        case .name:
+            tableView.deselectRow(at: indexPath, animated: true)
+            if let nameCell = tableView.cellForRow(at: indexPath) as? ModuleNameTableViewCell {
+                nameCell.textField.becomeFirstResponder()
+            }
+        case .notes(_):
+            tableView.deselectRow(at: indexPath, animated: true)
+            if let notesCell = tableView.cellForRow(at: indexPath) as? NotesTableViewCell {
+                notesCell.textView.becomeFirstResponder()
+            }
+        default:
+            break
+        }
     }
     
     //MARK: Private

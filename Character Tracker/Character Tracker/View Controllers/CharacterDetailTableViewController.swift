@@ -322,6 +322,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     */
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath == IndexPath(row: 0, section: 0) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            if let nameCell = tableView.cellForRow(at: indexPath) as? CharacterNameTableViewCell {
+                nameCell.textField.becomeFirstResponder()
+            }
+        }
+    }
+    
     //MARK: Private
     
     private func updateViews() {
@@ -475,9 +485,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     }
                 }
             }
-        } else if let sectionsVC = segue.destination as? SectionsTableViewController {
-            sectionsVC.attributeTypeSectionController = attributeTypeSectionController
-            sectionsVC.delegate = self
+        } else if let navigationController = segue.destination as? UINavigationController {
+            if let sectionsVC = navigationController.viewControllers[0] as? SectionsTableViewController {
+                sectionsVC.attributeTypeSectionController = attributeTypeSectionController
+                sectionsVC.attributeController = attributeController
+                sectionsVC.moduleController = moduleController
+                sectionsVC.delegate = self
+            }
         }
     }
 
