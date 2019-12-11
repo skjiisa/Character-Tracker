@@ -251,12 +251,21 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath == IndexPath(row: 0, section: 0) {
+        let section = sections[indexPath.section]
+        
+        switch section.type {
+        case .name:
             tableView.deselectRow(at: indexPath, animated: true)
-            
             if let nameCell = tableView.cellForRow(at: indexPath) as? ModuleNameTableViewCell {
                 nameCell.textField.becomeFirstResponder()
             }
+        case .notes(_):
+            tableView.deselectRow(at: indexPath, animated: true)
+            if let notesCell = tableView.cellForRow(at: indexPath) as? NotesTableViewCell {
+                notesCell.textView.becomeFirstResponder()
+            }
+        default:
+            break
         }
     }
     
