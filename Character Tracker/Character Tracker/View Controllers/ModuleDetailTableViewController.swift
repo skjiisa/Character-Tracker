@@ -250,6 +250,16 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 //        }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath == IndexPath(row: 0, section: 0) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            if let nameCell = tableView.cellForRow(at: indexPath) as? ModuleNameTableViewCell {
+                nameCell.textField.becomeFirstResponder()
+            }
+        }
+    }
+    
     //MARK: Private
     
     private func setUpSections() {
