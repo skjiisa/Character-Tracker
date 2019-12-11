@@ -37,6 +37,13 @@ class SectionsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        self.tableView.setEditing(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tableView.setEditing(false, animated: false)
     }
 
     // MARK: - Table view data source
@@ -73,12 +80,6 @@ class SectionsTableViewController: UITableViewController {
         
         cell.textLabel?.text = section.name
         
-//        if attributeTypeSectionController?.contains(section: section) ?? false {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
-        
         if let attributeSection = section as? AttributeTypeSection,
             let tempAttributes = attributeController?.getTempAttributes(from: attributeSection),
             tempAttributes.count > 0 {
@@ -110,41 +111,45 @@ class SectionsTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
 
-    /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        let section = shownSections[fromIndexPath.row]
+        attributeTypeSectionController?.tempSectionsToShow.remove(at: fromIndexPath.row)
+        attributeTypeSectionController?.tempSectionsToShow.insert(TempSection(section: section), at: to.row)
+        sortSections()
+        delegate?.updateSections()
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if proposedDestinationIndexPath.section == 1 {
+            return sourceIndexPath
+        }
+        
+        return proposedDestinationIndexPath
+    }
 
-    /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
-        return true
+        return indexPath.section == 0
     }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //guard let section = attributeTypeSectionController?.sections[indexPath.row] else { return }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-//        if let cell = tableView.cellForRow(at: indexPath) {
-//            if cell.accessoryType == .none {
-//                cell.accessoryType = .checkmark
-//                attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
-//                delegate?.updateSections()
-//            } else {
-//                cell.accessoryType = .none
-//                attributeTypeSectionController?.remove(section: section)
-//                delegate?.updateSections()
-//            }
-//        }
         
         if indexPath.section == 0 {
             let section = shownSections[indexPath.row]
@@ -168,7 +173,8 @@ class SectionsTableViewController: UITableViewController {
     func sortSections() {
         guard let attributeTypeSectionController = attributeTypeSectionController else { return }
         
-        shownSections = attributeTypeSectionController.sections.filter({ attributeTypeSectionController.contains(section: $0) })
+        //shownSections = attributeTypeSectionController.sections.filter({ attributeTypeSectionController.contains(section: $0) })
+        shownSections = attributeTypeSectionController.tempSectionsToShow.map({$0.section})
         hiddenSections = attributeTypeSectionController.sections.filter({ !attributeTypeSectionController.contains(section: $0) })
     }
     
