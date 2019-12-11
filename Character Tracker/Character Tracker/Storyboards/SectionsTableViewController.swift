@@ -38,12 +38,12 @@ class SectionsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         //self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        self.tableView.setEditing(true, animated: false)
+        tableView.allowsSelectionDuringEditing = true
+        tableView.setEditing(true, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tableView.setEditing(false, animated: false)
     }
 
     // MARK: - Table view data source
