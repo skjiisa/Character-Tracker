@@ -16,11 +16,18 @@ class SectionsTableViewController: UITableViewController {
     
     //MARK: Properties
 
-    var attributeTypeSectionController: AttributeTypeSectionController?
+    var attributeTypeSectionController: AttributeTypeSectionController? {
+        didSet {
+            sortSections()
+        }
+    }
     var attributeController: AttributeController?
     var moduleController: ModuleController?
     var character: Character?
     var delegate: SectionsTableDelegate?
+    
+    var shownSections: [Section] = []
+    var hiddenSections: [Section] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,34 +41,54 @@ class SectionsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Shown sections"
+        }
+        
+        return "Hidden sections"
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return attributeTypeSectionController?.sections.count ?? 0
+        if section == 0 {
+            return shownSections.count
+        }
+        
+        return hiddenSections.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SectionCell", for: indexPath)
 
-        if let section = attributeTypeSectionController?.sections[indexPath.row] {
-            cell.textLabel?.text = section.name
-            
-            if attributeTypeSectionController?.contains(section: section) ?? false {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
-            
-            if let attributeSection = section as? AttributeTypeSection,
-                let tempAttributes = attributeController?.getTempAttributes(from: attributeSection),
-                tempAttributes.count > 0 {
-                cell.detailTextLabel?.text = "\(tempAttributes.count) item\(tempAttributes.count > 1 ? "s" : "")"
-            } else if let moduleSection = section as? ModuleType,
-                let tempModules = moduleController?.getTempModules(from: moduleSection),
-                tempModules.count > 0 {
-                cell.detailTextLabel?.text = "\(tempModules.count) item\(tempModules.count > 1 ? "s" : "")"
-            } else {
-                cell.detailTextLabel?.text = nil
-            }
+        let section: Section
+        if indexPath.section == 0 {
+            section = shownSections[indexPath.row]
+        } else {
+            section = hiddenSections[indexPath.row]
+        }
+        
+        cell.textLabel?.text = section.name
+        
+//        if attributeTypeSectionController?.contains(section: section) ?? false {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
+        
+        if let attributeSection = section as? AttributeTypeSection,
+            let tempAttributes = attributeController?.getTempAttributes(from: attributeSection),
+            tempAttributes.count > 0 {
+            cell.detailTextLabel?.text = "\(tempAttributes.count) item\(tempAttributes.count > 1 ? "s" : "")"
+        } else if let moduleSection = section as? ModuleType,
+            let tempModules = moduleController?.getTempModules(from: moduleSection),
+            tempModules.count > 0 {
+            cell.detailTextLabel?.text = "\(tempModules.count) item\(tempModules.count > 1 ? "s" : "")"
+        } else {
+            cell.detailTextLabel?.text = nil
         }
 
         return cell
@@ -103,20 +130,46 @@ class SectionsTableViewController: UITableViewController {
     */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = attributeTypeSectionController?.sections[indexPath.row] else { return }
+        //guard let section = attributeTypeSectionController?.sections[indexPath.row] else { return }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let cell = tableView.cellForRow(at: indexPath) {
-            if cell.accessoryType == .none {
-                cell.accessoryType = .checkmark
-                attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
-                delegate?.updateSections()
-            } else {
-                cell.accessoryType = .none
-                attributeTypeSectionController?.remove(section: section)
-                delegate?.updateSections()
-            }
+//        if let cell = tableView.cellForRow(at: indexPath) {
+//            if cell.accessoryType == .none {
+//                cell.accessoryType = .checkmark
+//                attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
+//                delegate?.updateSections()
+//            } else {
+//                cell.accessoryType = .none
+//                attributeTypeSectionController?.remove(section: section)
+//                delegate?.updateSections()
+//            }
+//        }
+        
+        if indexPath.section == 0 {
+            let section = shownSections[indexPath.row]
+            attributeTypeSectionController?.remove(section: section)
+            delegate?.updateSections()
+            shownSections.remove(at: indexPath.row)
+            hiddenSections.insert(section, at: 0)
+            tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+        } else {
+            let section = hiddenSections[indexPath.row]
+            attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
+            delegate?.updateSections()
+            hiddenSections.remove(at: indexPath.row)
+            shownSections.append(section)
+            tableView.moveRow(at: indexPath, to: IndexPath(row: shownSections.count - 1, section: 0))
         }
+    }
+    
+    //MARK: Private
+    
+    func sortSections() {
+        guard let attributeTypeSectionController = attributeTypeSectionController else { return }
+        
+        shownSections = attributeTypeSectionController.sections.filter({ attributeTypeSectionController.contains(section: $0) })
+        hiddenSections = attributeTypeSectionController.sections.filter({ !attributeTypeSectionController.contains(section: $0) })
     }
     
     //MARK: Actions
