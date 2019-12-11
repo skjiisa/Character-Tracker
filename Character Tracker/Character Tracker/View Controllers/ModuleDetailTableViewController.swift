@@ -32,19 +32,33 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var characterModule: CharacterModule?
     var moduleController: ModuleController?
     
+    enum SectionTypes: Equatable {
+        case name
+        case notes(TextViewReference)
+        case ingredients
+    }
+    
     var nameTextField: UITextField?
     var levelTextField: UITextField?
     var levelStepper: UIStepper?
-    var notesTextView: UITextView?
+    
+    var sections: [(name: String, type: SectionTypes)] = []
+    
+    class TextViewReference: Equatable {
+        static func == (lhs: TextViewReference, rhs: TextViewReference) -> Bool {
+            return lhs.textView == rhs.textView
+        }
+        
+        var textView: UITextView?
+    }
+    
+    var notesTextView = TextViewReference()
+    var characterNotesTextView = TextViewReference()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        setUpSections()
         
         completeButton.setTitle("Completed", for: .disabled)
         completeButton.setTitle("Complete", for: .normal)
@@ -57,39 +71,49 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        tableView.reloadSections([2], with: .automatic)
+        guard let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) else { return }
+        tableView.reloadSections([ingredientsSectionIndex], with: .automatic)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch sections[section].type {
+        case .name:
             return 2
-        } else if section == 1 {
+        case .notes(_):
             return 1
+        case .ingredients:
+            return ingredientController.tempIngredients.count + 1
         }
-        
-        return ingredientController.tempIngredients.count + 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return "Notes"
-        } else if section == 2 {
-            return "Ingredients"
+        return sections[section].name
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            if module == nil {
+                return 0
+            }
+            return 20
         }
-        
-        return nil
+
+        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         
-        if indexPath.section == 0 {
+        let type = sections[indexPath.section].type
+        
+        switch type {
+        case .name:
             if indexPath.row == 0 {
                 if let nameCell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath) as? ModuleNameTableViewCell {
                     nameTextField = nameCell.textField
@@ -122,15 +146,28 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     cell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath)
                 }
             }
-        } else if indexPath.section == 1 {
+        case .notes(let textViewReference):
             if let notesCell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath) as? NotesTableViewCell {
-                notesTextView = notesCell.textView
-                notesTextView?.delegate = self
+                let cellTextView = notesCell.textView
+                cellTextView?.delegate = self
                 
-                if let notes = module?.notes {
-                    notesTextView?.text = notes
-                } else {
-                    notesTextView?.text = nil
+                switch textViewReference {
+                case notesTextView:
+                    notesTextView.textView = cellTextView
+                    if let notes = module?.notes {
+                        cellTextView?.text = notes
+                    } else {
+                        cellTextView?.text = nil
+                    }
+                case characterNotesTextView:
+                    characterNotesTextView.textView = cellTextView
+                    if let characterNotes = characterModule?.notes {
+                        cellTextView?.text = characterNotes
+                    } else {
+                        cellTextView?.text = nil
+                    }
+                default:
+                    break
                 }
                 
                 cell = notesCell
@@ -138,7 +175,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 // This shouldn't ever be called
                 cell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
             }
-        } else {
+        case .ingredients:
             if indexPath.row < ingredientController.tempIngredients.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
                 
@@ -197,14 +234,43 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     */
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath == IndexPath(row: 0, section: 2) {
-            if let textView = notesTextView {
+        switch sections[indexPath.section].type {
+        case .notes(let textViewReference):
+            if let textView = textViewReference.textView {
                 setTextViewFontSize(textView)
             }
+        default:
+            break
         }
+        
+//        if indexPath == IndexPath(row: 0, section: 2) {
+//            if let textView = notesTextView {
+//                setTextViewFontSize(textView)
+//            }
+//        }
     }
     
     //MARK: Private
+    
+    private func setUpSections() {
+        sections.append(("", .name))
+        
+        if let moduleTypeName = moduleType?.name {
+            sections.append(("\(moduleTypeName) Description", .notes(notesTextView)))
+        } else {
+            sections.append(("Module Description", .notes(notesTextView)))
+        }
+        
+        if let character = characterModule?.character {
+            if let characterName = character.name {
+                sections.append(("\(characterName) Notes", .notes(characterNotesTextView)))
+            } else {
+                sections.append(("Character Notes", .notes(characterNotesTextView)))
+            }
+        }
+        
+        sections.append(("Ingredients", .ingredients))
+    }
     
     private func updateViews() {
         
@@ -226,7 +292,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         } else {
             undoButton.isHidden = true
             completeButton.isEnabled = false
-            completeButton.setTitle("Save character to mark as complete", for: .disabled)
+            completeButton.setTitle("Save to a character to add notes", for: .disabled)
         }
         
     }
@@ -267,11 +333,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let savedModule: Module
         
         if let module = module {
-            moduleController?.edit(module: module, name: name, notes: notesTextView?.text, level: level ?? 0, type: type, context: context)
+            moduleController?.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
             savedModule = module
         } else {
-            guard let module = moduleController?.create(module: name, notes: notesTextView?.text, level: level ?? 0, game: game, type: type, context: context) else { return }
+            guard let module = moduleController?.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context) else { return }
             savedModule = module
+        }
+        
+        if let characterModule = characterModule {
+            characterModule.notes = characterNotesTextView.textView?.text
         }
         
         ingredientController.removeMissingTempIngredients(from: savedModule, context: context)

@@ -44,7 +44,11 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         if section == 0 {
             return "Game"
         } else if section == 1 {
-            return "\(gameReference?.name ?? "") Settings"
+            //return "\(gameReference?.name ?? "") Settings"
+        } else if section == 3 {
+            return "Attributes"
+        } else if section == 4 {
+            return "Modules"
         }
         
         return nil
@@ -52,9 +56,11 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 3 {
-            return "Character Attributes"
+            //return "Character Attributes"
+            return "Attributes are simple tags that characters can have"
         } else if section == 4 {
-            return "Modules"
+            //return "Modules"
+            return "Modules hold information about level, requirements, etc."
         }
         
         return nil

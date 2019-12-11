@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
 		595F771B236A55EF00151209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771A236A55EF00151209 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +185,7 @@
 				59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */,
 				59850F41237D061500286067 /* ModuleDetailTableViewController.swift */,
 				59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */,
+				59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
+				59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */,
 				59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */,
 				59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */,
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
