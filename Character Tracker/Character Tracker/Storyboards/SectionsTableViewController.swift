@@ -118,5 +118,11 @@ class SectionsTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    //MARK: Actions
+    
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

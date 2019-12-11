@@ -485,11 +485,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     }
                 }
             }
-        } else if let sectionsVC = segue.destination as? SectionsTableViewController {
-            sectionsVC.attributeTypeSectionController = attributeTypeSectionController
-            sectionsVC.attributeController = attributeController
-            sectionsVC.moduleController = moduleController
-            sectionsVC.delegate = self
+        } else if let navigationController = segue.destination as? UINavigationController {
+            if let sectionsVC = navigationController.viewControllers[0] as? SectionsTableViewController {
+                sectionsVC.attributeTypeSectionController = attributeTypeSectionController
+                sectionsVC.attributeController = attributeController
+                sectionsVC.moduleController = moduleController
+                sectionsVC.delegate = self
+            }
         }
     }
 

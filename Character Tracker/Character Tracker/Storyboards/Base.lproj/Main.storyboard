@@ -110,7 +110,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="3QA-oY-hHd" kind="show" id="DyH-gB-Ap0"/>
+                                    <segue destination="ike-gS-dYM" kind="show" id="DyH-gB-Ap0"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectModuleCell" textLabel="3uf-S8-4O4" style="IBUITableViewCellStyleDefault" id="VQb-5r-paV">
@@ -252,7 +252,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <state key="normal" title="Show/Hide Sections"/>
                                     <connections>
-                                        <segue destination="3QA-oY-hHd" kind="presentation" id="0CQ-Wd-qaZ"/>
+                                        <segue destination="ike-gS-dYM" kind="presentation" id="0CQ-Wd-qaZ"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -486,11 +486,17 @@
                             <outlet property="delegate" destination="3QA-oY-hHd" id="A1n-b3-e1f"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sections" id="QSd-b1-5GK"/>
+                    <navigationItem key="navigationItem" title="Sections" id="QSd-b1-5GK">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="qps-tL-A48">
+                            <connections>
+                                <action selector="done:" destination="3QA-oY-hHd" id="AXi-W4-wTr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b9H-jE-Kcp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3012" y="-1203"/>
+            <point key="canvasLocation" x="3921.739130434783" y="-1203.3482142857142"/>
         </scene>
         <!--Races-->
         <scene sceneID="tvO-79-aw0">
@@ -1088,17 +1094,36 @@
             </objects>
             <point key="canvasLocation" x="4688" y="907"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HS6-PT-m0s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ike-gS-dYM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="ZBG-cd-IfV"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JJ9-tl-upS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3QA-oY-hHd" kind="relationship" relationship="rootViewController" id="a8t-My-eU4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khR-N3-qBH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3011.594202898551" y="-1203.3482142857142"/>
+        </scene>
     </scenes>
     <resources>
         <image name="gear" catalog="system" width="64" height="58"/>
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="0CQ-Wd-qaZ"/>
         <segue reference="DTF-qi-Fya"/>
         <segue reference="FDA-d5-RMw"/>
         <segue reference="Hak-ez-6fv"/>
         <segue reference="9dZ-mf-KGH"/>
-        <segue reference="0CQ-Wd-qaZ"/>
         <segue reference="hwD-cT-7uC"/>
     </inferredMetricsTieBreakers>
 </document>
