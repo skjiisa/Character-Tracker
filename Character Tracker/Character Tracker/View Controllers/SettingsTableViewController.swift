@@ -169,6 +169,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             attributeTypeSectionController.loadTempSections(for: game)
             sectionsVC.attributeTypeSectionController = attributeTypeSectionController
             sectionsVC.delegate = self
+            sectionsVC.navigationItem.rightBarButtonItem = nil
         }
     }
 

@@ -110,7 +110,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="ike-gS-dYM" kind="show" id="DyH-gB-Ap0"/>
+                                    <segue destination="3QA-oY-hHd" kind="show" id="YvR-e2-XSd"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectModuleCell" textLabel="3uf-S8-4O4" style="IBUITableViewCellStyleDefault" id="VQb-5r-paV">
@@ -452,7 +452,7 @@
             <objects>
                 <tableViewController id="3QA-oY-hHd" customClass="SectionsTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="6QK-DL-hC5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -1101,7 +1101,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ZBG-cd-IfV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JJ9-tl-upS">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1119,11 +1119,11 @@
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DyH-gB-Ap0"/>
         <segue reference="DTF-qi-Fya"/>
-        <segue reference="FDA-d5-RMw"/>
-        <segue reference="Hak-ez-6fv"/>
-        <segue reference="9dZ-mf-KGH"/>
+        <segue reference="Adg-Vf-5jE"/>
+        <segue reference="7MN-57-o6h"/>
+        <segue reference="GZ6-Pz-ZgO"/>
+        <segue reference="a8t-My-eU4"/>
         <segue reference="hwD-cT-7uC"/>
     </inferredMetricsTieBreakers>
 </document>
