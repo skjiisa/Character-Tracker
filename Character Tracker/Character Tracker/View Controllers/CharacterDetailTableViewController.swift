@@ -89,6 +89,19 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         guard let tempSection = attributeTypeSectionController?.sectionToShow(section) else {
             // Character section or module options section
+            
+            if let tempSection = attributeTypeSectionController?.sectionToShow(section - 1),
+                let moduleSection = tempSection.section as? ModuleType,
+                tempSection.collapsed {
+                let tempModules = moduleController.getTempModules(from: moduleSection)
+                
+                if tempModules?.count ?? 0 > 0 {
+                    return 1
+                }
+                
+                return 0
+            }
+            
             return 2
         }
         
@@ -133,8 +146,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         view.tag = section
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-        view.addGestureRecognizer(tap)
+        if section > 0 {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            view.addGestureRecognizer(tap)
+        }
         
         view.textLabel?.font = .preferredFont(forTextStyle: .subheadline)
     }
@@ -196,8 +211,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 // This shouldn't happen and is just a fallback in case something breaks
                 cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
             }
-        } else if let moduleSection = attributeTypeSectionController?.sectionToShow(indexPath.section - 1)?.section as? ModuleType {
-            if indexPath.row == 0 {
+        } else if let tempSection = attributeTypeSectionController?.sectionToShow(indexPath.section - 1), let moduleSection = tempSection.section as? ModuleType {
+            if indexPath.row == 0,
+                !tempSection.collapsed {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                 cell.textLabel?.text = "Add \(moduleSection.typeName)s"
             } else {
@@ -322,9 +338,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         guard let index = sender.view?.tag else { return }
         characterHasBeenModified()
         
+        var sections: IndexSet = [index]
+        
+        let tempSection = attributeTypeSectionController?.sectionToShow(index)
+        if tempSection?.section is ModuleType {
+            sections.insert(index + 1)
+        }
+        
         attributeTypeSectionController?.toggleSection(index)
         if index < tableView.numberOfSections {
-            tableView.reloadSections([index], with: .automatic)
+            tableView.reloadSections(sections, with: .automatic)
         }
     }
     
