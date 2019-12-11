@@ -487,6 +487,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             }
         } else if let sectionsVC = segue.destination as? SectionsTableViewController {
             sectionsVC.attributeTypeSectionController = attributeTypeSectionController
+            sectionsVC.attributeController = attributeController
+            sectionsVC.moduleController = moduleController
             sectionsVC.delegate = self
         }
     }

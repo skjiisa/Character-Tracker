@@ -17,6 +17,8 @@ class SectionsTableViewController: UITableViewController {
     //MARK: Properties
 
     var attributeTypeSectionController: AttributeTypeSectionController?
+    var attributeController: AttributeController?
+    var moduleController: ModuleController?
     var character: Character?
     var delegate: SectionsTableDelegate?
 
@@ -47,6 +49,18 @@ class SectionsTableViewController: UITableViewController {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
+            }
+            
+            if let attributeSection = section as? AttributeTypeSection,
+                let tempAttributes = attributeController?.getTempAttributes(from: attributeSection),
+                tempAttributes.count > 0 {
+                cell.detailTextLabel?.text = "\(tempAttributes.count) item\(tempAttributes.count > 1 ? "s" : "")"
+            } else if let moduleSection = section as? ModuleType,
+                let tempModules = moduleController?.getTempModules(from: moduleSection),
+                tempModules.count > 0 {
+                cell.detailTextLabel?.text = "\(tempModules.count) item\(tempModules.count > 1 ? "s" : "")"
+            } else {
+                cell.detailTextLabel?.text = nil
             }
         }
 
