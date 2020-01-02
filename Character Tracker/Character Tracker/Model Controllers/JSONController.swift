@@ -37,7 +37,7 @@ class JSONController {
                         let games = race["games"].array,
                         let firstGameID = games.first?.string,
                         let firstGame = allGames.first(where: { $0.id?.uuidString == firstGameID }) else { continue }
-                    print(name)
+                    //print(name)
                     
                     if let existingRace = allRaces.first(where: { $0.id == uuid }) {
                         // TODO: Update race
@@ -57,19 +57,19 @@ class JSONController {
             if let characters = swiftyImport["characters"].array {
                 for character in characters {
                     guard let idString = character["id"].string,
-                        let uuid = UUID(uuidString: idString),
-                        let name = character["name"].string,
-                        let raceID = character["race"].string,
-                        let race = allRaces.first(where: { $0.id?.uuidString == raceID }),
-                        let gameID = character["game"].string,
-                        let game = allGames.first(where: { $0.id?.uuidString == gameID }),
-                        let female = character["female"].bool else { continue }
-                    print(character["name"].stringValue)
+                        let uuid = UUID(uuidString: idString) else { continue }
+                    //print(character["name"].stringValue)
                     
                     if let existingCharacter = allCharacters.first(where: { $0.id == uuid }) {
                         // TODO: Update character
                     } else {
-                        let newCharacter = Character(name: name, race: race, female: female, game: game, id: uuid, context: context)
+                        let newCharacter = Character(context: context)
+                        newCharacter.id = uuid
+                        
+                        importAttributes(with: ["female", "name"], for: newCharacter, from: character)
+                        
+                        addRelationship(to: newCharacter, json: character, with: "race", from: allRaces)
+                        addRelationship(to: newCharacter, json: character, with: "game", from: allGames)
                         allCharacters.append(newCharacter)
                     }
                 }
@@ -78,5 +78,23 @@ class JSONController {
         } catch {
             NSLog("\(error)")
         }
+    }
+    
+    func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
+        for key in keys {
+            let value = json[key].object
+            if value is NSNull { continue }            
+            object.setValue(value, forKey: key)
+        }
+    }
+    
+    func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
+        guard let id = json[key].string,
+            let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
+            guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
+            return uuid.uuidString == id
+        }) else { return }
+        
+        object.setValue(relationshipObject, forKey: key)
     }
 }
