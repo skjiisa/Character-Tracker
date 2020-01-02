@@ -39,7 +39,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         guard let game = gameReference?.game else { return nil }
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY game == %@", game)
+            fetchRequest.predicate = NSPredicate(format: "ANY games == %@", game)
         } else {
             if let gameRaces = game.races {
                 fetchRequest.predicate = NSPredicate(format: "NOT SELF in %@", gameRaces)
