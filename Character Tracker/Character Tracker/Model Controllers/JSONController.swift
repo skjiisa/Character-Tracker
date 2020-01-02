@@ -9,6 +9,24 @@
 import CoreData
 import SwiftyJSON
 
+protocol RelationshipProtocol {
+    func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON)
+    func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON)
+}
+
+struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
+    let key: String
+    let allObjects: [ObjectType]
+    
+    func addRelationship<ObjectType>(to object: ObjectType, json: JSON) where ObjectType : NSManagedObject {
+        JSONController.addRelationship(to: object, json: json, with: key, from: allObjects)
+    }
+    
+    func addRelationships<ObjectType>(to object: ObjectType, json: JSON) where ObjectType : NSManagedObject {
+        JSONController.addRelationships(to: object, json: json, with: key, from: allObjects)
+    }
+}
+
 class JSONController {
     
     func preloadData() {
@@ -17,7 +35,7 @@ class JSONController {
         do {
             let preloadDataURL = Bundle.main.url(forResource: "Preload", withExtension: "json")!
             let preloadData = try Data(contentsOf: preloadDataURL)
-            let swiftyImport = try JSON(data: preloadData)
+            let importJSON = try JSON(data: preloadData)
             
             // Import Games
             
@@ -26,42 +44,61 @@ class JSONController {
             
             // Import Races
             
-            let racesFetchRequest: NSFetchRequest<Race> = Race.fetchRequest()
-            var allRaces = try context.fetch(racesFetchRequest)
-            
-            if let races = swiftyImport["races"].array {
-                for raceJSON in races {
-                    guard let race = getOrCreateObject(json: raceJSON, from: allRaces, context: context) else { continue }
-                    
-                    importAttributes(with: ["name"], for: race, from: raceJSON)
-                    
-                    addRelationships(to: race, json: raceJSON, with: "games", from: allGames)
-                    
-                    allRaces.append(race)
-                }
-                CoreDataStack.shared.save(context: context)
-            }
+            let gamesRelationship = Relationship(key: "games", allObjects: allGames)
+            let allRaces: [Race] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "races",
+                attributes: ["name"],
+                toManyRelationships: [gamesRelationship],
+                context: context)
             
             // Import Characters
             
-            let charactersFetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
-            var allCharacters = try context.fetch(charactersFetchRequest)
+            let raceRelationship = Relationship(key: "race", allObjects: allRaces)
+            let gameRelationship = Relationship(key: "game", allObjects: allGames)
+            let _: [Character] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "characters",
+                attributes: ["female", "name"],
+                toOneRelationships: [raceRelationship, gameRelationship],
+                context: context)
             
-            if let characters = swiftyImport["characters"].array {
-                for characterJSON in characters {
-                    guard let character = getOrCreateObject(json: characterJSON, from: allCharacters, context: context) else { continue }
-                    
-                    importAttributes(with: ["female", "name"], for: character, from: characterJSON)
-                    
-                    addRelationship(to: character, json: characterJSON, with: "race", from: allRaces)
-                    addRelationship(to: character, json: characterJSON, with: "game", from: allGames)
-                    allCharacters.append(character)
-                }
-                CoreDataStack.shared.save(context: context)
-            }
+            CoreDataStack.shared.save(context: context)
         } catch {
             NSLog("\(error)")
         }
+    }
+    
+    func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
+        from json: JSON,
+        arrayKey: String,
+        attributes: [String] = [],
+        toOneRelationships: [RelationshipProtocol] = [],
+        toManyRelationships: [RelationshipProtocol] = [],
+        context: NSManagedObjectContext) throws -> [ObjectType] {
+        
+        let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
+        var allObjects = try context.fetch(fetchRequest)
+        
+        if let objects = json[arrayKey].array {
+            for objectJSON in objects {
+                guard let object = getOrCreateObject(json: objectJSON, from: allObjects, context: context) else { continue }
+                
+                importAttributes(with: attributes, for: object, from: objectJSON)
+                
+                for requirement in toOneRelationships {
+                    requirement.addRelationship(to: object, json: objectJSON)
+                }
+                
+                for requirement in toManyRelationships {
+                    requirement.addRelationships(to: object, json: objectJSON)
+                }
+                
+                allObjects.append(object)
+            }
+        }
+        
+        return allObjects
     }
     
     func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], context: NSManagedObjectContext) -> ObjectType? {
@@ -88,7 +125,7 @@ class JSONController {
         }
     }
     
-    func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
+    static func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
         guard let id = json[key].string,
             let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
             guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
@@ -98,7 +135,7 @@ class JSONController {
         object.setValue(relationshipObject, forKey: key)
     }
     
-    func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
+    static func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
         let relationshipsSet = object.mutableSetValue(forKey: key)
         
         guard let idArray = json[key].array else { return }
