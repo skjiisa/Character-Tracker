@@ -14,7 +14,7 @@ extension Race {
         
         self.name = name
         self.id = id
-        self.game = [game]
+        self.games = [game]
         self.mod = mod
     }
 }

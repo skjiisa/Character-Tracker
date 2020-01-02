@@ -1,0 +1,34 @@
+{
+  "races": [
+    {
+      "name": "Khajiit",
+      "id": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "female": false,
+      "id": "8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E",
+      "name": "Ja’Zakajirr",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+    },
+    {
+      "id": "8F434D1D-2FE6-4518-B3C0-213883BB914B",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "female": true,
+      "name": "Malula"
+    },
+    {
+      "name": "Halo of Snow",
+      "female": false,
+      "id": "80DED813-EAC3-41BF-B4A2-3C0DE6854222",
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+    }
+  ]
+}
