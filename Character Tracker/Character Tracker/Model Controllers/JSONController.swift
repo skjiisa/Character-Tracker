@@ -30,20 +30,14 @@ class JSONController {
             var allRaces = try context.fetch(racesFetchRequest)
             
             if let races = swiftyImport["races"].array {
-                for race in races {
-                    guard let idString = race["id"].string,
-                        let uuid = UUID(uuidString: idString),
-                        let name = race["name"].string,
-                        let games = race["games"].array,
-                        let firstGameID = games.first?.string,
-                        let firstGame = allGames.first(where: { $0.id?.uuidString == firstGameID }) else { continue }
+                for raceJSON in races {
+                    guard let race = getOrCreateObject(json: raceJSON, from: allRaces, context: context) else { continue }
                     
-                    if let existingRace = allRaces.first(where: { $0.id == uuid }) {
-                        // TODO: Update race
-                    } else {
-                        let newRace = Race(name: name, game: firstGame, mod: nil, id: uuid, context: context)
-                        allRaces.append(newRace)
-                    }
+                    importAttributes(with: ["name"], for: race, from: raceJSON)
+                    
+                    addRelationships(to: race, json: raceJSON, with: "games", from: allGames)
+                    
+                    allRaces.append(race)
                 }
                 CoreDataStack.shared.save(context: context)
             }
@@ -102,5 +96,20 @@ class JSONController {
         }) else { return }
         
         object.setValue(relationshipObject, forKey: key)
+    }
+    
+    func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
+        let relationshipsSet = object.mutableSetValue(forKey: key)
+        
+        guard let idArray = json[key].array else { return }
+        for idJSON in idArray {
+            guard let id = idJSON.string,
+                let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
+                    guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
+                    return uuid.uuidString == id
+            }) else { continue }
+            
+            relationshipsSet.add(relationshipObject)
+        }
     }
 }
