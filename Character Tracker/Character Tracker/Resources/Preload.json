@@ -185,6 +185,28 @@
       "minPriority": 0
     }
   ],
+  "module_types": [
+    {
+      "name": "Questline",
+      "id": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Objective",
+      "id": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "name": "Follower",
+      "id": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4"
+    },
+    {
+      "name": "Equipment",
+      "id": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE"
+    },
+    {
+      "name": "House",
+      "id": "D453D642-DE13-41F2-B129-A89D447E2863"
+    }
+  ],
   "characters": [
     {
       "game": "33839302-E5B9-4299-AA81-444BED243F20",

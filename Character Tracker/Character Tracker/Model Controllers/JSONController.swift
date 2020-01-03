@@ -63,6 +63,14 @@ class JSONController {
                 toOneRelationships: [attributeTypesRelationship],
                 context: context)
             
+            // Import Module Types
+            
+            let _: [ModuleType] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "module_types",
+                attributes: ["name"],
+                context: context)
+            
             // Import Races
             
             let gamesRelationship = Relationship(key: "games", allObjects: allGames)
