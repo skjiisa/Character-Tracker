@@ -165,12 +165,12 @@ class JSONController {
                 
                 importAttributes(with: attributes, for: object, from: objectJSON)
                 
-                for requirement in toOneRelationships {
-                    requirement.addRelationship(to: object, json: objectJSON)
+                for relationship in toOneRelationships {
+                    relationship.addRelationship(to: object, json: objectJSON)
                 }
                 
-                for requirement in toManyRelationships {
-                    requirement.addRelationships(to: object, json: objectJSON)
+                for relationship in toManyRelationships {
+                    relationship.addRelationships(to: object, json: objectJSON)
                 }
                 
                 allObjects.append(object)
