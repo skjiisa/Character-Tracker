@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !userDefaults.bool(forKey: preloadedDataKey) {
             JSONController.preloadData()
+            userDefaults.set(true, forKey: preloadedDataKey)
         }
     }
 
