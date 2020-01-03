@@ -39,8 +39,29 @@ class JSONController {
             
             // Import Games
             
-            let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
-            let allGames = try context.fetch(gamesFetchRequest)
+            let allGames: [Game] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "games",
+                attributes: ["name", "index", "mainline"],
+                context: context)
+            
+            // Import Attribute Types
+            
+            let allAttributeTypes: [AttributeType] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "attribute_types",
+                attributes: ["name"],
+                context: context)
+            
+            // Import Attribute Type Sections
+            
+            let attributeTypesRelationship = Relationship(key: "type", allObjects: allAttributeTypes)
+            let _: [AttributeTypeSection] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "attribute_type_sections",
+                attributes: ["name", "maxPriority", "minPriority"],
+                toOneRelationships: [attributeTypesRelationship],
+                context: context)
             
             // Import Races
             
@@ -72,7 +93,7 @@ class JSONController {
     static private func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
         from json: JSON,
         arrayKey: String,
-        attributes: [String] = [],
+        attributes: [String],
         toOneRelationships: [RelationshipProtocol] = [],
         toManyRelationships: [RelationshipProtocol] = [],
         context: NSManagedObjectContext) throws -> [ObjectType] {

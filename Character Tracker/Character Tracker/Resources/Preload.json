@@ -1,12 +1,188 @@
 {
+  "games": [
+    {
+      "name": "Skyrim",
+      "id": "33839302-E5B9-4299-AA81-444BED243F20",
+      "index": 50,
+      "mainline": true
+    },
+    {
+      "name": "Daggerfall",
+      "id": "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+      "index": 20,
+      "mainline": true
+    },
+    {
+      "name": "Elder Scrolls Online",
+      "id": "432650F5-26F6-491F-8280-5F3B0386C038",
+      "index": 55,
+      "mainline": false
+    },
+    {
+      "name": "Enderal",
+      "id": "4FBBD913-FCAB-43AC-B88B-5932EEB7983C",
+      "index": 54,
+      "mainline": false
+    },
+    {
+      "name": "Skyrim Special Edition",
+      "id": "75CFE734-1107-4B03-8269-AC130D88A8B7",
+      "index": 51,
+      "mainline": true
+    },
+    {
+      "name": "Skyrim VR",
+      "id": "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+      "index": 52,
+      "mainline": true
+    },
+    {
+      "name": "Arena",
+      "id": "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+      "index": 10,
+      "mainline": true
+    },
+    {
+      "name": "Morrowind",
+      "id": "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+      "index": 30,
+      "mainline": true
+    },
+    {
+      "name": "Oblivion",
+      "id": "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+      "index": 40,
+      "mainline": true
+    }
+  ],
   "races": [
     {
       "name": "Khajiit",
       "id": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
-        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
       ]
+    },
+    {
+      "name": "Argonian",
+      "id": "5047973E-73DF-4CFE-8457-89F95A7F9FF5",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Redguard",
+      "id": "0A5A839B-32D6-41D7-816B-3007703621E0",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Breton",
+      "id": "6233A289-4353-4402-A8B0-47971113A300",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Nord",
+      "id": "1DCCDFE6-232A-4BCB-B1B3-AA7430ABCB8D",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    }
+  ],
+  "attribute_types": [
+    {
+      "name": "skill",
+      "id": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54"
+    },
+    {
+      "name": "combat style",
+      "id": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "name": "armor type",
+      "id": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8"
+    }
+  ],
+  "attribute_type_sections": [
+    {
+      "name": "Primary Skills",
+      "id": "9FBF5691-B7FA-4DFD-BFEE-4AD5CCC673C4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 0,
+      "minPriority": 0
+    },
+    {
+      "name": "Major Skills",
+      "id": "74AC8FAF-3004-4CAD-B442-D89AA571A2B7",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 1,
+      "minPriority": 1
+    },
+    {
+      "name": "Minor Skills",
+      "id": "1435E225-54B8-4FED-879E-9F08CB2EFB9F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 2,
+      "minPriority": 2
+    },
+    {
+      "name": "Primary Combat Style",
+      "id": "1B69AADC-34E3-4067-9C83-FF78F7ECE2F3",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768",
+      "maxPriority": 0,
+      "minPriority": 0
+    },
+    {
+      "name": "Secondary Combat Style",
+      "id": "D8555224-80E1-4565-8349-4A1409AB1B31",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768",
+      "maxPriority": 1,
+      "minPriority": 1
+    },
+    {
+      "name": "Armor Type",
+      "id": "FC6F42BB-0CD0-4C54-8ED7-A5FEDB4F50D4",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "maxPriority": 0,
+      "minPriority": 0
     }
   ],
   "characters": [
