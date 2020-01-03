@@ -40,7 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = UserDefaults.standard
         
         if !userDefaults.bool(forKey: preloadedDataKey) {
+
+            JSONController.preloadData()
             
+            /*
             do {
                 // Temporary method of preloading basic data until a proper method is implemented
                 let context = CoreDataStack.shared.mainContext
@@ -114,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch {
                 fatalError("Undable to preload data: \(error)")
             }
+            */
         }
     }
 
