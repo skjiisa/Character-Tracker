@@ -227,6 +227,31 @@
       ]
     }
   ],
+  "modules": [
+    {
+      "name": "Leather Armor",
+      "id": "2EC7D7AD-F2E9-4ADE-9535-44F2FB5F9B2A",
+      "level": 8,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE"
+    }
+  ],
+  "module_ingredients": [
+    {
+      "module": "2EC7D7AD-F2E9-4ADE-9535-44F2FB5F9B2A",
+      "ingredient": "db5d2",
+      "quantity": 9
+    },
+    {
+      "module": "2EC7D7AD-F2E9-4ADE-9535-44F2FB5F9B2A",
+      "ingredient": "800e4",
+      "quantity": 8
+    }
+  ],
   "characters": [
     {
       "game": "33839302-E5B9-4299-AA81-444BED243F20",

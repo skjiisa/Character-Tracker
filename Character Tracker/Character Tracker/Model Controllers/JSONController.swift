@@ -12,6 +12,7 @@ import SwiftyJSON
 protocol RelationshipProtocol {
     func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON)
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON)
+    func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches json: JSON) -> Bool
 }
 
 struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
@@ -24,6 +25,22 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     
     func addRelationships<ObjectType>(to object: ObjectType, json: JSON) where ObjectType : NSManagedObject {
         JSONController.addRelationships(to: object, json: json, with: key, from: allObjects)
+    }
+    
+    func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches json: JSON) -> Bool {
+        guard let idString = json[key].string,
+            let object = object.value(forKey: key) as? NSManagedObject,
+            let objectID = object.value(forKey: "id") else { return false }
+        
+        if let objectUUID = objectID as? UUID {
+            guard let uuid = UUID(uuidString: idString) else { return false }
+            
+            return uuid == objectUUID
+        } else if let objectIDString = objectID as? String {
+            return idString == objectIDString
+        }
+        
+        return false
     }
 }
 
@@ -65,7 +82,7 @@ class JSONController {
             
             // Import Module Types
             
-            let _: [ModuleType] = try fetchAndImportAllObjects(
+            let allModuleTypes: [ModuleType] = try fetchAndImportAllObjects(
                 from: importJSON,
                 arrayKey: "module_types",
                 attributes: ["name"],
@@ -74,12 +91,34 @@ class JSONController {
             // Import Ingredients
             
             let gamesRelationship = Relationship(key: "games", allObjects: allGames)
-            let _: [Ingredient] = try fetchAndImportAllObjects(
+            let allIngredients: [Ingredient] = try fetchAndImportAllObjects(
                 from: importJSON,
                 arrayKey: "ingredients",
                 attributes: ["name"],
                 toManyRelationships: [gamesRelationship],
                 idIsUUID: false,
+                context: context)
+            
+            // Import Modules
+            
+            let moduleTypesRelationship = Relationship(key: "type", allObjects: allModuleTypes)
+            let allModules: [Module] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "modules",
+                attributes: ["name", "level"],
+                toOneRelationships: [moduleTypesRelationship],
+                toManyRelationships: [gamesRelationship],
+                context: context)
+            
+            // Import Module Ingredients
+            
+            let ingredientsRelationship = Relationship(key: "ingredient", allObjects: allIngredients)
+            let modulesRelationship = Relationship(key: "module", allObjects: allModules)
+            let _: [ModuleIngredient] = try fetchAndImportAllRelationshipObjects(
+                from: importJSON,
+                arrayKey: "module_ingredients",
+                attributes: ["quantity"],
+                toOneRelationships: [ingredientsRelationship, modulesRelationship],
                 context: context)
             
             // Import Races
@@ -141,6 +180,43 @@ class JSONController {
         return allObjects
     }
     
+    static private func fetchAndImportAllRelationshipObjects<ObjectType: NSManagedObject>(
+        from json: JSON,
+        arrayKey: String,
+        attributes: [String],
+        toOneRelationships: [RelationshipProtocol] = [],
+        context: NSManagedObjectContext) throws -> [ObjectType] {
+        
+        let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
+        var allObjects = try context.fetch(fetchRequest)
+        
+        if let objects = json[arrayKey].array {
+            for objectJSON in objects {
+                let object: ObjectType
+                if let existingObject = allObjects.first(where: { existingObject -> Bool in
+                    for relationship in toOneRelationships {
+                        if !relationship.object(existingObject, matches: objectJSON) {
+                            return false
+                        }
+                    }
+                    return true
+                }) {
+                    object = existingObject
+                } else {
+                    object = ObjectType(context: context)
+                    for relationship in toOneRelationships {
+                        relationship.addRelationship(to: object, json: objectJSON)
+                    }
+                }
+                
+                importAttributes(with: attributes, for: object, from: objectJSON)
+                allObjects.append(object)
+            }
+        }
+        
+        return allObjects
+    }
+    
     // This could maybe be simplified using implicit conversions between Strings and UUIDs
     static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], idIsUUID: Bool = true, context: NSManagedObjectContext) -> ObjectType? {
         guard let idString = json["id"].string else { return nil }
@@ -183,9 +259,16 @@ class JSONController {
     static func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with key: String, from relationshipObjects: [RelationshipType]) {
         guard let id = json[key].string,
             let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
-            guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
-            return uuid.uuidString == id
-        }) else { return }
+                
+                let objectID = relationshipObject.value(forKey: "id")
+                if let uuid = objectID as? UUID {
+                    return uuid.uuidString == id
+                } else if let idString = objectID as? String {
+                    return idString == id
+                }
+                
+                return false
+            }) else { return }
         
         object.setValue(relationshipObject, forKey: key)
     }
