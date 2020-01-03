@@ -105,7 +105,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     */
     
     @IBAction func importJSON(_ sender: UIBarButtonItem) {
-        JSONController().preloadData()
+        JSONController.preloadData()
     }
     
     //MARK: Private

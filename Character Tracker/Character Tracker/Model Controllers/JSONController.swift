@@ -29,7 +29,7 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
 
 class JSONController {
     
-    func preloadData() {
+    static func preloadData() {
         let context = CoreDataStack.shared.mainContext
         
         do {
@@ -69,7 +69,7 @@ class JSONController {
         }
     }
     
-    func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
+    static private func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
         from json: JSON,
         arrayKey: String,
         attributes: [String] = [],
@@ -101,7 +101,7 @@ class JSONController {
         return allObjects
     }
     
-    func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], context: NSManagedObjectContext) -> ObjectType? {
+    static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], context: NSManagedObjectContext) -> ObjectType? {
         guard let idString = json["id"].string,
             let uuid = UUID(uuidString: idString) else { return nil }
         
@@ -117,7 +117,7 @@ class JSONController {
         return object
     }
     
-    func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
+    static private func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
         for key in keys {
             let value = json[key].object
             if value is NSNull { continue }
