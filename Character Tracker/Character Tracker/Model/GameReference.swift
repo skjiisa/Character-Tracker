@@ -27,10 +27,7 @@ class GameReference {
             if let gameName = userDefaults.string(forKey: selectedGameKey) {
                 fetchRequest.predicate = NSPredicate(format: "name == %@", gameName)
             } else {
-                fetchRequest.sortDescriptors = [
-                    NSSortDescriptor(key: "mainline", ascending: false),
-                    NSSortDescriptor(key: "index", ascending: false)
-                ]
+                fetchRequest.predicate = NSPredicate(format: "name == %@", "Skyrim")
             }
             
             let games = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
