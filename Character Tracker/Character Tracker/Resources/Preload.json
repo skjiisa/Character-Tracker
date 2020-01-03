@@ -269,6 +269,16 @@
       "minPriority": 0
     }
   ],
+  "attributes": [
+    {
+      "name": "Daedric",
+      "id": "5E810A53-7656-4FEF-BE96-FC7A4B3576C6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    }
+  ],
   "module_types": [
     {
       "name": "Questline",
