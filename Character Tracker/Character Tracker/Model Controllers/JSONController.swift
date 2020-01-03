@@ -71,9 +71,19 @@ class JSONController {
                 attributes: ["name"],
                 context: context)
             
-            // Import Races
+            // Import Ingredients
             
             let gamesRelationship = Relationship(key: "games", allObjects: allGames)
+            let _: [Ingredient] = try fetchAndImportAllObjects(
+                from: importJSON,
+                arrayKey: "ingredients",
+                attributes: ["name"],
+                toManyRelationships: [gamesRelationship],
+                idIsUUID: false,
+                context: context)
+            
+            // Import Races
+            
             let allRaces: [Race] = try fetchAndImportAllObjects(
                 from: importJSON,
                 arrayKey: "races",
@@ -104,6 +114,7 @@ class JSONController {
         attributes: [String],
         toOneRelationships: [RelationshipProtocol] = [],
         toManyRelationships: [RelationshipProtocol] = [],
+        idIsUUID: Bool = true,
         context: NSManagedObjectContext) throws -> [ObjectType] {
         
         let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
@@ -111,7 +122,7 @@ class JSONController {
         
         if let objects = json[arrayKey].array {
             for objectJSON in objects {
-                guard let object = getOrCreateObject(json: objectJSON, from: allObjects, context: context) else { continue }
+                guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: idIsUUID, context: context) else { continue }
                 
                 importAttributes(with: attributes, for: object, from: objectJSON)
                 
@@ -130,20 +141,35 @@ class JSONController {
         return allObjects
     }
     
-    static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], context: NSManagedObjectContext) -> ObjectType? {
-        guard let idString = json["id"].string,
-            let uuid = UUID(uuidString: idString) else { return nil }
+    // This could maybe be simplified using implicit conversions between Strings and UUIDs
+    static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], idIsUUID: Bool = true, context: NSManagedObjectContext) -> ObjectType? {
+        guard let idString = json["id"].string else { return nil }
         
-        if let existingObject = existingObjects.first(where: { existingObject -> Bool in
-            guard let id = existingObject.value(forKey: "id") as? UUID else { return false }
-            return id == uuid
-        }) {
-            return existingObject
+        if idIsUUID {
+            guard let uuid = UUID(uuidString: idString) else { return nil }
+            
+            if let existingObject = existingObjects.first(where: { existingObject -> Bool in
+                guard let id = existingObject.value(forKey: "id") as? UUID else { return false }
+                return id == uuid
+            }) {
+                return existingObject
+            }
+            
+            let object = ObjectType(context: context)
+            object.setValue(uuid, forKey: "id")
+            return object
+        } else {
+            if let existingObject = existingObjects.first(where: { existingObject -> Bool in
+                guard let id = existingObject.value(forKey: "id") as? String else { return false }
+                return id == idString
+            }) {
+                return existingObject
+            }
+            
+            let object = ObjectType(context: context)
+            object.setValue(idString, forKey: "id")
+            return object
         }
-        
-        let object = ObjectType(context: context)
-        object.setValue(uuid, forKey: "id")
-        return object
     }
     
     static private func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
