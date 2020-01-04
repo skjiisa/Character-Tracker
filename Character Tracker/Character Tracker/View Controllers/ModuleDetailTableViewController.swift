@@ -20,6 +20,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     //MARK: Properties
     
     var ingredientController = IngredientController()
+    var moduleController = ModuleController()
     var gameReference: GameReference?
     var moduleType: ModuleType?
     var module: Module? {
@@ -30,7 +31,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
     }
     var characterModule: CharacterModule?
-    var moduleController: ModuleController?
+    var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
         case name
@@ -271,6 +272,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     //MARK: Private
     
+    private func choose(characterModule: CharacterModule, completed: Bool) {
+        for callback in callbacks {
+            callback(characterModule, completed)
+        }
+    }
+    
     private func setUpSections() {
         sections.append(("", .name))
         
@@ -352,10 +359,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let savedModule: Module
         
         if let module = module {
-            moduleController?.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
+            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
             savedModule = module
         } else {
-            guard let module = moduleController?.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context) else { return }
+            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context)
             savedModule = module
         }
         
@@ -369,7 +376,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     private func setCompleted(_ completed: Bool) {
         if let characterModule = characterModule {
-            moduleController?.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+            choose(characterModule: characterModule, completed: completed)
         }
     }
     
@@ -387,7 +394,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func completeTapped(_ sender: UIButton) {
         setCompleted(true)
-        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func undoTapped(_ sender: UIButton) {

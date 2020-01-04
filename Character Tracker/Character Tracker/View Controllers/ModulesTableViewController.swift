@@ -236,7 +236,6 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
                     self.dismiss(animated: true, completion: nil)
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
-                moduleDetailVC.moduleController = moduleController
                 moduleDetailVC.moduleType = moduleType
                 
                 if segue.identifier == "ShowModuleDetail",
