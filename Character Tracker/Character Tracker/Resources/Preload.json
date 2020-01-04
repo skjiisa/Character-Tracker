@@ -977,6 +977,51 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
+    },
+    {
+      "name": "Quicksilver Ingot",
+      "id": "5ada0",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Refined Malachite",
+      "id": "5ada1",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Glass Smithing",
+      "id": "cb411",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dragon Scales",
+      "id": "3ada3",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Dragon Armor",
+      "id": "52190",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
     }
   ],
   "modules": [
@@ -1064,6 +1109,108 @@
         },
         {
           "ingredient": "cb414",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Elven Guilded Armor",
+      "id": "FF027441-F56C-4ED0-8F6A-878B33DBFD3E",
+      "level": 27,
+      "notes": "Crafting ingredients for Guilded Armor only.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 3
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 1
+        },
+        {
+          "ingredient": "5ad9f",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ada0",
+          "quantity": 1
+        },
+        {
+          "ingredient": "cb40f",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Glass Armor",
+      "id": "3E9B9CE5-18B6-449C-89C4-D459A122E320",
+      "level": 36,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 4
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ad9f",
+          "quantity": 5
+        },
+        {
+          "ingredient": "5ada1",
+          "quantity": 9
+        },
+        {
+          "ingredient": "cb411",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dragonscale Armor",
+      "id": "F139D09C-AD44-402E-A1B4-1FF375D84485",
+      "level": 46,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 4
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 5
+        },
+        {
+          "ingredient": "3ada3",
+          "quantity": 10
+        },
+        {
+          "ingredient": "52190",
           "quantity": 0
         }
       ]
