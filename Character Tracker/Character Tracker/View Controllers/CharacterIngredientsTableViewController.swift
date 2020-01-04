@@ -112,12 +112,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         let module = modules[indexPath.section]
         
         var moduleIngredients = module.mutableSetValue(forKey: "ingredients").compactMap({ $0 as? ModuleIngredient })
-        moduleIngredients.sort { moduleIngredient1, moduleIngredient2 -> Bool in
-            guard let ingredient1Name = moduleIngredient1.ingredient?.name,
-                let ingredient2Name = moduleIngredient2.ingredient?.name else { return true }
-            
-            return ingredient1Name < ingredient2Name
-        }
+        moduleIngredients.sort { $0.quantity < $1.quantity }
         guard indexPath.row < moduleIngredients.count else { return cell }
         let moduleIngredient = moduleIngredients[indexPath.row]
         

@@ -55,6 +55,7 @@ class IngredientController {
         if !tempIngredients.contains(where: { $0.ingredient == ingredient }) {
             tempIngredients.append((ingredient: ingredient, quantity: quantity))
         }
+        sortTempIngredients()
     }
     
     func set(quantity: Int16, for ingredient: Ingredient) {
@@ -63,6 +64,11 @@ class IngredientController {
         } else {
             add(tempIngredient: ingredient, quantity: quantity)
         }
+        sortTempIngredients()
+    }
+    
+    func sortTempIngredients() {
+        tempIngredients.sort { $0.quantity < $1.quantity }
     }
     
     func remove(tempIngredient ingredient: Ingredient) {
@@ -98,6 +104,7 @@ class IngredientController {
             let quantity = moduleIngredient.quantity
             tempIngredients.append((ingredient, quantity))
         }
+        sortTempIngredients()
     }
     
     func fetchModuleIngredients(for module: Module, context: NSManagedObjectContext) -> [ModuleIngredient] {
