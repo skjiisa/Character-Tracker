@@ -119,7 +119,7 @@ class JSONController {
             let allModules: [Module] = try fetchAndImportAllObjects(
                 from: importJSON,
                 arrayKey: "modules",
-                attributes: ["name", "level"],
+                attributes: ["name", "level", "notes"],
                 toOneRelationships: [moduleTypesRelationship],
                 toManyRelationships: [gamesRelationship],
                 context: context)
