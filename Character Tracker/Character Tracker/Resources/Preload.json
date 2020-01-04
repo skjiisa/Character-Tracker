@@ -271,11 +271,560 @@
   ],
   "attributes": [
     {
-      "name": "Daedric",
-      "id": "5E810A53-7656-4FEF-BE96-FC7A4B3576C6",
+      "name": "Alteration",
+      "id": "83D71DF6-F1FF-40FF-8F90-B6B1B515B389",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Archery",
+      "id": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Axe",
+      "id": "9CA979AF-78B4-42FC-8D95-BAEF22AA761F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Backstabbing",
+      "id": "1CEE59DA-2936-45F6-A202-93E1C9AC812E",
       "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
       "games": [
         "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Blunt Weapon",
+      "id": "62D032A2-8FB8-4FB8-9890-6D688FB993B4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Centaurian",
+      "id": "01F23909-56A9-43CD-8860-3A3F2EDC759F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Climbing",
+      "id": "120B8B31-A1B5-4930-B73D-318887941F3F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Critical Strike",
+      "id": "C41A879B-AB67-4047-9567-B51C884FB429",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Daedric",
+      "id": "32685803-3B92-4984-8FBD-BE8F276F5411",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Destruction",
+      "id": "157CD52F-EC9B-4A8C-B087-232FDFF0E0F4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dodging",
+      "id": "390AE41F-6F77-45CC-8053-C2430D1150F1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Dragonish",
+      "id": "E6D0DC67-5528-4646-B976-5DCC0A0C8C5A",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Etiquette",
+      "id": "1E85B6F3-BF35-4A9E-9F21-57A08ECC1AB0",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Giantish",
+      "id": "C6D14DB9-55C3-43AE-9171-6CAEAD969CE2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Hand-to-Hand",
+      "id": "434C4930-FBFB-48C9-950E-A6F57DF9A7CE",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Harpy",
+      "id": "414C144A-5757-4CB8-850B-CB3178C84FA8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Illusion",
+      "id": "ADAD1B0B-4DB7-40F9-88F5-AD04C034BDA6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Impish",
+      "id": "6C7064C2-9D71-4F8C-A1D1-614284589D30",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Jumping",
+      "id": "7526188B-695B-4D79-BE57-CBCDA58DD098",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Lockpicking",
+      "id": "9A351E90-A92E-42B2-A6EC-819FAE34C79E",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Long Blade",
+      "id": "D1E52240-BF82-400A-9E80-CDA8918E77D1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Medical",
+      "id": "0A4FCFAD-8497-4B8D-AA63-2F40F93AE375",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Mercantile",
+      "id": "454F2075-CE6F-4C84-AFAF-39E67709C606",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Mysticism",
+      "id": "4393B030-0DD0-4FAD-BA70-4AFD9E95F0C2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Nymph",
+      "id": "05BE3DDA-6D2C-44C4-8613-A6693D7B2993",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Orcish",
+      "id": "C01D50AD-8947-4E04-B5FC-B541DCD501B6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Pickpocket",
+      "id": "13D279AF-B74A-48CF-B308-E3B77F76FC9C",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Restoration",
+      "id": "548EA51C-6A03-4C51-A1F4-8610B6E67E75",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Running",
+      "id": "D7798E34-80E1-4CF5-8005-54B8466FEE8A",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Short Blade",
+      "id": "FADAD3B8-DEAC-4C2A-8D0F-AB23130F7CEE",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Spriggan",
+      "id": "954C94BD-A344-4323-ACA8-0D991520439C",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Stealth",
+      "id": "E2931793-0238-4461-8802-C24696F48003",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Streetwise",
+      "id": "9F354D99-03A2-4A8F-BF28-FA9F03109332",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Swimming",
+      "id": "2D41720B-4BFC-4725-A39C-6AE15AB2A4A9",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Thaumaturgy",
+      "id": "4644C7AE-9372-4D2C-8307-A870A4F03DF6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Heavy Armor",
+      "id": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Acrobatics",
+      "id": "01F53694-1C7E-45E1-A78D-D980BC8BD174",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Block",
+      "id": "8244F7F5-139C-4D20-A19B-A777F7E246D4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Athletics",
+      "id": "CC86C3CF-575D-4667-A62D-5F12316DA6D8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Alchemy",
+      "id": "8006AB50-6D68-4FF1-BD77-22307F0F14A1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Medium Armor",
+      "id": "8CBA5E87-DCC1-42DE-9E6F-FBC4F8DA7D37",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Armorer",
+      "id": "072C5542-B30F-4747-B661-7CE1E3A3D7A9",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Light Armor",
+      "id": "3BB5036C-FDCC-4197-9559-B42212B1FAF7",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Hand-to-hand",
+      "id": "C6C07126-019E-4018-83B3-66FFC7BC9DA1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Conjuration",
+      "id": "14413FB8-EC18-48DA-BAA1-5EFE3574D8E8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Spear",
+      "id": "27E2ED98-B5C0-4D23-A1FD-CFF5649660E2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Marksman",
+      "id": "C08DD26A-8DEC-4FFF-84BD-580AE21BD71F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Speechcraft",
+      "id": "07C9B4CA-13BB-441E-A234-2D6C54A42849",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Enchant",
+      "id": "85B62DF2-E483-4AD1-A3A3-5E68C6A6B468",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Sneak",
+      "id": "D4C82D7D-78A9-4DDF-B30C-80FA5A9F21B1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Unarmored",
+      "id": "7CD6B107-2FE9-4E01-8775-300B33337DC8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Security",
+      "id": "285A564D-DB05-4FBB-9B41-A4EF4E109BAC",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Blade",
+      "id": "F109D390-1E53-4050-9305-DE79D16110D6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Blunt",
+      "id": "33883C86-FDF2-4560-9390-4188D2EE7F12",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Hand to Hand",
+      "id": "B085007A-7803-40A0-B83C-513645132912",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Enchanting",
+      "id": "43EFC577-0436-45CB-ACC1-3AA253864473",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "One-handed",
+      "id": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Smithing",
+      "id": "8964E348-4496-4EA7-B8E6-7149720AEBA0",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Two-handed",
+      "id": "9AB07CEF-F9A0-4D63-A60E-98AE96321080",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Speech",
+      "id": "DA056434-008E-42EC-A3A5-48B2736ACC4B",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
     }
   ],
