@@ -1,0 +1,1545 @@
+{
+  "games": [
+    {
+      "name": "Skyrim",
+      "id": "33839302-E5B9-4299-AA81-444BED243F20",
+      "index": 50,
+      "mainline": true
+    },
+    {
+      "name": "Daggerfall",
+      "id": "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+      "index": 20,
+      "mainline": true
+    },
+    {
+      "name": "Elder Scrolls Online",
+      "id": "432650F5-26F6-491F-8280-5F3B0386C038",
+      "index": 55,
+      "mainline": false
+    },
+    {
+      "name": "Enderal",
+      "id": "4FBBD913-FCAB-43AC-B88B-5932EEB7983C",
+      "index": 54,
+      "mainline": false
+    },
+    {
+      "name": "Skyrim Special Edition",
+      "id": "75CFE734-1107-4B03-8269-AC130D88A8B7",
+      "index": 51,
+      "mainline": true
+    },
+    {
+      "name": "Skyrim VR",
+      "id": "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+      "index": 52,
+      "mainline": true
+    },
+    {
+      "name": "Arena",
+      "id": "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+      "index": 10,
+      "mainline": true
+    },
+    {
+      "name": "Morrowind",
+      "id": "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+      "index": 30,
+      "mainline": true
+    },
+    {
+      "name": "Oblivion",
+      "id": "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+      "index": 40,
+      "mainline": true
+    }
+  ],
+  "races": [
+    {
+      "name": "Khajiit",
+      "id": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Argonian",
+      "id": "5047973E-73DF-4CFE-8457-89F95A7F9FF5",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Redguard",
+      "id": "0A5A839B-32D6-41D7-816B-3007703621E0",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Breton",
+      "id": "6233A289-4353-4402-A8B0-47971113A300",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Nord",
+      "id": "1DCCDFE6-232A-4BCB-B1B3-AA7430ABCB8D",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "432650F5-26F6-491F-8280-5F3B0386C038",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Dark Elf",
+      "id": "35138771-0437-468A-BCC8-CDD717BF1C4A",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "High Elf",
+      "id": "F31F2314-19AB-4749-B0E8-D452CF57E2FC",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Wood Elf",
+      "id": "5549BB1A-2071-4BF6-B65D-7BB81596C4D1",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Altmer",
+      "id": "DDD78BB9-47D7-4333-91E5-688B3F77661E",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "432650F5-26F6-491F-8280-5F3B0386C038"
+      ]
+    },
+    {
+      "name": "Bosmer",
+      "id": "E1175625-A68D-4E2D-9419-15EB6E6EE2E3",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "432650F5-26F6-491F-8280-5F3B0386C038"
+      ]
+    },
+    {
+      "name": "Dunmer",
+      "id": "B8B75E1E-215E-4DA3-910D-88068FE2EF40",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "432650F5-26F6-491F-8280-5F3B0386C038"
+      ]
+    },
+    {
+      "name": "Imperial",
+      "id": "66D9C22C-E587-411F-8506-1EE569150076",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "432650F5-26F6-491F-8280-5F3B0386C038"
+      ]
+    },
+    {
+      "name": "Orc",
+      "id": "9C029936-2E8F-4522-8FB4-ED5566AE27D6",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "432650F5-26F6-491F-8280-5F3B0386C038"
+      ]
+    }
+  ],
+  "attribute_types": [
+    {
+      "name": "skill",
+      "id": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54"
+    },
+    {
+      "name": "combat style",
+      "id": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "name": "armor type",
+      "id": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8"
+    }
+  ],
+  "attribute_type_sections": [
+    {
+      "name": "Primary Skills",
+      "id": "9FBF5691-B7FA-4DFD-BFEE-4AD5CCC673C4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 0,
+      "minPriority": 0
+    },
+    {
+      "name": "Major Skills",
+      "id": "74AC8FAF-3004-4CAD-B442-D89AA571A2B7",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 1,
+      "minPriority": 1
+    },
+    {
+      "name": "Minor Skills",
+      "id": "1435E225-54B8-4FED-879E-9F08CB2EFB9F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "maxPriority": 2,
+      "minPriority": 2
+    },
+    {
+      "name": "Primary Combat Style",
+      "id": "1B69AADC-34E3-4067-9C83-FF78F7ECE2F3",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768",
+      "maxPriority": 0,
+      "minPriority": 0
+    },
+    {
+      "name": "Secondary Combat Style",
+      "id": "D8555224-80E1-4565-8349-4A1409AB1B31",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768",
+      "maxPriority": 1,
+      "minPriority": 1
+    },
+    {
+      "name": "Armor Type",
+      "id": "FC6F42BB-0CD0-4C54-8ED7-A5FEDB4F50D4",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "maxPriority": 0,
+      "minPriority": 0
+    }
+  ],
+  "attributes": [
+    {
+      "name": "Alteration",
+      "id": "83D71DF6-F1FF-40FF-8F90-B6B1B515B389",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Archery",
+      "id": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Axe",
+      "id": "9CA979AF-78B4-42FC-8D95-BAEF22AA761F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Backstabbing",
+      "id": "1CEE59DA-2936-45F6-A202-93E1C9AC812E",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Blunt Weapon",
+      "id": "62D032A2-8FB8-4FB8-9890-6D688FB993B4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Centaurian",
+      "id": "01F23909-56A9-43CD-8860-3A3F2EDC759F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Climbing",
+      "id": "120B8B31-A1B5-4930-B73D-318887941F3F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Critical Strike",
+      "id": "C41A879B-AB67-4047-9567-B51C884FB429",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Daedric",
+      "id": "32685803-3B92-4984-8FBD-BE8F276F5411",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Destruction",
+      "id": "157CD52F-EC9B-4A8C-B087-232FDFF0E0F4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dodging",
+      "id": "390AE41F-6F77-45CC-8053-C2430D1150F1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Dragonish",
+      "id": "E6D0DC67-5528-4646-B976-5DCC0A0C8C5A",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Etiquette",
+      "id": "1E85B6F3-BF35-4A9E-9F21-57A08ECC1AB0",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Giantish",
+      "id": "C6D14DB9-55C3-43AE-9171-6CAEAD969CE2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Hand-to-Hand",
+      "id": "434C4930-FBFB-48C9-950E-A6F57DF9A7CE",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Harpy",
+      "id": "414C144A-5757-4CB8-850B-CB3178C84FA8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Illusion",
+      "id": "ADAD1B0B-4DB7-40F9-88F5-AD04C034BDA6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Impish",
+      "id": "6C7064C2-9D71-4F8C-A1D1-614284589D30",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Jumping",
+      "id": "7526188B-695B-4D79-BE57-CBCDA58DD098",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Lockpicking",
+      "id": "9A351E90-A92E-42B2-A6EC-819FAE34C79E",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Long Blade",
+      "id": "D1E52240-BF82-400A-9E80-CDA8918E77D1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Medical",
+      "id": "0A4FCFAD-8497-4B8D-AA63-2F40F93AE375",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Mercantile",
+      "id": "454F2075-CE6F-4C84-AFAF-39E67709C606",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Mysticism",
+      "id": "4393B030-0DD0-4FAD-BA70-4AFD9E95F0C2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Nymph",
+      "id": "05BE3DDA-6D2C-44C4-8613-A6693D7B2993",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Orcish",
+      "id": "C01D50AD-8947-4E04-B5FC-B541DCD501B6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Pickpocket",
+      "id": "13D279AF-B74A-48CF-B308-E3B77F76FC9C",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Restoration",
+      "id": "548EA51C-6A03-4C51-A1F4-8610B6E67E75",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Running",
+      "id": "D7798E34-80E1-4CF5-8005-54B8466FEE8A",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Short Blade",
+      "id": "FADAD3B8-DEAC-4C2A-8D0F-AB23130F7CEE",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Spriggan",
+      "id": "954C94BD-A344-4323-ACA8-0D991520439C",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Stealth",
+      "id": "E2931793-0238-4461-8802-C24696F48003",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Streetwise",
+      "id": "9F354D99-03A2-4A8F-BF28-FA9F03109332",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Swimming",
+      "id": "2D41720B-4BFC-4725-A39C-6AE15AB2A4A9",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Thaumaturgy",
+      "id": "4644C7AE-9372-4D2C-8307-A870A4F03DF6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Heavy Armor",
+      "id": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Acrobatics",
+      "id": "01F53694-1C7E-45E1-A78D-D980BC8BD174",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Block",
+      "id": "8244F7F5-139C-4D20-A19B-A777F7E246D4",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Athletics",
+      "id": "CC86C3CF-575D-4667-A62D-5F12316DA6D8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Alchemy",
+      "id": "8006AB50-6D68-4FF1-BD77-22307F0F14A1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Medium Armor",
+      "id": "8CBA5E87-DCC1-42DE-9E6F-FBC4F8DA7D37",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Armorer",
+      "id": "072C5542-B30F-4747-B661-7CE1E3A3D7A9",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Light Armor",
+      "id": "3BB5036C-FDCC-4197-9559-B42212B1FAF7",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Hand-to-hand",
+      "id": "C6C07126-019E-4018-83B3-66FFC7BC9DA1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Conjuration",
+      "id": "14413FB8-EC18-48DA-BAA1-5EFE3574D8E8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Spear",
+      "id": "27E2ED98-B5C0-4D23-A1FD-CFF5649660E2",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Marksman",
+      "id": "C08DD26A-8DEC-4FFF-84BD-580AE21BD71F",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Speechcraft",
+      "id": "07C9B4CA-13BB-441E-A234-2D6C54A42849",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Enchant",
+      "id": "85B62DF2-E483-4AD1-A3A3-5E68C6A6B468",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Sneak",
+      "id": "D4C82D7D-78A9-4DDF-B30C-80FA5A9F21B1",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Unarmored",
+      "id": "7CD6B107-2FE9-4E01-8775-300B33337DC8",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Security",
+      "id": "285A564D-DB05-4FBB-9B41-A4EF4E109BAC",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Blade",
+      "id": "F109D390-1E53-4050-9305-DE79D16110D6",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Blunt",
+      "id": "33883C86-FDF2-4560-9390-4188D2EE7F12",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Hand to Hand",
+      "id": "B085007A-7803-40A0-B83C-513645132912",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6"
+      ]
+    },
+    {
+      "name": "Enchanting",
+      "id": "43EFC577-0436-45CB-ACC1-3AA253864473",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "One-handed",
+      "id": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Smithing",
+      "id": "8964E348-4496-4EA7-B8E6-7149720AEBA0",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Two-handed",
+      "id": "9AB07CEF-F9A0-4D63-A60E-98AE96321080",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Speech",
+      "id": "DA056434-008E-42EC-A3A5-48B2736ACC4B",
+      "type": "9515BBFA-A1B9-43E4-BBDB-D946C8C2FD54",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Leather",
+      "id": "50A2CE5D-4BD8-45BB-BF17-561E50E9B3FC",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Chain",
+      "id": "0A497CC6-E3F9-4075-9679-8AFB692631EB",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Plate",
+      "id": "AA8F9CF1-0472-4BC6-AF65-AD7F61E77B17",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE"
+      ]
+    },
+    {
+      "name": "Medium",
+      "id": "E3FE6788-DC44-4B07-AB26-C012041C7813",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68"
+      ]
+    },
+    {
+      "name": "Light",
+      "id": "97113C70-BCF3-490D-9810-761A783B45D3",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20"
+      ]
+    },
+    {
+      "name": "Heavy",
+      "id": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20"
+      ]
+    }
+  ],
+  "module_types": [
+    {
+      "name": "Questline",
+      "id": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Objective",
+      "id": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "name": "Follower",
+      "id": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4"
+    },
+    {
+      "name": "Equipment",
+      "id": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE"
+    },
+    {
+      "name": "House",
+      "id": "D453D642-DE13-41F2-B129-A89D447E2863"
+    }
+  ],
+  "ingredients": [
+    {
+      "name": "Leather",
+      "id": "db5d2",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Leather Strips",
+      "id": "800e4",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Iron Ingot",
+      "id": "5ace4",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Refined Moonstone",
+      "id": "5ad9f",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Elven Smithing",
+      "id": "cb40f",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Steel Ingot",
+      "id": "5ace5",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Corundum Ingot",
+      "id": "5ad93",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Advanced Armors",
+      "id": "cb414",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Quicksilver Ingot",
+      "id": "5ada0",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Refined Malachite",
+      "id": "5ada1",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Glass Smithing",
+      "id": "cb411",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dragon Scales",
+      "id": "3ada3",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dragon Bone",
+      "id": "3ada4",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Dragon Armor",
+      "id": "52190",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Steel Smithing",
+      "id": "cb40d",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Dwarven Smithing",
+      "id": "cb40e",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dwarven Metal Ingot",
+      "id": "db8a2",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Orichalcum Ingot",
+      "id": "5ad99",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Orcish Smithing",
+      "id": "cb410",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Ebony Ingot",
+      "id": "5ad9d",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Ebony Smithing",
+      "id": "cb412",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Daedra Heart",
+      "id": "3ad5b",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Daedric Smithing",
+      "id": "cb413",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "name": "Leather Armor",
+      "id": "2EC7D7AD-F2E9-4ADE-9535-44F2FB5F9B2A",
+      "level": 8,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 9
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        }
+      ]
+    },
+    {
+      "name": "Elven Armor",
+      "id": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68",
+      "level": 12,
+      "notes": "Crafting ingredients for non-guilded armor and no shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 4
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ad9f",
+          "quantity": 9
+        },
+        {
+          "ingredient": "cb40f",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Scaled Armor",
+      "id": "F68317D6-9F20-48D2-A9F4-715AFE7C14DE",
+      "level": 19,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 5
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ad93",
+          "quantity": 5
+        },
+        {
+          "ingredient": "cb414",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Elven Guilded Armor",
+      "id": "FF027441-F56C-4ED0-8F6A-878B33DBFD3E",
+      "level": 27,
+      "notes": "Crafting ingredients for Guilded Armor only.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 3
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 1
+        },
+        {
+          "ingredient": "5ad9f",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ada0",
+          "quantity": 1
+        },
+        {
+          "ingredient": "cb40f",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Glass Armor",
+      "id": "3E9B9CE5-18B6-449C-89C4-D459A122E320",
+      "level": 36,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 4
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ad9f",
+          "quantity": 5
+        },
+        {
+          "ingredient": "5ada1",
+          "quantity": 9
+        },
+        {
+          "ingredient": "cb411",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dragonscale Armor",
+      "id": "F139D09C-AD44-402E-A1B4-1FF375D84485",
+      "level": 46,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "db5d2",
+          "quantity": 4
+        },
+        {
+          "ingredient": "800e4",
+          "quantity": 8
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 5
+        },
+        {
+          "ingredient": "3ada3",
+          "quantity": 10
+        },
+        {
+          "ingredient": "52190",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dragonplate Armor",
+      "id": "01F011F2-E718-4974-B084-B20ADB1F14D2",
+      "level": 40,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "3ada3",
+          "quantity": 10
+        },
+        {
+          "ingredient": "3ada4",
+          "quantity": 5
+        },
+        {
+          "ingredient": "52190",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Steel Armor",
+      "id": "03B886BF-C835-4933-8D9B-D75C34017215",
+      "level": 6,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 11
+        },
+        {
+          "ingredient": "cb40d",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dwarven Armor",
+      "id": "DA8F97D7-F74B-49CF-8CEF-CB38A6ED6B1D",
+      "level": 12,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 4
+        },
+        {
+          "ingredient": "db8a2",
+          "quantity": 8
+        },
+        {
+          "ingredient": "cb40e",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Steel Plate Armor",
+      "id": "95E144B9-DD6D-4E4C-99D3-44D115FD2111",
+      "level": 18,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad93",
+          "quantity": 4
+        },
+        {
+          "ingredient": "cb414",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Orcish Armor",
+      "id": "613E26A5-1284-43BD-A066-CAF666894743",
+      "level": 25,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ad99",
+          "quantity": 11
+        },
+        {
+          "ingredient": "cb410",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Ebony Armor",
+      "id": "0DBCAE5E-AC8A-4933-AC56-DDE8005A1C00",
+      "level": 32,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad9d",
+          "quantity": 13
+        },
+        {
+          "ingredient": "cb412",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Daedric Armor",
+      "id": "8CD3340B-2488-4807-BAE4-314119225EE1",
+      "level": 48,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad9d",
+          "quantity": 13
+        },
+        {
+          "ingredient": "3ad5b",
+          "quantity": 4
+        },
+        {
+          "ingredient": "cb413",
+          "quantity": 0
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "female": false,
+      "id": "8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E",
+      "name": "Ja’Zakajirr",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+    },
+    {
+      "id": "8F434D1D-2FE6-4518-B3C0-213883BB914B",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "female": true,
+      "name": "Malula"
+    },
+    {
+      "name": "Halo of Snow",
+      "female": false,
+      "id": "80DED813-EAC3-41BF-B4A2-3C0DE6854222",
+      "game": "33839302-E5B9-4299-AA81-444BED243F20",
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+    }
+  ]
+}

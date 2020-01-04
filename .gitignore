@@ -1,3 +1,5 @@
+.DS_Store
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
@@ -35,9 +37,9 @@ playground.xcworkspace
 # Swift Package Manager
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
+Packages/
+Package.pins
+Package.resolved
 .build/
 
 # CocoaPods
@@ -51,8 +53,8 @@ playground.xcworkspace
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
 
+Carthage/Checkouts
 Carthage/Build
 
 # fastlane

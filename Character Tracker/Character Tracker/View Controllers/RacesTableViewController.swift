@@ -39,7 +39,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         guard let game = gameReference?.game else { return nil }
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY game == %@", game)
+            fetchRequest.predicate = NSPredicate(format: "ANY games == %@", game)
         } else {
             if let gameRaces = game.races {
                 fetchRequest.predicate = NSPredicate(format: "NOT SELF in %@", gameRaces)
@@ -147,7 +147,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         if editingStyle == .delete {
             guard let race = fetchedResultsController?.object(at: indexPath) else { return }
             
-            if race.game?.count ?? 0 > 1, // If this race is tied to other games
+            if race.games?.count ?? 0 > 1, // If this race is tied to other games
                 !showAll { // and you aren't in the master list
                 guard let game = gameReference?.game else { return }
                 raceController.remove(game: game, from: race, context: CoreDataStack.shared.mainContext)

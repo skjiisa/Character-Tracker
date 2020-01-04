@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Attribute" representedClassName="Attribute" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="attribute" inverseEntity="CharacterAttribute"/>
-        <relationship name="game" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="attributes" inverseEntity="Link"/>
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="attributes" inverseEntity="Mod"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="attributes" inverseEntity="AttributeType"/>
@@ -38,7 +38,6 @@
     </entity>
     <entity name="Character" representedClassName="Character" syncable="YES" codeGenerationType="class">
         <attribute name="female" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="gameClass" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="character" inverseEntity="CharacterAttribute"/>
@@ -64,13 +63,13 @@
         <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="mainline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="game" inverseEntity="Attribute"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="games" inverseEntity="Attribute"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="games" inverseEntity="Ingredient"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="games" inverseEntity="Link"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="games" inverseEntity="Mod"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="games" inverseEntity="Module"/>
-        <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="game" inverseEntity="Race"/>
+        <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="games" inverseEntity="Race"/>
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES" codeGenerationType="class">
         <attribute name="url" optional="YES" attributeType="URI"/>
@@ -136,18 +135,17 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="character" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="race" inverseEntity="Character"/>
-        <relationship name="game" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="races" inverseEntity="Game"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="races" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="races" inverseEntity="Link"/>
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="races" inverseEntity="Mod"/>
     </entity>
-    <fetchRequest name="testAttributeTypes" entity="AttributeType"/>
     <elements>
         <element name="Attribute" positionX="473" positionY="-155" width="128" height="148"/>
         <element name="AttributeType" positionX="636" positionY="-90" width="128" height="103"/>
         <element name="AttributeTypeSection" positionX="826" positionY="-76" width="128" height="118"/>
         <element name="Author" positionX="-60" positionY="-57" width="128" height="133"/>
         <element name="Category" positionX="-88" positionY="194" width="128" height="103"/>
-        <element name="Character" positionX="157" positionY="-242" width="128" height="178"/>
+        <element name="Character" positionX="157" positionY="-242" width="128" height="163"/>
         <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
         <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>

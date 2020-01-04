@@ -45,7 +45,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             let type = attributeType else { return nil }
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY game == %@ AND type == %@", game, type)
+            fetchRequest.predicate = NSPredicate(format: "ANY games == %@ AND type == %@", game, type)
         } else {
             if let gameAttributes = game.attributes {
                 fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@) AND type == %@", gameAttributes, type)
@@ -155,7 +155,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         if editingStyle == .delete {
             guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
             
-            if attribute.game?.count ?? 0 > 1, // If this attribute is tied to other games
+            if attribute.games?.count ?? 0 > 1, // If this attribute is tied to other games
                 !showAll { // and you aren't in the master list
                 guard let game = gameReference?.game else { return }
                 attributeController?.remove(game: game, from: attribute, context: CoreDataStack.shared.mainContext)
