@@ -37,6 +37,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case name
         case notes(TextViewReference)
         case ingredients
+        case modules
     }
     
     var nameTextField: UITextField?
@@ -90,6 +91,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return 1
         case .ingredients:
             return ingredientController.tempIngredients.count + 1
+        case .modules:
+            return moduleController.tempModules.count + 1
         }
     }
     
@@ -191,6 +194,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
+            }
+        case .modules:
+            if indexPath.row < moduleController.tempModules.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
+                cell.textLabel?.text = "Select Modules"
             }
         }
 
@@ -394,6 +404,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func completeTapped(_ sender: UIButton) {
         setCompleted(true)
+        updateViews()
     }
     
     @IBAction func undoTapped(_ sender: UIButton) {

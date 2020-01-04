@@ -202,7 +202,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if moduleController.tempModules[module] ?? false {
+                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
                     cell.accessoryType = .checkmark
                 } else {
                     cell.accessoryType = .disclosureIndicator

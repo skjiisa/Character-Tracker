@@ -10,7 +10,7 @@ import CoreData
 
 class ModuleController {
     
-    private(set) var tempModules: [Module: Bool] = [:]
+    private(set) var tempModules: [(module: Module, completed: Bool)] = []
     
     //MARK: Module CRUD
     
@@ -67,7 +67,7 @@ class ModuleController {
             return
         }
         
-        tempModules.removeValue(forKey: module)
+        tempModules.removeAll(where: { $0.module == module })
         
         context.delete(module)
         CoreDataStack.shared.save(context: context)
@@ -124,44 +124,42 @@ class ModuleController {
             return
         }
         
-        tempModules.removeValue(forKey: module)
+        tempModules.removeAll(where: { $0.module == module })
         
         CoreDataStack.shared.save(context: context)
     }
     
     //MARK: Temp Modules
     
+    func sortTempModules() {
+        tempModules.sort { $0.module.level < $1.module.level }
+    }
+    
     func add(tempModule module: Module, completed: Bool = false) {
-        tempModules[module] = completed
+        if !tempModules.contains(where: { $0.module == module }) {
+            tempModules.append((module, completed))
+        }
+        sortTempModules()
     }
     
     func toggle(tempModule module: Module) {
-        if tempModules.contains(where: { $0.key == module }) {
+        if tempModules.contains(where: { $0.module == module }) {
             remove(tempModule: module)
         } else {
-            add(tempModule: module, completed: false)
+            add(tempModule: module)
         }
+        sortTempModules()
     }
     
     func remove(tempModule module: Module) {
-        tempModules.removeValue(forKey: module)
+        tempModules.removeAll(where: { $0.module == module })
     }
     
     func getTempModules(ofType type: ModuleType) -> [Module] {
-        var modules = tempModules.keys.filter { $0.type == type }
-        modules.sort { (module1, module2) -> Bool in
-            if module1.level < module2.level {
-                return true
-            } else if module1.level > module2.level {
-                return false
-            } else if module1.name ?? "" < module2.name ?? "" {
-                return true
-            }
-            
-            return false
-        }
+        let modules = tempModules.compactMap({ $0.module })
+        let result = modules.filter({ $0.type == type })
         
-        return modules
+        return result
     }
     
     func getTempModules(from section: Section) -> [Module]? {
@@ -177,11 +175,11 @@ class ModuleController {
     func saveTempModules(to character: Character, context: NSManagedObjectContext) {
         let currentCharacterModules = fetchCharacterModules(for: character, context: context)
         
-        for modulePair in tempModules {
-            if let characterModule = currentCharacterModules.first(where: { $0.module == modulePair.key }) {
-                characterModule.completed = modulePair.value
+        for tempModule in tempModules {
+            if let characterModule = currentCharacterModules.first(where: { $0.module == tempModule.module }) {
+                characterModule.completed = tempModule.completed
             } else {
-                CharacterModule(character: character, module: modulePair.key, completed: modulePair.value, context: context)
+                CharacterModule(character: character, module: tempModule.module, completed: tempModule.completed, context: context)
             }
         }
         
@@ -189,13 +187,14 @@ class ModuleController {
     }
     
     func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
-        tempModules = [:]
+        tempModules = []
         
         let characterModules = fetchCharacterModules(for: character, context: context)
         for characterModule in characterModules {
             guard let module = characterModule.module else { continue }
-            tempModules[module] = characterModule.completed
+            tempModules.append((module, characterModule.completed))
         }
+        sortTempModules()
     }
     
     func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
@@ -241,13 +240,13 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
         
         if let module = characterModule.module,
-            tempModules.keys.contains(module) {
-            tempModules[module] = completed
+            let index = tempModules.firstIndex(where: { $0.module == module }) {
+            tempModules[index].completed = completed
         }
     }
     
     func removeMissingTempModules(from character: Character, context: NSManagedObjectContext) {
-        let modules: [Module] = tempModules.map({ $0.key })
+        let modules: [Module] = tempModules.map({ $0.module })
         
         let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (module IN %@)", character, modules)
