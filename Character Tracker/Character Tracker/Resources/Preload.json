@@ -1015,8 +1015,98 @@
       ]
     },
     {
+      "name": "Dragon Bone",
+      "id": "3ada4",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
       "name": "Perk: Dragon Armor",
       "id": "52190",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Steel Smithing",
+      "id": "cb40d",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Dwarven Smithing",
+      "id": "cb40e",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dwarven Metal Ingot",
+      "id": "db8a2",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Orichalcum Ingot",
+      "id": "5ad99",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Orcish Smithing",
+      "id": "cb410",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Ebony Ingot",
+      "id": "5ad9d",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Ebony Smithing",
+      "id": "cb412",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Daedra Heart",
+      "id": "3ad5b",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Perk: Daedric Smithing",
+      "id": "cb413",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1211,6 +1301,219 @@
         },
         {
           "ingredient": "52190",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dragonplate Armor",
+      "id": "01F011F2-E718-4974-B084-B20ADB1F14D2",
+      "level": 40,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "3ada3",
+          "quantity": 10
+        },
+        {
+          "ingredient": "3ada4",
+          "quantity": 5
+        },
+        {
+          "ingredient": "52190",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Steel Armor",
+      "id": "03B886BF-C835-4933-8D9B-D75C34017215",
+      "level": 6,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 11
+        },
+        {
+          "ingredient": "cb40d",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Dwarven Armor",
+      "id": "DA8F97D7-F74B-49CF-8CEF-CB38A6ED6B1D",
+      "level": 12,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 4
+        },
+        {
+          "ingredient": "db8a2",
+          "quantity": 8
+        },
+        {
+          "ingredient": "cb40e",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Steel Plate Armor",
+      "id": "95E144B9-DD6D-4E4C-99D3-44D115FD2111",
+      "level": 18,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ace5",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad93",
+          "quantity": 4
+        },
+        {
+          "ingredient": "cb414",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Orcish Armor",
+      "id": "613E26A5-1284-43BD-A066-CAF666894743",
+      "level": 25,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "5ad99",
+          "quantity": 11
+        },
+        {
+          "ingredient": "cb410",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Ebony Armor",
+      "id": "0DBCAE5E-AC8A-4933-AC56-DDE8005A1C00",
+      "level": 32,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad9d",
+          "quantity": 13
+        },
+        {
+          "ingredient": "cb412",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "name": "Daedric Armor",
+      "id": "8CD3340B-2488-4807-BAE4-314119225EE1",
+      "level": 48,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "5ad9d",
+          "quantity": 13
+        },
+        {
+          "ingredient": "3ad5b",
+          "quantity": 4
+        },
+        {
+          "ingredient": "cb413",
           "quantity": 0
         }
       ]
