@@ -73,8 +73,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) else { return }
-        tableView.reloadSections([ingredientsSectionIndex], with: .automatic)
+        var sectionsToReload: IndexSet = []
+        if let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) {
+            sectionsToReload.insert(ingredientsSectionIndex)
+        }
+        if let modulesSectionIndex = sections.firstIndex(where: { $0.type == .modules }) {
+            sectionsToReload.insert(modulesSectionIndex)
+        }
+        
+        tableView.reloadSections(sectionsToReload, with: .automatic)
     }
 
     // MARK: - Table view data source
@@ -197,9 +204,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             }
         case .modules:
             if indexPath.row < moduleController.tempModules.count {
-                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
+                
+                let tempModule = moduleController.tempModules[indexPath.row]
+                let module = tempModule.module
+                
+                cell.textLabel?.text = module.name
+                
+                if module.level > 0 {
+                    cell.detailTextLabel?.text = "Level \(module.level)"
+                } else {
+                    cell.detailTextLabel?.text = nil
+                }
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                 cell.textLabel?.text = "Select Modules"
             }
         }
@@ -306,6 +324,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
         
         sections.append(("Ingredients", .ingredients))
+        sections.append(("Required Modules", .modules))
     }
     
     private func updateViews() {
@@ -429,6 +448,16 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                             self.navigationController?.popViewController(animated: true)
                         }
                     }
+                }
+            } else if let modulesVC = vc as? ModulesTableViewController {
+                let selectedModules = moduleController.tempModules.map({ $0.module })
+                
+                modulesVC.checkedModules = selectedModules
+                modulesVC.moduleController = moduleController
+                
+                modulesVC.callbacks.append { module in
+                    self.moduleController.toggle(tempModule: module)
+                    self.moduleHasBeenModified()
                 }
             }
         }

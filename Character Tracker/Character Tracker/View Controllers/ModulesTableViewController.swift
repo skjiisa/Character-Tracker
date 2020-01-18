@@ -38,14 +38,22 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        guard let game = gameReference?.game,
-            let type = moduleType else { return nil }
+        guard let game = gameReference?.game else { return nil }
+        
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY games == %@ AND type == %@", game, type)
+            var argumentList: [Any] = [game]
+            if let type = moduleType {
+                argumentList.append(type)
+            }
+            fetchRequest.predicate = NSPredicate(format: "ANY games == %@\(argumentList.count == 2 ? " AND type == %@" : "")", argumentArray: argumentList)
         } else {
             if let gameModules = game.modules {
-                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@) AND type == %@", gameModules, type)
+                var argumentList: [Any] = [gameModules]
+                if let type = moduleType {
+                    argumentList.append(type)
+                }
+                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@)\(argumentList.count == 2 ? " AND type == %@" : "")", argumentArray: argumentList)
             }
         }
         
