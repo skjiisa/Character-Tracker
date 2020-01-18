@@ -96,3 +96,13 @@ extension ModuleIngredient {
         self.quantity = quantity
     }
 }
+
+extension ModuleModule {
+    @discardableResult convenience init(parent: Module, child: Module, value: Int16 = 0, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.parent = parent
+        self.child = child
+        self.value = value
+    }
+}

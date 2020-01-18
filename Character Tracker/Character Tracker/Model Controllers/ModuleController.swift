@@ -212,9 +212,8 @@ class ModuleController {
         fetchRequest.predicate = NSPredicate(format: "character == %@", character)
         
         do {
-            let characterAttributes = try context.fetch(fetchRequest)
-            
-            return characterAttributes
+            let characterModule = try context.fetch(fetchRequest)
+            return characterModule
         } catch {
             if let name = character.name {
                 NSLog("Could not fetch \(name)'s modules: \(error)")
@@ -231,9 +230,8 @@ class ModuleController {
         fetchRequest.predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
         
         do {
-            let characterAttribute = try context.fetch(fetchRequest)
-            
-            return characterAttribute.first
+            let characterModule = try context.fetch(fetchRequest)
+            return characterModule.first
         } catch {
             if let name = character.name {
                 NSLog("Could not fetch \(name)'s modules: \(error)")
@@ -273,6 +271,51 @@ class ModuleController {
                 NSLog("Could not fetch character's modules for removal: \(error)")
             }
         }
+    }
+    
+    //MARK: Module Modules CRUD
+    
+    func saveTempModules(to module: Module, context: NSManagedObjectContext) {
+        let currentChildModules = fetchChildModules(for: module, context: context)
+        
+        for tempModule in tempModules {
+            if let childModule = currentChildModules.first(where: { $0.parent == tempModule.module }) {
+                // update the value
+            } else {
+                ModuleModule(parent: module, child: tempModule.module, context: context)
+            }
+        }
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func fetchTempModules(for module: Module, context: NSManagedObjectContext) {
+        tempModules = []
+        
+        let childModules = fetchChildModules(for: module, context: context)
+        for childModule in childModules {
+            guard let module = childModule.child else { continue }
+            tempModules.append((module, false))
+        }
+        sortTempModules()
+    }
+    
+    func fetchChildModules(for module: Module, context: NSManagedObjectContext) -> [ModuleModule] {
+        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+        
+        do {
+            let moduleModules = try context.fetch(fetchRequest)
+            return moduleModules
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s modules: \(error)")
+            } else {
+                NSLog("Could not fetch character's modules: \(error)")
+            }
+        }
+        
+        return []
     }
     
 }
