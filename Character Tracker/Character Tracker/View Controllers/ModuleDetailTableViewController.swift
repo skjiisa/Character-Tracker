@@ -72,6 +72,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let characterModule = characterModule {
+            moduleController.checkTempModules(againstCharacterFrom: characterModule, context: CoreDataStack.shared.mainContext)
+        }
 
         var sectionsToReload: IndexSet = []
         if let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) {
@@ -215,6 +219,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     cell.detailTextLabel?.text = "Level \(module.level)"
                 } else {
                     cell.detailTextLabel?.text = nil
+                }
+                
+                if tempModule.completed {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .disclosureIndicator
                 }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)

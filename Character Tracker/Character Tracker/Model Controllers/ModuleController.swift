@@ -197,6 +197,16 @@ class ModuleController {
         sortTempModules()
     }
     
+    func checkTempModules(againstCharacterFrom characterModule: CharacterModule, context: NSManagedObjectContext) {
+        guard let character = characterModule.character else { return }
+        let characterModules = fetchCharacterModules(for: character, context: context)
+        for fetchedCharacterModule in characterModules {
+            guard let module = fetchedCharacterModule.module,
+                let index = tempModules.firstIndex(where: { $0.module == module }) else { continue }
+            tempModules[index].completed = fetchedCharacterModule.completed
+        }
+    }
+    
     func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
         let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "character == %@", character)
