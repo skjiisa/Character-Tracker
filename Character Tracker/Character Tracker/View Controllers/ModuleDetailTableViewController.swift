@@ -497,8 +497,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else if let modulesVC = vc as? ModulesTableViewController {
                 let selectedModules = moduleController.tempModules.map({ $0.module })
                 
-                modulesVC.checkedModules = selectedModules
                 modulesVC.moduleController = moduleController
+                modulesVC.checkedModules = selectedModules
+                modulesVC.excludedModule = module
                 
                 modulesVC.callbacks.append { module in
                     self.moduleController.toggle(tempModule: module)

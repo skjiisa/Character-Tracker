@@ -21,6 +21,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var moduleController: ModuleController?
     var moduleType: ModuleType?
     var checkedModules: [Module]?
+    var excludedModule: Module?
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
@@ -42,18 +43,31 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         
         if !showAll {
+            var predicateString = "ANY games == %@"
             var argumentList: [Any] = [game]
+            
             if let type = moduleType {
+                predicateString += " AND type == %@"
                 argumentList.append(type)
             }
-            fetchRequest.predicate = NSPredicate(format: "ANY games == %@\(argumentList.count == 2 ? " AND type == %@" : "")", argumentArray: argumentList)
+            
+            if let excludedModuleUUID = excludedModule?.id {
+                predicateString += " AND id != %@"
+                argumentList.append(excludedModuleUUID)
+            }
+            
+            fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
         } else {
             if let gameModules = game.modules {
+                var predicateString = "NOT (SELF in %@)"
                 var argumentList: [Any] = [gameModules]
+                
                 if let type = moduleType {
+                    predicateString += " AND type == %@"
                     argumentList.append(type)
                 }
-                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@)\(argumentList.count == 2 ? " AND type == %@" : "")", argumentArray: argumentList)
+                
+                fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
             }
         }
         
