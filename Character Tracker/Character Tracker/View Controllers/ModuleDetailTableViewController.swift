@@ -244,7 +244,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 2,
+        if sections[indexPath.section].type == .ingredients
+            || sections[indexPath.section].type == .modules,
             indexPath.row < ingredientController.tempIngredients.count {
             return true
         }
@@ -255,8 +256,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
-            ingredientController.remove(tempIngredient: ingredient)
+            let section = sections[indexPath.section].type
+            if section == .ingredients {
+                let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
+                ingredientController.remove(tempIngredient: ingredient)
+            } else if section == .modules {
+                let module = moduleController.tempModules[indexPath.row].module
+                moduleController.remove(tempModule: module)
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
         } else if editingStyle == .insert {
@@ -423,6 +430,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         ingredientController.removeMissingTempIngredients(from: savedModule, context: context)
         ingredientController.saveTempIngredients(to: savedModule, context: context)
         
+        moduleController.removeMissingTempModules(from: savedModule, context: context)
         moduleController.saveTempModules(to: savedModule, context: context)
     }
     

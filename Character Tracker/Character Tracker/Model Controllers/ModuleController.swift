@@ -279,7 +279,7 @@ class ModuleController {
         let currentChildModules = fetchChildModules(for: module, context: context)
         
         for tempModule in tempModules {
-            if let childModule = currentChildModules.first(where: { $0.parent == tempModule.module }) {
+            if let childModule = currentChildModules.first(where: { $0.child == tempModule.module }) {
                 // update the value
             } else {
                 ModuleModule(parent: module, child: tempModule.module, context: context)
@@ -311,11 +311,31 @@ class ModuleController {
             if let name = module.name {
                 NSLog("Could not fetch \(name)'s modules: \(error)")
             } else {
-                NSLog("Could not fetch character's modules: \(error)")
+                NSLog("Could not fetch module's modules: \(error)")
             }
         }
         
         return []
+    }
+    
+    func removeMissingTempModules(from module: Module, context: NSManagedObjectContext) {
+        let modules: [Module] = tempModules.map({ $0.module })
+        
+        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "parent == %@ AND NOT (child IN %@)", module, modules)
+        
+        do {
+            let modulesToRemove = try context.fetch(fetchRequest)
+            for moduleToRemove in modulesToRemove {
+                context.delete(moduleToRemove)
+            }
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's modules for removal: \(error)")
+            }
+        }
     }
     
 }
