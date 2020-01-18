@@ -535,6 +535,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
                 
                 moduleDetailVC.moduleType = module.type
+                moduleDetailVC.callbacks.append { characterModule, completed in
+                    self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+                    if completed {
+                        DispatchQueue.main.async {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }
             }
         }
     }

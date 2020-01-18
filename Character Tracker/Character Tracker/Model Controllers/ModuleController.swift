@@ -199,6 +199,10 @@ class ModuleController {
     
     func checkTempModules(againstCharacterFrom characterModule: CharacterModule, context: NSManagedObjectContext) {
         guard let character = characterModule.character else { return }
+        checkTempModules(againstCharacter: character, context: context)
+    }
+    
+    func checkTempModules(againstCharacter character: Character, context: NSManagedObjectContext) {
         let characterModules = fetchCharacterModules(for: character, context: context)
         for fetchedCharacterModule in characterModules {
             guard let module = fetchedCharacterModule.module,
@@ -279,7 +283,7 @@ class ModuleController {
         let currentChildModules = fetchChildModules(for: module, context: context)
         
         for tempModule in tempModules {
-            if let childModule = currentChildModules.first(where: { $0.child == tempModule.module }) {
+            if let _ = currentChildModules.first(where: { $0.child == tempModule.module }) {
                 // update the value
             } else {
                 ModuleModule(parent: module, child: tempModule.module, context: context)
