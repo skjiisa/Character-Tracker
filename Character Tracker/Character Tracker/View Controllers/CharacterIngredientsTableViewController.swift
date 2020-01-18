@@ -40,8 +40,8 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
     //MARK: Private
     
     private func setModules() {
-        let uncheckedModulesDictionary = moduleController?.tempModules.filter({ $0.value == false && $0.key.type == moduleType }) ?? [:]
-        let uncheckedModules = uncheckedModulesDictionary.map({ $0.key })
+        let uncheckedTempModules = moduleController?.tempModules.filter({ $0.completed == false && $0.module.type == moduleType }) ?? []
+        let uncheckedModules = uncheckedTempModules.map({ $0.module })
         
         modules = uncheckedModules.sorted(by: { module1, module2 -> Bool in
             // Modules with no level will be sorted to the end of the list
@@ -112,12 +112,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         let module = modules[indexPath.section]
         
         var moduleIngredients = module.mutableSetValue(forKey: "ingredients").compactMap({ $0 as? ModuleIngredient })
-        moduleIngredients.sort { moduleIngredient1, moduleIngredient2 -> Bool in
-            guard let ingredient1Name = moduleIngredient1.ingredient?.name,
-                let ingredient2Name = moduleIngredient2.ingredient?.name else { return true }
-            
-            return ingredient1Name < ingredient2Name
-        }
+        moduleIngredients.sort { $0.quantity < $1.quantity }
         guard indexPath.row < moduleIngredients.count else { return cell }
         let moduleIngredient = moduleIngredients[indexPath.row]
         

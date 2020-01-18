@@ -76,6 +76,9 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let character = character {
+            moduleController.checkTempModules(againstCharacter: character, context: CoreDataStack.shared.mainContext)
+        }
         tableView.reloadData()
     }
 
@@ -202,7 +205,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if moduleController.tempModules[module] ?? false {
+                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
                     cell.accessoryType = .checkmark
                 } else {
                     cell.accessoryType = .disclosureIndicator
@@ -460,8 +463,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                                 moduleDetailVC.characterModule = characterModule
                             }
                             
-                            moduleDetailVC.moduleController = moduleController
                             moduleDetailVC.moduleType = modulesSection
+                            moduleDetailVC.callbacks.append { characterModule, completed in
+                                self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+                                if completed {
+                                    DispatchQueue.main.async {
+                                        self.navigationController?.popViewController(animated: true)
+                                    }
+                                }
+                            }
                         }
                         
                     }

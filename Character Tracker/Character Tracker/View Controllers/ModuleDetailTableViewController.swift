@@ -20,22 +20,27 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     //MARK: Properties
     
     var ingredientController = IngredientController()
+    var moduleController = ModuleController()
     var gameReference: GameReference?
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
             if let module = module, let game = gameReference?.game {
-                ingredientController.fetchTempIngredients(for: module, in: game, context: CoreDataStack.shared.mainContext)
+                let context = CoreDataStack.shared.mainContext
+                ingredientController.fetchTempIngredients(for: module, in: game, context: context)
+                moduleController.fetchTempModules(for: module, context: context)
             }
         }
     }
     var characterModule: CharacterModule?
-    var moduleController: ModuleController?
+    var excludedModules: [Module] = []
+    var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
         case name
         case notes(TextViewReference)
         case ingredients
+        case modules
     }
     
     var nameTextField: UITextField?
@@ -70,9 +75,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if let characterModule = characterModule {
+            moduleController.checkTempModules(againstCharacterFrom: characterModule, context: CoreDataStack.shared.mainContext)
+        }
 
-        guard let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) else { return }
-        tableView.reloadSections([ingredientsSectionIndex], with: .automatic)
+        var sectionsToReload: IndexSet = []
+        if let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) {
+            sectionsToReload.insert(ingredientsSectionIndex)
+        }
+        if let modulesSectionIndex = sections.firstIndex(where: { $0.type == .modules }) {
+            sectionsToReload.insert(modulesSectionIndex)
+        }
+        
+        tableView.reloadSections(sectionsToReload, with: .automatic)
     }
 
     // MARK: - Table view data source
@@ -89,6 +105,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return 1
         case .ingredients:
             return ingredientController.tempIngredients.count + 1
+        case .modules:
+            return moduleController.tempModules.count + 1
         }
     }
     
@@ -191,6 +209,34 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
             }
+        case .modules:
+            if indexPath.row < moduleController.tempModules.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
+                
+                let tempModule = moduleController.tempModules[indexPath.row]
+                let module = tempModule.module
+                
+                cell.textLabel?.text = module.name
+                
+                if module.level > 0 {
+                    cell.detailTextLabel?.text = "Level \(module.level)"
+                } else {
+                    cell.detailTextLabel?.text = nil
+                }
+                
+                if tempModule.completed {
+                    cell.accessoryType = .checkmark
+                } else {
+                    if moduleIsExcluded(at: indexPath) {
+                        cell.accessoryType = .none
+                    } else {
+                        cell.accessoryType = .disclosureIndicator
+                    }
+                }
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
+                cell.textLabel?.text = "Select Modules"
+            }
         }
 
         return cell
@@ -198,7 +244,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 2,
+        if sections[indexPath.section].type == .ingredients
+            || sections[indexPath.section].type == .modules,
             indexPath.row < ingredientController.tempIngredients.count {
             return true
         }
@@ -209,8 +256,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
-            ingredientController.remove(tempIngredient: ingredient)
+            let section = sections[indexPath.section].type
+            if section == .ingredients {
+                let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
+                ingredientController.remove(tempIngredient: ingredient)
+            } else if section == .modules {
+                let module = moduleController.tempModules[indexPath.row].module
+                moduleController.remove(tempModule: module)
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
         } else if editingStyle == .insert {
@@ -264,12 +317,22 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if let notesCell = tableView.cellForRow(at: indexPath) as? NotesTableViewCell {
                 notesCell.textView.becomeFirstResponder()
             }
+        case .modules:
+            if moduleIsExcluded(at: indexPath) {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         default:
             break
         }
     }
     
     //MARK: Private
+    
+    private func choose(characterModule: CharacterModule, completed: Bool) {
+        for callback in callbacks {
+            callback(characterModule, completed)
+        }
+    }
     
     private func setUpSections() {
         sections.append(("", .name))
@@ -289,6 +352,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
         
         sections.append(("Ingredients", .ingredients))
+        sections.append(("Required Modules", .modules))
     }
     
     private func updateViews() {
@@ -352,10 +416,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let savedModule: Module
         
         if let module = module {
-            moduleController?.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
+            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
             savedModule = module
         } else {
-            guard let module = moduleController?.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context) else { return }
+            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context)
             savedModule = module
         }
         
@@ -365,17 +429,35 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         ingredientController.removeMissingTempIngredients(from: savedModule, context: context)
         ingredientController.saveTempIngredients(to: savedModule, context: context)
+        
+        moduleController.removeMissingTempModules(from: savedModule, context: context)
+        moduleController.saveTempModules(to: savedModule, context: context)
     }
     
     private func setCompleted(_ completed: Bool) {
         if let characterModule = characterModule {
-            moduleController?.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+            choose(characterModule: characterModule, completed: completed)
         }
     }
     
     private func moduleHasBeenModified() {
         //gameReference?.isSafeToChangeGame = false
         saveButton.isEnabled = true
+    }
+    
+    private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
+        let index = indexPath.row
+        
+        if index >= moduleController.tempModules.count {
+            return false
+        }
+        
+        let module = moduleController.tempModules[index].module
+        if excludedModules.contains(module) {
+            return true
+        }
+        
+        return false
     }
     
     //MARK: Actions
@@ -387,7 +469,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func completeTapped(_ sender: UIButton) {
         setCompleted(true)
-        navigationController?.popViewController(animated: true)
+        updateViews()
     }
     
     @IBAction func undoTapped(_ sender: UIButton) {
@@ -396,6 +478,17 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "AttributeToAttributes",
+            let indexPath = tableView.indexPathForSelectedRow {
+            if moduleIsExcluded(at: indexPath) {
+                return false
+            }
+        }
+        
+        return true
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -409,6 +502,43 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                         if let quantity = quantity {
                             self.ingredientController.add(tempIngredient: ingredient, quantity: quantity)
                             self.moduleHasBeenModified()
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }
+            } else if let modulesVC = vc as? ModulesTableViewController {
+                let selectedModules = moduleController.tempModules.map({ $0.module })
+                
+                modulesVC.moduleController = moduleController
+                modulesVC.checkedModules = selectedModules
+                modulesVC.excludedModule = module
+                
+                modulesVC.callbacks.append { module in
+                    self.moduleController.toggle(tempModule: module)
+                    self.moduleHasBeenModified()
+                }
+            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                let tempModule = moduleController.tempModules[indexPath.row]
+                let module = tempModule.module
+                
+                moduleDetailVC.module = module
+                
+                moduleDetailVC.excludedModules = excludedModules
+                if let thisModule = self.module {
+                    moduleDetailVC.excludedModules.append(thisModule)
+                }
+                
+                if let character = characterModule?.character {
+                    let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
+                    moduleDetailVC.characterModule = characterModule
+                }
+                
+                moduleDetailVC.moduleType = module.type
+                moduleDetailVC.callbacks.append { characterModule, completed in
+                    self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+                    if completed {
+                        DispatchQueue.main.async {
                             self.navigationController?.popViewController(animated: true)
                         }
                     }

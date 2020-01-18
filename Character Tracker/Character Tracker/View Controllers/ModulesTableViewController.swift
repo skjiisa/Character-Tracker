@@ -21,6 +21,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var moduleController: ModuleController?
     var moduleType: ModuleType?
     var checkedModules: [Module]?
+    var excludedModule: Module?
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
@@ -38,14 +39,35 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        guard let game = gameReference?.game,
-            let type = moduleType else { return nil }
+        guard let game = gameReference?.game else { return nil }
+        
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY games == %@ AND type == %@", game, type)
+            var predicateString = "ANY games == %@"
+            var argumentList: [Any] = [game]
+            
+            if let type = moduleType {
+                predicateString += " AND type == %@"
+                argumentList.append(type)
+            }
+            
+            if let excludedModuleUUID = excludedModule?.id {
+                predicateString += " AND id != %@"
+                argumentList.append(excludedModuleUUID)
+            }
+            
+            fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
         } else {
             if let gameModules = game.modules {
-                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@) AND type == %@", gameModules, type)
+                var predicateString = "NOT (SELF in %@)"
+                var argumentList: [Any] = [gameModules]
+                
+                if let type = moduleType {
+                    predicateString += " AND type == %@"
+                    argumentList.append(type)
+                }
+                
+                fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
             }
         }
         
@@ -236,7 +258,6 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
                     self.dismiss(animated: true, completion: nil)
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
-                moduleDetailVC.moduleController = moduleController
                 moduleDetailVC.moduleType = moduleType
                 
                 if segue.identifier == "ShowModuleDetail",
