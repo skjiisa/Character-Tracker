@@ -31,6 +31,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
     }
     var characterModule: CharacterModule?
+    var excludedModules: [Module] = []
     var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
@@ -224,7 +225,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 if tempModule.completed {
                     cell.accessoryType = .checkmark
                 } else {
-                    cell.accessoryType = .disclosureIndicator
+                    if moduleIsExcluded(at: indexPath) {
+                        cell.accessoryType = .none
+                    } else {
+                        cell.accessoryType = .disclosureIndicator
+                    }
                 }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
@@ -302,6 +307,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             tableView.deselectRow(at: indexPath, animated: true)
             if let notesCell = tableView.cellForRow(at: indexPath) as? NotesTableViewCell {
                 notesCell.textView.becomeFirstResponder()
+            }
+        case .modules:
+            if moduleIsExcluded(at: indexPath) {
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         default:
             break
@@ -424,6 +433,21 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         saveButton.isEnabled = true
     }
     
+    private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
+        let index = indexPath.row
+        
+        if index >= moduleController.tempModules.count {
+            return false
+        }
+        
+        let module = moduleController.tempModules[index].module
+        if excludedModules.contains(module) {
+            return true
+        }
+        
+        return false
+    }
+    
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
@@ -442,6 +466,17 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "AttributeToAttributes",
+            let indexPath = tableView.indexPathForSelectedRow {
+            if moduleIsExcluded(at: indexPath) {
+                return false
+            }
+        }
+        
+        return true
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -469,6 +504,24 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     self.moduleController.toggle(tempModule: module)
                     self.moduleHasBeenModified()
                 }
+            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                let tempModule = moduleController.tempModules[indexPath.row]
+                let module = tempModule.module
+                
+                moduleDetailVC.module = module
+                
+                moduleDetailVC.excludedModules = excludedModules
+                if let thisModule = self.module {
+                    moduleDetailVC.excludedModules.append(thisModule)
+                }
+                
+                if let character = characterModule?.character {
+                    let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
+                    moduleDetailVC.characterModule = characterModule
+                }
+                
+                moduleDetailVC.moduleType = module.type
             }
         }
     }

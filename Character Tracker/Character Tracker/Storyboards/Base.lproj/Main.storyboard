@@ -990,7 +990,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="FcM-PG-5WN" kind="show" id="zZH-5H-xAz"/>
+                                    <segue destination="FcM-PG-5WN" kind="show" identifier="AttributeToAttributes" id="zZH-5H-xAz"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectModuleCell" textLabel="lSq-oF-tpg" style="IBUITableViewCellStyleDefault" id="Ma2-3f-9BD">
@@ -1172,7 +1172,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DTF-qi-Fya"/>
-        <segue reference="FDA-d5-RMw"/>
+        <segue reference="lR8-jg-YER"/>
         <segue reference="Hak-ez-6fv"/>
         <segue reference="9dZ-mf-KGH"/>
         <segue reference="a8t-My-eU4"/>
