@@ -112,7 +112,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        title = "\(typeName)s"
+        title = typeName.pluralize()
         addAttributeButton.setTitle("Add \(typeName)", for: .normal)
         
         if showAll {

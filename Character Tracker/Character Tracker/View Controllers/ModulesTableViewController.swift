@@ -115,11 +115,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        if typeName != "Equipment" {
-            title = "\(typeName)s"
-        } else {
-            title = typeName
-        }
+        title = typeName.pluralize()
         addModuleButton.setTitle("Add \(typeName)", for: .normal)
         
         if showAll {
