@@ -65,6 +65,18 @@ extension Module {
         self.mod = mod
         self.id = id
     }
+    
+    @discardableResult convenience init(name: String, notes: String? = nil, level: Int16 = 0, games: Set<Game>, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.name = name
+        self.notes = notes
+        self.level = level
+        self.games = games as NSSet
+        self.type = type
+        self.mod = mod
+        self.id = id
+    }
 }
 
 extension CharacterModule {

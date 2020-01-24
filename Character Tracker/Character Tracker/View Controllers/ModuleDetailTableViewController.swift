@@ -449,8 +449,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     private func save() {
-        guard let game = gameReference?.game,
-            let type = moduleType else { return }
+        guard let type = moduleType,
+            !games.isEmpty else { return }
         let context = CoreDataStack.shared.mainContext
         
         guard let name = nameTextField?.text,
@@ -464,10 +464,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let savedModule: Module
         
         if let module = module {
-            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
+            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, games: games, type: type, context: context)
             savedModule = module
         } else {
-            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context)
+            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, games: games, type: type, context: context)
             savedModule = module
         }
         

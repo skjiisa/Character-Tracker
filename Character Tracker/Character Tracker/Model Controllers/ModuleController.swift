@@ -14,17 +14,18 @@ class ModuleController {
     
     //MARK: Module CRUD
     
-    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
-        let module = Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
+    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, games: [Game], type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
+        let module = Module(name: name, notes: notes, level: level, games: Set(games), type: type, context: context)
         CoreDataStack.shared.save(context: context)
         return module
     }
     
-    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
+    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, games: [Game], type: ModuleType, context: NSManagedObjectContext) {
         module.name = name
         module.notes = notes
         module.level = level
         module.type = type
+        module.games = Set(games) as NSSet
         CoreDataStack.shared.save(context: context)
     }
     
