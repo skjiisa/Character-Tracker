@@ -25,7 +25,20 @@ class ModuleController {
         module.notes = notes
         module.level = level
         module.type = type
-        module.games = Set(games) as NSSet
+        
+        if let oldGames = module.games as? Set<Game> {
+            for oldGameToRemove in oldGames.filter({ !games.contains($0) }) {
+                remove(game: oldGameToRemove, from: module, context: context, shouldSave: false)
+            }
+            
+            let mutableGames = module.mutableSetValue(forKey: "games")
+            for game in games {
+                if !mutableGames.contains(game) {
+                    mutableGames.add(game)
+                }
+            }
+        }
+        
         CoreDataStack.shared.save(context: context)
     }
     
@@ -49,55 +62,18 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func remove(game: Game, from module: Module, context: NSManagedObjectContext) {
-        // Remove CharacterModules
-        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "module == %@ AND character.game == %@", module, game)
+    func remove(game: Game, from module: Module, context: NSManagedObjectContext, shouldSave: Bool = true) {
+        let charactersPredicate = NSPredicate(format: "character.game == %@", game)
+        module.deleteRelationshipObjects(forKey: "characters", using: charactersPredicate, context: context)
         
-        do {
-            let characterModules = try context.fetch(characterFetchRequest)
-            
-            for characterModule in characterModules {
-                context.delete(characterModule)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's character modules for removal: \(error)")
-            }
-            return
-        }
-        
-        // Remove ModuleIngredients
-        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
-        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@ AND ANY ingredient.games == %@", module, game)
-        
-        let moduleGamesSet = module.mutableSetValue(forKey: "games")
-        moduleGamesSet.remove(game)
-        
-        do {
-            let moduleIngredients = try context.fetch(ingredientFetchRequest)
-            
-            for moduleIngredient in moduleIngredients {
-                if let ingredientGamesSet = moduleIngredient.ingredient?.mutableSetValue(forKey: "games"),
-                    ingredientGamesSet.count == 1,
-                    ingredientGamesSet.contains(game){
-                    context.delete(moduleIngredient)
-                }
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's module ingredients for removal: \(error)")
-            }
-            return
-        }
+        let ingredientsPredicate = NSPredicate(format: "ANY ingredient.games == %@", game)
+        module.deleteRelationshipObjects(forKey: "ingredients", using: ingredientsPredicate, context: context)
         
         tempModules.removeAll(where: { $0.module == module })
         
-        CoreDataStack.shared.save(context: context)
+        if shouldSave {
+            CoreDataStack.shared.save(context: context)
+        }
     }
     
     //MARK: Temp Modules
