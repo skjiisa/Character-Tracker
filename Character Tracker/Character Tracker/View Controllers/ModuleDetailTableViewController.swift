@@ -286,10 +286,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if sections[indexPath.section].type == .ingredients
-            || sections[indexPath.section].type == .modules
-            || sections[indexPath.section].type == .attributes,
-            indexPath.row < ingredientController.tempIngredients.count {
+        if (sections[indexPath.section].type == .ingredients
+            && indexPath.row < ingredientController.tempIngredients.count)
+            || (sections[indexPath.section].type == .modules
+                && indexPath.row < moduleController.tempModules.count)
+            || (sections[indexPath.section].type == .attributes
+                && indexPath.row < attributeController.tempAttributes.count)
+            || (sections[indexPath.section].type == .games
+                && indexPath.row < games.count
+                && games[indexPath.row] != gameReference?.game) {
             return true
         }
         
@@ -309,6 +314,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else if section == .attributes {
                 let attribute = attributeController.tempAttributes[indexPath.row].attribute
                 attributeController.remove(tempAttribute: attribute)
+            } else if section == .games {
+                games.remove(at: indexPath.row)
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()

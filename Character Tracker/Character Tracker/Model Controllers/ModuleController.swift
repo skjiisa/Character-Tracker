@@ -63,13 +63,15 @@ class ModuleController {
     }
     
     func remove(game: Game, from module: Module, context: NSManagedObjectContext, shouldSave: Bool = true) {
+        tempModules.removeAll(where: { $0.module == module })
+        
         let charactersPredicate = NSPredicate(format: "character.game == %@", game)
         module.deleteRelationshipObjects(forKey: "characters", using: charactersPredicate, context: context)
         
         let ingredientsPredicate = NSPredicate(format: "ANY ingredient.games == %@", game)
         module.deleteRelationshipObjects(forKey: "ingredients", using: ingredientsPredicate, context: context)
         
-        tempModules.removeAll(where: { $0.module == module })
+        module.mutableSetValue(forKey: "games").remove(game)
         
         if shouldSave {
             CoreDataStack.shared.save(context: context)
