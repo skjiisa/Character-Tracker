@@ -36,7 +36,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let currentGame = gameReference?.game {
                 let context = CoreDataStack.shared.mainContext
                 let games = module.mutableSetValue(forKey: "games")
-                if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "name", ascending: true)]) as? [Game] {
+                if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
                     self.games = gamesArray
                 }
                 ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
