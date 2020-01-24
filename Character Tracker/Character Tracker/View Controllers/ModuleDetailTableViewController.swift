@@ -22,7 +22,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     let moduleController = ModuleController()
     let attributeController = AttributeController()
     var ingredientController = IngredientController()
-    var gameReference: GameReference?
+    var gameReference: GameReference? {
+        didSet {
+            if let game = gameReference?.game {
+                games = [game]
+            }
+        }
+    }
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
