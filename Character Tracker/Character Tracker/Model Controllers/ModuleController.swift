@@ -29,45 +29,18 @@ class ModuleController {
     }
     
     func delete(module: Module, context: NSManagedObjectContext) {
-        // Remove CharacterModules
-        let characterFetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "module == %@", module)
-        
-        do {
-            let characterModules = try context.fetch(characterFetchRequest)
-            
-            for characterModule in characterModules {
-                context.delete(characterModule)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s character modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's character modules for removal: \(error)")
-            }
-            return
-        }
-        
-        // Remove ModuleIngredients
-        let ingredientFetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
-        ingredientFetchRequest.predicate = NSPredicate(format: "module == %@", module)
-        
-        do {
-            let moduleIngredients = try context.fetch(ingredientFetchRequest)
-            
-            for moduleIngredient in moduleIngredients {
-                context.delete(moduleIngredient)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s module ingredients for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's module ingredients for removal: \(error)")
-            }
-            return
-        }
         
         tempModules.removeAll(where: { $0.module == module })
+        
+        // Remove CharacterModules
+        module.deleteRelationshipObjects(forKey: "characters", context: context)
+        
+        // Remove ModuleIngredients
+        module.deleteRelationshipObjects(forKey: "ingredients", context: context)
+        
+        // Remove ModuleModules        
+        module.deleteRelationshipObjects(forKey: "parents", context: context)
+        module.deleteRelationshipObjects(forKey: "children", context: context)
         
         context.delete(module)
         CoreDataStack.shared.save(context: context)
