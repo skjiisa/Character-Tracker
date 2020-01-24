@@ -25,26 +25,9 @@ class AttributeController {
     }
     
     func delete(attribute: Attribute, context: NSManagedObjectContext) {
-        // Remove CharacterAttributes
-        let characterFetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "attribute == %@", attribute)
-        
-        do {
-            let characterAttributes = try context.fetch(characterFetchRequest)
-            
-            for characterAttribute in characterAttributes {
-                context.delete(characterAttribute)
-            }
-        } catch {
-            if let name = attribute.name {
-                NSLog("Could not fetch \(name)'s character attributes for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's character attributes for removal: \(error)")
-            }
-            return
-        }
-        
         tempAttributes.removeAll(where: { $0.attribute == attribute })
+        
+        attribute.deleteRelationshipObjects(forKeys: ["characters", "modules"], context: context)
         
         context.delete(attribute)
         CoreDataStack.shared.save(context: context)
@@ -56,28 +39,17 @@ class AttributeController {
     }
     
     func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
-        // Remove CharacterModules
-        let characterFetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "attribute == %@ AND character.game == %@", attribute, game)
+        tempAttributes.removeAll(where: { $0.attribute == attribute })
         
-        do {
-            let characterAttributes = try context.fetch(characterFetchRequest)
-            
+        let characters = attribute.mutableSetValue(forKey: "characters")
+        let predicate = NSPredicate(format: "character.game == %@", game)
+        if let characterAttributes = characters.filtered(using: predicate) as? Set<CharacterAttribute> {
             for characterAttribute in characterAttributes {
                 context.delete(characterAttribute)
             }
-        } catch {
-            if let name = attribute.name {
-                NSLog("Could not fetch \(name)'s character attributes for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's character attributes for removal: \(error)")
-            }
-            return
         }
         
-        tempAttributes.removeAll(where: { $0.attribute == attribute })
-        
-        attribute.mutableSetValue(forKey: "game").remove(game)
+        attribute.mutableSetValue(forKey: "games").remove(game)
         CoreDataStack.shared.save(context: context)
     }
     
