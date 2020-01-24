@@ -26,16 +26,22 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
-            if let module = module, let game = gameReference?.game {
+            if let module = module,
+                let currentGame = gameReference?.game {
                 let context = CoreDataStack.shared.mainContext
-                ingredientController.fetchTempIngredients(for: module, in: game, context: context)
-                moduleController.fetchTempModules(for: module, context: context)
+                let games = module.mutableSetValue(forKey: "games")
+                if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "name", ascending: true)]) as? [Game] {
+                    self.games = gamesArray
+                }
+                ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
+                moduleController.fetchTempModules(for: module, game: currentGame, context: context)
                 attributeController.fetchTempAttributes(for: module, context: context)
             }
         }
     }
     var characterModule: CharacterModule?
     var excludedModules: [Module] = []
+    var games: [Game] = []
     var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
@@ -44,6 +50,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case ingredients
         case modules
         case attributes
+        //case games
     }
     
     var nameTextField: UITextField?
@@ -374,6 +381,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sections.append(("Ingredients", .ingredients))
         sections.append(("Required Modules", .modules))
         sections.append(("Attributes", .attributes))
+        //sections.append(("Games", .games))
     }
     
     private func updateViews() {

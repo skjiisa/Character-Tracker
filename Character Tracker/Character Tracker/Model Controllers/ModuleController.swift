@@ -262,10 +262,10 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempModules(for module: Module, context: NSManagedObjectContext) {
+    func fetchTempModules(for module: Module, game: Game?, context: NSManagedObjectContext) {
         tempModules = []
         
-        let childModules = fetchChildModules(for: module, context: context)
+        let childModules = fetchChildModules(for: module, game: game, context: context)
         for childModule in childModules {
             guard let module = childModule.child else { continue }
             tempModules.append((module, false))
@@ -273,9 +273,13 @@ class ModuleController {
         sortTempModules()
     }
     
-    func fetchChildModules(for module: Module, context: NSManagedObjectContext) -> [ModuleModule] {
+    func fetchChildModules(for module: Module, game: Game? = nil, context: NSManagedObjectContext) -> [ModuleModule] {
         let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+        if let game = game {
+            fetchRequest.predicate = NSPredicate(format: "parent == %@ AND ANY child.games == %@", module, game)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+        }
         
         do {
             let moduleModules = try context.fetch(fetchRequest)
