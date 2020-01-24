@@ -7,6 +7,7 @@
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Link" inverseName="attributes" inverseEntity="Link"/>
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="attributes" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleAttribute" inverseName="attribute" inverseEntity="ModuleAttribute"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="attributes" inverseEntity="AttributeType"/>
     </entity>
     <entity name="AttributeType" representedClassName="AttributeType" syncable="YES" codeGenerationType="class">
@@ -114,6 +115,7 @@
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleAttribute" inverseName="module" inverseEntity="ModuleAttribute"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterModule" inverseName="module" inverseEntity="CharacterModule"/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="parent" inverseEntity="ModuleModule"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="modules" inverseEntity="Game"/>
@@ -125,8 +127,8 @@
     </entity>
     <entity name="ModuleAttribute" representedClassName="ModuleAttribute" syncable="YES" codeGenerationType="class">
         <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="attribute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attribute"/>
-        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module"/>
+        <relationship name="attribute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attribute" inverseName="modules" inverseEntity="Attribute"/>
+        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="attributes" inverseEntity="Module"/>
     </entity>
     <entity name="ModuleIngredient" representedClassName="ModuleIngredient" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -152,7 +154,7 @@
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="races" inverseEntity="Mod"/>
     </entity>
     <elements>
-        <element name="Attribute" positionX="473" positionY="-155" width="128" height="148"/>
+        <element name="Attribute" positionX="473" positionY="-155" width="128" height="163"/>
         <element name="AttributeType" positionX="636" positionY="-90" width="128" height="103"/>
         <element name="AttributeTypeSection" positionX="826" positionY="-76" width="128" height="118"/>
         <element name="Author" positionX="-60" positionY="-57" width="128" height="133"/>
@@ -165,11 +167,11 @@
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
         <element name="Link" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
-        <element name="Module" positionX="343" positionY="203" width="128" height="223"/>
+        <element name="Module" positionX="343" positionY="203" width="128" height="238"/>
+        <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
         <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="88"/>
         <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>
         <element name="ModuleType" positionX="411" positionY="445" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>
-        <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
     </elements>
 </model>

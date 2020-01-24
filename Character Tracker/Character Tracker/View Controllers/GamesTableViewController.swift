@@ -12,6 +12,8 @@ import CoreData
 class GamesTableViewController: UITableViewController, CharacterTrackerViewController {
     
     var gameReference: GameReference?
+    var checkedGames: [Game]?
+    var callback: ( ([Game]) -> Void )?
     
     lazy var fetchedResultsController: NSFetchedResultsController<Game> = {
         
@@ -41,11 +43,16 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        if checkedGames != nil {
+            title = "Games"
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let checkedGames = checkedGames {
+            callback?(checkedGames)
+        }
     }
 
     // MARK: - Table view data source
@@ -66,7 +73,14 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath)
 
-        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).name
+        let game = fetchedResultsController.object(at: indexPath)
+        
+        cell.textLabel?.text = game.name
+        if checkedGames?.contains(game) ?? false {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
 
         return cell
     }
@@ -109,22 +123,35 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let game = fetchedResultsController.object(at: indexPath)
         
-        if gameReference?.isSafeToChangeGame ?? true {
-            gameReference?.set(game: game)
-        } else {
-            let alertController = UIAlertController(title: "Are you sure?", message: "Changes to currently selected character will be lost.", preferredStyle: .alert)
-            
-            let continueAction = UIAlertAction(title: "Continue", style: .default) { _ in
-                self.gameReference?.set(game: game)
-                self.gameReference?.isSafeToChangeGame = true
+        if checkedGames != nil {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let cell = tableView.cellForRow(at: indexPath)
+            if checkedGames?.contains(game) ?? false {
+                checkedGames?.removeAll(where: { $0 == game })
+                cell?.accessoryType = .none
+            } else {
+                checkedGames?.append(game)
+                cell?.accessoryType = .checkmark
             }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            alertController.addAction(continueAction)
-            alertController.addAction(cancelAction)
-            
-            self.present(alertController, animated: true, completion: nil)
+            //tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            if gameReference?.isSafeToChangeGame ?? true {
+                gameReference?.set(game: game)
+            } else {
+                let alertController = UIAlertController(title: "Are you sure?", message: "Changes to currently selected character will be lost.", preferredStyle: .alert)
+                
+                let continueAction = UIAlertAction(title: "Continue", style: .default) { _ in
+                    self.gameReference?.set(game: game)
+                    self.gameReference?.isSafeToChangeGame = true
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                
+                alertController.addAction(continueAction)
+                alertController.addAction(cancelAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
     }
 

@@ -50,7 +50,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case ingredients
         case modules
         case attributes
-        //case games
+        case games
     }
     
     var nameTextField: UITextField?
@@ -100,6 +100,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if let attributesSectionIndex = sections.firstIndex(where: { $0.type == .attributes }) {
             sectionsToReload.insert(attributesSectionIndex)
         }
+        if let gamesSectionIndex = sections.firstIndex(where: { $0.type == .games }) {
+            sectionsToReload.insert(gamesSectionIndex)
+        }
         
         tableView.reloadSections(sectionsToReload, with: .automatic)
     }
@@ -122,6 +125,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return moduleController.tempModules.count + 1
         case .attributes:
             return attributeController.tempAttributes.count + 1
+        case .games:
+            return games.count + 1
         }
     }
     
@@ -260,6 +265,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
             }
+        case .games:
+            if indexPath.row < games.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell.textLabel?.text = games[indexPath.row].name
+                cell.detailTextLabel?.text = nil
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
+            }
         }
 
         return cell
@@ -381,7 +394,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sections.append(("Ingredients", .ingredients))
         sections.append(("Required Modules", .modules))
         sections.append(("Attributes", .attributes))
-        //sections.append(("Games", .games))
+        sections.append(("Games", .games))
     }
     
     private func updateViews() {
@@ -557,6 +570,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.toggle(tempAttribute: attribute, priority: 0)
+                    self.moduleHasBeenModified()
+                }
+            } else if let gamesVC = vc as? GamesTableViewController {
+                gamesVC.checkedGames = games
+                gamesVC.callback = { games in
+                    self.games = games
                     self.moduleHasBeenModified()
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
