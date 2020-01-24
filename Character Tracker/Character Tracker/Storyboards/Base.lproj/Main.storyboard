@@ -1013,6 +1013,26 @@
                                     <segue destination="tXZ-rk-zoV" kind="show" id="lR8-jg-YER"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectAttributeCell" textLabel="sBn-0E-PFq" style="IBUITableViewCellStyleDefault" id="Bs4-PZ-yHP">
+                                <rect key="frame" x="20" y="560.5" width="374" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bs4-PZ-yHP" id="RGt-h2-0PH">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Select Attribute" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sBn-0E-PFq">
+                                            <rect key="frame" x="20" y="0.0" width="315" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="s9Q-u2-klJ" kind="show" id="x2i-i4-wE1"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="FcM-PG-5WN" id="lrb-G7-93W"/>
@@ -1173,7 +1193,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="DTF-qi-Fya"/>
         <segue reference="lR8-jg-YER"/>
-        <segue reference="Hak-ez-6fv"/>
+        <segue reference="x2i-i4-wE1"/>
         <segue reference="9dZ-mf-KGH"/>
         <segue reference="a8t-My-eU4"/>
         <segue reference="hwD-cT-7uC"/>
