@@ -14,17 +14,18 @@ class ModuleController {
     
     //MARK: Module CRUD
     
-    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, game: Game, type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
-        let module = Module(name: name, notes: notes, level: level, game: game, type: type, context: context)
+    @discardableResult func create(module name: String, notes: String? = nil, level: Int16 = 0, games: [Game], type: ModuleType, mod: Mod? = nil, context: NSManagedObjectContext) -> Module {
+        let module = Module(name: name, notes: notes, level: level, games: Set(games), type: type, context: context)
         CoreDataStack.shared.save(context: context)
         return module
     }
     
-    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, type: ModuleType, context: NSManagedObjectContext) {
+    func edit(module: Module, name: String, notes: String?, level: Int16 = 0, games: [Game], type: ModuleType, context: NSManagedObjectContext) {
         module.name = name
         module.notes = notes
         module.level = level
         module.type = type
+        module.games = Set(games) as NSSet
         CoreDataStack.shared.save(context: context)
     }
     
@@ -35,7 +36,8 @@ class ModuleController {
         module.deleteRelationshipObjects(forKeys: ["characters",
                                                    "ingredients",
                                                    "parents",
-                                                   "children"],
+                                                   "children",
+                                                   "attributes"],
                                          context: context)
         
         context.delete(module)
@@ -262,10 +264,10 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempModules(for module: Module, context: NSManagedObjectContext) {
+    func fetchTempModules(for module: Module, game: Game?, context: NSManagedObjectContext) {
         tempModules = []
         
-        let childModules = fetchChildModules(for: module, context: context)
+        let childModules = fetchChildModules(for: module, game: game, context: context)
         for childModule in childModules {
             guard let module = childModule.child else { continue }
             tempModules.append((module, false))
@@ -273,9 +275,13 @@ class ModuleController {
         sortTempModules()
     }
     
-    func fetchChildModules(for module: Module, context: NSManagedObjectContext) -> [ModuleModule] {
+    func fetchChildModules(for module: Module, game: Game? = nil, context: NSManagedObjectContext) -> [ModuleModule] {
         let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+        if let game = game {
+            fetchRequest.predicate = NSPredicate(format: "parent == %@ AND ANY child.games == %@", module, game)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+        }
         
         do {
             let moduleModules = try context.fetch(fetchRequest)

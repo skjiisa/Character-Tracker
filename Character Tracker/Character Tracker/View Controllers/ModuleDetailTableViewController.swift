@@ -22,20 +22,32 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     let moduleController = ModuleController()
     let attributeController = AttributeController()
     var ingredientController = IngredientController()
-    var gameReference: GameReference?
+    var gameReference: GameReference? {
+        didSet {
+            if let game = gameReference?.game {
+                games = [game]
+            }
+        }
+    }
     var moduleType: ModuleType?
     var module: Module? {
         didSet {
-            if let module = module, let game = gameReference?.game {
+            if let module = module,
+                let currentGame = gameReference?.game {
                 let context = CoreDataStack.shared.mainContext
-                ingredientController.fetchTempIngredients(for: module, in: game, context: context)
-                moduleController.fetchTempModules(for: module, context: context)
+                let games = module.mutableSetValue(forKey: "games")
+                if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
+                    self.games = gamesArray
+                }
+                ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
+                moduleController.fetchTempModules(for: module, game: currentGame, context: context)
                 attributeController.fetchTempAttributes(for: module, context: context)
             }
         }
     }
     var characterModule: CharacterModule?
     var excludedModules: [Module] = []
+    var games: [Game] = []
     var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
@@ -44,6 +56,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case ingredients
         case modules
         case attributes
+        case games
     }
     
     var nameTextField: UITextField?
@@ -93,6 +106,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if let attributesSectionIndex = sections.firstIndex(where: { $0.type == .attributes }) {
             sectionsToReload.insert(attributesSectionIndex)
         }
+        if let gamesSectionIndex = sections.firstIndex(where: { $0.type == .games }) {
+            sectionsToReload.insert(gamesSectionIndex)
+        }
         
         tableView.reloadSections(sectionsToReload, with: .automatic)
     }
@@ -115,6 +131,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return moduleController.tempModules.count + 1
         case .attributes:
             return attributeController.tempAttributes.count + 1
+        case .games:
+            return games.count + 1
         }
     }
     
@@ -253,6 +271,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
             }
+        case .games:
+            if indexPath.row < games.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell.textLabel?.text = games[indexPath.row].name
+                cell.detailTextLabel?.text = nil
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
+            }
         }
 
         return cell
@@ -374,6 +400,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sections.append(("Ingredients", .ingredients))
         sections.append(("Required Modules", .modules))
         sections.append(("Attributes", .attributes))
+        sections.append(("Games", .games))
     }
     
     private func updateViews() {
@@ -422,8 +449,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     private func save() {
-        guard let game = gameReference?.game,
-            let type = moduleType else { return }
+        guard let type = moduleType,
+            !games.isEmpty else { return }
         let context = CoreDataStack.shared.mainContext
         
         guard let name = nameTextField?.text,
@@ -437,10 +464,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let savedModule: Module
         
         if let module = module {
-            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, type: type, context: context)
+            moduleController.edit(module: module, name: name, notes: notesTextView.textView?.text, level: level ?? 0, games: games, type: type, context: context)
             savedModule = module
         } else {
-            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, game: game, type: type, context: context)
+            let module = moduleController.create(module: name, notes: notesTextView.textView?.text, level: level ?? 0, games: games, type: type, context: context)
             savedModule = module
         }
         
@@ -549,6 +576,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.toggle(tempAttribute: attribute, priority: 0)
+                    self.moduleHasBeenModified()
+                }
+            } else if let gamesVC = vc as? GamesTableViewController {
+                gamesVC.checkedGames = games
+                gamesVC.callback = { games in
+                    self.games = games
                     self.moduleHasBeenModified()
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
