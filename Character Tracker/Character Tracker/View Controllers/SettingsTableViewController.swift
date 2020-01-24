@@ -90,16 +90,12 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         } else if indexPath.section == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
             if let attributeTypeName = attributeTypeController?.types[indexPath.row].name?.capitalized {
-                cell.textLabel?.text = "\(attributeTypeName)s"
+                cell.textLabel?.text = "\(attributeTypeName.pluralize())"
             }
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
             if let moduleTypeName = moduleTypeController?.types[indexPath.row].name {
-                if moduleTypeName != "Equipment" {
-                    cell.textLabel?.text = "\(moduleTypeName)s"
-                } else {
-                    cell.textLabel?.text = moduleTypeName
-                }
+                cell.textLabel?.text = moduleTypeName.pluralize()
             }
         }
 

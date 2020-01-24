@@ -191,7 +191,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.textLabel?.text = tempAttributes[indexPath.row].name
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                    cell.textLabel?.text = "Add \(attributeSection.typeName)s"
+                    cell.textLabel?.text = "Add \(attributeSection.typeName.pluralize())"
                 }
             } else if let moduleSection = section.section as? ModuleType,
                 let tempModules = moduleController.getTempModules(from: moduleSection) {
@@ -218,7 +218,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if indexPath.row == 0,
                 !tempSection.collapsed {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
-                cell.textLabel?.text = "Add \(moduleSection.typeName)s"
+                cell.textLabel?.text = "Add \(moduleSection.typeName.pluralize())"
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
             }
