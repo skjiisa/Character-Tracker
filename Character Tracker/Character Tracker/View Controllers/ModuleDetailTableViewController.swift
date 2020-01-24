@@ -19,8 +19,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     //MARK: Properties
     
+    let moduleController = ModuleController()
+    let attributeController = AttributeController()
     var ingredientController = IngredientController()
-    var moduleController = ModuleController()
     var gameReference: GameReference?
     var moduleType: ModuleType?
     var module: Module? {
@@ -29,6 +30,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let context = CoreDataStack.shared.mainContext
                 ingredientController.fetchTempIngredients(for: module, in: game, context: context)
                 moduleController.fetchTempModules(for: module, context: context)
+                attributeController.fetchTempAttributes(for: module, context: context)
             }
         }
     }
@@ -41,6 +43,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case notes(TextViewReference)
         case ingredients
         case modules
+        case attributes
     }
     
     var nameTextField: UITextField?
@@ -87,6 +90,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if let modulesSectionIndex = sections.firstIndex(where: { $0.type == .modules }) {
             sectionsToReload.insert(modulesSectionIndex)
         }
+        if let attributesSectionIndex = sections.firstIndex(where: { $0.type == .attributes }) {
+            sectionsToReload.insert(attributesSectionIndex)
+        }
         
         tableView.reloadSections(sectionsToReload, with: .automatic)
     }
@@ -107,6 +113,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return ingredientController.tempIngredients.count + 1
         case .modules:
             return moduleController.tempModules.count + 1
+        case .attributes:
+            return attributeController.tempAttributes.count + 1
         }
     }
     
@@ -237,6 +245,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                 cell.textLabel?.text = "Select Modules"
             }
+        case .attributes:
+            if indexPath.row < attributeController.tempAttributes.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell.textLabel?.text = attributeController.tempAttributes[indexPath.row].attribute.name
+                cell.detailTextLabel?.text = nil
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+            }
         }
 
         return cell
@@ -245,7 +261,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if sections[indexPath.section].type == .ingredients
-            || sections[indexPath.section].type == .modules,
+            || sections[indexPath.section].type == .modules
+            || sections[indexPath.section].type == .attributes,
             indexPath.row < ingredientController.tempIngredients.count {
             return true
         }
@@ -263,6 +280,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else if section == .modules {
                 let module = moduleController.tempModules[indexPath.row].module
                 moduleController.remove(tempModule: module)
+            } else if section == .attributes {
+                let attribute = attributeController.tempAttributes[indexPath.row].attribute
+                attributeController.remove(tempAttribute: attribute)
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
@@ -353,6 +373,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         sections.append(("Ingredients", .ingredients))
         sections.append(("Required Modules", .modules))
+        sections.append(("Attributes", .attributes))
     }
     
     private func updateViews() {
@@ -432,6 +453,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         moduleController.removeMissingTempModules(from: savedModule, context: context)
         moduleController.saveTempModules(to: savedModule, context: context)
+        
+        attributeController.removeMissingTempAttributes(from: savedModule, context: context)
+        attributeController.saveTempAttributes(to: savedModule, context: context)
     }
     
     private func setCompleted(_ completed: Bool) {
@@ -515,6 +539,16 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 modulesVC.callbacks.append { module in
                     self.moduleController.toggle(tempModule: module)
+                    self.moduleHasBeenModified()
+                }
+            } else if let attributesVC = vc as? AttributesTableViewController {
+                let selectedAttributes = attributeController.tempAttributes.map({ $0.attribute })
+                
+                attributesVC.attributeController = attributeController
+                attributesVC.checkedAttributes = selectedAttributes
+                
+                attributesVC.callbacks.append { attribute in
+                    self.attributeController.toggle(tempAttribute: attribute, priority: 0)
                     self.moduleHasBeenModified()
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,

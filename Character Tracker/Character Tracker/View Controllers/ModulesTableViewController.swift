@@ -41,7 +41,6 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         guard let game = gameReference?.game else { return nil }
         
-        
         if !showAll {
             var predicateString = "ANY games == %@"
             var argumentList: [Any] = [game]

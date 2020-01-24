@@ -106,3 +106,13 @@ extension ModuleModule {
         self.value = value
     }
 }
+
+extension ModuleAttribute {
+    @discardableResult convenience init(module: Module, attribute: Attribute, value: Int16 = 0, context: NSManagedObjectContext) {
+        self.init(context: context)
+        
+        self.attribute = attribute
+        self.module = module
+        self.value = value
+    }
+}

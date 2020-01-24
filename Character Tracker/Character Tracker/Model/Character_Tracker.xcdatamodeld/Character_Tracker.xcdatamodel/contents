@@ -123,6 +123,11 @@
         <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="child" inverseEntity="ModuleModule"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModuleType" inverseName="modules" inverseEntity="ModuleType"/>
     </entity>
+    <entity name="ModuleAttribute" representedClassName="ModuleAttribute" syncable="YES" codeGenerationType="class">
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="attribute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attribute"/>
+        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module"/>
+    </entity>
     <entity name="ModuleIngredient" representedClassName="ModuleIngredient" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="modules" inverseEntity="Ingredient"/>
@@ -162,8 +167,9 @@
         <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
         <element name="Module" positionX="343" positionY="203" width="128" height="223"/>
         <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="88"/>
+        <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>
         <element name="ModuleType" positionX="411" positionY="445" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>
-        <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>
+        <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
     </elements>
 </model>

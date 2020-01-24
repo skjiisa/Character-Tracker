@@ -41,14 +41,29 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
-        guard let game = gameReference?.game,
-            let type = attributeType else { return nil }
+        guard let game = gameReference?.game else { return nil }
         
         if !showAll {
-            fetchRequest.predicate = NSPredicate(format: "ANY games == %@ AND type == %@", game, type)
+            var predicateString = "ANY games == %@"
+            var argumentsList: [Any] = [game]
+            
+            if let type = attributeType {
+                predicateString += " AND type == %@"
+                argumentsList.append(type)
+            }
+            
+            fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentsList)
         } else {
             if let gameAttributes = game.attributes {
-                fetchRequest.predicate = NSPredicate(format: "NOT (SELF in %@) AND type == %@", gameAttributes, type)
+                var predicateString = "NOT (SELF in %@)"
+                var argumentsList: [Any] = [gameAttributes]
+                
+                if let type = attributeType {
+                    predicateString += " AND type == %@"
+                    argumentsList.append(type)
+                }
+                
+                fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentsList)
             }
         }
 
