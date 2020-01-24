@@ -454,6 +454,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         moduleController.removeMissingTempModules(from: savedModule, context: context)
         moduleController.saveTempModules(to: savedModule, context: context)
         
+        attributeController.removeMissingTempAttributes(from: savedModule, context: context)
         attributeController.saveTempAttributes(to: savedModule, context: context)
     }
     

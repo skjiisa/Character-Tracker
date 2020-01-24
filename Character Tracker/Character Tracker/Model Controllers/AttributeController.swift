@@ -253,4 +253,26 @@ class AttributeController {
         }
     }
     
+    func removeMissingTempAttributes(from module: Module, context: NSManagedObjectContext) {
+        let attributes: [Attribute] = tempAttributes.map({ $0.attribute })
+        
+        let fetchRequest: NSFetchRequest<ModuleAttribute> = ModuleAttribute.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (attribute IN %@)", module, attributes)
+        
+        do {
+            let moduleAttributes = try context.fetch(fetchRequest)
+            for moduleAttribute in moduleAttributes {
+                context.delete(moduleAttribute)
+            }
+            
+            CoreDataStack.shared.save(context: context)
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
+            } else {
+                NSLog("Could not fetch module's attributes for removal: \(error)")
+            }
+        }
+    }
+    
 }
