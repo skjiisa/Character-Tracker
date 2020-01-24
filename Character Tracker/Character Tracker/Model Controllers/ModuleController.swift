@@ -36,7 +36,8 @@ class ModuleController {
         module.deleteRelationshipObjects(forKeys: ["characters",
                                                    "ingredients",
                                                    "parents",
-                                                   "children"],
+                                                   "children",
+                                                   "attributes"],
                                          context: context)
         
         context.delete(module)
