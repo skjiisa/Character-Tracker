@@ -166,7 +166,7 @@ class AttributeController {
     
     func fetchCharacterAttributes(for character: Character, context: NSManagedObjectContext) -> [CharacterAttribute] {
         let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character = %@", character)
+        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
         
         do {
             let characterAttributes = try context.fetch(fetchRequest)
@@ -202,6 +202,54 @@ class AttributeController {
             } else {
                 NSLog("Could not fetch character's attributes for removal: \(error)")
             }
+        }
+    }
+    
+    //MARK: Module Attributes CRUD
+    
+    func saveTempAttributes(to module: Module, context: NSManagedObjectContext) {
+        let currentModuleAttributes = fetchModuleAttributes(for: module, context: context)
+        
+        for tempAttribute in tempAttributes {
+            if let moduleAttribute = currentModuleAttributes.first(where: { $0.attribute == tempAttribute.attribute } ) {
+                moduleAttribute.value = tempAttribute.priority
+            } else {
+                ModuleAttribute(module: module, attribute: tempAttribute.attribute, value: tempAttribute.priority, context: context)
+            }
+        }
+        
+        tempAttributes = []
+        
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func fetchTempAttributes(for module: Module, context: NSManagedObjectContext) {
+        tempAttributes = []
+        
+        let moduleAttributes = fetchModuleAttributes(for: module, context: context)
+        for moduleAttribute in moduleAttributes {
+            guard let attribute = moduleAttribute.attribute else { continue }
+            self.tempAttributes.append((attribute, moduleAttribute.value))
+        }
+        
+        sortTempAttributes()
+    }
+    
+    func fetchModuleAttributes(for module: Module, context: NSManagedObjectContext) -> [ModuleAttribute] {
+        let fetchRequest: NSFetchRequest<ModuleAttribute> = ModuleAttribute.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "module == %@", module)
+        
+        do {
+            let moduleAttributes = try context.fetch(fetchRequest)
+            return moduleAttributes
+        } catch {
+            if let name = module.name {
+                NSLog("Could not fetch \(name)'s attributes: \(error)")
+            } else {
+                NSLog("Could not fetch module's attributes: \(error)")
+            }
+            
+            return []
         }
     }
     

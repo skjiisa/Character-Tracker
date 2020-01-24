@@ -30,6 +30,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let context = CoreDataStack.shared.mainContext
                 ingredientController.fetchTempIngredients(for: module, in: game, context: context)
                 moduleController.fetchTempModules(for: module, context: context)
+                attributeController.fetchTempAttributes(for: module, context: context)
             }
         }
     }
@@ -452,6 +453,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         moduleController.removeMissingTempModules(from: savedModule, context: context)
         moduleController.saveTempModules(to: savedModule, context: context)
+        
+        attributeController.saveTempAttributes(to: savedModule, context: context)
     }
     
     private func setCompleted(_ completed: Bool) {
