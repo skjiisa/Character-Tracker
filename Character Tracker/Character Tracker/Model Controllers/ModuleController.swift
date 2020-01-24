@@ -32,15 +32,11 @@ class ModuleController {
         
         tempModules.removeAll(where: { $0.module == module })
         
-        // Remove CharacterModules
-        module.deleteRelationshipObjects(forKey: "characters", context: context)
-        
-        // Remove ModuleIngredients
-        module.deleteRelationshipObjects(forKey: "ingredients", context: context)
-        
-        // Remove ModuleModules        
-        module.deleteRelationshipObjects(forKey: "parents", context: context)
-        module.deleteRelationshipObjects(forKey: "children", context: context)
+        module.deleteRelationshipObjects(forKeys: ["characters",
+                                                   "ingredients",
+                                                   "parents",
+                                                   "children"],
+                                         context: context)
         
         context.delete(module)
         CoreDataStack.shared.save(context: context)
