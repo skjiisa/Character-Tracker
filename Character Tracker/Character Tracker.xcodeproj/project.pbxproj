@@ -178,6 +178,7 @@
 				59B3A78E236CF68E00B3D33B /* GameReference.swift */,
 				59BCF978237A5968000E90B7 /* Section.swift */,
 				59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */,
+				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,7 +221,6 @@
 				594D7AC0237124AD00F0795D /* CharacterController.swift */,
 				59B3A796236D506000B3D33B /* AttributeController.swift */,
 				59BCF976237A450D000E90B7 /* ModuleController.swift */,
-				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
 				59B8D942237F8F6C00C7A28F /* IngredientController.swift */,
 				59C33EF423BD6E3500FC1F11 /* JSONController.swift */,
 			);

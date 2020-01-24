@@ -24,4 +24,13 @@ extension NSManagedObject {
         }
     }
     
+    func deleteRelationshipObjects(forKey key: String, using predicate: NSPredicate, context: NSManagedObjectContext) {
+        guard let objects = self.value(forKey: key) as? NSSet,
+            let filteredObjects = objects.filtered(using: predicate) as? Set<NSManagedObject> else { return }
+        
+        for object in filteredObjects {
+            context.delete(object)
+        }
+    }
+    
 }
