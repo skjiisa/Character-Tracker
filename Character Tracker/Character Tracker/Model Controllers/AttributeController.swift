@@ -34,20 +34,15 @@ class AttributeController {
     }
     
     func add(game: Game, to attribute: Attribute, context: NSManagedObjectContext) {
-        attribute.mutableSetValue(forKey: "game").add(game)
+        attribute.mutableSetValue(forKey: "games").add(game)
         CoreDataStack.shared.save(context: context)
     }
     
     func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
         tempAttributes.removeAll(where: { $0.attribute == attribute })
         
-        let characters = attribute.mutableSetValue(forKey: "characters")
         let predicate = NSPredicate(format: "character.game == %@", game)
-        if let characterAttributes = characters.filtered(using: predicate) as? Set<CharacterAttribute> {
-            for characterAttribute in characterAttributes {
-                context.delete(characterAttribute)
-            }
-        }
+        attribute.deleteRelationshipObjects(forKey: "characters", using: predicate, context: context)
         
         attribute.mutableSetValue(forKey: "games").remove(game)
         CoreDataStack.shared.save(context: context)
