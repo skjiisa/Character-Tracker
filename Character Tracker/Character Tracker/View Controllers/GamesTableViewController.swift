@@ -24,6 +24,10 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
             NSSortDescriptor(key: "index", ascending: false)
         ]
         
+        if let game = gameReference?.game {
+            fetchRequest.predicate = NSPredicate(format: "SELF != %@", game)
+        }
+        
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
                                              sectionNameKeyPath: "mainline",
