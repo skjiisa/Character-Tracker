@@ -10,7 +10,7 @@ import CoreData
 
 class AttributeController {
     
-    private(set) var tempAttributes: [Attribute: Int16] = [:]
+    private(set) var tempAttributes: [(attribute: Attribute, priority: Int16)] = []
     
     //MARK: Attribute CRUD
     
@@ -44,7 +44,7 @@ class AttributeController {
             return
         }
         
-        tempAttributes.removeValue(forKey: attribute)
+        tempAttributes.removeAll(where: { $0.attribute == attribute })
         
         context.delete(attribute)
         CoreDataStack.shared.save(context: context)
@@ -75,7 +75,7 @@ class AttributeController {
             return
         }
         
-        tempAttributes.removeValue(forKey: attribute)
+        tempAttributes.removeAll(where: { $0.attribute == attribute })
         
         attribute.mutableSetValue(forKey: "game").remove(game)
         CoreDataStack.shared.save(context: context)
@@ -83,37 +83,48 @@ class AttributeController {
     
     //MARK: Temp Attributes
     
+    func sortTempAttributes() {
+        tempAttributes.sort { attribute0, attribute1 -> Bool in
+            if attribute0.priority == attribute1.priority {
+                return attribute0.attribute.name ?? "" < attribute1.attribute.name ?? ""
+            }
+            
+            return attribute0.priority < attribute1.priority
+        }
+    }
+    
     func add(tempAttribute attribute: Attribute, priority: Int16) {
-        tempAttributes[attribute] = priority
+        if !tempAttributes.contains(where: { $0.attribute == attribute }) {
+            tempAttributes.append((attribute, priority))
+        }
+        sortTempAttributes()
     }
     
     func toggle(tempAttribute attribute: Attribute, priority: Int16) {
-        if tempAttributes.contains(where: { $0.key == attribute }) {
+        if tempAttributes.contains(where: { $0.attribute == attribute }) {
             remove(tempAttribute: attribute)
         } else {
             add(tempAttribute: attribute, priority: priority)
         }
+        sortTempAttributes()
     }
     
     func remove(tempAttribute attribute: Attribute) {
-        tempAttributes.removeValue(forKey: attribute)
+        tempAttributes.removeAll(where: { $0.attribute == attribute })
     }
     
     func getTempAttributes(ofType type: AttributeType) -> [Attribute] {
-        return tempAttributes.keys.filter { $0.type == type }
+        let attributes = tempAttributes.compactMap({ $0.attribute })
+        let result = attributes.filter({ $0.type == type })
+        
+        return result
     }
     
     func getTempAttributes(ofType type: AttributeType, priority: Int16) -> [Attribute] {
-        let attributesDictionary = tempAttributes.filter { $0.key.type == type && $0.value == priority }
-        let attributeKeys = attributesDictionary.map { $0.key }
-        let sortedAttributes = attributeKeys.sorted { (attribute0, attribute1) -> Bool in
-            guard let name0 = attribute0.name,
-                let name1 = attribute1.name else { return false }
-            
-            return name0 > name1
-        }
+        let tempAttributes = self.tempAttributes.filter({ $0.attribute.type == type && $0.priority == priority })
+        let result = tempAttributes.compactMap({ $0.attribute })
         
-        return sortedAttributes
+        return result
     }
     
     func getTempAttributes(from section: Section) -> [Attribute]? {
@@ -131,15 +142,15 @@ class AttributeController {
     func saveTempAttributes(to character: Character, context: NSManagedObjectContext) {
         let currentCharacterAttributes = fetchCharacterAttributes(for: character, context: context)
         
-        for attributePair in tempAttributes {
-            if let characterAttribute = currentCharacterAttributes.first(where: { $0.attribute == attributePair.key } ) {
-                characterAttribute.priority = attributePair.value
+        for tempAttribute in tempAttributes {
+            if let characterAttribute = currentCharacterAttributes.first(where: { $0.attribute == tempAttribute.attribute } ) {
+                characterAttribute.priority = tempAttribute.priority
             } else {
-                CharacterAttribute(character: character, attribute: attributePair.key, priority: attributePair.value, context: context)
+                CharacterAttribute(character: character, attribute: tempAttribute.attribute, priority: tempAttribute.priority, context: context)
             }
         }
         
-        tempAttributes = [:]
+        tempAttributes = []
         
         CoreDataStack.shared.save(context: context)
     }
@@ -149,7 +160,7 @@ class AttributeController {
         
         for characterAttribute in characterAttributes {
             guard let attribute = characterAttribute.attribute else { continue }
-            tempAttributes[attribute] = characterAttribute.priority
+            tempAttributes.append((attribute, characterAttribute.priority))
         }
     }
     
@@ -173,7 +184,7 @@ class AttributeController {
     }
     
     func removeMissingTempAttributes(from character: Character, context: NSManagedObjectContext) {
-        let attributes: [Attribute] = tempAttributes.map({ $0.key })
+        let attributes: [Attribute] = tempAttributes.map({ $0.attribute })
         
         let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (attribute IN %@)", character, attributes)
