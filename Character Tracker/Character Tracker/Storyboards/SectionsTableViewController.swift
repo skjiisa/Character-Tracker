@@ -23,7 +23,6 @@ class SectionsTableViewController: UITableViewController {
     }
     var attributeController: AttributeController?
     var moduleController: ModuleController?
-    var character: Character?
     var delegate: SectionsTableDelegate?
     
     var shownSections: [Section] = []
@@ -31,19 +30,9 @@ class SectionsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        //self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         tableView.allowsSelectionDuringEditing = true
         tableView.setEditing(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
 
     // MARK: - Table view data source
@@ -142,7 +131,6 @@ class SectionsTableViewController: UITableViewController {
 
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
         return indexPath.section == 0
     }
     
@@ -156,8 +144,9 @@ class SectionsTableViewController: UITableViewController {
             attributeTypeSectionController?.remove(section: section)
             delegate?.updateSections()
             shownSections.remove(at: indexPath.row)
-            hiddenSections.insert(section, at: 0)
-            tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+            sortSections()
+            guard let index = hiddenSections.firstIndex(where: { $0.id == section.id }) else { return }
+            tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: 1))
         } else {
             let section = hiddenSections[indexPath.row]
             attributeTypeSectionController?.tempSectionsToShow.append(TempSection(section: section))
@@ -172,8 +161,6 @@ class SectionsTableViewController: UITableViewController {
     
     func sortSections() {
         guard let attributeTypeSectionController = attributeTypeSectionController else { return }
-        
-        //shownSections = attributeTypeSectionController.sections.filter({ attributeTypeSectionController.contains(section: $0) })
         shownSections = attributeTypeSectionController.tempSectionsToShow.map({$0.section})
         hiddenSections = attributeTypeSectionController.sections.filter({ !attributeTypeSectionController.contains(section: $0) })
     }
