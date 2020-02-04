@@ -159,7 +159,9 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             let gameNames = games.compactMap({ $0.name })
             cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
         } else {
-            cell.detailTextLabel?.text = nil
+            let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
+            let attiributeNames = attributes?.compactMap({ $0.attribute?.name })
+            cell.detailTextLabel?.text = attiributeNames?.joined(separator: ", ")
         }
         
         if checkedModules?.contains(module) ?? false {
