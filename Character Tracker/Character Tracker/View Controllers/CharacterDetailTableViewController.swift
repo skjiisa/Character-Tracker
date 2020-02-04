@@ -122,6 +122,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard section < allSections.count else {
+            NSLog("That weird crash happened again where index is out of range for titleForHeaderInSection.")
+            return "<Something went wrong!>"
+        }
         let title = allSections[section]
         
         if let title = title,
