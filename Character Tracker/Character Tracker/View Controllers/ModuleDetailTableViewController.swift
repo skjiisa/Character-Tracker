@@ -64,6 +64,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var levelStepper: UIStepper?
     
     var sections: [(name: String, type: SectionTypes)] = []
+    var sectionsToReload: [SectionTypes] = []
     
     class TextViewReference: Equatable {
         static func == (lhs: TextViewReference, rhs: TextViewReference) -> Bool {
@@ -96,21 +97,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             moduleController.checkTempModules(againstCharacterFrom: characterModule, context: CoreDataStack.shared.mainContext)
         }
 
-        var sectionsToReload: IndexSet = []
-        if let ingredientsSectionIndex = sections.firstIndex(where: { $0.type == .ingredients }) {
-            sectionsToReload.insert(ingredientsSectionIndex)
-        }
-        if let modulesSectionIndex = sections.firstIndex(where: { $0.type == .modules }) {
-            sectionsToReload.insert(modulesSectionIndex)
-        }
-        if let attributesSectionIndex = sections.firstIndex(where: { $0.type == .attributes }) {
-            sectionsToReload.insert(attributesSectionIndex)
-        }
-        if let gamesSectionIndex = sections.firstIndex(where: { $0.type == .games }) {
-            sectionsToReload.insert(gamesSectionIndex)
+        var sectionIndicesToReload: IndexSet = []
+        for section in sectionsToReload {
+            guard let index = sections.firstIndex(where: { $0.type == section }) else { continue }
+            sectionIndicesToReload.insert(index)
         }
         
-        tableView.reloadSections(sectionsToReload, with: .automatic)
+        tableView.reloadSections(sectionIndicesToReload, with: .automatic)
+        sectionsToReload = []
     }
 
     // MARK: - Table view data source
@@ -518,6 +512,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return false
     }
     
+    private func markSectionForReload(section: SectionTypes) {
+        if !sectionsToReload.contains(section) {
+            sectionsToReload.append(section)
+        }
+    }
+    
     //MARK: Actions
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
@@ -559,6 +559,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     ingredientsVC.askForQuantity { quantity in
                         if let quantity = quantity {
                             self.ingredientController.add(tempIngredient: ingredient, quantity: quantity)
+                            self.markSectionForReload(section: .ingredients)
                             self.moduleHasBeenModified()
                             self.navigationController?.popViewController(animated: true)
                         }
@@ -573,6 +574,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 modulesVC.callbacks.append { module in
                     self.moduleController.toggle(tempModule: module)
+                    self.markSectionForReload(section: .modules)
                     self.moduleHasBeenModified()
                 }
             } else if let attributesVC = vc as? AttributesTableViewController {
@@ -583,12 +585,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 attributesVC.callbacks.append { attribute in
                     self.attributeController.toggle(tempAttribute: attribute, priority: 0)
+                    self.markSectionForReload(section: .attributes)
                     self.moduleHasBeenModified()
                 }
             } else if let gamesVC = vc as? GamesTableViewController {
                 gamesVC.checkedGames = games
                 gamesVC.callback = { games in
                     self.games = games
+                    self.markSectionForReload(section: .games)
                     self.moduleHasBeenModified()
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
@@ -611,6 +615,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 moduleDetailVC.moduleType = module.type
                 moduleDetailVC.callbacks.append { characterModule, completed in
                     self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: CoreDataStack.shared.mainContext)
+                    self.markSectionForReload(section: .modules)
                     if completed {
                         DispatchQueue.main.async {
                             self.navigationController?.popViewController(animated: true)
