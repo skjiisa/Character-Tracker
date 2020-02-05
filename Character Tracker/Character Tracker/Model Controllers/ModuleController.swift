@@ -119,6 +119,30 @@ class ModuleController {
         return nil
     }
     
+    //MARK: ModuleIngredients
+    
+    func getModuleIngredient(module: Module, forRowAt indexPath: IndexPath) -> ModuleIngredient? {
+        var moduleIngredients = module.mutableSetValue(forKey: "ingredients").compactMap({ $0 as? ModuleIngredient })
+        moduleIngredients.sort { $0.quantity < $1.quantity }
+        guard indexPath.row < moduleIngredients.count else { return nil }
+        let moduleIngredient = moduleIngredients[indexPath.row]
+        return moduleIngredient
+    }
+    
+    @discardableResult func toggle(character: Character, ingredientAtIndexPath indexPath: IndexPath, inModule module: Module, context: NSManagedObjectContext) -> Bool? {
+        guard let moduleIngredient = getModuleIngredient(module: module, forRowAt: indexPath) else { return nil }
+        let moduleIngredientCharacters = moduleIngredient.mutableSetValue(forKey: "characters")
+        
+        let contained = moduleIngredientCharacters.contains(character)
+        if contained {
+            moduleIngredientCharacters.remove(character)
+        } else {
+            moduleIngredientCharacters.add(character)
+        }
+        CoreDataStack.shared.save(context: context)
+        return !contained
+    }
+    
     //MARK: Character Modules CRUD
     
     func saveTempModules(to character: Character, context: NSManagedObjectContext) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Attribute" representedClassName="Attribute" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -44,6 +44,7 @@
         <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="character" inverseEntity="CharacterAttribute"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="characters" inverseEntity="Game"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="characters" inverseEntity="Mod"/>
+        <relationship name="moduleIngredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="characters" inverseEntity="ModuleIngredient"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterModule" inverseName="character" inverseEntity="CharacterModule"/>
         <relationship name="race" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Race" inverseName="character" inverseEntity="Race"/>
     </entity>
@@ -132,6 +133,7 @@
     </entity>
     <entity name="ModuleIngredient" representedClassName="ModuleIngredient" syncable="YES" codeGenerationType="class">
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="moduleIngredients" inverseEntity="Character"/>
         <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="modules" inverseEntity="Ingredient"/>
         <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="ingredients" inverseEntity="Module"/>
     </entity>
@@ -159,7 +161,7 @@
         <element name="AttributeTypeSection" positionX="826" positionY="-76" width="128" height="118"/>
         <element name="Author" positionX="-60" positionY="-57" width="128" height="133"/>
         <element name="Category" positionX="-88" positionY="194" width="128" height="103"/>
-        <element name="Character" positionX="157" positionY="-242" width="128" height="163"/>
+        <element name="Character" positionX="157" positionY="-242" width="128" height="178"/>
         <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
         <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
@@ -169,7 +171,7 @@
         <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
         <element name="Module" positionX="343" positionY="203" width="128" height="238"/>
         <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
-        <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="88"/>
+        <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="103"/>
         <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>
         <element name="ModuleType" positionX="411" positionY="445" width="128" height="88"/>
         <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>

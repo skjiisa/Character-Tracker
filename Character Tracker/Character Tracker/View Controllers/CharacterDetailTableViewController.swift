@@ -496,6 +496,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     } else if let characterIngredientsVC = vc as? CharacterIngredientsTableViewController {
                         characterIngredientsVC.moduleType = modulesSection
                         characterIngredientsVC.moduleController = moduleController
+                        characterIngredientsVC.character = character
                     }
                 }
             }

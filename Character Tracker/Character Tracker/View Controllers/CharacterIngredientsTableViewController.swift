@@ -24,6 +24,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         }
     }
     var moduleType: ModuleType?
+    var character: Character?
     
     var modules: [Module] = []
 
@@ -110,13 +111,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
 
         let module = modules[indexPath.section]
-        
-        var moduleIngredients = module.mutableSetValue(forKey: "ingredients").compactMap({ $0 as? ModuleIngredient })
-        moduleIngredients.sort { $0.quantity < $1.quantity }
-        guard indexPath.row < moduleIngredients.count else { return cell }
-        let moduleIngredient = moduleIngredients[indexPath.row]
-        
-        //guard let moduleIngredient = moduleIngredient as? ModuleIngredient else { continue }
+        guard let moduleIngredient = moduleController?.getModuleIngredient(module: module, forRowAt: indexPath) else { return cell }
         
         cell.textLabel?.text = moduleIngredient.ingredient?.name
         
@@ -144,44 +139,33 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         } else {
             cell.detailTextLabel?.text = nil
         }
+        
+        if let character = character,
+            moduleIngredient.characters?.contains(character) ?? false {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
 
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let module = modules[indexPath.section]
+        guard let cell = tableView.cellForRow(at: indexPath),
+            let character = character else { return }
+        
+        if moduleController?.toggle(character: character,
+                                    ingredientAtIndexPath: indexPath,
+                                    inModule: module,
+                                    context: CoreDataStack.shared.mainContext) ?? false {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     //MARK: Actions
     
