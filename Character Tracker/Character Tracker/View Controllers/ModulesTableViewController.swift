@@ -41,34 +41,27 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         guard let game = gameReference?.game else { return nil }
         
+        var predicates: [NSPredicate] = []
+        
         if !showAll {
-            var predicateString = "ANY games == %@"
-            var argumentList: [Any] = [game]
+            predicates.append(NSPredicate(format: "ANY games == %@", game))
             
             if let type = moduleType {
-                predicateString += " AND type == %@"
-                argumentList.append(type)
+                predicates.append(NSPredicate(format: "type == %@", type))
             }
             
             if let excludedModuleUUID = excludedModule?.id {
-                predicateString += " AND id != %@"
-                argumentList.append(excludedModuleUUID)
+                predicates.append(NSPredicate(format: "id != %@", excludedModuleUUID as CVarArg))
             }
+        } else if let gameModules = game.modules {
+            predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameModules))
             
-            fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
-        } else {
-            if let gameModules = game.modules {
-                var predicateString = "NOT (SELF in %@)"
-                var argumentList: [Any] = [gameModules]
-                
-                if let type = moduleType {
-                    predicateString += " AND type == %@"
-                    argumentList.append(type)
-                }
-                
-                fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentList)
+            if let type = moduleType {
+                predicates.append(NSPredicate(format: "type == %@", type))
             }
         }
+        
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
@@ -85,35 +78,9 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         return frc
     }()
-    
-    lazy var gamesFRC: NSFetchedResultsController<Game> = {
-        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
-        ]
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "name",
-                                             cacheName: nil)
-                
-        do {
-            try frc.performFetch()
-        } catch {
-            fatalError("Error performing fetch for game frc: \(error)")
-        }
-        
-        return frc
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         title = typeName.pluralize()
         addModuleButton.setTitle("Add \(typeName)", for: .normal)
@@ -123,12 +90,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
     }
 
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
+    //MARK: Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
@@ -153,10 +115,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         cell.textLabel?.text = module.name
         
         if showAll,
-            let allGames = gamesFRC.fetchedObjects,
-            let game = gameReference?.game {
-            let games = allGames.filter({ ($0.modules?.contains(module) ?? false) && $0 != game })
-            let gameNames = games.compactMap({ $0.name })
+            let gameNames = module.games?.compactMap({ ($0 as? Game)?.name }) {
             cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
         } else {
             let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
@@ -171,15 +130,6 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let module = fetchedResultsController?.object(at: indexPath) else { return }
@@ -191,25 +141,10 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             } else {
                 moduleController?.delete(module: module, context: CoreDataStack.shared.mainContext)
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    
+    //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -238,9 +173,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
     }
 
-    // MARK: - Navigation
+    //MARK: Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
@@ -291,7 +225,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     
 }
 
-//MARK: Fetched Results Controller Delegate
+//MARK: Fetched results controller delegate
 
 extension ModulesTableViewController: NSFetchedResultsControllerDelegate {
     
