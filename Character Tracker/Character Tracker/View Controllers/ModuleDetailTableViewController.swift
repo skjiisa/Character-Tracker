@@ -107,7 +107,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sectionsToReload = []
     }
 
-    // MARK: - Table view data source
+    //MARK: Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -132,17 +132,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].name
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            if module == nil {
-                return 0
-            }
-            return 20
-        }
-
-        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -280,36 +269,40 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if (sections[indexPath.section].type == .ingredients
-            && indexPath.row < ingredientController.tempIngredients.count)
-            || (sections[indexPath.section].type == .modules
-                && indexPath.row < moduleController.tempModules.count)
-            || (sections[indexPath.section].type == .attributes
-                && indexPath.row < attributeController.tempAttributes.count)
-            || (sections[indexPath.section].type == .games
-                && indexPath.row < games.count
-                && games[indexPath.row] != gameReference?.game) {
-            return true
+        let array: [Any]
+        switch sections[indexPath.section].type {
+        case .ingredients:
+            array = ingredientController.tempIngredients
+        case .modules:
+            array = moduleController.tempModules
+        case .attributes:
+            array = attributeController.tempAttributes
+        case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
+            array = games
+        default:
+            return false
         }
-        
-        return false
+        return indexPath.row < array.count
     }
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let section = sections[indexPath.section].type
-            if section == .ingredients {
+            switch section {
+            case .ingredients:
                 let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
                 ingredientController.remove(tempIngredient: ingredient)
-            } else if section == .modules {
+            case .modules:
                 let module = moduleController.tempModules[indexPath.row].module
                 moduleController.remove(tempModule: module)
-            } else if section == .attributes {
+            case .attributes:
                 let attribute = attributeController.tempAttributes[indexPath.row].attribute
                 attributeController.remove(tempAttribute: attribute)
-            } else if section == .games {
+            case .games:
                 games.remove(at: indexPath.row)
+            default:
+                break
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
@@ -317,21 +310,19 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    //MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            if module == nil {
+                return 0
+            }
+            return 20
+        }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        return UITableView.automaticDimension
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch sections[indexPath.section].type {
@@ -342,12 +333,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         default:
             break
         }
-        
-//        if indexPath == IndexPath(row: 0, section: 2) {
-//            if let textView = notesTextView {
-//                setTextViewFontSize(textView)
-//            }
-//        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -414,13 +399,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         }
         
         if let completed = characterModule?.completed {
-            if completed {
-                completeButton.isEnabled = false
-                undoButton.isHidden = false
-            } else {
-                completeButton.isEnabled = true
-                undoButton.isHidden = true
-            }
+            completeButton.isEnabled = !completed
+            undoButton.isHidden = !completed
         } else {
             undoButton.isHidden = true
             completeButton.isEnabled = false

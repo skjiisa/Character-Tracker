@@ -82,7 +82,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
+    //MARK: Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return allSections.count
@@ -92,16 +92,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         guard let tempSection = attributeTypeSectionController?.sectionToShow(section) else {
             // Character section or module options section
-            
             if let tempSection = attributeTypeSectionController?.sectionToShow(section - 1),
-                let moduleSection = tempSection.section as? ModuleType,
                 tempSection.collapsed {
-                let tempModules = moduleController.getTempModules(from: moduleSection)
-                
-                if tempModules?.count ?? 0 > 0 {
-                    return 1
-                }
-                
                 return 0
             }
             
@@ -128,60 +120,17 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         let title = allSections[section]
         
+        // Triangles: ▼▶︎▲
         if let title = title,
             let tempSection = attributeTypeSectionController?.sectionToShow(section) {
             if tempSection.collapsed {
-                return "▼\t\(title)"
+                return "▶︎\t\(title)"
             }
             
-            return "▲\t\(title)"
+            return "▼\t\(title)"
         }
         
         return title
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if attributeTypeSectionController?.sectionToShow(section - 1)?.section is ModuleType {
-            return 2
-        }
-        
-        return UITableView.automaticDimension
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? UITableViewHeaderFooterView else { return }
-        
-        view.tag = section
-        
-        if section > 0 {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-            view.addGestureRecognizer(tap)
-        }
-        
-        view.textLabel?.font = .preferredFont(forTextStyle: .subheadline)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let tempSection = attributeTypeSectionController?.sectionToShow(section),
-            let section = tempSection.section as? ModuleType {
-            if let tempModules = moduleController.getTempModules(from: section),
-                tempModules.count == 0
-                    || tempSection.collapsed {
-                return 2
-            }
-        }
-        
-        return UITableView.automaticDimension
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UITableViewHeaderFooterView()
-        view.tag = section + 1
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
-        view.addGestureRecognizer(tap)
-        
-        return view
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -267,28 +216,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
             if let tempAttributes = attributeController.getTempAttributes(from: section.section) {
-                if indexPath.row < tempAttributes.count {
-                    // Attribute
-                    return true
-                } else {
-                    // "Add attribute" cell
-                    return false
-                }
+                return indexPath.row < tempAttributes.count
             } else if let tempModules = moduleController.getTempModules(from: section.section) {
-                if indexPath.row < tempModules.count {
-                    // Module
-                    return true
-                } else {
-                    // "Add module" cell
-                    return false
-                }
-            } else {
-                return false
+                return indexPath.row < tempModules.count
             }
-        } else {
-            // Character section
-            return false
         }
+        
+        return false
     }
 
     // Override to support editing the table view.
@@ -313,21 +247,52 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    //MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if attributeTypeSectionController?.sectionToShow(section - 1)?.section is ModuleType {
+            return 2
+        }
+        
+        return UITableView.automaticDimension
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? UITableViewHeaderFooterView else { return }
+        
+        view.tag = section
+        
+        if section > 0 {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+            view.addGestureRecognizer(tap)
+        }
+        
+        view.textLabel?.font = .preferredFont(forTextStyle: .subheadline)
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if let tempSection = attributeTypeSectionController?.sectionToShow(section),
+            let section = tempSection.section as? ModuleType {
+            if let tempModules = moduleController.getTempModules(from: section),
+                tempModules.count == 0
+                    || tempSection.collapsed {
+                return 2
+            }
+        }
+        
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UITableViewHeaderFooterView()
+        view.tag = section + 1
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
+        view.addGestureRecognizer(tap)
+        
+        return view
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath(row: 0, section: 0) {
