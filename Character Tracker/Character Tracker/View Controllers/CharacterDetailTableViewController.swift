@@ -205,8 +205,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     femaleSegmentedControl = textFieldCell.femaleSegmentedControl
                     textFieldCell.delegate = self
                     
-                    femaleSegmentedControl?.selectedSegmentIndex = female ? 1 : 0
-                    femaleSegmentedControl?.setEnabled(editMode, forSegmentAt: female ? 0 : 1)
+                    femaleSegmentedControl?.selectedSegmentIndex = female.int
+                    femaleSegmentedControl?.setEnabled(editMode, forSegmentAt: (!female).int)
                     
                     cell = textFieldCell
                 } else {
@@ -422,7 +422,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     @objc private func edit() {
         navigationItem.rightBarButtonItem = cancelEditButton
         editMode = true
-//        femaleSegmentedControl?.setEnabled(true, forSegmentAt: female ? 0 : 1)
         
         tableView.reloadData()
     }
@@ -430,7 +429,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     @objc private func endEdit() {
         editMode = false
         navigationItem.rightBarButtonItem = editButton
-//        femaleSegmentedControl?.setEnabled(false, forSegmentAt: female ? 0 : 1)
         view.endEditing(true)
         
         tableView.reloadData()
