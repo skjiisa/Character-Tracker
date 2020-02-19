@@ -117,8 +117,6 @@ class AttributeController {
             }
         }
         
-        tempAttributes = []
-        
         CoreDataStack.shared.save(context: context)
     }
     
@@ -184,8 +182,6 @@ class AttributeController {
                 ModuleAttribute(module: module, attribute: tempAttribute.attribute, value: tempAttribute.priority, context: context)
             }
         }
-        
-        tempAttributes = []
         
         CoreDataStack.shared.save(context: context)
     }

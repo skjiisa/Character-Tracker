@@ -117,17 +117,19 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
             destination = segue.destination
         }
         
-        if let vc = destination as? CharacterDetailTableViewController {
-            vc.gameReference = gameReference
-            vc.characterController = characterController
-            vc.attributeTypeController = attributeTypeController
-            vc.attributeTypeSectionController = attributeTypeSectionController
+        if let characterDetailVC = destination as? CharacterDetailTableViewController {
+            characterDetailVC.gameReference = gameReference
+            characterDetailVC.characterController = characterController
+            characterDetailVC.attributeTypeController = attributeTypeController
+            characterDetailVC.attributeTypeSectionController = attributeTypeSectionController
             guard let game = gameReference?.game else { return }
-            vc.attributeTypeSectionController?.loadTempSections(for: game)
+            characterDetailVC.attributeTypeSectionController?.loadTempSections(for: game)
             
             if segue.identifier == "ShowCharacterDetail",
                 let indexPath = tableView.indexPathForSelectedRow {
-                vc.character = fetchedResultsController?.object(at: indexPath)
+                characterDetailVC.character = fetchedResultsController?.object(at: indexPath)
+            } else {
+                characterDetailVC.editMode = true
             }
         }
     }

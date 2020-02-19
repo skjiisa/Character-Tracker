@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
+		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
+		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */,
+				590B3A5623FCDC790058D236 /* Bool+Int.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */,
 				59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */,
 				597AC99E2374E04800DC18E6 /* SectionsTableViewController.swift in Sources */,
+				590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */,
 				59850F44237D0F4B00286067 /* ModuleNameTableViewCell.swift in Sources */,
 				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
