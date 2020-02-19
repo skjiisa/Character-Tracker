@@ -63,12 +63,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        if character == nil {
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+            navigationItem.leftBarButtonItem = cancelButton
+        }
         
         updateViews()
         saveButton.isEnabled = false
@@ -316,6 +315,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
     }
     
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc private func toggleSection(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         characterHasBeenModified()
@@ -388,7 +391,12 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         save()
-        navigationController?.popViewController(animated: true)
+        
+        if character == nil {
+            dismiss(animated: true, completion: nil)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     // MARK: - Navigation

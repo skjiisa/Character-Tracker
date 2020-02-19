@@ -33,6 +33,10 @@ class SectionsTableViewController: UITableViewController {
         
         tableView.allowsSelectionDuringEditing = true
         tableView.setEditing(true, animated: false)
+        
+        // The below line is to fix a bug with second-layer navigation bars
+        // See https://forums.developer.apple.com/thread/121861
+        navigationController?.navigationBar.setNeedsLayout()
     }
 
     // MARK: - Table view data source
