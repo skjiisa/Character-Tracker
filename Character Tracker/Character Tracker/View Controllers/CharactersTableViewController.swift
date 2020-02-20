@@ -20,14 +20,38 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         didSet {
             gameReference?.callbacks.append {
                 self.navigationController?.popToRootViewController(animated: false)
-                self.fetchedResultsController = self.newFRC()
+                self.changeGame()
                 self.tableView.reloadData()
                 self.navigationItem.title = self.gameReference?.name
             }
         }
     }
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Character>? = newFRC()
+    lazy var fetchedResultsController: NSFetchedResultsController<Character>? = {
+        let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
+        
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        
+        guard let game = gameReference?.game else { return nil }
+        fetchRequest.predicate = NSPredicate(format: "game == %@", game)
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataStack.shared.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        
+        frc.delegate = self
+        
+        do {
+            try frc.performFetch()
+        } catch {
+            fatalError("Error performing fetch for character frc: \(error)")
+        }
+        
+        return frc
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,30 +103,14 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Private
     
-    private func newFRC() -> NSFetchedResultsController<Character>? {
-        let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
-        
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
-        ]
-        
-        guard let game = gameReference?.game else { return nil }
-        fetchRequest.predicate = NSPredicate(format: "game == %@", game)
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: nil,
-                                             cacheName: nil)
-        
-        frc.delegate = self
-        
+    private func changeGame() {
+        guard let game = gameReference?.game else { return }
+        fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "game == %@", game)
         do {
-            try frc.performFetch()
+            try fetchedResultsController?.performFetch()
         } catch {
             fatalError("Error performing fetch for character frc: \(error)")
         }
-        
-        return frc
     }
 
     // MARK: - Navigation
