@@ -176,7 +176,16 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     //MARK: Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? CharacterTrackerViewController {
+        let destination: UIViewController
+        
+        if let navigationVC = segue.destination as? UINavigationController,
+            let firstVC = navigationVC.viewControllers.first {
+            destination = firstVC
+        } else {
+            destination = segue.destination
+        }
+        
+        if let vc = destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
             
             if let modulesVC = vc as? ModulesTableViewController {
@@ -209,7 +218,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
         
         let addNew = UIAlertAction(title: "Add new \(typeName)", style: .default) { _ in
-            self.performSegue(withIdentifier: "ShowNewModule", sender: self)
+            self.performSegue(withIdentifier: "NewModule", sender: self)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
