@@ -62,34 +62,9 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         return frc
     }()
     
-    lazy var gamesFRC: NSFetchedResultsController<Game> = {
-        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
-        ]
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: "name",
-                                             cacheName: nil)
-                
-        do {
-            try frc.performFetch()
-        } catch {
-            fatalError("Error performing fetch for game frc: \(error)")
-        }
-        
-        return frc
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         if showAll {
             addRaceView.isHidden = true
         }
@@ -120,27 +95,15 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         cell.textLabel?.text = race?.name
         
-        if showAll {
-            if let allGames = gamesFRC.fetchedObjects,
-                let game = gameReference?.game {
-                let games = allGames.filter({ ($0.races?.contains(race!) ?? false) && $0 != game })
-                let gameNames = games.compactMap({ $0.name })
-                cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
-            }
+        if showAll,
+            let gameNames = race?.games?.compactMap({ ($0 as? Game)?.name }) {
+            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
         } else {
             cell.detailTextLabel?.text = nil
         }
 
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -154,25 +117,8 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
             } else {
                 raceController.delete(race: race, context: CoreDataStack.shared.mainContext)
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let race = fetchedResultsController?.object(at: indexPath) else { return }
@@ -182,7 +128,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let racesVC = segue.destination as? RacesTableViewController {
             racesVC.showAll = true
