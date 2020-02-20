@@ -10,10 +10,6 @@ import UIKit
 
 class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
-    //MARK: Outlets
-    
-    @IBOutlet weak var saveButton: UIBarButtonItem!
-    
     //MARK: Properties
     
     let attributeController = AttributeController()
@@ -44,6 +40,20 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     var female: Bool = false
     var femaleSegmentedControl: UISegmentedControl?
     var textField: UITextField?
+    var editMode: Bool = false
+    
+    var cancelButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+    }
+    var editButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+    }
+    var saveButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+    }
+    var cancelEditButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+    }
 
     var allSections: [String?] {
         var sections: [String?] = []
@@ -63,15 +73,16 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        if character == nil {
+            navigationItem.leftBarButtonItem = cancelButton
+            navigationItem.rightBarButtonItem = saveButton
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.rightBarButtonItem = editButton
+        }
         
         updateViews()
-        saveButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,30 +93,25 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
+    //MARK: Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return allSections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 2
+        }
         
         guard let tempSection = attributeTypeSectionController?.sectionToShow(section) else {
-            // Character section or module options section
-            
+            // Module options section
             if let tempSection = attributeTypeSectionController?.sectionToShow(section - 1),
-                let moduleSection = tempSection.section as? ModuleType,
                 tempSection.collapsed {
-                let tempModules = moduleController.getTempModules(from: moduleSection)
-                
-                if tempModules?.count ?? 0 > 0 {
-                    return 1
-                }
-                
                 return 0
             }
             
-            return 2
+            return 1 + editMode.int
         }
         
         if tempSection.collapsed {
@@ -113,7 +119,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         
         if let tempAttributes = attributeController.getTempAttributes(from: tempSection.section) {
-            return tempAttributes.count + 1
+            return tempAttributes.count + editMode.int
         } else if let tempModules = moduleController.getTempModules(from: tempSection.section) {
             return tempModules.count
         }
@@ -128,17 +134,140 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         let title = allSections[section]
         
+        // Triangles: ▼▶︎▲
         if let title = title,
             let tempSection = attributeTypeSectionController?.sectionToShow(section) {
             if tempSection.collapsed {
-                return "▼\t\(title)"
+                return "▶︎\t\(title)"
             }
             
-            return "▲\t\(title)"
+            return "▼\t\(title)"
         }
         
         return title
     }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell
+        
+        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+            if let attributeSection = section.section as? AttributeTypeSection,
+                let tempAttributes = attributeController.getTempAttributes(from: attributeSection) {
+                if indexPath.row < tempAttributes.count {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+                    cell.textLabel?.text = tempAttributes[indexPath.row].name
+                } else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
+                    cell.textLabel?.text = "Add \(attributeSection.typeName.pluralize())"
+                }
+            } else if let moduleSection = section.section as? ModuleType,
+                let tempModules = moduleController.getTempModules(from: moduleSection) {
+                cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
+                let module = tempModules[indexPath.row]
+                cell.textLabel?.text = module.name
+                
+                if module.level > 0 {
+                    cell.detailTextLabel?.text = "Level \(module.level)"
+                } else {
+                    cell.detailTextLabel?.text = nil
+                }
+                
+                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .disclosureIndicator
+                }
+            } else {
+                // This shouldn't happen and is just a fallback in case something breaks
+                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+            }
+        } else if let tempSection = attributeTypeSectionController?.sectionToShow(indexPath.section - 1),
+            let moduleSection = tempSection.section as? ModuleType {
+            if indexPath.row == editMode.int {
+                cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
+                cell.textLabel?.text = "Add \(moduleSection.typeName.pluralize())"
+            }
+        } else {
+            // Character section
+            if indexPath.row == 0 {
+                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
+                    textField = textFieldCell.textField
+                    textField?.delegate = self
+
+                    if let name = textField?.text,
+                        name == "",
+                        let character = character {
+                        textField?.text = character.name
+                    }
+                    
+                    femaleSegmentedControl = textFieldCell.femaleSegmentedControl
+                    textFieldCell.delegate = self
+                    
+                    femaleSegmentedControl?.selectedSegmentIndex = female.int
+                    femaleSegmentedControl?.setEnabled(editMode, forSegmentAt: (!female).int)
+                    
+                    cell = textFieldCell
+                } else {
+                    cell = UITableViewCell()
+                }
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
+                if let race = race,
+                    race.managedObjectContext != nil {
+                    cell.textLabel?.text = race.name
+                } else {
+                    cell.textLabel?.text = "Select Race"
+                }
+                
+                if editMode {
+                    cell.accessoryType = .disclosureIndicator
+                } else {
+                    cell.accessoryType = .none
+                }
+            }
+        }
+        
+        return cell
+    }
+
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if editMode,
+            let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+            if let tempAttributes = attributeController.getTempAttributes(from: section.section) {
+                return indexPath.row < tempAttributes.count
+            } else if let tempModules = moduleController.getTempModules(from: section.section) {
+                return indexPath.row < tempModules.count
+            }
+        }
+        
+        return false
+    }
+
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
+                if let tempAttributes = attributeController.getTempAttributes(from: section.section),
+                    indexPath.row < tempAttributes.count {
+                    attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
+                } else if let tempModules = moduleController.getTempModules(from: section.section),
+                    indexPath.row < tempModules.count {
+                    moduleController.remove(tempModule: tempModules[indexPath.row])
+                } else {
+                    return
+                }
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            characterHasBeenModified()
+        }
+    }
+    
+    //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if attributeTypeSectionController?.sectionToShow(section - 1)?.section is ModuleType {
@@ -183,151 +312,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         return view
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
-        
-        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-            if let attributeSection = section.section as? AttributeTypeSection,
-                let tempAttributes = attributeController.getTempAttributes(from: attributeSection) {
-                if indexPath.row < tempAttributes.count {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
-                    cell.textLabel?.text = tempAttributes[indexPath.row].name
-                } else {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
-                    cell.textLabel?.text = "Add \(attributeSection.typeName.pluralize())"
-                }
-            } else if let moduleSection = section.section as? ModuleType,
-                let tempModules = moduleController.getTempModules(from: moduleSection) {
-                cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
-                let module = tempModules[indexPath.row]
-                cell.textLabel?.text = module.name
-                
-                if module.level > 0 {
-                    cell.detailTextLabel?.text = "Level \(module.level)"
-                } else {
-                    cell.detailTextLabel?.text = nil
-                }
-                
-                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .disclosureIndicator
-                }
-            } else {
-                // This shouldn't happen and is just a fallback in case something breaks
-                cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
-            }
-        } else if let tempSection = attributeTypeSectionController?.sectionToShow(indexPath.section - 1), let moduleSection = tempSection.section as? ModuleType {
-            if indexPath.row == 0,
-                !tempSection.collapsed {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
-                cell.textLabel?.text = "Add \(moduleSection.typeName.pluralize())"
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "ViewIngredientsCell", for: indexPath)
-            }
-        } else {
-            // Character section
-            if indexPath.row == 0 {
-                if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
-                    textField = textFieldCell.textField
-                    textField?.delegate = self
-
-                    if let name = textField?.text,
-                        name == "",
-                        let character = character {
-                        textField?.text = character.name
-                    }
-                    
-                    femaleSegmentedControl = textFieldCell.femaleSegmentedControl
-                    textFieldCell.delegate = self
-                    
-                    femaleSegmentedControl?.selectedSegmentIndex = female ? 1 : 0
-                    
-                    cell = textFieldCell
-                } else {
-                    cell = UITableViewCell()
-                }
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
-                if let race = race,
-                    race.managedObjectContext != nil {
-                    cell.textLabel?.text = race.name
-                } else {
-                    cell.textLabel?.text = "Select Race"
-                }
-            }
-        }
-        
-        return cell
-    }
-
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        
-        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-            if let tempAttributes = attributeController.getTempAttributes(from: section.section) {
-                if indexPath.row < tempAttributes.count {
-                    // Attribute
-                    return true
-                } else {
-                    // "Add attribute" cell
-                    return false
-                }
-            } else if let tempModules = moduleController.getTempModules(from: section.section) {
-                if indexPath.row < tempModules.count {
-                    // Module
-                    return true
-                } else {
-                    // "Add module" cell
-                    return false
-                }
-            } else {
-                return false
-            }
-        } else {
-            // Character section
-            return false
-        }
-    }
-
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
-                if let tempAttributes = attributeController.getTempAttributes(from: section.section),
-                    indexPath.row < tempAttributes.count {
-                    attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
-                } else if let tempModules = moduleController.getTempModules(from: section.section),
-                    indexPath.row < tempModules.count {
-                    moduleController.remove(tempModule: tempModules[indexPath.row])
-                } else {
-                    return
-                }
-            }
-            
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            characterHasBeenModified()
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath(row: 0, section: 0) {
@@ -353,7 +337,6 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     @objc private func toggleSection(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
-        characterHasBeenModified()
         
         var sections: IndexSet = [index]
         
@@ -416,19 +399,52 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     private func characterHasBeenModified() {
         gameReference?.isSafeToChangeGame = false
-        saveButton.isEnabled = true
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     //MARK: Actions
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+    @objc private func saveTapped(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
         save()
-        navigationController?.popViewController(animated: true)
+        
+        if character == nil {
+            dismiss(animated: true, completion: nil)
+        } else {
+            endEdit()
+        }
+    }
+    
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func edit() {
+        navigationItem.rightBarButtonItem = cancelEditButton
+        editMode = true
+        
+        tableView.reloadData()
+    }
+    
+    @objc private func endEdit() {
+        editMode = false
+        navigationItem.rightBarButtonItem = editButton
+        view.endEditing(true)
+        
+        tableView.reloadData()
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "ShowRaces":
+            return editMode
+        default:
+            return true
+        }
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
@@ -515,6 +531,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
 //MARK: Text field delegate
 
 extension CharacterDetailTableViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return editMode
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text != character?.name {
             characterHasBeenModified()
@@ -542,6 +562,6 @@ extension CharacterDetailTableViewController: CharacterNameCellDelegate {
 extension CharacterDetailTableViewController: SectionsTableDelegate {
     func updateSections() {
         tableView.reloadData()
-        characterHasBeenModified()
+        //characterHasBeenModified()
     }
 }

@@ -20,23 +20,42 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         didSet {
             gameReference?.callbacks.append {
                 self.navigationController?.popToRootViewController(animated: false)
-                self.fetchedResultsController = self.newFRC()
+                self.changeGame()
                 self.tableView.reloadData()
                 self.navigationItem.title = self.gameReference?.name
             }
         }
     }
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Character>? = newFRC()
+    lazy var fetchedResultsController: NSFetchedResultsController<Character>? = {
+        let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
+        
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "name", ascending: true)
+        ]
+        
+        guard let game = gameReference?.game else { return nil }
+        fetchRequest.predicate = NSPredicate(format: "game == %@", game)
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                             managedObjectContext: CoreDataStack.shared.mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        
+        frc.delegate = self
+        
+        do {
+            try frc.performFetch()
+        } catch {
+            fatalError("Error performing fetch for character frc: \(error)")
+        }
+        
+        return frc
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
         navigationItem.title = gameReference?.name
     }
     
@@ -67,15 +86,6 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let character = fetchedResultsController?.object(at: indexPath) else { return }
@@ -84,25 +94,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
             } catch {
                 NSLog("Could not delete character: \(error)")
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     @IBAction func importJSON(_ sender: UIBarButtonItem) {
         JSONController.preloadData()
@@ -110,46 +103,41 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
     
     //MARK: Private
     
-    private func newFRC() -> NSFetchedResultsController<Character>? {
-        let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
-        
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
-        ]
-        
-        guard let game = gameReference?.game else { return nil }
-        fetchRequest.predicate = NSPredicate(format: "game == %@", game)
-        
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                             managedObjectContext: CoreDataStack.shared.mainContext,
-                                             sectionNameKeyPath: nil,
-                                             cacheName: nil)
-        
-        frc.delegate = self
-        
+    private func changeGame() {
+        guard let game = gameReference?.game else { return }
+        fetchedResultsController?.fetchRequest.predicate = NSPredicate(format: "game == %@", game)
         do {
-            try frc.performFetch()
+            try fetchedResultsController?.performFetch()
         } catch {
             fatalError("Error performing fetch for character frc: \(error)")
         }
-        
-        return frc
     }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? CharacterDetailTableViewController {
-            vc.gameReference = gameReference
-            vc.characterController = characterController
-            vc.attributeTypeController = attributeTypeController
-            vc.attributeTypeSectionController = attributeTypeSectionController
+        let destination: UIViewController
+        
+        if let navigationVC = segue.destination as? UINavigationController,
+            let firstVC = navigationVC.viewControllers.first {
+            destination = firstVC
+        } else {
+            destination = segue.destination
+        }
+        
+        if let characterDetailVC = destination as? CharacterDetailTableViewController {
+            characterDetailVC.gameReference = gameReference
+            characterDetailVC.characterController = characterController
+            characterDetailVC.attributeTypeController = attributeTypeController
+            characterDetailVC.attributeTypeSectionController = attributeTypeSectionController
             guard let game = gameReference?.game else { return }
-            vc.attributeTypeSectionController?.loadTempSections(for: game)
+            characterDetailVC.attributeTypeSectionController?.loadTempSections(for: game)
             
             if segue.identifier == "ShowCharacterDetail",
                 let indexPath = tableView.indexPathForSelectedRow {
-                vc.character = fetchedResultsController?.object(at: indexPath)
+                characterDetailVC.character = fetchedResultsController?.object(at: indexPath)
+            } else {
+                characterDetailVC.editMode = true
             }
         }
     }

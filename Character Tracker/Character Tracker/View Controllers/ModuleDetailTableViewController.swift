@@ -15,7 +15,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBOutlet weak var completeView: UIView!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: Properties
     
@@ -48,6 +47,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var characterModule: CharacterModule?
     var excludedModules: [Module] = []
     var games: [Game] = []
+    var editMode: Bool = false
     var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
     enum SectionTypes: Equatable {
@@ -59,12 +59,25 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case games
     }
     
+    var sections: [(name: String, type: SectionTypes)] = []
+    var sectionsToReload: [SectionTypes] = []
+    
     var nameTextField: UITextField?
     var levelTextField: UITextField?
     var levelStepper: UIStepper?
     
-    var sections: [(name: String, type: SectionTypes)] = []
-    var sectionsToReload: [SectionTypes] = []
+    var cancelButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+    }
+    var editButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+    }
+    var saveButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+    }
+    var cancelEditButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+    }
     
     class TextViewReference: Equatable {
         static func == (lhs: TextViewReference, rhs: TextViewReference) -> Bool {
@@ -85,7 +98,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         completeButton.setTitle("Completed", for: .disabled)
         completeButton.setTitle("Complete", for: .normal)
         
-        saveButton.isEnabled = false
+        if module == nil {
+            navigationItem.leftBarButtonItem = cancelButton
+            navigationItem.rightBarButtonItem = saveButton
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.rightBarButtonItem = editButton
+        }
         
         updateViews()
     }
@@ -107,7 +126,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sectionsToReload = []
     }
 
-    // MARK: - Table view data source
+    //MARK: Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -120,29 +139,18 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .notes(_):
             return 1
         case .ingredients:
-            return ingredientController.tempIngredients.count + 1
+            return ingredientController.tempIngredients.count + editMode.int
         case .modules:
-            return moduleController.tempModules.count + 1
+            return moduleController.tempModules.count + editMode.int
         case .attributes:
-            return attributeController.tempAttributes.count + 1
+            return attributeController.tempAttributes.count + editMode.int
         case .games:
-            return games.count + 1
+            return games.count + editMode.int
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].name
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            if module == nil {
-                return 0
-            }
-            return 20
-        }
-
-        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -171,6 +179,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     levelTextField?.delegate = self
                     
                     levelStepper = levelCell.stepper
+                    levelStepper?.isEnabled = editMode
                     
                     if let level = module?.level,
                         level > 0 {
@@ -280,36 +289,42 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if (sections[indexPath.section].type == .ingredients
-            && indexPath.row < ingredientController.tempIngredients.count)
-            || (sections[indexPath.section].type == .modules
-                && indexPath.row < moduleController.tempModules.count)
-            || (sections[indexPath.section].type == .attributes
-                && indexPath.row < attributeController.tempAttributes.count)
-            || (sections[indexPath.section].type == .games
-                && indexPath.row < games.count
-                && games[indexPath.row] != gameReference?.game) {
-            return true
-        }
+        guard editMode else { return false }
         
-        return false
+        let array: [Any]
+        switch sections[indexPath.section].type {
+        case .ingredients:
+            array = ingredientController.tempIngredients
+        case .modules:
+            array = moduleController.tempModules
+        case .attributes:
+            array = attributeController.tempAttributes
+        case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
+            array = games
+        default:
+            return false
+        }
+        return indexPath.row < array.count
     }
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let section = sections[indexPath.section].type
-            if section == .ingredients {
+            switch section {
+            case .ingredients:
                 let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
                 ingredientController.remove(tempIngredient: ingredient)
-            } else if section == .modules {
+            case .modules:
                 let module = moduleController.tempModules[indexPath.row].module
                 moduleController.remove(tempModule: module)
-            } else if section == .attributes {
+            case .attributes:
                 let attribute = attributeController.tempAttributes[indexPath.row].attribute
                 attributeController.remove(tempAttribute: attribute)
-            } else if section == .games {
+            case .games:
                 games.remove(at: indexPath.row)
+            default:
+                break
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
@@ -317,21 +332,19 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    //MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            if module == nil {
+                return 0
+            }
+            return 20
+        }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        return UITableView.automaticDimension
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch sections[indexPath.section].type {
@@ -342,12 +355,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         default:
             break
         }
-        
-//        if indexPath == IndexPath(row: 0, section: 2) {
-//            if let textView = notesTextView {
-//                setTextViewFontSize(textView)
-//            }
-//        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -409,18 +416,17 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if let module = module {
             title = module.name
         } else {
-            title = "New Module"
             completeView.isHidden = true
+            if let typeName = moduleType?.typeName {
+                title = "New \(typeName)"
+            } else {
+                title = "New Module"
+            }
         }
         
         if let completed = characterModule?.completed {
-            if completed {
-                completeButton.isEnabled = false
-                undoButton.isHidden = false
-            } else {
-                completeButton.isEnabled = true
-                undoButton.isHidden = true
-            }
+            completeButton.isEnabled = !completed
+            undoButton.isHidden = !completed
         } else {
             undoButton.isHidden = true
             completeButton.isEnabled = false
@@ -494,7 +500,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     private func moduleHasBeenModified() {
         //gameReference?.isSafeToChangeGame = false
-        saveButton.isEnabled = true
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
@@ -520,9 +526,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     //MARK: Actions
     
-    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+    @objc private func saveTapped(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
         save()
-        navigationController?.popViewController(animated: true)
+        
+        if module == nil {
+            dismiss(animated: true, completion: nil)
+        } else {
+            endEdit()
+        }
     }
     
     @IBAction func completeTapped(_ sender: UIButton) {
@@ -533,6 +545,25 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBAction func undoTapped(_ sender: UIButton) {
         setCompleted(false)
         updateViews()
+    }
+    
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func edit() {
+        navigationItem.rightBarButtonItem = cancelEditButton
+        editMode = true
+        
+        tableView.reloadData()
+    }
+    
+    @objc private func endEdit() {
+        editMode = false
+        navigationItem.rightBarButtonItem = editButton
+        view.endEditing(true)
+        
+        tableView.reloadData()
     }
     
     // MARK: - Navigation
@@ -631,6 +662,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
 // MARK: Text Field Delegate
 
 extension ModuleDetailTableViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return editMode
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == levelTextField {
             if let level = Int(textField.text ?? "") {
@@ -666,6 +701,10 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
 //MARK: Text View Delegate
 
 extension ModuleDetailTableViewController: UITextViewDelegate {
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        return editMode
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         setTextViewFontSize(textView)

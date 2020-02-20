@@ -77,13 +77,8 @@ class AttributeTypeSectionController {
         }
     }
     
-    func clearTempSections() {
-        tempSectionsToShow = []
-    }
-    
     func saveTempSections(to character: Character) {
         sectionsByCharacter[character] = tempSectionsToShow
-        clearTempSections()
         saveToPersistentStore()
     }
     
