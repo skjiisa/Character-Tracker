@@ -35,13 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func preloadData() {
-        let preloadedDataKey = "didPreloadData"
+        let preloadedDataKey = "preloadedDataVersion"
         
         let userDefaults = UserDefaults.standard
-        
-        if !userDefaults.bool(forKey: preloadedDataKey) {
+  
+        let loadedVersion = userDefaults.string(forKey: preloadedDataKey)
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            (loadedVersion ?? "0").compare(appVersion, options: .numeric) == .orderedAscending {
+            print("Preloading data...")
             JSONController.preloadData()
-            userDefaults.set(true, forKey: preloadedDataKey)
+            userDefaults.set(appVersion, forKey: preloadedDataKey)
         }
     }
 
