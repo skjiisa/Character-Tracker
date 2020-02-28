@@ -31,7 +31,7 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
         
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "name", ascending: true)
+            NSSortDescriptor(key: "modified", ascending: false)
         ]
         
         guard let game = gameReference?.game else { return nil }

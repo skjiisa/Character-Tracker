@@ -40,6 +40,7 @@ extension Character {
         self.female = female
         self.game = game
         self.id = id
+        self.modified = Date()
     }
 }
 
