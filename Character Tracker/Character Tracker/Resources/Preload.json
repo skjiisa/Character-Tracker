@@ -1255,6 +1255,11 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "modules": [
+        {
+          "child": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68"
+        }
       ]
     },
     {
