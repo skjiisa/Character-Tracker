@@ -65,6 +65,7 @@ extension Module {
         self.type = type
         self.mod = mod
         self.id = id
+        self.modified = Date()
     }
     
     @discardableResult convenience init(name: String, notes: String? = nil, level: Int16 = 0, games: Set<Game>, type: ModuleType, mod: Mod? = nil, id: UUID = UUID(), context: NSManagedObjectContext) {

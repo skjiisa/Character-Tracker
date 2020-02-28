@@ -39,6 +39,7 @@ class ModuleController {
             }
         }
         
+        module.modified = Date()
         CoreDataStack.shared.save(context: context)
     }
     
