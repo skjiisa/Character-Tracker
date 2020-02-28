@@ -20,6 +20,7 @@ class CharacterController {
         character.name = name
         character.race = race
         character.female = female
+        character.modified = Date()
         CoreDataStack.shared.save(context: context)
     }
     

@@ -39,6 +39,7 @@ class ModuleController {
             }
         }
         
+        module.modified = Date()
         CoreDataStack.shared.save(context: context)
     }
     
@@ -139,6 +140,8 @@ class ModuleController {
         } else {
             moduleIngredientCharacters.add(character)
         }
+        
+        character.modified = Date()
         CoreDataStack.shared.save(context: context)
         return !contained
     }

@@ -1134,6 +1134,11 @@
           "ingredient": "800e4",
           "quantity": 8
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1168,6 +1173,11 @@
           "ingredient": "cb40f",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1200,6 +1210,11 @@
         {
           "ingredient": "cb414",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
       ]
     },
@@ -1235,6 +1250,16 @@
           "ingredient": "cb40f",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
+      ],
+      "modules": [
+        {
+          "child": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68"
+        }
       ]
     },
     {
@@ -1268,6 +1293,11 @@
         {
           "ingredient": "cb411",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
       ]
     },
@@ -1303,6 +1333,11 @@
           "ingredient": "52190",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1333,6 +1368,11 @@
           "ingredient": "52190",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1362,6 +1402,11 @@
         {
           "ingredient": "cb40d",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
     },
@@ -1397,6 +1442,11 @@
           "ingredient": "cb40e",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1430,6 +1480,11 @@
           "ingredient": "cb414",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1460,6 +1515,11 @@
           "ingredient": "cb410",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1485,6 +1545,11 @@
         {
           "ingredient": "cb412",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
     },
@@ -1516,6 +1581,11 @@
           "ingredient": "cb413",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     }
   ],
@@ -1525,20 +1595,6 @@
       "female": false,
       "id": "8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E",
       "name": "Ja’Zakajirr",
-      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
-    },
-    {
-      "id": "8F434D1D-2FE6-4518-B3C0-213883BB914B",
-      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
-      "game": "33839302-E5B9-4299-AA81-444BED243F20",
-      "female": true,
-      "name": "Malula"
-    },
-    {
-      "name": "Halo of Snow",
-      "female": false,
-      "id": "80DED813-EAC3-41BF-B4A2-3C0DE6854222",
-      "game": "33839302-E5B9-4299-AA81-444BED243F20",
       "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
     }
   ]
