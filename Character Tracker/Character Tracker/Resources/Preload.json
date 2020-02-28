@@ -1134,6 +1134,11 @@
           "ingredient": "800e4",
           "quantity": 8
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1168,6 +1173,11 @@
           "ingredient": "cb40f",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1200,6 +1210,11 @@
         {
           "ingredient": "cb414",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
       ]
     },
@@ -1235,6 +1250,11 @@
           "ingredient": "cb40f",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1268,6 +1288,11 @@
         {
           "ingredient": "cb411",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
       ]
     },
@@ -1303,6 +1328,11 @@
           "ingredient": "52190",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
       ]
     },
     {
@@ -1333,6 +1363,11 @@
           "ingredient": "52190",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1362,6 +1397,11 @@
         {
           "ingredient": "cb40d",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
     },
@@ -1397,6 +1437,11 @@
           "ingredient": "cb40e",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1430,6 +1475,11 @@
           "ingredient": "cb414",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1460,6 +1510,11 @@
           "ingredient": "cb410",
           "quantity": 0
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
       ]
     },
     {
@@ -1485,6 +1540,11 @@
         {
           "ingredient": "cb412",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
     },
@@ -1515,6 +1575,11 @@
         {
           "ingredient": "cb413",
           "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
     }

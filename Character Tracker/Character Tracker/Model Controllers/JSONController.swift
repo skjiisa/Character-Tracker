@@ -87,7 +87,7 @@ class JSONController {
             // Import Attributes
             
             let gamesRelationship = Relationship(key: "games", allObjects: allGames)
-            let _: [Attribute] = try fetchAndImportAllObjects(
+            let allAttributes: [Attribute] = try fetchAndImportAllObjects(
                 from: importJSON,
                 arrayKey: "attributes",
                 attributes: ["name"],
@@ -135,6 +135,18 @@ class JSONController {
                 attributes: ["quantity"],
                 parentRelationship: moduleRelationship,
                 childRelationship: ingredientRelationship,
+                context: context)
+            
+            // Import Module Attributes
+            
+            let attributeRelationship = Relationship(key: "attribute", allObjects: allAttributes)
+            let _: [ModuleAttribute] = try fetchAndImportAllRelationshipObjects(
+                from: importJSON,
+                arrayKey: "modules",
+                relationshipKey: "attributes",
+                attributes: [],
+                parentRelationship: moduleRelationship,
+                childRelationship: attributeRelationship,
                 context: context)
             
             // Import Races
