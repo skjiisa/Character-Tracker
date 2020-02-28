@@ -197,6 +197,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if let notesCell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath) as? NotesTableViewCell {
                 let cellTextView = notesCell.textView
                 cellTextView?.delegate = self
+                cellTextView?.isEditable = editMode
+                cellTextView?.isScrollEnabled = editMode
                 
                 switch textViewReference {
                 case notesTextView:
@@ -328,9 +330,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             moduleHasBeenModified()
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }  
     }
     
     //MARK: Table view delegate
@@ -346,15 +346,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return UITableView.automaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        switch sections[indexPath.section].type {
-        case .notes(let textViewReference):
-            if let textView = textViewReference.textView {
-                setTextViewFontSize(textView)
-            }
-        default:
-            break
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if editMode,
+            case .notes = sections[indexPath.section].type {
+            return 144
         }
+        
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -433,19 +431,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             completeButton.setTitle("Save to a character to add notes", for: .disabled)
         }
         
-    }
-    
-    private func setTextViewFontSize(_ textView: UITextView) {
-        let numLines = Int(textView.contentSize.height / textView.font!.lineHeight)
-        
-        if numLines < 3, textView.font!.pointSize < 17.0 {
-            textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 17.0)
-        } else if numLines > 3, textView.font!.pointSize > 14.0 {
-            textView.font = UIFont(descriptor: textView.font!.fontDescriptor, size: 14.0)
-        }
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
     
     private func prompt(message: String) {
@@ -579,7 +564,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return true
     }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
@@ -702,12 +686,7 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
 
 extension ModuleDetailTableViewController: UITextViewDelegate {
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        return editMode
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
-        setTextViewFontSize(textView)
         moduleHasBeenModified()
     }
     
