@@ -200,9 +200,15 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
                 moduleDetailVC.moduleType = moduleType
                 
-                if segue.identifier == "ShowModuleDetail",
-                    let indexPath = tableView.indexPathForSelectedRow {
-                    moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
+                switch segue.identifier {
+                case "ShowModuleDetail":
+                    if let indexPath = tableView.indexPathForSelectedRow {
+                        moduleDetailVC.module = fetchedResultsController?.object(at: indexPath)
+                    }
+                case "NewModule":
+                    moduleDetailVC.editMode = true
+                default:
+                    break
                 }
             }
         }
