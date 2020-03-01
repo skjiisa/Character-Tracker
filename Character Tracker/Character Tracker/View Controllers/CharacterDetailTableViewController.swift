@@ -172,7 +172,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
+                if moduleController.tempEntities.first(where: { $0.entity == module })?.value ?? false {
                     cell.accessoryType = .checkmark
                 } else {
                     cell.accessoryType = .disclosureIndicator
@@ -253,10 +253,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
                 if let tempAttributes = attributeController.getTempAttributes(from: section.section),
                     indexPath.row < tempAttributes.count {
-                    attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
+                    attributeController.remove(tempEntity: tempAttributes[indexPath.row])
                 } else if let tempModules = moduleController.getTempModules(from: section.section),
                     indexPath.row < tempModules.count {
-                    moduleController.remove(tempModule: tempModules[indexPath.row])
+                    moduleController.remove(tempEntity: tempModules[indexPath.row])
                 } else {
                     return
                 }
@@ -479,8 +479,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                             moduleDetailVC.module = module
                             
                             if let character = character {
-                                let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
-                                moduleDetailVC.characterModule = characterModule
+                                let characterModules = character.modules as? Set<CharacterModule>
+                                moduleDetailVC.characterModule = characterModules?.first(where: { $0.module == module })
                             }
                             
                             moduleDetailVC.moduleType = modulesSection

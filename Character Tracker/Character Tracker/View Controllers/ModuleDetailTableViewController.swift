@@ -139,11 +139,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .notes(_):
             return 1
         case .ingredients:
-            return ingredientController.tempIngredients.count + editMode.int
+            return ingredientController.tempEntities.count + editMode.int
         case .modules:
-            return moduleController.tempModules.count + editMode.int
+            return moduleController.tempEntities.count + editMode.int
         case .attributes:
-            return attributeController.tempAttributes.count + editMode.int
+            return attributeController.tempEntities.count + editMode.int
         case .games:
             return games.count + editMode.int
         }
@@ -225,15 +225,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
             }
         case .ingredients:
-            if indexPath.row < ingredientController.tempIngredients.count {
+            if indexPath.row < ingredientController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
                 
-                let tempIngredient = ingredientController.tempIngredients[indexPath.row]
+                let tempIngredient = ingredientController.tempEntities[indexPath.row]
                 
-                cell.textLabel?.text = tempIngredient.ingredient.name
+                cell.textLabel?.text = tempIngredient.entity.name
                 
-                if tempIngredient.quantity != 0 {
-                    cell.detailTextLabel?.text = "Qty: \(tempIngredient.quantity)"
+                if tempIngredient.value != 0 {
+                    cell.detailTextLabel?.text = "Qty: \(tempIngredient.value)"
                 } else {
                     cell.detailTextLabel?.text = nil
                 }
@@ -241,11 +241,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
             }
         case .modules:
-            if indexPath.row < moduleController.tempModules.count {
+            if indexPath.row < moduleController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
                 
-                let tempModule = moduleController.tempModules[indexPath.row]
-                let module = tempModule.module
+                let tempModule = moduleController.tempEntities[indexPath.row]
+                let module = tempModule.entity
                 
                 cell.textLabel?.text = module.name
                 
@@ -255,7 +255,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if tempModule.completed {
+                if tempModule.value {
                     cell.accessoryType = .checkmark
                 } else {
                     if moduleIsExcluded(at: indexPath) {
@@ -269,9 +269,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell.textLabel?.text = "Select Modules"
             }
         case .attributes:
-            if indexPath.row < attributeController.tempAttributes.count {
+            if indexPath.row < attributeController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
-                cell.textLabel?.text = attributeController.tempAttributes[indexPath.row].attribute.name
+                cell.textLabel?.text = attributeController.tempEntities[indexPath.row].entity.name
                 cell.detailTextLabel?.text = nil
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
@@ -296,11 +296,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let array: [Any]
         switch sections[indexPath.section].type {
         case .ingredients:
-            array = ingredientController.tempIngredients
+            array = ingredientController.tempEntities
         case .modules:
-            array = moduleController.tempModules
+            array = moduleController.tempEntities
         case .attributes:
-            array = attributeController.tempAttributes
+            array = attributeController.tempEntities
         case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
             array = games
         default:
@@ -315,14 +315,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             let section = sections[indexPath.section].type
             switch section {
             case .ingredients:
-                let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
-                ingredientController.remove(tempIngredient: ingredient)
+                let ingredient = ingredientController.tempEntities[indexPath.row].entity
+                ingredientController.remove(tempEntity: ingredient)
             case .modules:
-                let module = moduleController.tempModules[indexPath.row].module
-                moduleController.remove(tempModule: module)
+                let module = moduleController.tempEntities[indexPath.row].entity
+                moduleController.remove(tempEntity: module)
             case .attributes:
-                let attribute = attributeController.tempAttributes[indexPath.row].attribute
-                attributeController.remove(tempAttribute: attribute)
+                let attribute = attributeController.tempEntities[indexPath.row].entity
+                attributeController.remove(tempEntity: attribute)
             case .games:
                 games.remove(at: indexPath.row)
             default:
@@ -491,11 +491,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
         let index = indexPath.row
         
-        if index >= moduleController.tempModules.count {
+        if index >= moduleController.tempEntities.count {
             return false
         }
         
-        let module = moduleController.tempModules[index].module
+        let module = moduleController.tempEntities[index].entity
         if excludedModules.contains(module) {
             return true
         }
@@ -573,7 +573,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 ingredientsVC.callbacks.append { ingredient in
                     ingredientsVC.askForQuantity { quantity in
                         if let quantity = quantity {
-                            self.ingredientController.add(tempIngredient: ingredient, quantity: quantity)
+                            self.ingredientController.add(tempEntity: ingredient, value: quantity)
                             self.markSectionForReload(section: .ingredients)
                             self.moduleHasBeenModified()
                             self.navigationController?.popViewController(animated: true)
@@ -581,7 +581,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     }
                 }
             } else if let modulesVC = vc as? ModulesTableViewController {
-                let selectedModules = moduleController.tempModules.map({ $0.module })
+                let selectedModules = moduleController.tempEntities.map({ $0.entity })
                 
                 modulesVC.moduleController = moduleController
                 modulesVC.checkedModules = selectedModules
@@ -593,7 +593,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     self.moduleHasBeenModified()
                 }
             } else if let attributesVC = vc as? AttributesTableViewController {
-                let selectedAttributes = attributeController.tempAttributes.map({ $0.attribute })
+                let selectedAttributes = attributeController.tempEntities.map({ $0.entity })
                 
                 attributesVC.attributeController = attributeController
                 attributesVC.checkedAttributes = selectedAttributes
@@ -612,8 +612,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
-                let tempModule = moduleController.tempModules[indexPath.row]
-                let module = tempModule.module
+                let tempModule = moduleController.tempEntities[indexPath.row]
+                let module = tempModule.entity
                 
                 moduleDetailVC.module = module
                 
@@ -623,8 +623,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
                 
                 if let character = characterModule?.character {
-                    let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
-                    moduleDetailVC.characterModule = characterModule
+                    let characterModules = character.modules as? Set<CharacterModule>
+                    moduleDetailVC.characterModule = characterModules?.first(where: { $0.module == module })
                 }
                 
                 moduleDetailVC.moduleType = module.type

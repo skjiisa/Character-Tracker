@@ -8,9 +8,9 @@
 
 import CoreData
 
-class ModuleController {
+class ModuleController: EntityController {
     
-    private(set) var tempModules: [(module: Module, completed: Bool)] = []
+    var tempEntities: [(entity: Module, value: Bool)] = []
     
     //MARK: Module CRUD
     
@@ -45,7 +45,7 @@ class ModuleController {
     
     func delete(module: Module, context: NSManagedObjectContext) {
         
-        tempModules.removeAll(where: { $0.module == module })
+        tempEntities.removeAll(where: { $0.entity == module })
         
         module.deleteRelationshipObjects(forKeys: ["characters",
                                                    "ingredients",
@@ -64,7 +64,7 @@ class ModuleController {
     }
     
     func remove(game: Game, from module: Module, context: NSManagedObjectContext, shouldSave: Bool = true) {
-        tempModules.removeAll(where: { $0.module == module })
+        tempEntities.removeAll(where: { $0.entity == module })
         
         let charactersPredicate = NSPredicate(format: "character.game == %@", game)
         module.deleteRelationshipObjects(forKey: "characters", using: charactersPredicate, context: context)
@@ -81,32 +81,21 @@ class ModuleController {
     
     //MARK: Temp Modules
     
-    func sortTempModules() {
-        tempModules.sort { $0.module.level < $1.module.level }
-    }
-    
-    func add(tempModule module: Module, completed: Bool = false) {
-        if !tempModules.contains(where: { $0.module == module }) {
-            tempModules.append((module, completed))
-        }
-        sortTempModules()
+    func sortTempEntities() {
+        tempEntities.sort { $0.entity.level < $1.entity.level }
     }
     
     func toggle(tempModule module: Module) {
-        if tempModules.contains(where: { $0.module == module }) {
-            remove(tempModule: module)
+        if tempEntities.contains(where: { $0.entity == module }) {
+            remove(tempEntity: module)
         } else {
-            add(tempModule: module)
+            add(tempEntity: module, value: false)
         }
-        sortTempModules()
-    }
-    
-    func remove(tempModule module: Module) {
-        tempModules.removeAll(where: { $0.module == module })
+        sortTempEntities()
     }
     
     func getTempModules(ofType type: ModuleType) -> [Module] {
-        let modules = tempModules.compactMap({ $0.module })
+        let modules = tempEntities.compactMap({ $0.entity })
         let result = modules.filter({ $0.type == type })
         
         return result
@@ -149,13 +138,13 @@ class ModuleController {
     //MARK: Character Modules CRUD
     
     func saveTempModules(to character: Character, context: NSManagedObjectContext) {
-        let currentCharacterModules = fetchCharacterModules(for: character, context: context)
+        guard let currentCharacterModules = character.modules as? Set<CharacterModule> else { return }
         
-        for tempModule in tempModules {
-            if let characterModule = currentCharacterModules.first(where: { $0.module == tempModule.module }) {
-                characterModule.completed = tempModule.completed
+        for tempModule in tempEntities {
+            if let characterModule = currentCharacterModules.first(where: { $0.module == tempModule.entity }) {
+                characterModule.completed = tempModule.value
             } else {
-                CharacterModule(character: character, module: tempModule.module, completed: tempModule.completed, context: context)
+                CharacterModule(character: character, module: tempModule.entity, completed: tempModule.value, context: context)
             }
         }
         
@@ -163,14 +152,14 @@ class ModuleController {
     }
     
     func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
-        tempModules = []
+        tempEntities = []
         
-        let characterModules = fetchCharacterModules(for: character, context: context)
+        guard let characterModules = character.modules as? Set<CharacterModule> else { return }
         for characterModule in characterModules {
             guard let module = characterModule.module else { continue }
-            tempModules.append((module, characterModule.completed))
+            tempEntities.append((module, characterModule.completed))
         }
-        sortTempModules()
+        sortTempEntities()
     }
     
     func checkTempModules(againstCharacterFrom characterModule: CharacterModule, context: NSManagedObjectContext) {
@@ -179,48 +168,12 @@ class ModuleController {
     }
     
     func checkTempModules(againstCharacter character: Character, context: NSManagedObjectContext) {
-        let characterModules = fetchCharacterModules(for: character, context: context)
-        for fetchedCharacterModule in characterModules {
-            guard let module = fetchedCharacterModule.module,
-                let index = tempModules.firstIndex(where: { $0.module == module }) else { continue }
-            tempModules[index].completed = fetchedCharacterModule.completed
+        guard let characterModules = character.modules as? Set<CharacterModule> else { return }
+        for characterModule in characterModules {
+            guard let module = characterModule.module,
+                let index = tempEntities.firstIndex(where: { $0.entity == module }) else { continue }
+            tempEntities[index].value = characterModule.completed
         }
-    }
-    
-    func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
-        
-        do {
-            let characterModule = try context.fetch(fetchRequest)
-            return characterModule
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules: \(error)")
-            }
-        }
-        
-        return []
-    }
-    
-    func fetchCharacterModule(for character: Character, module: Module, context: NSManagedObjectContext) -> CharacterModule? {
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
-        
-        do {
-            let characterModule = try context.fetch(fetchRequest)
-            return characterModule.first
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules: \(error)")
-            }
-        }
-        
-        return nil
     }
     
     func setCompleted(characterModule: CharacterModule, completed: Bool, context: NSManagedObjectContext) {
@@ -228,41 +181,35 @@ class ModuleController {
         CoreDataStack.shared.save(context: context)
         
         if let module = characterModule.module,
-            let index = tempModules.firstIndex(where: { $0.module == module }) {
-            tempModules[index].completed = completed
+            let index = tempEntities.firstIndex(where: { $0.entity == module }) {
+            tempEntities[index].value = completed
         }
     }
     
     func removeMissingTempModules(from character: Character, context: NSManagedObjectContext) {
-        let modules: [Module] = tempModules.map({ $0.module })
+        let modules: [Module] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (module IN %@)", character, modules)
+        guard let existingCharacterModules = character.modules as? Set<CharacterModule> else { return }
+        let characterModulesToDelete = existingCharacterModules.filter { characterModule -> Bool in
+            guard let module = characterModule.module else { return true }
+            return !modules.contains(module)
+        }
         
-        do {
-            let characterModules = try context.fetch(fetchRequest)
-            for characterModule in characterModules {
-                context.delete(characterModule)
-            }
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules for removal: \(error)")
-            }
+        for characterModule in characterModulesToDelete {
+            context.delete(characterModule)
         }
     }
     
     //MARK: Module Modules CRUD
     
     func saveTempModules(to module: Module, context: NSManagedObjectContext) {
-        let currentChildModules = fetchChildModules(for: module, context: context)
+        guard let currentChildModules = module.children as? Set<ModuleModule> else { return }
         
-        for tempModule in tempModules {
-            if let _ = currentChildModules.first(where: { $0.child == tempModule.module }) {
+        for tempModule in tempEntities {
+            if let _ = currentChildModules.first(where: { $0.child == tempModule.entity }) {
                 // update the value
             } else {
-                ModuleModule(parent: module, child: tempModule.module, context: context)
+                ModuleModule(parent: module, child: tempModule.entity, context: context)
             }
         }
         
@@ -270,55 +217,27 @@ class ModuleController {
     }
     
     func fetchTempModules(for module: Module, game: Game?, context: NSManagedObjectContext) {
-        tempModules = []
+        tempEntities = []
         
-        let childModules = fetchChildModules(for: module, game: game, context: context)
+        guard let childModules = module.children as? Set<ModuleModule> else { return }
         for childModule in childModules {
             guard let module = childModule.child else { continue }
-            tempModules.append((module, false))
+            tempEntities.append((module, false))
         }
-        sortTempModules()
-    }
-    
-    func fetchChildModules(for module: Module, game: Game? = nil, context: NSManagedObjectContext) -> [ModuleModule] {
-        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
-        if let game = game {
-            fetchRequest.predicate = NSPredicate(format: "parent == %@ AND ANY child.games == %@", module, game)
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
-        }
-        
-        do {
-            let moduleModules = try context.fetch(fetchRequest)
-            return moduleModules
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch module's modules: \(error)")
-            }
-        }
-        
-        return []
+        sortTempEntities()
     }
     
     func removeMissingTempModules(from module: Module, context: NSManagedObjectContext) {
-        let modules: [Module] = tempModules.map({ $0.module })
+        let modules: [Module] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "parent == %@ AND NOT (child IN %@)", module, modules)
+        guard let existingChildren = module.children as? Set<ModuleModule> else { return }
+        let childrenToDelete = existingChildren.filter { moduleModule -> Bool in
+            guard let child = moduleModule.child else { return true }
+            return !modules.contains(child)
+        }
         
-        do {
-            let modulesToRemove = try context.fetch(fetchRequest)
-            for moduleToRemove in modulesToRemove {
-                context.delete(moduleToRemove)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's modules for removal: \(error)")
-            }
+        for child in childrenToDelete {
+            context.delete(child)
         }
     }
     
