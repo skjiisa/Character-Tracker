@@ -119,22 +119,8 @@ class AttributeController: EntityController {
     }
     
     func fetchCharacterAttributes(for character: Character, context: NSManagedObjectContext) -> [CharacterAttribute] {
-        let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
-        
-        do {
-            let characterAttributes = try context.fetch(fetchRequest)
-            
-            return characterAttributes
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s attributes: \(error)")
-            } else {
-                NSLog("Could not fetch character's attributes: \(error)")
-            }
-            
-            return []
-        }
+        let predicate = NSPredicate(format: "character == %@", character)
+        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempAttributes(from character: Character, context: NSManagedObjectContext) {
@@ -188,21 +174,8 @@ class AttributeController: EntityController {
     }
     
     func fetchModuleAttributes(for module: Module, context: NSManagedObjectContext) -> [ModuleAttribute] {
-        let fetchRequest: NSFetchRequest<ModuleAttribute> = ModuleAttribute.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "module == %@", module)
-        
-        do {
-            let moduleAttributes = try context.fetch(fetchRequest)
-            return moduleAttributes
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s attributes: \(error)")
-            } else {
-                NSLog("Could not fetch module's attributes: \(error)")
-            }
-            
-            return []
-        }
+        let predicate = NSPredicate(format: "module == %@", module)
+        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempAttributes(from module: Module, context: NSManagedObjectContext) {

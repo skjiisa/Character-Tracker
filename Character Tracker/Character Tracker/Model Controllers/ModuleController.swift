@@ -177,39 +177,13 @@ class ModuleController: EntityController {
     }
     
     func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@", character)
-        
-        do {
-            let characterModule = try context.fetch(fetchRequest)
-            return characterModule
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules: \(error)")
-            }
-        }
-        
-        return []
+        let predicate = NSPredicate(format: "character == %@", character)
+        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func fetchCharacterModule(for character: Character, module: Module, context: NSManagedObjectContext) -> CharacterModule? {
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
-        
-        do {
-            let characterModule = try context.fetch(fetchRequest)
-            return characterModule.first
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules: \(error)")
-            }
-        }
-        
-        return nil
+        let predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
+        return fetchRelationshipEntities(predicate: predicate, context: context).first
     }
     
     func setCompleted(characterModule: CharacterModule, completed: Bool, context: NSManagedObjectContext) {
@@ -270,25 +244,13 @@ class ModuleController: EntityController {
     }
     
     func fetchChildModules(for module: Module, game: Game? = nil, context: NSManagedObjectContext) -> [ModuleModule] {
-        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
+        var predicates = [NSPredicate(format: "parent == %@", module)]
         if let game = game {
-            fetchRequest.predicate = NSPredicate(format: "parent == %@ AND ANY child.games == %@", module, game)
-        } else {
-            fetchRequest.predicate = NSPredicate(format: "parent == %@", module)
+            predicates.append(NSPredicate(format: "ANY child.games == %@", module, game))
         }
         
-        do {
-            let moduleModules = try context.fetch(fetchRequest)
-            return moduleModules
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s modules: \(error)")
-            } else {
-                NSLog("Could not fetch module's modules: \(error)")
-            }
-        }
-        
-        return []
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempModules(from module: Module, context: NSManagedObjectContext) {

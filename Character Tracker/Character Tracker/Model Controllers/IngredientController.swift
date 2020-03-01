@@ -99,22 +99,8 @@ class IngredientController: EntityController {
     }
     
     func fetchModuleIngredients(for module: Module, context: NSManagedObjectContext) -> [ModuleIngredient] {
-        let fetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "module == %@", module)
-        
-        do {
-            let characterAttributes = try context.fetch(fetchRequest)
-            
-            return characterAttributes
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s ingredients: \(error)")
-            } else {
-                NSLog("Could not fetch module's ingredients: \(error)")
-            }
-        }
-        
-        return []
+        let predicate = NSPredicate(format: "module == %@", module)
+        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempIngredients(from module: Module, context: NSManagedObjectContext) {

@@ -23,6 +23,10 @@ protocol EntityController: AnyObject {
     func remove(tempEntity: Entity)
     
     // Entity Entity CRUD
+    
+    func fetchRelationshipEntities<RelationshipEntity: NSManagedObject>(
+        predicate: NSPredicate,
+        context: NSManagedObjectContext) -> [RelationshipEntity]
 }
 
 //MARK: EntityController default implementations
@@ -38,6 +42,23 @@ extension EntityController {
     func remove(tempEntity entity: Entity) {
         tempEntities.removeAll(where: { $0.entity == entity })
     }
+    
+    func fetchRelationshipEntities<RelationshipEntity: NSManagedObject>(
+        predicate: NSPredicate,
+        context: NSManagedObjectContext) -> [RelationshipEntity] {
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = RelationshipEntity.fetchRequest()
+        fetchRequest.predicate = predicate
+        
+        do {
+            let relationshipEntities = try context.fetch(fetchRequest)
+            return relationshipEntities as? [RelationshipEntity] ?? []
+        } catch {
+            NSLog("Could not fetch object's relationship objects: \(error)")
+        }
+        
+        return []
+    }
 }
 
 protocol NamedEntity: NSManagedObject {
@@ -48,3 +69,4 @@ extension Ingredient: NamedEntity {}
 extension Module: NamedEntity {}
 extension Attribute: NamedEntity {}
 extension Mod: NamedEntity {}
+extension Character: NamedEntity {}
