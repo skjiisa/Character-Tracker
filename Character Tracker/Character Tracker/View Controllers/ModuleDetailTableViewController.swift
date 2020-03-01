@@ -141,7 +141,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .ingredients:
             return ingredientController.tempEntities.count + editMode.int
         case .modules:
-            return moduleController.tempModules.count + editMode.int
+            return moduleController.tempEntities.count + editMode.int
         case .attributes:
             return attributeController.tempEntities.count + editMode.int
         case .games:
@@ -241,11 +241,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectIngredientCell", for: indexPath)
             }
         case .modules:
-            if indexPath.row < moduleController.tempModules.count {
+            if indexPath.row < moduleController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "ModuleDetailCell", for: indexPath)
                 
-                let tempModule = moduleController.tempModules[indexPath.row]
-                let module = tempModule.module
+                let tempModule = moduleController.tempEntities[indexPath.row]
+                let module = tempModule.entity
                 
                 cell.textLabel?.text = module.name
                 
@@ -255,7 +255,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if tempModule.completed {
+                if tempModule.value {
                     cell.accessoryType = .checkmark
                 } else {
                     if moduleIsExcluded(at: indexPath) {
@@ -298,7 +298,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .ingredients:
             array = ingredientController.tempEntities
         case .modules:
-            array = moduleController.tempModules
+            array = moduleController.tempEntities
         case .attributes:
             array = attributeController.tempEntities
         case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
@@ -318,8 +318,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let ingredient = ingredientController.tempEntities[indexPath.row].entity
                 ingredientController.remove(tempEntity: ingredient)
             case .modules:
-                let module = moduleController.tempModules[indexPath.row].module
-                moduleController.remove(tempModule: module)
+                let module = moduleController.tempEntities[indexPath.row].entity
+                moduleController.remove(tempEntity: module)
             case .attributes:
                 let attribute = attributeController.tempEntities[indexPath.row].entity
                 attributeController.remove(tempEntity: attribute)
@@ -491,11 +491,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
         let index = indexPath.row
         
-        if index >= moduleController.tempModules.count {
+        if index >= moduleController.tempEntities.count {
             return false
         }
         
-        let module = moduleController.tempModules[index].module
+        let module = moduleController.tempEntities[index].entity
         if excludedModules.contains(module) {
             return true
         }
@@ -581,7 +581,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     }
                 }
             } else if let modulesVC = vc as? ModulesTableViewController {
-                let selectedModules = moduleController.tempModules.map({ $0.module })
+                let selectedModules = moduleController.tempEntities.map({ $0.entity })
                 
                 modulesVC.moduleController = moduleController
                 modulesVC.checkedModules = selectedModules
@@ -612,8 +612,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else if let moduleDetailVC = vc as? ModuleDetailTableViewController,
                 let indexPath = tableView.indexPathForSelectedRow {
-                let tempModule = moduleController.tempModules[indexPath.row]
-                let module = tempModule.module
+                let tempModule = moduleController.tempEntities[indexPath.row]
+                let module = tempModule.entity
                 
                 moduleDetailVC.module = module
                 

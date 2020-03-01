@@ -172,7 +172,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.detailTextLabel?.text = nil
                 }
                 
-                if moduleController.tempModules.first(where: { $0.module == module })?.completed ?? false {
+                if moduleController.tempEntities.first(where: { $0.entity == module })?.value ?? false {
                     cell.accessoryType = .checkmark
                 } else {
                     cell.accessoryType = .disclosureIndicator
@@ -256,7 +256,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     attributeController.remove(tempEntity: tempAttributes[indexPath.row])
                 } else if let tempModules = moduleController.getTempModules(from: section.section),
                     indexPath.row < tempModules.count {
-                    moduleController.remove(tempModule: tempModules[indexPath.row])
+                    moduleController.remove(tempEntity: tempModules[indexPath.row])
                 } else {
                     return
                 }

@@ -41,8 +41,8 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
     //MARK: Private
     
     private func setModules() {
-        let uncheckedTempModules = moduleController?.tempModules.filter({ $0.completed == false && $0.module.type == moduleType }) ?? []
-        let uncheckedModules = uncheckedTempModules.map({ $0.module })
+        let uncheckedTempModules = moduleController?.tempEntities.filter({ $0.value == false && $0.entity.type == moduleType }) ?? []
+        let uncheckedModules = uncheckedTempModules.map({ $0.entity })
         
         modules = uncheckedModules.sorted(by: { module1, module2 -> Bool in
             // Modules with no level will be sorted to the end of the list
