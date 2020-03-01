@@ -189,20 +189,14 @@ class ModuleController: EntityController {
     func removeMissingTempModules(from character: Character, context: NSManagedObjectContext) {
         let modules: [Module] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<CharacterModule> = CharacterModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (module IN %@)", character, modules)
+        guard let existingCharacterModules = character.modules as? Set<CharacterModule> else { return }
+        let characterModulesToDelete = existingCharacterModules.filter { characterModule -> Bool in
+            guard let module = characterModule.module else { return true }
+            return !modules.contains(module)
+        }
         
-        do {
-            let characterModules = try context.fetch(fetchRequest)
-            for characterModule in characterModules {
-                context.delete(characterModule)
-            }
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch character's modules for removal: \(error)")
-            }
+        for characterModule in characterModulesToDelete {
+            context.delete(characterModule)
         }
     }
     
@@ -236,20 +230,14 @@ class ModuleController: EntityController {
     func removeMissingTempModules(from module: Module, context: NSManagedObjectContext) {
         let modules: [Module] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<ModuleModule> = ModuleModule.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "parent == %@ AND NOT (child IN %@)", module, modules)
+        guard let existingChildren = module.children as? Set<ModuleModule> else { return }
+        let childrenToDelete = existingChildren.filter { moduleModule -> Bool in
+            guard let child = moduleModule.child else { return true }
+            return !modules.contains(child)
+        }
         
-        do {
-            let modulesToRemove = try context.fetch(fetchRequest)
-            for moduleToRemove in modulesToRemove {
-                context.delete(moduleToRemove)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s modules for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's modules for removal: \(error)")
-            }
+        for child in childrenToDelete {
+            context.delete(child)
         }
     }
     

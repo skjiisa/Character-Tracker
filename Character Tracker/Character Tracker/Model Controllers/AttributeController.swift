@@ -121,22 +121,14 @@ class AttributeController: EntityController {
     func removeMissingTempAttributes(from character: Character, context: NSManagedObjectContext) {
         let attributes: [Attribute] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (attribute IN %@)", character, attributes)
+        guard let existingCharacterAttributes = character.attributes as? Set<CharacterAttribute> else { return }
+        let characterAttributesToDelete = existingCharacterAttributes.filter { characterAttribute -> Bool in
+            guard let attribute = characterAttribute.attribute else { return true }
+            return !attributes.contains(attribute)
+        }
         
-        do {
-            let characterAttributes = try context.fetch(fetchRequest)
-            for characterAttribute in characterAttributes {
-                context.delete(characterAttribute)
-            }
-            
-            CoreDataStack.shared.save(context: context)
-        } catch {
-            if let name = character.name {
-                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
-            } else {
-                NSLog("Could not fetch character's attributes for removal: \(error)")
-            }
+        for characterAttribute in characterAttributesToDelete {
+            context.delete(characterAttribute)
         }
     }
     
@@ -171,22 +163,14 @@ class AttributeController: EntityController {
     func removeMissingTempAttributes(from module: Module, context: NSManagedObjectContext) {
         let attributes: [Attribute] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<ModuleAttribute> = ModuleAttribute.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (attribute IN %@)", module, attributes)
+        guard let existingModuleAttributes = module.attributes as? Set<ModuleAttribute> else { return }
+        let moduleAttributesToDelete = existingModuleAttributes.filter { moduleAttribute -> Bool in
+            guard let attribute = moduleAttribute.attribute else { return true }
+            return !attributes.contains(attribute)
+        }
         
-        do {
-            let moduleAttributes = try context.fetch(fetchRequest)
-            for moduleAttribute in moduleAttributes {
-                context.delete(moduleAttribute)
-            }
-            
-            CoreDataStack.shared.save(context: context)
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s attributes for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's attributes for removal: \(error)")
-            }
+        for moduleAttribute in moduleAttributesToDelete {
+            context.delete(moduleAttribute)
         }
     }
     

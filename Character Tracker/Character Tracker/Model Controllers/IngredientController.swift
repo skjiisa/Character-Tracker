@@ -9,8 +9,6 @@
 import CoreData
 
 class IngredientController: EntityController {
-    typealias Entity = Ingredient
-    typealias Value = Int16
     
     var tempEntities: [(entity: Ingredient, value: Int16)] = []
     
@@ -84,20 +82,14 @@ class IngredientController: EntityController {
     func removeMissingTempIngredients(from module: Module, context: NSManagedObjectContext) {
         let ingredients: [Ingredient] = tempEntities.map({ $0.entity })
         
-        let fetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (ingredient IN %@)", module, ingredients)
+        guard let existingModuleIngredients = module.ingredients as? Set<ModuleIngredient> else { return }
+        let moduleIngredientsToDelete = existingModuleIngredients.filter { moduleIngredient -> Bool in
+            guard let ingredient = moduleIngredient.ingredient else { return true }
+            return !ingredients.contains(ingredient)
+        }
         
-        do {
-            let moduleIngredients = try context.fetch(fetchRequest)
-            for moduleIngredient in moduleIngredients {
-                context.delete(moduleIngredient)
-            }
-        } catch {
-            if let name = module.name {
-                NSLog("Could not fetch \(name)'s ingredients for removal: \(error)")
-            } else {
-                NSLog("Could not fetch module's ingredients for removal: \(error)")
-            }
+        for moduleIngredient in moduleIngredientsToDelete {
+            context.delete(moduleIngredient)
         }
     }
     

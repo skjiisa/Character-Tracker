@@ -21,8 +21,6 @@ protocol EntityController: AnyObject {
     func sortTempEntities()
     func add(tempEntity: Entity, value: Value)
     func remove(tempEntity: Entity)
-    
-    // Entity Entity CRUD
 }
 
 //MARK: EntityController default implementations
