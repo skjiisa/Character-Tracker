@@ -8,9 +8,9 @@
 
 import CoreData
 
-class AttributeController {
+class AttributeController: EntityController {
     
-    private(set) var tempAttributes: [(attribute: Attribute, priority: Int16)] = []
+    var tempEntities: [(entity: Attribute, value: Int16)] = []
     
     //MARK: Attribute CRUD
     
@@ -25,7 +25,7 @@ class AttributeController {
     }
     
     func delete(attribute: Attribute, context: NSManagedObjectContext) {
-        tempAttributes.removeAll(where: { $0.attribute == attribute })
+        tempEntities.removeAll(where: { $0.entity == attribute })
         
         attribute.deleteRelationshipObjects(forKeys: ["characters", "modules"], context: context)
         
@@ -39,7 +39,7 @@ class AttributeController {
     }
     
     func remove(game: Game, from attribute: Attribute, context: NSManagedObjectContext) {
-        tempAttributes.removeAll(where: { $0.attribute == attribute })
+        tempEntities.removeAll(where: { $0.entity == attribute })
         
         let predicate = NSPredicate(format: "character.game == %@", game)
         attribute.deleteRelationshipObjects(forKey: "characters", using: predicate, context: context)
@@ -50,46 +50,35 @@ class AttributeController {
     
     //MARK: Temp Attributes
     
-    func sortTempAttributes() {
-        tempAttributes.sort { attribute0, attribute1 -> Bool in
-            if attribute0.priority == attribute1.priority {
-                return attribute0.attribute.name ?? "" < attribute1.attribute.name ?? ""
+    func sortTempEntities() {
+        tempEntities.sort { attribute0, attribute1 -> Bool in
+            if attribute0.value == attribute1.value {
+                return attribute0.entity.name ?? "" < attribute1.entity.name ?? ""
             }
             
-            return attribute0.priority < attribute1.priority
+            return attribute0.value < attribute1.value
         }
-    }
-    
-    func add(tempAttribute attribute: Attribute, priority: Int16) {
-        if !tempAttributes.contains(where: { $0.attribute == attribute }) {
-            tempAttributes.append((attribute, priority))
-        }
-        sortTempAttributes()
     }
     
     func toggle(tempAttribute attribute: Attribute, priority: Int16) {
-        if tempAttributes.contains(where: { $0.attribute == attribute }) {
-            remove(tempAttribute: attribute)
+        if tempEntities.contains(where: { $0.entity == attribute }) {
+            remove(tempEntity: attribute)
         } else {
-            add(tempAttribute: attribute, priority: priority)
+            add(tempEntity: attribute, value: priority)
         }
-        sortTempAttributes()
-    }
-    
-    func remove(tempAttribute attribute: Attribute) {
-        tempAttributes.removeAll(where: { $0.attribute == attribute })
+        sortTempEntities()
     }
     
     func getTempAttributes(ofType type: AttributeType) -> [Attribute] {
-        let attributes = tempAttributes.compactMap({ $0.attribute })
+        let attributes = tempEntities.compactMap({ $0.entity })
         let result = attributes.filter({ $0.type == type })
         
         return result
     }
     
     func getTempAttributes(ofType type: AttributeType, priority: Int16) -> [Attribute] {
-        let tempAttributes = self.tempAttributes.filter({ $0.attribute.type == type && $0.priority == priority })
-        let result = tempAttributes.compactMap({ $0.attribute })
+        let tempAttributes = self.tempEntities.filter({ $0.entity.type == type && $0.value == priority })
+        let result = tempAttributes.compactMap({ $0.entity })
         
         return result
     }
@@ -109,11 +98,11 @@ class AttributeController {
     func saveTempAttributes(to character: Character, context: NSManagedObjectContext) {
         let currentCharacterAttributes = fetchCharacterAttributes(for: character, context: context)
         
-        for tempAttribute in tempAttributes {
-            if let characterAttribute = currentCharacterAttributes.first(where: { $0.attribute == tempAttribute.attribute } ) {
-                characterAttribute.priority = tempAttribute.priority
+        for tempAttribute in tempEntities {
+            if let characterAttribute = currentCharacterAttributes.first(where: { $0.attribute == tempAttribute.entity } ) {
+                characterAttribute.priority = tempAttribute.value
             } else {
-                CharacterAttribute(character: character, attribute: tempAttribute.attribute, priority: tempAttribute.priority, context: context)
+                CharacterAttribute(character: character, attribute: tempAttribute.entity, priority: tempAttribute.value, context: context)
             }
         }
         
@@ -125,7 +114,7 @@ class AttributeController {
         
         for characterAttribute in characterAttributes {
             guard let attribute = characterAttribute.attribute else { continue }
-            tempAttributes.append((attribute, characterAttribute.priority))
+            tempEntities.append((attribute, characterAttribute.priority))
         }
     }
     
@@ -149,7 +138,7 @@ class AttributeController {
     }
     
     func removeMissingTempAttributes(from character: Character, context: NSManagedObjectContext) {
-        let attributes: [Attribute] = tempAttributes.map({ $0.attribute })
+        let attributes: [Attribute] = tempEntities.map({ $0.entity })
         
         let fetchRequest: NSFetchRequest<CharacterAttribute> = CharacterAttribute.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "character == %@ AND NOT (attribute IN %@)", character, attributes)
@@ -175,11 +164,11 @@ class AttributeController {
     func saveTempAttributes(to module: Module, context: NSManagedObjectContext) {
         let currentModuleAttributes = fetchModuleAttributes(for: module, context: context)
         
-        for tempAttribute in tempAttributes {
-            if let moduleAttribute = currentModuleAttributes.first(where: { $0.attribute == tempAttribute.attribute } ) {
-                moduleAttribute.value = tempAttribute.priority
+        for tempAttribute in tempEntities {
+            if let moduleAttribute = currentModuleAttributes.first(where: { $0.attribute == tempAttribute.entity } ) {
+                moduleAttribute.value = tempAttribute.value
             } else {
-                ModuleAttribute(module: module, attribute: tempAttribute.attribute, value: tempAttribute.priority, context: context)
+                ModuleAttribute(module: module, attribute: tempAttribute.entity, value: tempAttribute.value, context: context)
             }
         }
         
@@ -187,15 +176,15 @@ class AttributeController {
     }
     
     func fetchTempAttributes(for module: Module, context: NSManagedObjectContext) {
-        tempAttributes = []
+        tempEntities = []
         
         let moduleAttributes = fetchModuleAttributes(for: module, context: context)
         for moduleAttribute in moduleAttributes {
             guard let attribute = moduleAttribute.attribute else { continue }
-            self.tempAttributes.append((attribute, moduleAttribute.value))
+            self.tempEntities.append((attribute, moduleAttribute.value))
         }
         
-        sortTempAttributes()
+        sortTempEntities()
     }
     
     func fetchModuleAttributes(for module: Module, context: NSManagedObjectContext) -> [ModuleAttribute] {
@@ -217,7 +206,7 @@ class AttributeController {
     }
     
     func removeMissingTempAttributes(from module: Module, context: NSManagedObjectContext) {
-        let attributes: [Attribute] = tempAttributes.map({ $0.attribute })
+        let attributes: [Attribute] = tempEntities.map({ $0.entity })
         
         let fetchRequest: NSFetchRequest<ModuleAttribute> = ModuleAttribute.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (attribute IN %@)", module, attributes)

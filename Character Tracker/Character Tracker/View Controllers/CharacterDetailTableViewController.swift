@@ -253,7 +253,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if let section = attributeTypeSectionController?.sectionToShow(indexPath.section) {
                 if let tempAttributes = attributeController.getTempAttributes(from: section.section),
                     indexPath.row < tempAttributes.count {
-                    attributeController.remove(tempAttribute: tempAttributes[indexPath.row])
+                    attributeController.remove(tempEntity: tempAttributes[indexPath.row])
                 } else if let tempModules = moduleController.getTempModules(from: section.section),
                     indexPath.row < tempModules.count {
                     moduleController.remove(tempModule: tempModules[indexPath.row])

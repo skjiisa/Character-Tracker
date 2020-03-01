@@ -143,7 +143,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .modules:
             return moduleController.tempModules.count + editMode.int
         case .attributes:
-            return attributeController.tempAttributes.count + editMode.int
+            return attributeController.tempEntities.count + editMode.int
         case .games:
             return games.count + editMode.int
         }
@@ -269,9 +269,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell.textLabel?.text = "Select Modules"
             }
         case .attributes:
-            if indexPath.row < attributeController.tempAttributes.count {
+            if indexPath.row < attributeController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
-                cell.textLabel?.text = attributeController.tempAttributes[indexPath.row].attribute.name
+                cell.textLabel?.text = attributeController.tempEntities[indexPath.row].entity.name
                 cell.detailTextLabel?.text = nil
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
@@ -300,7 +300,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .modules:
             array = moduleController.tempModules
         case .attributes:
-            array = attributeController.tempAttributes
+            array = attributeController.tempEntities
         case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
             array = games
         default:
@@ -321,8 +321,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let module = moduleController.tempModules[indexPath.row].module
                 moduleController.remove(tempModule: module)
             case .attributes:
-                let attribute = attributeController.tempAttributes[indexPath.row].attribute
-                attributeController.remove(tempAttribute: attribute)
+                let attribute = attributeController.tempEntities[indexPath.row].entity
+                attributeController.remove(tempEntity: attribute)
             case .games:
                 games.remove(at: indexPath.row)
             default:
@@ -593,7 +593,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                     self.moduleHasBeenModified()
                 }
             } else if let attributesVC = vc as? AttributesTableViewController {
-                let selectedAttributes = attributeController.tempAttributes.map({ $0.attribute })
+                let selectedAttributes = attributeController.tempEntities.map({ $0.entity })
                 
                 attributesVC.attributeController = attributeController
                 attributesVC.checkedAttributes = selectedAttributes
