@@ -8,9 +8,11 @@
 
 import CoreData
 
-class IngredientController {
+class IngredientController: EntityController {
+    typealias Entity = Ingredient
+    typealias Value = Int16
     
-    private(set) var tempIngredients: [(ingredient: Ingredient, quantity: Int16)] = []
+    var tempEntities: [(entity: Ingredient, value: Int16)] = []
     
     //MARK: Ingredient CRUD
     
@@ -43,7 +45,7 @@ class IngredientController {
             return
         }
         
-        tempIngredients.removeAll(where: { $0.ingredient == ingredient })
+        tempEntities.removeAll(where: { $0.entity == ingredient })
         
         context.delete(ingredient)
         CoreDataStack.shared.save(context: context)
@@ -51,28 +53,17 @@ class IngredientController {
     
     //MARK: Temp Ingredients
     
-    func add(tempIngredient ingredient: Ingredient, quantity: Int16 = 0) {
-        if !tempIngredients.contains(where: { $0.ingredient == ingredient }) {
-            tempIngredients.append((ingredient: ingredient, quantity: quantity))
-        }
-        sortTempIngredients()
-    }
-    
     func set(quantity: Int16, for ingredient: Ingredient) {
-        if let index = tempIngredients.firstIndex(where: { $0.ingredient == ingredient }) {
-            tempIngredients[index].quantity = quantity
+        if let index = tempEntities.firstIndex(where: { $0.entity == ingredient }) {
+            tempEntities[index].value = quantity
         } else {
-            add(tempIngredient: ingredient, quantity: quantity)
+            add(tempEntity: ingredient, value: quantity)
         }
-        sortTempIngredients()
+        sortTempEntities()
     }
     
-    func sortTempIngredients() {
-        tempIngredients.sort { $0.quantity < $1.quantity }
-    }
-    
-    func remove(tempIngredient ingredient: Ingredient) {
-        tempIngredients.removeAll(where: { $0.ingredient == ingredient })
+    func sortTempEntities() {
+        tempEntities.sort { $0.value < $1.value }
     }
     
     //MARK: Module Ingredients CRUD
@@ -80,13 +71,13 @@ class IngredientController {
     func saveTempIngredients(to module: Module, context: NSManagedObjectContext) {
         let currentModuleIngredients = fetchModuleIngredients(for: module, context: context)
         
-        for tempIngredient in tempIngredients {
-            if let moduleIngredient = currentModuleIngredients.first(where: { $0.ingredient == tempIngredient.ingredient }) {
+        for tempIngredient in tempEntities {
+            if let moduleIngredient = currentModuleIngredients.first(where: { $0.ingredient == tempIngredient.entity }) {
                 // If the module already has the ingredient, make sure the quantity and completed state are up-to-date
-                moduleIngredient.quantity = tempIngredient.quantity
+                moduleIngredient.quantity = tempIngredient.value
             } else {
                 // Add the Module Ingredient
-                ModuleIngredient(module: module, ingredient: tempIngredient.ingredient, quantity: tempIngredient.quantity, context: context)
+                ModuleIngredient(module: module, ingredient: tempIngredient.entity, quantity: tempIngredient.value, context: context)
             }
         }
         
@@ -94,7 +85,7 @@ class IngredientController {
     }
     
     func fetchTempIngredients(for module: Module, in game: Game, context: NSManagedObjectContext) {
-        tempIngredients = []
+        tempEntities = []
         
         let moduleIngredients = fetchModuleIngredients(for: module, context: context)
         for moduleIngredient in moduleIngredients {
@@ -102,9 +93,9 @@ class IngredientController {
                 let games = ingredient.games,
                 games.contains(game) else { continue }
             let quantity = moduleIngredient.quantity
-            tempIngredients.append((ingredient, quantity))
+            tempEntities.append((ingredient, quantity))
         }
-        sortTempIngredients()
+        sortTempEntities()
     }
     
     func fetchModuleIngredients(for module: Module, context: NSManagedObjectContext) -> [ModuleIngredient] {
@@ -127,7 +118,7 @@ class IngredientController {
     }
     
     func removeMissingTempIngredients(from module: Module, context: NSManagedObjectContext) {
-        let ingredients: [Ingredient] = tempIngredients.map({ $0.ingredient })
+        let ingredients: [Ingredient] = tempEntities.map({ $0.entity })
         
         let fetchRequest: NSFetchRequest<ModuleIngredient> = ModuleIngredient.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "module == %@ AND NOT (ingredient IN %@)", module, ingredients)

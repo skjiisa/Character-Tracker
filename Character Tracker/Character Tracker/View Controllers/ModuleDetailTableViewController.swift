@@ -139,7 +139,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .notes(_):
             return 1
         case .ingredients:
-            return ingredientController.tempIngredients.count + editMode.int
+            return ingredientController.tempEntities.count + editMode.int
         case .modules:
             return moduleController.tempModules.count + editMode.int
         case .attributes:
@@ -225,15 +225,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "NotesCell", for: indexPath)
             }
         case .ingredients:
-            if indexPath.row < ingredientController.tempIngredients.count {
+            if indexPath.row < ingredientController.tempEntities.count {
                 cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
                 
-                let tempIngredient = ingredientController.tempIngredients[indexPath.row]
+                let tempIngredient = ingredientController.tempEntities[indexPath.row]
                 
-                cell.textLabel?.text = tempIngredient.ingredient.name
+                cell.textLabel?.text = tempIngredient.entity.name
                 
-                if tempIngredient.quantity != 0 {
-                    cell.detailTextLabel?.text = "Qty: \(tempIngredient.quantity)"
+                if tempIngredient.value != 0 {
+                    cell.detailTextLabel?.text = "Qty: \(tempIngredient.value)"
                 } else {
                     cell.detailTextLabel?.text = nil
                 }
@@ -296,7 +296,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let array: [Any]
         switch sections[indexPath.section].type {
         case .ingredients:
-            array = ingredientController.tempIngredients
+            array = ingredientController.tempEntities
         case .modules:
             array = moduleController.tempModules
         case .attributes:
@@ -315,8 +315,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             let section = sections[indexPath.section].type
             switch section {
             case .ingredients:
-                let ingredient = ingredientController.tempIngredients[indexPath.row].ingredient
-                ingredientController.remove(tempIngredient: ingredient)
+                let ingredient = ingredientController.tempEntities[indexPath.row].entity
+                ingredientController.remove(tempEntity: ingredient)
             case .modules:
                 let module = moduleController.tempModules[indexPath.row].module
                 moduleController.remove(tempModule: module)
@@ -573,7 +573,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 ingredientsVC.callbacks.append { ingredient in
                     ingredientsVC.askForQuantity { quantity in
                         if let quantity = quantity {
-                            self.ingredientController.add(tempIngredient: ingredient, quantity: quantity)
+                            self.ingredientController.add(tempEntity: ingredient, value: quantity)
                             self.markSectionForReload(section: .ingredients)
                             self.moduleHasBeenModified()
                             self.navigationController?.popViewController(animated: true)
