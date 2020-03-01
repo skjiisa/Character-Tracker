@@ -479,8 +479,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                             moduleDetailVC.module = module
                             
                             if let character = character {
-                                let characterModule = moduleController.fetchCharacterModule(for: character, module: module, context: CoreDataStack.shared.mainContext)
-                                moduleDetailVC.characterModule = characterModule
+                                let characterModules = character.modules as? Set<CharacterModule>
+                                moduleDetailVC.characterModule = characterModules?.first(where: { $0.module == module })
                             }
                             
                             moduleDetailVC.moduleType = modulesSection

@@ -138,7 +138,7 @@ class ModuleController: EntityController {
     //MARK: Character Modules CRUD
     
     func saveTempModules(to character: Character, context: NSManagedObjectContext) {
-        let currentCharacterModules = fetchCharacterModules(for: character, context: context)
+        guard let currentCharacterModules = character.modules as? Set<CharacterModule> else { return }
         
         for tempModule in tempEntities {
             if let characterModule = currentCharacterModules.first(where: { $0.module == tempModule.entity }) {
@@ -154,7 +154,7 @@ class ModuleController: EntityController {
     func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
         tempEntities = []
         
-        let characterModules = fetchCharacterModules(for: character, context: context)
+        guard let characterModules = character.modules as? Set<CharacterModule> else { return }
         for characterModule in characterModules {
             guard let module = characterModule.module else { continue }
             tempEntities.append((module, characterModule.completed))
@@ -168,22 +168,12 @@ class ModuleController: EntityController {
     }
     
     func checkTempModules(againstCharacter character: Character, context: NSManagedObjectContext) {
-        let characterModules = fetchCharacterModules(for: character, context: context)
-        for fetchedCharacterModule in characterModules {
-            guard let module = fetchedCharacterModule.module,
+        guard let characterModules = character.modules as? Set<CharacterModule> else { return }
+        for characterModule in characterModules {
+            guard let module = characterModule.module,
                 let index = tempEntities.firstIndex(where: { $0.entity == module }) else { continue }
-            tempEntities[index].value = fetchedCharacterModule.completed
+            tempEntities[index].value = characterModule.completed
         }
-    }
-    
-    func fetchCharacterModules(for character: Character, context: NSManagedObjectContext) -> [CharacterModule] {
-        let predicate = NSPredicate(format: "character == %@", character)
-        return fetchRelationshipEntities(predicate: predicate, context: context)
-    }
-    
-    func fetchCharacterModule(for character: Character, module: Module, context: NSManagedObjectContext) -> CharacterModule? {
-        let predicate = NSPredicate(format: "character == %@ AND module == %@", character, module)
-        return fetchRelationshipEntities(predicate: predicate, context: context).first
     }
     
     func setCompleted(characterModule: CharacterModule, completed: Bool, context: NSManagedObjectContext) {
@@ -219,7 +209,7 @@ class ModuleController: EntityController {
     //MARK: Module Modules CRUD
     
     func saveTempModules(to module: Module, context: NSManagedObjectContext) {
-        let currentChildModules = fetchChildModules(for: module, context: context)
+        guard let currentChildModules = module.children as? Set<ModuleModule> else { return }
         
         for tempModule in tempEntities {
             if let _ = currentChildModules.first(where: { $0.child == tempModule.entity }) {
@@ -235,22 +225,12 @@ class ModuleController: EntityController {
     func fetchTempModules(for module: Module, game: Game?, context: NSManagedObjectContext) {
         tempEntities = []
         
-        let childModules = fetchChildModules(for: module, game: game, context: context)
+        guard let childModules = module.children as? Set<ModuleModule> else { return }
         for childModule in childModules {
             guard let module = childModule.child else { continue }
             tempEntities.append((module, false))
         }
         sortTempEntities()
-    }
-    
-    func fetchChildModules(for module: Module, game: Game? = nil, context: NSManagedObjectContext) -> [ModuleModule] {
-        var predicates = [NSPredicate(format: "parent == %@", module)]
-        if let game = game {
-            predicates.append(NSPredicate(format: "ANY child.games == %@", module, game))
-        }
-        
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempModules(from module: Module, context: NSManagedObjectContext) {

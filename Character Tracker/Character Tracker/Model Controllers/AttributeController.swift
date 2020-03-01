@@ -96,7 +96,7 @@ class AttributeController: EntityController {
     //MARK: Character Attributes CRUD
     
     func saveTempAttributes(to character: Character, context: NSManagedObjectContext) {
-        let currentCharacterAttributes = fetchCharacterAttributes(for: character, context: context)
+        guard let currentCharacterAttributes = character.attributes as? Set<CharacterAttribute> else { return }
         
         for tempAttribute in tempEntities {
             if let characterAttribute = currentCharacterAttributes.first(where: { $0.attribute == tempAttribute.entity } ) {
@@ -110,17 +110,12 @@ class AttributeController: EntityController {
     }
     
     func fetchTempAttributes(for character: Character, context: NSManagedObjectContext) {
-        let characterAttributes = fetchCharacterAttributes(for: character, context: context)
+        guard let characterAttributes = character.attributes as? Set<CharacterAttribute> else { return }
         
         for characterAttribute in characterAttributes {
             guard let attribute = characterAttribute.attribute else { continue }
             tempEntities.append((attribute, characterAttribute.priority))
         }
-    }
-    
-    func fetchCharacterAttributes(for character: Character, context: NSManagedObjectContext) -> [CharacterAttribute] {
-        let predicate = NSPredicate(format: "character == %@", character)
-        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempAttributes(from character: Character, context: NSManagedObjectContext) {
@@ -148,7 +143,7 @@ class AttributeController: EntityController {
     //MARK: Module Attributes CRUD
     
     func saveTempAttributes(to module: Module, context: NSManagedObjectContext) {
-        let currentModuleAttributes = fetchModuleAttributes(for: module, context: context)
+        guard let currentModuleAttributes = module.attributes as? Set<ModuleAttribute> else { return }
         
         for tempAttribute in tempEntities {
             if let moduleAttribute = currentModuleAttributes.first(where: { $0.attribute == tempAttribute.entity } ) {
@@ -164,18 +159,13 @@ class AttributeController: EntityController {
     func fetchTempAttributes(for module: Module, context: NSManagedObjectContext) {
         tempEntities = []
         
-        let moduleAttributes = fetchModuleAttributes(for: module, context: context)
+        guard let moduleAttributes = module.attributes as? Set<ModuleAttribute> else { return }
         for moduleAttribute in moduleAttributes {
             guard let attribute = moduleAttribute.attribute else { continue }
             self.tempEntities.append((attribute, moduleAttribute.value))
         }
         
         sortTempEntities()
-    }
-    
-    func fetchModuleAttributes(for module: Module, context: NSManagedObjectContext) -> [ModuleAttribute] {
-        let predicate = NSPredicate(format: "module == %@", module)
-        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempAttributes(from module: Module, context: NSManagedObjectContext) {

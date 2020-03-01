@@ -52,7 +52,7 @@ class IngredientController: EntityController {
     //MARK: Module Ingredients CRUD
     
     func saveTempIngredients(to module: Module, context: NSManagedObjectContext) {
-        let currentModuleIngredients = fetchModuleIngredients(for: module, context: context)
+        guard let currentModuleIngredients = module.ingredients as? Set<ModuleIngredient> else { return }
         
         for tempIngredient in tempEntities {
             if let moduleIngredient = currentModuleIngredients.first(where: { $0.ingredient == tempIngredient.entity }) {
@@ -70,7 +70,7 @@ class IngredientController: EntityController {
     func fetchTempIngredients(for module: Module, in game: Game, context: NSManagedObjectContext) {
         tempEntities = []
         
-        let moduleIngredients = fetchModuleIngredients(for: module, context: context)
+        guard let moduleIngredients = module.ingredients as? Set<ModuleIngredient> else { return }
         for moduleIngredient in moduleIngredients {
             guard let ingredient = moduleIngredient.ingredient,
                 let games = ingredient.games,
@@ -79,11 +79,6 @@ class IngredientController: EntityController {
             tempEntities.append((ingredient, quantity))
         }
         sortTempEntities()
-    }
-    
-    func fetchModuleIngredients(for module: Module, context: NSManagedObjectContext) -> [ModuleIngredient] {
-        let predicate = NSPredicate(format: "module == %@", module)
-        return fetchRelationshipEntities(predicate: predicate, context: context)
     }
     
     func removeMissingTempIngredients(from module: Module, context: NSManagedObjectContext) {
