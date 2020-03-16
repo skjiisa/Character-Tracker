@@ -8,7 +8,7 @@ Character Tracker is an iOS app for keeping track of characters and other inform
 
 ### Features
 
-* Track information abouty characters including:
+* Track information about characters including:
   * Skills
   * Combat Styles
   * Questlines
