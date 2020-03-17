@@ -362,8 +362,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         switch section {
         case .ingredients:
             array = ingredientController.tempEntities
-        case .modules:
-            array = moduleController.tempEntities
         case .attributes:
             array = attributeController.tempEntities
         case .games:

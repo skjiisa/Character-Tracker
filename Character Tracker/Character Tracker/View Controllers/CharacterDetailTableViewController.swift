@@ -313,6 +313,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         return view
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section),
+            let tempAttributes = attributeController.getTempAttributes(from: section.section) {
+            return indexPath.row == tempAttributes.count ? indexPath : nil
+        }
+        
+        return indexPath
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath(row: 0, section: 0) {
             tableView.deselectRow(at: indexPath, animated: true)
