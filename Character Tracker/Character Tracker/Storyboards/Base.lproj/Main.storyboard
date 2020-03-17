@@ -133,6 +133,31 @@
                                     <segue destination="tXZ-rk-zoV" kind="show" id="Adg-Vf-5jE"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LinkCell" id="WXD-8u-Q2Z" customClass="LinkTableViewCell" customModule="Character_Tracker" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="273" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WXD-8u-Q2Z" id="Auv-dU-IlW">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dod-Dt-NtF">
+                                            <rect key="frame" x="20" y="7" width="95" height="30"/>
+                                            <state key="normal" title="Privacy Policy"/>
+                                            <connections>
+                                                <action selector="openLink:" destination="WXD-8u-Q2Z" eventType="touchUpInside" id="rId-l5-022"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Dod-Dt-NtF" firstAttribute="centerY" secondItem="Auv-dU-IlW" secondAttribute="centerY" id="6st-6P-ipx"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Dod-Dt-NtF" secondAttribute="trailing" id="fan-NC-6Zm"/>
+                                        <constraint firstItem="Dod-Dt-NtF" firstAttribute="leading" secondItem="Auv-dU-IlW" secondAttribute="leadingMargin" id="yHh-L3-AIg"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="button" destination="Dod-Dt-NtF" id="Hh3-HK-4jt"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="9w1-We-Xi2" id="cjh-7p-Oub"/>
@@ -150,7 +175,7 @@
             <objects>
                 <tableViewController id="xlr-Lk-qr8" customClass="GamesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="c0y-OH-fs0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -591,7 +616,7 @@
             <objects>
                 <tableViewController id="s9Q-u2-klJ" customClass="AttributesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aS0-XJ-H7d">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="0UY-hy-SUx">
@@ -706,7 +731,7 @@
             <objects>
                 <tableViewController id="tXZ-rk-zoV" customClass="ModulesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5Va-4m-seg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="lIb-TW-9N3">
@@ -827,7 +852,7 @@
             <objects>
                 <tableViewController id="FcM-PG-5WN" customClass="ModuleDetailTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5BS-lZ-RTL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Lgi-Q9-F3h">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1167,7 +1192,7 @@
             <objects>
                 <tableViewController id="iIE-4W-44r" customClass="IngredientsTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="olg-S9-trG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -1232,11 +1257,11 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tDt-bG-AJ4"/>
-        <segue reference="lR8-jg-YER"/>
-        <segue reference="x2i-i4-wE1"/>
+        <segue reference="Adg-Vf-5jE"/>
+        <segue reference="7MN-57-o6h"/>
         <segue reference="GZ6-Pz-ZgO"/>
         <segue reference="YvR-e2-XSd"/>
         <segue reference="hwD-cT-7uC"/>
-        <segue reference="TKY-Ee-oVW"/>
+        <segue reference="Jjo-ZB-lgx"/>
     </inferredMetricsTieBreakers>
 </document>

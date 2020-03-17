@@ -23,43 +23,43 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             }
         }
     }
+    
+    let links: [(title: String, urlString: String)] = [
+        ("Support Website", "https://github.com/Isvvc/Character-Tracker/issues"),
+        ("Email Support", "mailto:lyons@tuta.io"),
+        ("Privacy Policy", "https://github.com/Isvvc/Character-Tracker/blob/master/Privacy%20Policy.txt"),
+        ("Source Code", "https://github.com/Isvvc/Character-Tracker")
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        switch section {
+        case 0:
             return "Game"
-        } else if section == 1 {
-            //return "\(gameReference?.name ?? "") Settings"
-        } else if section == 3 {
+        case 3:
             return "Attributes"
-        } else if section == 4 {
+        case 4:
             return "Modules"
+        case 5:
+            return "App Information"
+        default:
+            return nil
         }
-        
-        return nil
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 3 {
-            //return "Character Attributes"
-            return "Attributes are simple tags that characters can have"
+            return "Attributes are simple tags"
         } else if section == 4 {
-            //return "Modules"
             return "Modules hold information about level, requirements, etc."
         }
         
@@ -67,75 +67,61 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < 3 {
+        switch section {
+        case 0..<3:
             return 1
-        } else if section == 3 {
+        case 3:
             return attributeTypeController?.types.count ?? 0
-        } else {
+        case 4:
             return moduleTypeController?.types.count ?? 0
+        default:
+            return links.count
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
             cell.textLabel?.text = gameReference?.name
-        } else if indexPath.section == 1 {
+        case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectRaceCell", for: indexPath)
             cell.textLabel?.text = "Races"
-        } else if indexPath.section == 2 {
+        case 2:
             cell = tableView.dequeueReusableCell(withIdentifier: "DefaultSectionsCell", for: indexPath)
-        } else if indexPath.section == 3 {
+        case 3:
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
             if let attributeTypeName = attributeTypeController?.types[indexPath.row].name?.capitalized {
                 cell.textLabel?.text = "\(attributeTypeName.pluralize())"
             }
-        } else {
+        case 4:
             cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
             if let moduleTypeName = moduleTypeController?.types[indexPath.row].name {
                 cell.textLabel?.text = moduleTypeName.pluralize()
             }
+        default:
+            guard let linkCell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath) as? LinkTableViewCell else { return UITableViewCell() }
+            let link = links[indexPath.row]
+            
+            linkCell.button.setTitle(link.title, for: .normal)
+            linkCell.url = URL(string: link.urlString)
+            cell = linkCell
         }
 
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    //MARK: Table view delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 5,
+            let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell {
+            cell.openLink(self)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
