@@ -355,6 +355,28 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         return UITableView.automaticDimension
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let section = sections[indexPath.section].type
+        
+        let array: [Any]
+        switch section {
+        case .ingredients:
+            array = ingredientController.tempEntities
+        case .modules:
+            array = moduleController.tempEntities
+        case .attributes:
+            array = attributeController.tempEntities
+        case .games:
+            array = games
+        case .name:
+            array = []
+        default:
+            return indexPath
+        }
+        
+        return indexPath.row == array.count ? indexPath : nil
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         
