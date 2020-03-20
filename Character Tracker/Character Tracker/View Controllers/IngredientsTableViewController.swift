@@ -65,6 +65,7 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
 
         let ingredient = fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = ingredient.name
+        cell.detailTextLabel?.text = ingredient.id
 
         return cell
     }
