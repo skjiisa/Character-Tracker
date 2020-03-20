@@ -111,6 +111,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         if showAll {
             addAttributeView.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
     }
 
@@ -153,14 +154,6 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -173,25 +166,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             } else {
                 attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
@@ -218,31 +194,16 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             callback(attribute)
         }
     }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let attributesVC = segue.destination as? AttributesTableViewController {
-            attributesVC.showAll = true
-            attributesVC.gameReference = gameReference
-            attributesVC.attributeController = attributeController
-            attributesVC.attributeType = attributeType
-            attributesVC.callbacks.append { attribute in
-                guard let game = self.gameReference?.game else { return }
-                self.attributeController?.add(game: game, to: attribute, context: CoreDataStack.shared.mainContext)
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
     
     //MARK: Actions
     
     @IBAction func addAttribute(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Add \(typeName)", message: nil, preferredStyle: .actionSheet)
         
-        let addExisting = UIAlertAction(title: "Add existing \(typeName)", style: .default) { _ in
-            self.performSegue(withIdentifier: "ModalShowAttributes", sender: self)
+        let addExisting = UIAlertAction(title: "Add \(typeName) from other game", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.presentAllAttributes()
+            }
         }
         
         let addNew = UIAlertAction(title: "Add new \(typeName)", style: .default) { _ in
@@ -256,6 +217,12 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         alertController.addAction(cancelAction)
         
         alertController.pruneNegativeWidthConstraints()
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = addAttributeButton.convert(addAttributeButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
         
         present(alertController, animated: true, completion: nil)
     }
@@ -286,6 +253,30 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    private func presentAllAttributes() {
+        guard let attributesVC  = storyboard?.instantiateViewController(withIdentifier: "AttributesTable") as? AttributesTableViewController else { return }
+        let navigationVC = UINavigationController(rootViewController: attributesVC)
+        
+        attributesVC.showAll = true
+        attributesVC.gameReference = gameReference
+        attributesVC.attributeController = attributeController
+        attributesVC.attributeType = attributeType
+        attributesVC.callbacks.append { attribute in
+            guard let game = self.gameReference?.game else { return }
+            self.attributeController?.add(game: game, to: attribute, context: CoreDataStack.shared.mainContext)
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        present(navigationVC, animated: true)
     }
     
 }

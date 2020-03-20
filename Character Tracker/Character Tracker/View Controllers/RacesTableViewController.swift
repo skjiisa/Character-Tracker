@@ -67,6 +67,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
 
         if showAll {
             addRaceView.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
     }
 
@@ -75,14 +76,6 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController?.sections?.count ?? 0
     }
-    
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if fetchedResultsController?.sectionIndexTitles[section] == "1" {
-//            return "Vanilla"
-//        } else {
-//            return "Custom"
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
@@ -125,28 +118,16 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         choose(race: race)
     }
-
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let racesVC = segue.destination as? RacesTableViewController {
-            racesVC.showAll = true
-            racesVC.gameReference = gameReference
-            racesVC.callbacks.append { race in
-                guard let game = self.gameReference?.game else { return }
-                self.raceController.add(game: game, to: race, context: CoreDataStack.shared.mainContext)
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
     
     //MARK: Actions
     
     @IBAction func addRace(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Add Race", message: nil, preferredStyle: .actionSheet)
         
-        let addExisting = UIAlertAction(title: "Add existing race", style: .default) { _ in
-            self.performSegue(withIdentifier: "ModalShowRaces", sender: self)
+        let addExisting = UIAlertAction(title: "Add race from other game", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.presentAllRaces()
+            }
         }
         
         let addNew = UIAlertAction(title: "Add new race", style: .default) { _ in
@@ -160,6 +141,12 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         alertController.addAction(cancelAction)
         
         alertController.pruneNegativeWidthConstraints()
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = addRaceView.convert(addRaceView.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
                 
         present(alertController, animated: true, completion: nil)
     }
@@ -189,6 +176,27 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    // MARK: - Navigation
+    
+    private func presentAllRaces() {
+        guard let racesVC = storyboard?.instantiateViewController(withIdentifier: "RacesTable") as? RacesTableViewController else { return }
+        let navigationVC = UINavigationController(rootViewController: racesVC)
+
+        racesVC.showAll = true
+        racesVC.gameReference = gameReference
+        racesVC.callbacks.append { race in
+            guard let game = self.gameReference?.game else { return }
+            self.raceController.add(game: game, to: race, context: CoreDataStack.shared.mainContext)
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+       present(navigationVC, animated: true)
     }
     
 }
