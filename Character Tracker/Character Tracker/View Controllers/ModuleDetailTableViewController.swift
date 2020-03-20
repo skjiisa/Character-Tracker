@@ -360,8 +360,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         let array: [Any]
         switch section {
-        case .ingredients:
-            array = ingredientController.tempEntities
         case .attributes:
             array = attributeController.tempEntities
         case .games:
@@ -392,6 +390,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case .modules:
             if moduleIsExcluded(at: indexPath) {
                 tableView.deselectRow(at: indexPath, animated: true)
+            }
+        case .ingredients:
+            if indexPath.row < ingredientController.tempEntities.count {
+                let ingredient = ingredientController.tempEntities[indexPath.row].entity
+                tableView.deselectRow(at: indexPath, animated: true)
+                prompt(title: ingredient.name ?? "Ingredient", message: ingredient.id ?? "")
             }
         default:
             break
@@ -453,8 +457,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
     }
     
-    private func prompt(message: String) {
-        let alertController = UIAlertController(title: "Could not save module", message: message, preferredStyle: .alert)
+    private func prompt(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         
         present(alertController, animated: true, completion: nil)
@@ -467,7 +471,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         guard let name = nameTextField?.text,
             !name.isEmpty else {
-                prompt(message: "Please enter a module name.")
+                prompt(title: "Could not save module", message: "Please enter a module name.")
                 return
         }
         
