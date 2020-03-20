@@ -235,6 +235,12 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         alertController.pruneNegativeWidthConstraints()
         
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = addModuleButton.convert(addModuleButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
+        
         present(alertController, animated: true, completion: nil)
     }
     
