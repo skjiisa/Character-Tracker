@@ -103,6 +103,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         tableView.reloadData()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if let character = character {
+            attributeTypeSectionController?.saveTempSections(to: character)
+        }
+    }
 
     //MARK: Table view data source
 
@@ -405,7 +413,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         moduleController.removeMissingTempModules(from: savedCharacter, context: context)
         moduleController.saveTempModules(to: savedCharacter, context: context)
         
-        attributeTypeSectionController?.saveTempSections(to: savedCharacter)
+        self.character = savedCharacter
         
         gameReference?.isSafeToChangeGame = true
         return true
