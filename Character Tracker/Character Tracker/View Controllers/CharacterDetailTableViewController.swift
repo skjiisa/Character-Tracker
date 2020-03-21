@@ -418,7 +418,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             navigationItem.rightBarButtonItem = saveButton
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = (name != nil && name != "" && race != nil)
+        navigationItem.rightBarButtonItem?.isEnabled = !(name?.isEmpty ?? true) && race != nil
     }
     
     //MARK: Actions

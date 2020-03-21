@@ -33,6 +33,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         didSet {
             if let module = module,
                 let currentGame = gameReference?.game {
+                self.name = module.name
                 let context = CoreDataStack.shared.mainContext
                 let games = module.mutableSetValue(forKey: "games")
                 if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
@@ -47,6 +48,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var characterModule: CharacterModule?
     var excludedModules: [Module] = []
     var games: [Game] = []
+    var name: String?
     var editMode: Bool = false
     var callbacks: [( (CharacterModule, Bool) -> Void )] = []
     
@@ -67,16 +69,24 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var levelStepper: UIStepper?
     
     var cancelButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        barButton.tag = 1
+        return barButton
     }
     var editButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        barButton.tag = 2
+        return barButton
     }
     var saveButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+        barButton.tag = 3
+        return barButton
     }
     var cancelEditButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+        barButton.tag = 4
+        return barButton
     }
     
     class TextViewReference: Equatable {
@@ -164,7 +174,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 if let nameCell = tableView.dequeueReusableCell(withIdentifier: "ModuleNameCell", for: indexPath) as? ModuleNameTableViewCell {
                     nameTextField = nameCell.textField
                     nameTextField?.delegate = self
-                    nameTextField?.text = module?.name
+                    nameTextField?.text = name
                     
                     cell = nameCell
                 } else {
@@ -464,16 +474,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         present(alertController, animated: true, completion: nil)
     }
     
-    private func save() {
+    @discardableResult private func save() -> Bool {
         guard let type = moduleType,
-            !games.isEmpty else { return }
-        let context = CoreDataStack.shared.mainContext
+            let name = nameTextField?.text,
+            !name.isEmpty,
+            !games.isEmpty else { return false }
         
-        guard let name = nameTextField?.text,
-            !name.isEmpty else {
-                prompt(title: "Could not save module", message: "Please enter a module name.")
-                return
-        }
+        let context = CoreDataStack.shared.mainContext
         
         let level = Int16(levelTextField?.text ?? "")
         
@@ -499,6 +506,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         attributeController.removeMissingTempAttributes(from: savedModule, context: context)
         attributeController.saveTempAttributes(to: savedModule, context: context)
+        
+        return true
     }
     
     private func setCompleted(_ completed: Bool) {
@@ -509,7 +518,12 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     private func moduleHasBeenModified() {
         //gameReference?.isSafeToChangeGame = false
-        navigationItem.rightBarButtonItem = saveButton
+        
+        if navigationItem.rightBarButtonItem?.tag != 3 {
+            navigationItem.rightBarButtonItem = saveButton
+        }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = !(name?.isEmpty ?? true)
     }
     
     private func moduleIsExcluded(at indexPath: IndexPath) -> Bool {
@@ -537,7 +551,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @objc private func saveTapped(_ sender: UIBarButtonItem) {
         view.endEditing(true)
-        save()
+        guard save() else { return }
         
         if module == nil {
             dismiss(animated: true, completion: nil)
@@ -674,6 +688,10 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
         return editMode
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderText])
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == levelTextField {
             if let level = Int(textField.text ?? "") {
@@ -694,8 +712,14 @@ extension ModuleDetailTableViewController: UITextFieldDelegate {
                 }
             }
         } else if textField == nameTextField {
-            if textField.text != module?.name {
+            name = textField.text
+            
+            if name != module?.name {
                 moduleHasBeenModified()
+                
+                if name?.isEmpty ?? true {
+                    textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemRed])
+                }
             }
         }
     }
