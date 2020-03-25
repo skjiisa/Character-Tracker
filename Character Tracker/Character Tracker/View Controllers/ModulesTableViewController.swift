@@ -87,6 +87,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if showAll {
             addModuleView.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
     }
 
@@ -188,16 +189,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         if let vc = destination as? CharacterTrackerViewController {
             vc.gameReference = gameReference
             
-            if let modulesVC = vc as? ModulesTableViewController {
-                modulesVC.showAll = true
-                modulesVC.moduleController = moduleController
-                modulesVC.moduleType = moduleType
-                modulesVC.callbacks.append { module in
-                    guard let game = self.gameReference?.game else { return }
-                    self.moduleController?.add(game: game, to: module, context: CoreDataStack.shared.mainContext)
-                    self.dismiss(animated: true, completion: nil)
-                }
-            } else if let moduleDetailVC = vc as? ModuleDetailTableViewController {
+            if let moduleDetailVC = vc as? ModuleDetailTableViewController {
                 moduleDetailVC.moduleType = moduleType
                 
                 switch segue.identifier {
@@ -213,14 +205,33 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             }
         }
     }
+    
+    private func presentAllModules() {
+        guard let modulesVC = storyboard?.instantiateViewController(withIdentifier: "ModulesTable") as? ModulesTableViewController else { return }
+        let navigationVC = UINavigationController(rootViewController: modulesVC)
+        
+        modulesVC.gameReference = gameReference
+        modulesVC.showAll = true
+        modulesVC.moduleController = moduleController
+        modulesVC.moduleType = moduleType
+        modulesVC.callbacks.append { module in
+            guard let game = self.gameReference?.game else { return }
+            self.moduleController?.add(game: game, to: module, context: CoreDataStack.shared.mainContext)
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        present(navigationVC, animated: true)
+    }
 
     //MARK: Actions
     
     @IBAction func addModule(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Add \(typeName)", message: nil, preferredStyle: .actionSheet)
         
-        let addExisting = UIAlertAction(title: "Add existing \(typeName)", style: .default) { _ in
-            self.performSegue(withIdentifier: "ModalShowModules", sender: self)
+        let addExisting = UIAlertAction(title: "Add \(typeName) from other game", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.presentAllModules()
+            }
         }
         
         let addNew = UIAlertAction(title: "Add new \(typeName)", style: .default) { _ in
@@ -235,7 +246,17 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         alertController.pruneNegativeWidthConstraints()
         
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = addModuleButton.convert(addModuleButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
+        
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
     }
     
 }

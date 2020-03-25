@@ -57,6 +57,8 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         super.viewDidLoad()
         
         navigationItem.title = gameReference?.name
+        
+        navigationItem.leftBarButtonItem = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -538,7 +538,7 @@
         <!--Races-->
         <scene sceneID="tvO-79-aw0">
             <objects>
-                <tableViewController id="hEt-7s-HJP" customClass="RacesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RacesTable" id="hEt-7s-HJP" customClass="RacesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="dLh-fY-bwC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -554,20 +554,12 @@
                                         <action selector="addRace:" destination="hEt-7s-HJP" eventType="touchUpInside" id="wwb-2q-GE0"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPa-lb-Rk9">
-                                    <rect key="frame" x="192" y="7" width="30" height="30"/>
-                                    <connections>
-                                        <segue destination="hEt-7s-HJP" kind="presentation" identifier="ModalShowRaces" id="mKa-eA-sdu"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="gYI-j1-djF" firstAttribute="centerY" secondItem="VpU-9Q-wIR" secondAttribute="centerY" id="8BT-sk-HPL"/>
                                 <constraint firstItem="gYI-j1-djF" firstAttribute="width" secondItem="VpU-9Q-wIR" secondAttribute="width" id="Vem-gx-BEC"/>
-                                <constraint firstItem="sPa-lb-Rk9" firstAttribute="centerX" secondItem="VpU-9Q-wIR" secondAttribute="centerX" id="Z8F-6T-IyN"/>
                                 <constraint firstItem="gYI-j1-djF" firstAttribute="centerX" secondItem="VpU-9Q-wIR" secondAttribute="centerX" id="dVR-sa-Xt7"/>
-                                <constraint firstItem="sPa-lb-Rk9" firstAttribute="centerY" secondItem="VpU-9Q-wIR" secondAttribute="centerY" id="eIj-ZS-fWE"/>
                                 <constraint firstItem="gYI-j1-djF" firstAttribute="height" secondItem="VpU-9Q-wIR" secondAttribute="height" id="lsq-AZ-20p"/>
                             </constraints>
                         </view>
@@ -614,7 +606,7 @@
         <!--Attributes-->
         <scene sceneID="4ei-Gi-qpT">
             <objects>
-                <tableViewController id="s9Q-u2-klJ" customClass="AttributesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AttributesTable" id="s9Q-u2-klJ" customClass="AttributesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aS0-XJ-H7d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -630,21 +622,13 @@
                                         <action selector="addAttribute:" destination="s9Q-u2-klJ" eventType="touchUpInside" id="lJE-j2-G4z"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S07-5U-2zJ">
-                                    <rect key="frame" x="192" y="7" width="30" height="30"/>
-                                    <connections>
-                                        <segue destination="s9Q-u2-klJ" kind="presentation" identifier="ModalShowAttributes" id="S6m-au-cel"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="width" secondItem="0UY-hy-SUx" secondAttribute="width" id="5ar-mQ-7As"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="height" secondItem="0UY-hy-SUx" secondAttribute="height" id="EH6-8P-Vmk"/>
-                                <constraint firstItem="S07-5U-2zJ" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="UP4-Ye-FAX"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="hps-S2-JQc"/>
                                 <constraint firstItem="o4T-KY-j4F" firstAttribute="centerX" secondItem="0UY-hy-SUx" secondAttribute="centerX" id="mRJ-St-2Pc"/>
-                                <constraint firstItem="S07-5U-2zJ" firstAttribute="centerY" secondItem="0UY-hy-SUx" secondAttribute="centerY" id="npl-WJ-OlH"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -729,7 +713,7 @@
         <!--Modules-->
         <scene sceneID="4cS-Mu-74n">
             <objects>
-                <tableViewController id="tXZ-rk-zoV" customClass="ModulesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ModulesTable" id="tXZ-rk-zoV" customClass="ModulesTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5Va-4m-seg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -745,21 +729,13 @@
                                         <action selector="addModule:" destination="tXZ-rk-zoV" eventType="touchUpInside" id="bLN-tJ-UQL"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpA-iV-fBr">
-                                    <rect key="frame" x="192" y="7" width="30" height="30"/>
-                                    <connections>
-                                        <segue destination="tXZ-rk-zoV" kind="presentation" identifier="ModalShowModules" id="YLm-ZD-VaI"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="CZf-i0-e7r" firstAttribute="height" secondItem="lIb-TW-9N3" secondAttribute="height" id="Onc-u5-PmL"/>
                                 <constraint firstItem="CZf-i0-e7r" firstAttribute="centerX" secondItem="lIb-TW-9N3" secondAttribute="centerX" id="TZG-CQ-eoh"/>
-                                <constraint firstItem="bpA-iV-fBr" firstAttribute="centerY" secondItem="lIb-TW-9N3" secondAttribute="centerY" id="TsH-UI-SAl"/>
                                 <constraint firstItem="CZf-i0-e7r" firstAttribute="centerY" secondItem="lIb-TW-9N3" secondAttribute="centerY" id="V2C-36-vvQ"/>
                                 <constraint firstItem="CZf-i0-e7r" firstAttribute="width" secondItem="lIb-TW-9N3" secondAttribute="width" id="fPx-3n-ScO"/>
-                                <constraint firstItem="bpA-iV-fBr" firstAttribute="centerX" secondItem="lIb-TW-9N3" secondAttribute="centerX" id="fW7-BE-oC1"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -1196,17 +1172,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientCell" textLabel="z1k-j8-6kg" style="IBUITableViewCellStyleDefault" id="ajY-bn-u7N">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientCell" textLabel="z1k-j8-6kg" detailTextLabel="jv8-Hm-BxX" style="IBUITableViewCellStyleSubtitle" id="ajY-bn-u7N">
+                                <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ajY-bn-u7N" id="C7C-qq-KX5">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Ingredient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z1k-j8-6kg">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <rect key="frame" x="20" y="10" width="77.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jv8-Hm-BxX">
+                                            <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1256,10 +1239,10 @@
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tDt-bG-AJ4"/>
-        <segue reference="Adg-Vf-5jE"/>
-        <segue reference="7MN-57-o6h"/>
-        <segue reference="GZ6-Pz-ZgO"/>
+        <segue reference="DTF-qi-Fya"/>
+        <segue reference="FDA-d5-RMw"/>
+        <segue reference="Hak-ez-6fv"/>
+        <segue reference="9dZ-mf-KGH"/>
         <segue reference="YvR-e2-XSd"/>
         <segue reference="hwD-cT-7uC"/>
         <segue reference="Jjo-ZB-lgx"/>

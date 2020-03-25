@@ -869,7 +869,9 @@
       "games": [
         "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
         "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
-        "33839302-E5B9-4299-AA81-444BED243F20"
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7"
       ]
     },
     {
@@ -879,7 +881,23 @@
       "games": [
         "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
         "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
-        "33839302-E5B9-4299-AA81-444BED243F20"
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7"
+      ]
+    },
+    {
+      "name": "Unarmored",
+      "id": "479A95E4-9533-4A1B-88FB-8082B8361815",
+      "type": "DF9C65E2-B917-4C45-AB0E-BCC7C645B3A8",
+      "games": [
+        "7AF9F11D-6CF6-45E5-A089-7C9D9ECC6A68",
+        "71D77F1C-BDD8-4D1A-8FD8-0A8BCD418FA6",
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
+        "227CA73A-8143-462C-B97E-20F5FCB6E18B"
       ]
     }
   ],
@@ -908,7 +926,7 @@
   "ingredients": [
     {
       "name": "Leather",
-      "id": "db5d2",
+      "id": "Skyrim.esm 0db5d2",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -917,7 +935,7 @@
     },
     {
       "name": "Leather Strips",
-      "id": "800e4",
+      "id": "Skyrim.esm 0800e4",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -926,7 +944,7 @@
     },
     {
       "name": "Iron Ingot",
-      "id": "5ace4",
+      "id": "Skyrim.esm 05ace4",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -935,7 +953,7 @@
     },
     {
       "name": "Refined Moonstone",
-      "id": "5ad9f",
+      "id": "Skyrim.esm 05ad9f",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -944,7 +962,7 @@
     },
     {
       "name": "Perk: Elven Smithing",
-      "id": "cb40f",
+      "id": "Skyrim.esm 0cb40f",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -953,7 +971,7 @@
     },
     {
       "name": "Steel Ingot",
-      "id": "5ace5",
+      "id": "Skyrim.esm 05ace5",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -962,7 +980,7 @@
     },
     {
       "name": "Corundum Ingot",
-      "id": "5ad93",
+      "id": "Skyrim.esm 05ad93",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -971,7 +989,7 @@
     },
     {
       "name": "Perk: Advanced Armors",
-      "id": "cb414",
+      "id": "Skyrim.esm 0cb414",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -980,7 +998,7 @@
     },
     {
       "name": "Quicksilver Ingot",
-      "id": "5ada0",
+      "id": "Skyrim.esm 05ada0",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -989,7 +1007,7 @@
     },
     {
       "name": "Refined Malachite",
-      "id": "5ada1",
+      "id": "Skyrim.esm 05ada1",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -998,7 +1016,7 @@
     },
     {
       "name": "Perk: Glass Smithing",
-      "id": "cb411",
+      "id": "Skyrim.esm 0cb411",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1007,7 +1025,7 @@
     },
     {
       "name": "Dragon Scales",
-      "id": "3ada3",
+      "id": "Skyrim.esm 03ada3",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1016,7 +1034,7 @@
     },
     {
       "name": "Dragon Bone",
-      "id": "3ada4",
+      "id": "Skyrim.esm 03ada4",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1025,7 +1043,7 @@
     },
     {
       "name": "Perk: Dragon Armor",
-      "id": "52190",
+      "id": "Skyrim.esm 052190",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1034,7 +1052,7 @@
     },
     {
       "name": "Perk: Steel Smithing",
-      "id": "cb40d",
+      "id": "Skyrim.esm 0cb40d",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1043,7 +1061,7 @@
     },
     {
       "name": "Perk: Dwarven Smithing",
-      "id": "cb40e",
+      "id": "Skyrim.esm 0cb40e",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1052,7 +1070,7 @@
     },
     {
       "name": "Dwarven Metal Ingot",
-      "id": "db8a2",
+      "id": "Skyrim.esm 0db8a2",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1061,7 +1079,7 @@
     },
     {
       "name": "Orichalcum Ingot",
-      "id": "5ad99",
+      "id": "Skyrim.esm 05ad99",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1070,7 +1088,7 @@
     },
     {
       "name": "Perk: Orcish Smithing",
-      "id": "cb410",
+      "id": "Skyrim.esm 0cb410",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1079,7 +1097,7 @@
     },
     {
       "name": "Ebony Ingot",
-      "id": "5ad9d",
+      "id": "Skyrim.esm 05ad9d",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1088,7 +1106,7 @@
     },
     {
       "name": "Perk: Ebony Smithing",
-      "id": "cb412",
+      "id": "Skyrim.esm 0cb412",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1097,7 +1115,7 @@
     },
     {
       "name": "Daedra Heart",
-      "id": "3ad5b",
+      "id": "Skyrim.esm 03ad5b",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1106,7 +1124,7 @@
     },
     {
       "name": "Perk: Daedric Smithing",
-      "id": "cb413",
+      "id": "Skyrim.esm 0cb413",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1127,11 +1145,11 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "db5d2",
+          "ingredient": "Skyrim.esm 0db5d2",
           "quantity": 9
         },
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 8
         }
       ],
@@ -1154,23 +1172,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "db5d2",
+          "ingredient": "Skyrim.esm 0db5d2",
           "quantity": 4
         },
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 8
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 4
         },
         {
-          "ingredient": "5ad9f",
+          "ingredient": "Skyrim.esm 05ad9f",
           "quantity": 9
         },
         {
-          "ingredient": "cb40f",
+          "ingredient": "Skyrim.esm 0cb40f",
           "quantity": 0
         }
       ],
@@ -1192,23 +1210,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "db5d2",
+          "ingredient": "Skyrim.esm 0db5d2",
           "quantity": 5
         },
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 8
         },
         {
-          "ingredient": "5ace5",
+          "ingredient": "Skyrim.esm 05ace5",
           "quantity": 8
         },
         {
-          "ingredient": "5ad93",
+          "ingredient": "Skyrim.esm 05ad93",
           "quantity": 5
         },
         {
-          "ingredient": "cb414",
+          "ingredient": "Skyrim.esm 0cb414",
           "quantity": 0
         }
       ],
@@ -1231,23 +1249,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 3
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 1
         },
         {
-          "ingredient": "5ad9f",
+          "ingredient": "Skyrim.esm 05ad9f",
           "quantity": 4
         },
         {
-          "ingredient": "5ada0",
+          "ingredient": "Skyrim.esm 05ada0",
           "quantity": 1
         },
         {
-          "ingredient": "cb40f",
+          "ingredient": "Skyrim.esm 0cb40f",
           "quantity": 0
         }
       ],
@@ -1275,23 +1293,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "db5d2",
+          "ingredient": "Skyrim.esm 0db5d2",
           "quantity": 4
         },
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 8
         },
         {
-          "ingredient": "5ad9f",
+          "ingredient": "Skyrim.esm 05ad9f",
           "quantity": 5
         },
         {
-          "ingredient": "5ada1",
+          "ingredient": "Skyrim.esm 05ada1",
           "quantity": 9
         },
         {
-          "ingredient": "cb411",
+          "ingredient": "Skyrim.esm 0cb411",
           "quantity": 0
         }
       ],
@@ -1314,23 +1332,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "db5d2",
+          "ingredient": "Skyrim.esm 0db5d2",
           "quantity": 4
         },
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 8
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 5
         },
         {
-          "ingredient": "3ada3",
+          "ingredient": "Skyrim.esm 03ada3",
           "quantity": 10
         },
         {
-          "ingredient": "52190",
+          "ingredient": "Skyrim.esm 052190",
           "quantity": 0
         }
       ],
@@ -1353,19 +1371,19 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "3ada3",
+          "ingredient": "Skyrim.esm 03ada3",
           "quantity": 10
         },
         {
-          "ingredient": "3ada4",
+          "ingredient": "Skyrim.esm 03ada4",
           "quantity": 5
         },
         {
-          "ingredient": "52190",
+          "ingredient": "Skyrim.esm 052190",
           "quantity": 0
         }
       ],
@@ -1388,19 +1406,19 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 4
         },
         {
-          "ingredient": "5ace5",
+          "ingredient": "Skyrim.esm 05ace5",
           "quantity": 11
         },
         {
-          "ingredient": "cb40d",
+          "ingredient": "Skyrim.esm 0cb40d",
           "quantity": 0
         }
       ],
@@ -1423,23 +1441,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 4
         },
         {
-          "ingredient": "5ace5",
+          "ingredient": "Skyrim.esm 05ace5",
           "quantity": 4
         },
         {
-          "ingredient": "db8a2",
+          "ingredient": "Skyrim.esm 0db8a2",
           "quantity": 8
         },
         {
-          "ingredient": "cb40e",
+          "ingredient": "Skyrim.esm 0cb40e",
           "quantity": 0
         }
       ],
@@ -1461,23 +1479,23 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 4
         },
         {
-          "ingredient": "5ace5",
+          "ingredient": "Skyrim.esm 05ace5",
           "quantity": 9
         },
         {
-          "ingredient": "5ad93",
+          "ingredient": "Skyrim.esm 05ad93",
           "quantity": 4
         },
         {
-          "ingredient": "cb414",
+          "ingredient": "Skyrim.esm 0cb414",
           "quantity": 0
         }
       ],
@@ -1500,19 +1518,19 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ace4",
+          "ingredient": "Skyrim.esm 05ace4",
           "quantity": 4
         },
         {
-          "ingredient": "5ad99",
+          "ingredient": "Skyrim.esm 05ad99",
           "quantity": 11
         },
         {
-          "ingredient": "cb410",
+          "ingredient": "Skyrim.esm 0cb410",
           "quantity": 0
         }
       ],
@@ -1535,15 +1553,15 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ad9d",
+          "ingredient": "Skyrim.esm 05ad9d",
           "quantity": 13
         },
         {
-          "ingredient": "cb412",
+          "ingredient": "Skyrim.esm 0cb412",
           "quantity": 0
         }
       ],
@@ -1566,19 +1584,19 @@
       "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
       "ingredients": [
         {
-          "ingredient": "800e4",
+          "ingredient": "Skyrim.esm 0800e4",
           "quantity": 9
         },
         {
-          "ingredient": "5ad9d",
+          "ingredient": "Skyrim.esm 05ad9d",
           "quantity": 13
         },
         {
-          "ingredient": "3ad5b",
+          "ingredient": "Skyrim.esm 03ad5b",
           "quantity": 4
         },
         {
-          "ingredient": "cb413",
+          "ingredient": "Skyrim.esm 0cb413",
           "quantity": 0
         }
       ],

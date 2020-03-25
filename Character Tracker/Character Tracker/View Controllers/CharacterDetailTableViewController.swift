@@ -26,6 +26,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     var character: Character? {
         didSet {
             guard let character = character else { return }
+            name = character.name
             race = character.race
             female = character.female
             attributeController.fetchTempAttributes(for: character, context: CoreDataStack.shared.mainContext)
@@ -36,23 +37,33 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     
     var attributeTypeController: AttributeTypeController?
     var gameReference: GameReference?
+    var name: String?
     var race: Race?
     var female: Bool = false
     var femaleSegmentedControl: UISegmentedControl?
     var textField: UITextField?
     var editMode: Bool = false
+    var checkRace: Bool = false
     
     var cancelButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        barButton.tag = 1
+        return barButton
     }
     var editButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        barButton.tag = 2
+        return barButton
     }
     var saveButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
+        barButton.tag = 3
+        return barButton
     }
     var cancelEditButton: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+        let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
+        barButton.tag = 4
+        return barButton
     }
 
     var allSections: [String?] {
@@ -91,6 +102,14 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             moduleController.checkTempModules(againstCharacter: character, context: CoreDataStack.shared.mainContext)
         }
         tableView.reloadData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if let character = character {
+            attributeTypeSectionController?.saveTempSections(to: character)
+        }
     }
 
     //MARK: Table view data source
@@ -195,12 +214,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
                     textField = textFieldCell.textField
                     textField?.delegate = self
-
-                    if let name = textField?.text,
-                        name == "",
-                        let character = character {
-                        textField?.text = character.name
-                    }
+                    
+                    textField?.text = name
                     
                     femaleSegmentedControl = textFieldCell.femaleSegmentedControl
                     textFieldCell.delegate = self
@@ -217,8 +232,15 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 if let race = race,
                     race.managedObjectContext != nil {
                     cell.textLabel?.text = race.name
+                    checkRace = false
                 } else {
                     cell.textLabel?.text = "Select Race"
+                }
+                
+                if checkRace {
+                    cell.textLabel?.textColor = UIColor.systemRed
+                } else {
+                    cell.textLabel?.textColor = UIColor.label
                 }
                 
                 if editMode {
@@ -313,6 +335,20 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         return view
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 0,
+            !editMode {
+            return nil
+        }
+        
+        if let section = attributeTypeSectionController?.sectionToShow(indexPath.section),
+            let tempAttributes = attributeController.getTempAttributes(from: section.section) {
+            return indexPath.row == tempAttributes.count ? indexPath : nil
+        }
+        
+        return indexPath
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath(row: 0, section: 0) {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -351,28 +387,13 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
     }
     
-    private func prompt(message: String) {
-        let alertController = UIAlertController(title: "Could not save character", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+    @discardableResult private func save() -> Bool {
+        guard let game = gameReference?.game,
+            let name = name,
+            !name.isEmpty,
+            let race = race else { return false }
         
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    private func save() {
-        guard let game = gameReference?.game else { return }
-        
-        guard let name = textField?.text,
-            !name.isEmpty else {
-                prompt(message: "Please enter a character name.")
-                return
-        }
-        
-        guard let race = race else {
-            prompt(message: "Please select a race.")
-            return
-        }
-        
-        guard let selectedSegmentIndex = femaleSegmentedControl?.selectedSegmentIndex else { return }
+        guard let selectedSegmentIndex = femaleSegmentedControl?.selectedSegmentIndex else { return false }
         let female: Bool = selectedSegmentIndex == 0 ? false : true
         
         let context = CoreDataStack.shared.mainContext
@@ -382,7 +403,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             characterController?.edit(character: character, name: name, race: race, female: female, context: context)
             savedCharacter = character
         } else {
-            guard let character = characterController?.create(character: name, race: race, female: female, game: game, context: context) else { return }
+            guard let character = characterController?.create(character: name, race: race, female: female, game: game, context: context) else { return false }
             savedCharacter = character
         }
         
@@ -392,21 +413,27 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         moduleController.removeMissingTempModules(from: savedCharacter, context: context)
         moduleController.saveTempModules(to: savedCharacter, context: context)
         
-        attributeTypeSectionController?.saveTempSections(to: savedCharacter)
+        self.character = savedCharacter
         
         gameReference?.isSafeToChangeGame = true
+        return true
     }
     
     private func characterHasBeenModified() {
         gameReference?.isSafeToChangeGame = false
-        navigationItem.rightBarButtonItem = saveButton
+        
+        if navigationItem.rightBarButtonItem?.tag != 3 {
+            navigationItem.rightBarButtonItem = saveButton
+        }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = !(name?.isEmpty ?? true) && race != nil
     }
     
     //MARK: Actions
     
     @objc private func saveTapped(_ sender: UIBarButtonItem) {
         view.endEditing(true)
-        save()
+        guard save() else { return }
         
         if character == nil {
             dismiss(animated: true, completion: nil)
@@ -450,6 +477,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             vc.gameReference = gameReference
             
             if let racesVC = vc as? RacesTableViewController {
+                checkRace = true
                 racesVC.callbacks.append { race in
                     self.race = race
                     self.tableView.reloadData()
@@ -535,9 +563,19 @@ extension CharacterDetailTableViewController: UITextFieldDelegate {
         return editMode
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderText])
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.text != character?.name {
+        name = textField.text
+        
+        if name != character?.name {
             characterHasBeenModified()
+            
+            if name?.isEmpty ?? true {
+                textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemRed])
+            }
         }
     }
     
