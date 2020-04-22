@@ -92,6 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    //MARK: Watch Connectivity
+    
+    lazy private(set) var connectivityProvider = WatchConnectivityProvider(persistentContainer: CoreDataStack.shared.container)
 
 }
 

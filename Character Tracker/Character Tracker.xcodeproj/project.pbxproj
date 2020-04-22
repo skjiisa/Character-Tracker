@@ -60,6 +60,10 @@
 		59EEABBA2450EDFC00DDF1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABB92450EDFC00DDF1AF /* Assets.xcassets */; };
 		59EEABBD2450EDFC00DDF1AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABBC2450EDFC00DDF1AF /* Preview Assets.xcassets */; };
 		59EEABC12450EDFC00DDF1AF /* Character Tracker Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 59EEABA22450EDF900DDF1AF /* Character Tracker Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59EEABCC2450EEA000DDF1AF /* PhoneConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABCB2450EEA000DDF1AF /* PhoneConnectivityProvider.swift */; };
+		59EEABCE2450EFE600DDF1AF /* WatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABCD2450EFE600DDF1AF /* WatchCommunication.swift */; };
+		59EEABCF2450F00000DDF1AF /* WatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABCD2450EFE600DDF1AF /* WatchCommunication.swift */; };
+		59EEABD12450F19900DDF1AF /* WatchConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABD02450F19900DDF1AF /* WatchConnectivityProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +165,9 @@
 		59EEABB92450EDFC00DDF1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59EEABBC2450EDFC00DDF1AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		59EEABBE2450EDFC00DDF1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59EEABCB2450EEA000DDF1AF /* PhoneConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnectivityProvider.swift; sourceTree = "<group>"; };
+		59EEABCD2450EFE600DDF1AF /* WatchCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCommunication.swift; sourceTree = "<group>"; };
+		59EEABD02450F19900DDF1AF /* WatchConnectivityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +267,8 @@
 				59BCF978237A5968000E90B7 /* Section.swift */,
 				59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */,
 				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
+				59EEABCD2450EFE600DDF1AF /* WatchCommunication.swift */,
+				59EEABD02450F19900DDF1AF /* WatchConnectivityProvider.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				59EEABB72450EDFB00DDF1AF /* ExtensionDelegate.swift */,
+				59EEABCB2450EEA000DDF1AF /* PhoneConnectivityProvider.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -488,6 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59EEABCE2450EFE600DDF1AF /* WatchCommunication.swift in Sources */,
 				59BCF979237A5968000E90B7 /* Section.swift in Sources */,
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
@@ -502,6 +513,7 @@
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
+				59EEABD12450F19900DDF1AF /* WatchConnectivityProvider.swift in Sources */,
 				59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
@@ -534,8 +546,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59EEABCF2450F00000DDF1AF /* WatchCommunication.swift in Sources */,
 				59EEABB62450EDFB00DDF1AF /* HostingController.swift in Sources */,
 				59EEABB42450EDFA00DDF1AF /* ContentView.swift in Sources */,
+				59EEABCC2450EEA000DDF1AF /* PhoneConnectivityProvider.swift in Sources */,
 				59EEABB82450EDFB00DDF1AF /* ExtensionDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

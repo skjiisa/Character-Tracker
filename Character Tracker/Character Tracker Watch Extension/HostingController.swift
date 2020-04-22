@@ -11,7 +11,15 @@ import Foundation
 import SwiftUI
 
 class HostingController: WKHostingController<ContentView> {
+    lazy private(set) var connectivityProvider: PhoneConnectivityProvider = {
+        let provider = PhoneConnectivityProvider()
+        provider.connect()
+        return provider
+    }()
+    
+    private lazy var characterModel = CharacterList(connectivityProvider: connectivityProvider)
+    
     override var body: ContentView {
-        return ContentView()
+        return ContentView(viewModel: characterModel)
     }
 }
