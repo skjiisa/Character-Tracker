@@ -51,7 +51,58 @@
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
+		59EEABA62450EDF900DDF1AF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABA42450EDF900DDF1AF /* Interface.storyboard */; };
+		59EEABA82450EDFA00DDF1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABA72450EDFA00DDF1AF /* Assets.xcassets */; };
+		59EEABAF2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 59EEABAE2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59EEABB42450EDFA00DDF1AF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABB32450EDFA00DDF1AF /* ContentView.swift */; };
+		59EEABB62450EDFB00DDF1AF /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABB52450EDFB00DDF1AF /* HostingController.swift */; };
+		59EEABB82450EDFB00DDF1AF /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EEABB72450EDFB00DDF1AF /* ExtensionDelegate.swift */; };
+		59EEABBA2450EDFC00DDF1AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABB92450EDFC00DDF1AF /* Assets.xcassets */; };
+		59EEABBD2450EDFC00DDF1AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EEABBC2450EDFC00DDF1AF /* Preview Assets.xcassets */; };
+		59EEABC12450EDFC00DDF1AF /* Character Tracker Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 59EEABA22450EDF900DDF1AF /* Character Tracker Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59EEABB02450EDFA00DDF1AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 595F770F236A55EF00151209 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59EEABAD2450EDFA00DDF1AF;
+			remoteInfo = "Character Tracker Watch Extension";
+		};
+		59EEABBF2450EDFC00DDF1AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 595F770F236A55EF00151209 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59EEABA12450EDF900DDF1AF;
+			remoteInfo = "Character Tracker Watch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59EEABC22450EDFC00DDF1AF /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				59EEABC12450EDFC00DDF1AF /* Character Tracker Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59EEABC52450EDFC00DDF1AF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				59EEABAF2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +150,17 @@
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		59EEABA22450EDF900DDF1AF /* Character Tracker Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59EEABA52450EDF900DDF1AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		59EEABA72450EDFA00DDF1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59EEABA92450EDFA00DDF1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59EEABAE2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Character Tracker Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59EEABB32450EDFA00DDF1AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		59EEABB52450EDFB00DDF1AF /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
+		59EEABB72450EDFB00DDF1AF /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		59EEABB92450EDFC00DDF1AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59EEABBC2450EDFC00DDF1AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		59EEABBE2450EDFC00DDF1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +169,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59EEABAB2450EDFA00DDF1AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +208,8 @@
 			isa = PBXGroup;
 			children = (
 				595F7719236A55EF00151209 /* Character Tracker */,
+				59EEABA32450EDF900DDF1AF /* Character Tracker Watch */,
+				59EEABB22450EDFA00DDF1AF /* Character Tracker Watch Extension */,
 				595F7718236A55EF00151209 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				595F7717236A55EF00151209 /* Character Tracker.app */,
+				59EEABA22450EDF900DDF1AF /* Character Tracker Watch.app */,
+				59EEABAE2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +309,45 @@
 			path = "Model Controllers";
 			sourceTree = "<group>";
 		};
+		59EEABA32450EDF900DDF1AF /* Character Tracker Watch */ = {
+			isa = PBXGroup;
+			children = (
+				59EEABA42450EDF900DDF1AF /* Interface.storyboard */,
+				59EEABA72450EDFA00DDF1AF /* Assets.xcassets */,
+				59EEABA92450EDFA00DDF1AF /* Info.plist */,
+			);
+			path = "Character Tracker Watch";
+			sourceTree = "<group>";
+		};
+		59EEABB22450EDFA00DDF1AF /* Character Tracker Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59EEABCA2450EE5100DDF1AF /* Application */,
+				59EEABB32450EDFA00DDF1AF /* ContentView.swift */,
+				59EEABB52450EDFB00DDF1AF /* HostingController.swift */,
+				59EEABB92450EDFC00DDF1AF /* Assets.xcassets */,
+				59EEABBE2450EDFC00DDF1AF /* Info.plist */,
+				59EEABBB2450EDFC00DDF1AF /* Preview Content */,
+			);
+			path = "Character Tracker Watch Extension";
+			sourceTree = "<group>";
+		};
+		59EEABBB2450EDFC00DDF1AF /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				59EEABBC2450EDFC00DDF1AF /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		59EEABCA2450EE5100DDF1AF /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				59EEABB72450EDFB00DDF1AF /* ExtensionDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -246,10 +358,12 @@
 				595F7713236A55EF00151209 /* Sources */,
 				595F7714236A55EF00151209 /* Frameworks */,
 				595F7715236A55EF00151209 /* Resources */,
+				59EEABC22450EDFC00DDF1AF /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				59EEABC02450EDFC00DDF1AF /* PBXTargetDependency */,
 			);
 			name = "Character Tracker";
 			packageProductDependencies = (
@@ -259,18 +373,58 @@
 			productReference = 595F7717236A55EF00151209 /* Character Tracker.app */;
 			productType = "com.apple.product-type.application";
 		};
+		59EEABA12450EDF900DDF1AF /* Character Tracker Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59EEABC92450EDFC00DDF1AF /* Build configuration list for PBXNativeTarget "Character Tracker Watch" */;
+			buildPhases = (
+				59EEABA02450EDF900DDF1AF /* Resources */,
+				59EEABC52450EDFC00DDF1AF /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59EEABB12450EDFA00DDF1AF /* PBXTargetDependency */,
+			);
+			name = "Character Tracker Watch";
+			productName = "Character Tracker Watch";
+			productReference = 59EEABA22450EDF900DDF1AF /* Character Tracker Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		59EEABAD2450EDFA00DDF1AF /* Character Tracker Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59EEABC82450EDFC00DDF1AF /* Build configuration list for PBXNativeTarget "Character Tracker Watch Extension" */;
+			buildPhases = (
+				59EEABAA2450EDFA00DDF1AF /* Sources */,
+				59EEABAB2450EDFA00DDF1AF /* Frameworks */,
+				59EEABAC2450EDFA00DDF1AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Character Tracker Watch Extension";
+			productName = "Character Tracker Watch Extension";
+			productReference = 59EEABAE2450EDFA00DDF1AF /* Character Tracker Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		595F770F236A55EF00151209 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Isaac Lyons";
 				TargetAttributes = {
 					595F7716236A55EF00151209 = {
 						CreatedOnToolsVersion = 11.1;
+					};
+					59EEABA12450EDF900DDF1AF = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					59EEABAD2450EDFA00DDF1AF = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
 			};
@@ -291,6 +445,8 @@
 			projectRoot = "";
 			targets = (
 				595F7716236A55EF00151209 /* Character Tracker */,
+				59EEABA12450EDF900DDF1AF /* Character Tracker Watch */,
+				59EEABAD2450EDFA00DDF1AF /* Character Tracker Watch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -304,6 +460,24 @@
 				595F7727236A55F300151209 /* Assets.xcassets in Resources */,
 				595F7722236A55EF00151209 /* Main.storyboard in Resources */,
 				59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59EEABA02450EDF900DDF1AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59EEABA82450EDFA00DDF1AF /* Assets.xcassets in Resources */,
+				59EEABA62450EDF900DDF1AF /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59EEABAC2450EDFA00DDF1AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59EEABBD2450EDFC00DDF1AF /* Preview Assets.xcassets in Resources */,
+				59EEABBA2450EDFC00DDF1AF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +530,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59EEABAA2450EDFA00DDF1AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59EEABB62450EDFB00DDF1AF /* HostingController.swift in Sources */,
+				59EEABB42450EDFA00DDF1AF /* ContentView.swift in Sources */,
+				59EEABB82450EDFB00DDF1AF /* ExtensionDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59EEABB12450EDFA00DDF1AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59EEABAD2450EDFA00DDF1AF /* Character Tracker Watch Extension */;
+			targetProxy = 59EEABB02450EDFA00DDF1AF /* PBXContainerItemProxy */;
+		};
+		59EEABC02450EDFC00DDF1AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59EEABA12450EDF900DDF1AF /* Character Tracker Watch */;
+			targetProxy = 59EEABBF2450EDFC00DDF1AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		595F7720236A55EF00151209 /* Main.storyboard */ = {
@@ -373,6 +570,14 @@
 				595F7729236A55F300151209 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		59EEABA42450EDF900DDF1AF /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59EEABA52450EDF900DDF1AF /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -530,6 +735,92 @@
 			};
 			name = Release;
 		};
+		59EEABC32450EDFC00DDF1AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A4525544Q4;
+				IBSC_MODULE = Character_Tracker_Watch_Extension;
+				INFOPLIST_FILE = "Character Tracker Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "vc.isv.Character-Tracker.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Debug;
+		};
+		59EEABC42450EDFC00DDF1AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A4525544Q4;
+				IBSC_MODULE = Character_Tracker_Watch_Extension;
+				INFOPLIST_FILE = "Character Tracker Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "vc.isv.Character-Tracker.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Release;
+		};
+		59EEABC62450EDFC00DDF1AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Character Tracker Watch Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = A4525544Q4;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Character Tracker Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "vc.isv.Character-Tracker.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Debug;
+		};
+		59EEABC72450EDFC00DDF1AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Character Tracker Watch Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = A4525544Q4;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Character Tracker Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "vc.isv.Character-Tracker.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -547,6 +838,24 @@
 			buildConfigurations = (
 				595F772F236A55F300151209 /* Debug */,
 				595F7730236A55F300151209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59EEABC82450EDFC00DDF1AF /* Build configuration list for PBXNativeTarget "Character Tracker Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59EEABC62450EDFC00DDF1AF /* Debug */,
+				59EEABC72450EDFC00DDF1AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59EEABC92450EDFC00DDF1AF /* Build configuration list for PBXNativeTarget "Character Tracker Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59EEABC32450EDFC00DDF1AF /* Debug */,
+				59EEABC42450EDFC00DDF1AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
