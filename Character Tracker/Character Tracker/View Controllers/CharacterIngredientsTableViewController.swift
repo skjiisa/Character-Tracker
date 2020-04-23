@@ -44,41 +44,7 @@ class CharacterIngredientsTableViewController: UITableViewController, CharacterT
         let uncheckedTempModules = moduleController?.tempEntities.filter({ $0.value == false && $0.entity.type == moduleType }) ?? []
         let uncheckedModules = uncheckedTempModules.map({ $0.entity })
         
-        modules = uncheckedModules.sorted(by: { module1, module2 -> Bool in
-            // Modules with no level will be sorted to the end of the list
-            // Modules with no level are stored as level 0
-            // In order to sort level 0 modules to the end of the list, modules with level 0 are tested as if they are 1 level higher than the other module
-            // If both modules are the same level (including if they're both 0), they will be sorted by name
-            
-            let module1Level: Int16
-            
-            if module1.level == 0 {
-                module1Level = module2.level + 1
-            } else {
-                module1Level = module1.level
-            }
-            
-            let module2Level: Int16
-            
-            if module2.level == 0 {
-                module2Level = module1.level + 1
-            } else {
-                module2Level = module2.level
-            }
-            
-            if module1Level > module2Level {
-                return false
-            } else if module2Level > module1Level {
-                return true
-            }
-            
-            if let module1Name = module1.name,
-                let module2Name = module2.name {
-                return module1Name < module2Name
-            }
-            
-            return true
-        })
+        modules = uncheckedModules.sortedByLevel()
     }
 
     // MARK: - Table view data source
