@@ -48,7 +48,7 @@ class ModuleRepresentation: NSObject, Codable, Identifiable {
         
         self.name = name
         self.level = module.level
-        self.ingredients = ingredients.compactMap { IngredientRepresentation($0) }
+        self.ingredients = ingredients.sorted(by: { $0.quantity < $1.quantity }).compactMap { IngredientRepresentation($0) }
     }
 }
 
