@@ -13,6 +13,7 @@ final class PhoneConnectivityProvider: NSObject {
     //MARK: Properties
     
     private let session: WCSession
+    private let decoder = JSONDecoder()
     
     init(session: WCSession = .default) {
         self.session = session
@@ -41,11 +42,19 @@ final class PhoneConnectivityProvider: NSObject {
         print("Requesting characters from phone")
         let message = [WatchCommunication.requestKey: WatchCommunication.Content.allCharacters.rawValue]
         session.sendMessage(message, replyHandler: { (payload: [String : Any]) in
-            let characters = payload[WatchCommunication.responseKey] as? [String]
-            print("Received \(characters?.count ?? 0) characters")
+            guard let charactersDictionary = payload[WatchCommunication.responseKey] as? [[String: Any]] else { return NSLog("Could not decode response") }
+            print("Received \(charactersDictionary.count) characters")
             
-            DispatchQueue.main.async {
-                completion(characters)
+            do {
+                let data = try JSONSerialization.data(withJSONObject: charactersDictionary, options: .fragmentsAllowed)
+                let characters = try self.decoder.decode([CharacterRepresentation].self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(characters.map({ $0.name }))
+                }
+            } catch {
+                NSLog("\(error)")
+                completion(nil)
             }
         }) { error in
             NSLog("\(error)")

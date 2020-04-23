@@ -15,6 +15,7 @@ final class WatchConnectivityProvider: NSObject {
     
     private let persistentContainer: NSPersistentContainer
     private let session: WCSession
+    private let encoder = JSONEncoder()
     
     init(session: WCSession = .default, persistentContainer: NSPersistentContainer) {
         self.persistentContainer = persistentContainer
@@ -57,8 +58,12 @@ extension WatchConnectivityProvider: WCSessionDelegate {
                 do {
                     let fetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
                     let allCharacters = try moc.fetch(fetchRequest)
-                    let allNames = allCharacters.compactMap { $0.name }
-                    replyHandler([WatchCommunication.responseKey: allNames])
+                    let characterRepresentations = allCharacters.compactMap { CharacterRepresentation($0) }
+                    
+                    let json = try self.encoder.encode(characterRepresentations)
+                    let dictionary = try JSONSerialization.jsonObject(with: json, options: .allowFragments)
+                    
+                    replyHandler([WatchCommunication.responseKey: dictionary])
                 } catch {
                     NSLog("\(error)")
                     replyHandler([:])
