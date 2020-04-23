@@ -8,44 +8,62 @@
 
 import Foundation
 
-class CharacterRepresentation: NSObject, Codable {
+class CharacterRepresentation: NSObject, Codable, Identifiable {
     var name: String
     var modified: Date
     var moduleIngredients: [ModuleRepresentation]
     
+    init(name: String, modules: [ModuleRepresentation]) {
+        self.name = name
+        self.modified = Date()
+        self.moduleIngredients = modules
+    }
+    
     init?(_ character: Character) {
         guard let name = character.name,
-            let modules = character.modules as? Set<Module> else { return nil }
+            let modules = character.modules as? Set<CharacterModule> else { return nil }
         
         self.name = name
         self.modified = character.modified ?? Date()
         
         self.moduleIngredients = modules.sortedByLevel().compactMap({ModuleRepresentation($0)})
     }
+}
+
+class ModuleRepresentation: NSObject, Codable, Identifiable {
+    var name: String
+    var level: Int16
+    var ingredients: [IngredientRepresentation]
     
-    class ModuleRepresentation: NSObject, Codable {
-        var name: String
-        var level: Int16
-        var ingredients: [IngredientRepresentation]
+    init(name: String, level: Int16 = 0, ingredients: [IngredientRepresentation]) {
+        self.name = name
+        self.level = level
+        self.ingredients = ingredients
+    }
+    
+    init?(_ characterModule: CharacterModule) {
+        guard let module = characterModule.module,
+            let name = module.name,
+            let ingredients = module.ingredients as? Set<ModuleIngredient> else { return nil }
         
-        init?(_ module: Module) {
-            guard let name = module.name,
-                let ingredients = module.ingredients as? Set<ModuleIngredient> else { return nil }
-            
-            self.name = name
-            self.level = module.level
-            self.ingredients = ingredients.compactMap { IngredientRepresentation($0) }
-        }
-        
-        class IngredientRepresentation: NSObject, Codable {
-            var name: String
-            var quantity: Int16
-            
-            init?(_ moduleIngredient: ModuleIngredient) {
-                guard let name = moduleIngredient.ingredient?.name else { return nil }
-                self.name = name
-                self.quantity = moduleIngredient.quantity
-            }
-        }
+        self.name = name
+        self.level = module.level
+        self.ingredients = ingredients.compactMap { IngredientRepresentation($0) }
+    }
+}
+
+class IngredientRepresentation: NSObject, Codable, Identifiable {
+    var name: String
+    var quantity: Int16
+    
+    init(name: String, quantity: Int16) {
+        self.name = name
+        self.quantity = quantity
+    }
+    
+    init?(_ moduleIngredient: ModuleIngredient) {
+        guard let name = moduleIngredient.ingredient?.name else { return nil }
+        self.name = name
+        self.quantity = moduleIngredient.quantity
     }
 }

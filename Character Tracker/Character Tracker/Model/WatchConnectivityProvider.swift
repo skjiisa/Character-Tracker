@@ -35,12 +35,6 @@ final class WatchConnectivityProvider: NSObject {
         session.activate()
     }
     
-    //MARK: Sending data to watch
-    
-    func noteCharactersDidChange() {
-        
-    }
-    
 }
 
 //MARK: Watch Connectivity session delegate

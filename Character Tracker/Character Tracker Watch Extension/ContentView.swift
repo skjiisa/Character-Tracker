@@ -9,54 +9,40 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel: CharacterList
+    @ObservedObject var characterList: CharacterList
     
     var body: some View {
-        VStack{
+        VStack {
             List {
-                ForEach(viewModel.characters, id: \.self) { character in
-                    Text(character)
+                ForEach(characterList.characters) { character in
+                    NavigationLink(destination: CharacterIngredientsView(character: character)) {
+                        Text(character.name)
+                    }
                 }
                 
                 Button(action: {
-                    self.viewModel.refresh()
+                    self.characterList.refresh()
                 }) {
                     Text("Refresh characters")
                 }
             }
             
-            if viewModel.characters.count == 0 {
+            if characterList.characters.count == 0 {
                 Text("Loading characters...")
             }
-        }.onAppear {
-            self.viewModel.refresh()
-        }
-    }
-}
-
-final class CharacterList: ObservableObject {
-    @Published private(set) var characters: [String]
-    
-    private let connectivityProvider: PhoneConnectivityProvider
-    
-    init(characters: [String] = [], connectivityProvider: PhoneConnectivityProvider) {
-        self.characters = characters
-        self.connectivityProvider = connectivityProvider
-        refresh()
-    }
-    
-    func refresh() {
-        connectivityProvider.refreshAllCharacters { [weak self] (characters: [String]?) in
-            guard let characters = characters else { return }
-            self?.characters = characters
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let previewCharacters = ["Ja'Zakajirr", "Geetum-Za", "Malula", "Candella"]
+        let previewCharacters = [
+            CharacterRepresentation(name: "Ja'Zakajirr", modules: []),
+            CharacterRepresentation(name: "Geetum-Za", modules: []),
+            CharacterRepresentation(name: "Malula", modules: []),
+            CharacterRepresentation(name: "Candella", modules: [])
+        ]
         let characterList = CharacterList(characters: previewCharacters, connectivityProvider: PhoneConnectivityProvider())
-        return ContentView(viewModel: characterList)
+        return ContentView(characterList: characterList)
     }
 }

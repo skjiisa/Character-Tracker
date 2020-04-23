@@ -20,6 +20,6 @@ class HostingController: WKHostingController<ContentView> {
     private lazy var characterModel = CharacterList(connectivityProvider: connectivityProvider)
     
     override var body: ContentView {
-        return ContentView(viewModel: characterModel)
+        ContentView(characterList: characterModel)
     }
 }

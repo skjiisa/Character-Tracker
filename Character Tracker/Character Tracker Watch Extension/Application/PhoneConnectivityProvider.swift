@@ -8,12 +8,18 @@
 
 import WatchConnectivity
 
+protocol PhoneConnectivityProviderDelegate {
+    func refresh()
+}
+
 final class PhoneConnectivityProvider: NSObject {
     
     //MARK: Properties
     
     private let session: WCSession
     private let decoder = JSONDecoder()
+    
+    var delegate: PhoneConnectivityProviderDelegate?
     
     init(session: WCSession = .default) {
         self.session = session
@@ -34,7 +40,7 @@ final class PhoneConnectivityProvider: NSObject {
     
     //MARK: Sending data to watch
     
-    func refreshAllCharacters(completion: @escaping ([String]?) -> Void) {
+    func refreshAllCharacters(completion: @escaping ([CharacterRepresentation]?) -> Void) {
         guard session.activationState == .activated else {
             return NSLog("Session is not active")
         }
@@ -50,7 +56,7 @@ final class PhoneConnectivityProvider: NSObject {
                 let characters = try self.decoder.decode([CharacterRepresentation].self, from: data)
                 
                 DispatchQueue.main.async {
-                    completion(characters.map({ $0.name }))
+                    completion(characters)
                 }
             } catch {
                 NSLog("\(error)")
@@ -68,5 +74,6 @@ final class PhoneConnectivityProvider: NSObject {
 extension PhoneConnectivityProvider: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("Session activation complete")
+        delegate?.refresh()
     }
 }
