@@ -26,10 +26,6 @@ struct ContentView: View {
                     Text("Refresh characters")
                 }
             }
-            
-            if characterList.characters.count == 0 {
-                Text("Loading characters...")
-            }
         }
     }
 }

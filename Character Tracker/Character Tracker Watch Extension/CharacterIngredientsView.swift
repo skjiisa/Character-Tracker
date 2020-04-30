@@ -12,19 +12,25 @@ struct CharacterIngredientsView: View {
     var character: CharacterRepresentation
     
     var body: some View {
-        List {
-            ForEach(character.moduleIngredients) { moduleRepresentation in
-                Section(header: Text("\(moduleRepresentation.level > 0 ? "Level \(moduleRepresentation.level):" : "") \(moduleRepresentation.name)")) {
-                    ForEach(moduleRepresentation.ingredients) { ingredientRepresentation in
-                        HStack {
-                            Text(ingredientRepresentation.name)
-                            if ingredientRepresentation.quantity > 0 {
-                                Spacer()
-                                Text("\(ingredientRepresentation.quantity)")
+        Group {
+            if character.moduleIngredients.flatMap({ $0.ingredients }).count > 0 {
+                List {
+                    ForEach(character.moduleIngredients) { moduleRepresentation in
+                        Section(header: Text("\(moduleRepresentation.level > 0 ? "Level \(moduleRepresentation.level):" : "") \(moduleRepresentation.name)")) {
+                            ForEach(moduleRepresentation.ingredients) { ingredientRepresentation in
+                                HStack {
+                                    Text(ingredientRepresentation.name)
+                                    if ingredientRepresentation.quantity > 0 {
+                                        Spacer()
+                                        Text("\(ingredientRepresentation.quantity)")
+                                    }
+                                }
                             }
                         }
                     }
                 }
+            } else {
+                Text("No modules with crafting for \(character.name)")
             }
         }
     }
@@ -35,9 +41,10 @@ struct CharacterIngredientsView_Previews: PreviewProvider {
         CharacterIngredientsView(character:
             CharacterRepresentation(name: "Ja'Zakajirr", modules: [
                 ModuleRepresentation(name: "Leather Armor", ingredients: [
-                IngredientRepresentation(name: "Leather Strips", quantity: 8),
+                    IngredientRepresentation(name: "Leather Strips", quantity: 8),
                     IngredientRepresentation(name: "Leather", quantity: 9)
-                ])
+                    ]
+                )
             ]))
     }
 }
