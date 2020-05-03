@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol CharacterTrackerViewController: UIViewController {
     var gameReference: GameReference? { get set }
@@ -42,17 +43,12 @@ class TabBarController: UITabBarController {
                 }
             }
         }
+        
+        let modsView = ModsView().environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+        let modsViewHost = UIHostingController(rootView: modsView)
+        modsViewHost.tabBarItem.title = "Mods"
+        modsViewHost.tabBarItem.image = UIImage(systemName: "circle.grid.hex.fill")
+        viewControllers?.insert(modsViewHost, at: 1)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

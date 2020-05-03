@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4B245F2FEE0072E8EA /* ModsView.swift */; };
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59019C4B245F2FEE0072E8EA /* ModsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsView.swift; sourceTree = "<group>"; };
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
 		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
@@ -113,6 +115,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59019C4A245F2FA30072E8EA /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
 		592F0D8923DAB28400F06F75 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +172,7 @@
 				59BB3D1E236AA19800A4A14E /* View Controllers */,
 				594D7ABD2371210D00F0795D /* Views */,
 				595F7731236A561800151209 /* Storyboards */,
+				59019C4A245F2FA30072E8EA /* SwiftUI Views */,
 				59B3A774236B9EE800B3D33B /* Resources */,
 				595F772B236A55F300151209 /* Info.plist */,
 			);
@@ -321,6 +332,7 @@
 				59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
+				59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
 				59850F46237D0FD400286067 /* LevelTableViewCell.swift in Sources */,
 				594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */,
