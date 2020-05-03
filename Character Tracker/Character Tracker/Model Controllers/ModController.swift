@@ -17,6 +17,11 @@ class ModController: ObservableObject {
         return mod
     }
     
+    func update(mod: Mod, name: String, context: NSManagedObjectContext) {
+        mod.name = name
+        CoreDataStack.shared.save(context: context)
+    }
+    
     func delete(mod: Mod, context: NSManagedObjectContext) {
         // delete relationship objects
         context.delete(mod)

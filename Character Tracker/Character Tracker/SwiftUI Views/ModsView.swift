@@ -29,7 +29,9 @@ struct ModsView: View {
         NavigationView {
             List {
                 ForEach(mods, id: \.self) { mod in
-                    Text(mod.name ?? "")
+                    NavigationLink(destination: ModDetailView(mod: mod)) {
+                        Text(mod.name ?? "")
+                    }
                 }
                 .onDelete { indexSet in
                     let mod = self.mods[indexSet.first!]

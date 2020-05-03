@@ -32,7 +32,12 @@ struct ModDetailView: View {
             SwiftUI.Section {
                 Button("Save") {
                     guard !self.name.isEmpty else { return }
-                    self.modController.create(mod: self.name, context: self.moc)
+                    
+                    if let mod = self.mod {
+                        self.modController.update(mod: mod, name: self.name, context: self.moc)
+                    } else {
+                        self.modController.create(mod: self.name, context: self.moc)
+                    }
                     
                     self.presentationMode.wrappedValue.dismiss()
                 }
