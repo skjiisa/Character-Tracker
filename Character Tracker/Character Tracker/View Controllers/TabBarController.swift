@@ -18,6 +18,7 @@ class TabBarController: UITabBarController {
     let gameReference = GameReference()
     let attributeTypeController = AttributeTypeController()
     let moduleTypeController = ModuleTypeController()
+    let modController = ModController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,9 @@ class TabBarController: UITabBarController {
             }
         }
         
-        let modsView = ModsView().environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+        let modsView = ModsView()
+            .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+            .environmentObject(modController)
         let modsViewHost = UIHostingController(rootView: modsView)
         modsViewHost.tabBarItem.title = "Mods"
         modsViewHost.tabBarItem.image = UIImage(systemName: "circle.grid.hex.fill")
