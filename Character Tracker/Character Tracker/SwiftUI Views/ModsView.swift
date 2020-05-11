@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ModsView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: false)]) var mods: FetchedResults<Mod>
+    @FetchRequest(entity: Character_Tracker.Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: false)]) var mods: FetchedResults<Mod>
     
     @EnvironmentObject var modController: ModController
     
@@ -25,12 +25,25 @@ struct ModsView: View {
         }
     }
     
+    var deleteAllButton: some View {
+        Button(action: {
+            for mod in self.mods {
+                self.moc.delete(mod)
+            }
+        }) {
+            Text("Delete all")
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(mods, id: \.self) { mod in
-                    NavigationLink(destination: ModDetailView(mod: mod)) {
-                        Text(mod.name ?? "")
+                    NavigationLink(destination:
+                        ModDetailView(mod: mod)
+                            .environment(\.managedObjectContext, self.moc)
+                            .environmentObject(self.modController)) {
+                                Text(mod.name ?? "")
                     }
                 }
                 .onDelete { indexSet in
@@ -39,7 +52,7 @@ struct ModsView: View {
                 }
             }
             .navigationBarTitle("Mods")
-            .navigationBarItems(trailing: newModButton)
+            .navigationBarItems(leading: deleteAllButton, trailing: newModButton)
             .sheet(isPresented: $showingNewMod) {
                 NavigationView {
                     ModDetailView()

@@ -51,6 +51,7 @@
 		59BCF979237A5968000E90B7 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF978237A5968000E90B7 /* Section.swift */; };
 		59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */; };
 		59C20BFE245F3AE30003FDC7 /* ModController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C20BFD245F3AE30003FDC7 /* ModController.swift */; };
+		59C20C00245F57CE0003FDC7 /* ModulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C20BFF245F57CE0003FDC7 /* ModulesView.swift */; };
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
@@ -102,6 +103,7 @@
 		59BCF978237A5968000E90B7 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Section.swift"; sourceTree = "<group>"; };
 		59C20BFD245F3AE30003FDC7 /* ModController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModController.swift; sourceTree = "<group>"; };
+		59C20BFF245F57CE0003FDC7 /* ModulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesView.swift; sourceTree = "<group>"; };
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
 				59019C4D245F35760072E8EA /* ModDetailView.swift */,
+				59C20BFF245F57CE0003FDC7 /* ModulesView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
+				59C20C00245F57CE0003FDC7 /* ModulesView.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
 				59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */,

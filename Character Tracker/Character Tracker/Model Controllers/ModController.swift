@@ -10,7 +10,7 @@ import CoreData
 
 class ModController: ObservableObject {
     
-    @discardableResult func create(mod name: String, context: NSManagedObjectContext) -> Mod {
+    @discardableResult func create(mod name: String? = nil, context: NSManagedObjectContext) -> Mod {
         let mod = Mod(context: context)
         mod.name = name
         CoreDataStack.shared.save(context: context)
@@ -25,6 +25,12 @@ class ModController: ObservableObject {
     func delete(mod: Mod, context: NSManagedObjectContext) {
         // delete relationship objects
         context.delete(mod)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func add(_ module: Module, to mod: Mod, context: NSManagedObjectContext) {
+        let modules = mod.mutableSetValue(forKey: "modules")
+        modules.add(module)
         CoreDataStack.shared.save(context: context)
     }
     
