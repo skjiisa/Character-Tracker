@@ -2,6 +2,8 @@
 
 Elder Scrolls character tracker for iOS
 
+[Download on the App Store](https://apps.apple.com/us/app/character-tracker-for-skyrim/id1500330869)
+
 ## Overview
 
 Character Tracker is an iOS app for keeping track of characters and other information for Skyrim or other games. This app is for players who might lose track of their many characters. You'll never again have to ask yourself questions like "Was I going to do the Thieve's Guild quest line on my assassin or my archer?" or "Was I going to bother with Enchanting on my fighter?"
