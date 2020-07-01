@@ -405,7 +405,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if indexPath.row < ingredientController.tempEntities.count {
                 let ingredient = ingredientController.tempEntities[indexPath.row].entity
                 tableView.deselectRow(at: indexPath, animated: true)
-                prompt(title: ingredient.name ?? "Ingredient", message: ingredient.id ?? "")
+                prompt(title: ingredient.name ?? "Ingredient", message: "Plugin and FormID:\n\(ingredient.id ?? "")")
             }
         default:
             break

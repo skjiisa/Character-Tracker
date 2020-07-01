@@ -10,6 +10,10 @@ import UIKit
 
 class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var sectionsButtonView: UIView!
+    
     //MARK: Properties
     
     let attributeController = AttributeController()
@@ -81,6 +85,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         return sections
     }
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +95,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.rightBarButtonItem?.isEnabled = false
+            sectionsButtonView.isHidden = true
+            sectionsButtonView.isUserInteractionEnabled = false
         } else {
             navigationItem.rightBarButtonItem = editButton
         }
@@ -125,12 +133,29 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         guard let tempSection = attributeTypeSectionController?.sectionToShow(section) else {
             // Module options section
-            if let tempSection = attributeTypeSectionController?.sectionToShow(section - 1),
-                tempSection.collapsed {
-                return 0
+            if let tempSection = attributeTypeSectionController?.sectionToShow(section - 1) {
+                if tempSection.collapsed {
+                    return 0
+                }
+                
+                if editMode {
+                    return 2
+                }
+                
+                if let tempModules = moduleController.getTempModules(from: tempSection.section) {
+                    if tempModules.firstIndex(where: { $0.ingredients?.count ?? 0 > 0 }) != nil {
+                        // If there is at least one module that has ingredients,
+                        // show the "View Required Ingredients" cell
+                        return 1
+                    }
+                    
+                    // There are no modules with ingredients
+                    return 0
+                }
             }
             
-            return 1 + editMode.int
+            // Hopefully this never gets called
+            return 0
         }
         
         if tempSection.collapsed {
@@ -413,9 +438,12 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         moduleController.removeMissingTempModules(from: savedCharacter, context: context)
         moduleController.saveTempModules(to: savedCharacter, context: context)
         
-        self.character = savedCharacter
-        
         gameReference?.isSafeToChangeGame = true
+        
+        if character == nil {
+            dismiss(animated: true, completion: nil)
+        }
+        
         return true
     }
     

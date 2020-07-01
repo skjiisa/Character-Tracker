@@ -25,6 +25,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     var showAll = false
     var callbacks: [( (Attribute) -> Void )] = []
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     var typeName: String {
         if let name = attributeType?.name {
             return name.capitalized
@@ -41,31 +43,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
-        guard let game = gameReference?.game else { return nil }
-        
-        if !showAll {
-            var predicateString = "ANY games == %@"
-            var argumentsList: [Any] = [game]
-            
-            if let type = attributeType {
-                predicateString += " AND type == %@"
-                argumentsList.append(type)
-            }
-            
-            fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentsList)
-        } else {
-            if let gameAttributes = game.attributes {
-                var predicateString = "NOT (SELF in %@)"
-                var argumentsList: [Any] = [gameAttributes]
-                
-                if let type = attributeType {
-                    predicateString += " AND type == %@"
-                    argumentsList.append(type)
-                }
-                
-                fetchRequest.predicate = NSPredicate(format: predicateString, argumentArray: argumentsList)
-            }
-        }
+        fetchRequest.predicate = frcPredicate()
 
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
@@ -103,6 +81,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         return frc
     }()
     
+    //MARK: View loading
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,6 +93,12 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
             addAttributeView.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 
     // MARK: - Table view data source
@@ -149,6 +135,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         if checkedAttributes.contains(attribute) {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
 
         return cell
@@ -169,30 +157,62 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         }
     }
     
+    //MARK: Table view delegate
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
         
         choose(attribute: attribute)
         
         if !showAll {
-            tableView.deselectRow(at: indexPath, animated: true)
+            let cell = tableView.cellForRow(at: indexPath)
             
-            if let cell = tableView.cellForRow(at: indexPath) {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+            if let index = checkedAttributes.firstIndex(of: attribute) {
+                checkedAttributes.remove(at: index)
+                cell?.accessoryType = .none
+            } else {
+                checkedAttributes.append(attribute)
+                cell?.accessoryType = .checkmark
             }
         }
     }
     
     //MARK: Private
     
-    func choose(attribute: Attribute) {
+    private func choose(attribute: Attribute) {
         for callback in callbacks {
             callback(attribute)
         }
+    }
+    
+    private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
+        guard let game = gameReference?.game else { return nil }
+        
+        var predicates: [NSPredicate] = []
+        
+        if !showAll {
+            predicates.append(NSPredicate(format: "ANY games == %@", game))
+            
+            if let type = attributeType {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+        } else {
+            if let gameAttributes = game.attributes {
+                predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameAttributes))
+                
+                if let type = attributeType {
+                    predicates.append(NSPredicate(format: "type == %@", type))
+                }
+            }
+        }
+        
+        if let searchString = searchString?.lowercased(),
+            !searchString.isEmpty {
+            predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
     //MARK: Actions
@@ -281,58 +301,19 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     
 }
 
-//MARK: Fetched Results Controller Delegate
+//MARK: Search results updating
 
-extension AttributesTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
+extension AttributesTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
         
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError()
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
-        default:
-            return
+        fetchedResultsController?.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController?.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
         }
     }
 }

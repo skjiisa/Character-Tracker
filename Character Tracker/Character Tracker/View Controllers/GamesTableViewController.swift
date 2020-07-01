@@ -80,10 +80,19 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         let game = fetchedResultsController.object(at: indexPath)
         
         cell.textLabel?.text = game.name
+        
         if checkedGames?.contains(game) ?? false {
             cell.accessoryType = .checkmark
+            cell.detailTextLabel?.text = nil
         } else {
             cell.accessoryType = .none
+            
+            let charactersCount = game.characters?.count ?? 0
+            if charactersCount > 0 {
+                cell.detailTextLabel?.text = "\(charactersCount) character\(charactersCount == 1 ? "" : "s")"
+            } else {
+                cell.detailTextLabel?.text = nil
+            }
         }
 
         return cell
@@ -108,21 +117,8 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         }    
     }
     */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    
+    //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let game = fetchedResultsController.object(at: indexPath)
@@ -169,58 +165,4 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
     }
     */
 
-}
-
-extension GamesTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError()
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
-        default:
-            return
-        }
-    }
 }

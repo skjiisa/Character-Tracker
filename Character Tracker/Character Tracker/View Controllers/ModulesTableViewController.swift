@@ -26,6 +26,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     var typeName: String {
         if let name = moduleType?.name {
             return name
@@ -39,29 +41,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        guard let game = gameReference?.game else { return nil }
-        
-        var predicates: [NSPredicate] = []
-        
-        if !showAll {
-            predicates.append(NSPredicate(format: "ANY games == %@", game))
-            
-            if let type = moduleType {
-                predicates.append(NSPredicate(format: "type == %@", type))
-            }
-            
-            if let excludedModuleUUID = excludedModule?.id {
-                predicates.append(NSPredicate(format: "id != %@", excludedModuleUUID as CVarArg))
-            }
-        } else if let gameModules = game.modules {
-            predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameModules))
-            
-            if let type = moduleType {
-                predicates.append(NSPredicate(format: "type == %@", type))
-            }
-        }
-        
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        fetchRequest.predicate = frcPredicate()
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
@@ -78,6 +58,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         return frc
     }()
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +71,12 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             addModuleView.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 
     //MARK: Table view data source
@@ -126,6 +114,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if checkedModules?.contains(module) ?? false {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
 
         return cell
@@ -155,23 +145,55 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if !showAll,
             checkedModules != nil {
+            let cell = tableView.cellForRow(at: indexPath)
             
-            if let cell = tableView.cellForRow(at: indexPath) {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+            if let index = checkedModules?.firstIndex(of: module) {
+                checkedModules?.remove(at: index)
+                cell?.accessoryType = .none
+            } else {
+                checkedModules?.append(module)
+                cell?.accessoryType = .checkmark
             }
         }
     }
     
     //MARK: Private
     
-    func choose(module: Module) {
+    private func choose(module: Module) {
         for callback in callbacks {
             callback(module)
         }
+    }
+    
+    private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
+        guard let game = gameReference?.game else { return nil }
+        
+        var predicates: [NSPredicate] = []
+        
+        if !showAll {
+            predicates.append(NSPredicate(format: "ANY games == %@", game))
+            
+            if let type = moduleType {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+            
+            if let excludedModuleUUID = excludedModule?.id {
+                predicates.append(NSPredicate(format: "id != %@", excludedModuleUUID as CVarArg))
+            }
+        } else if let gameModules = game.modules {
+            predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameModules))
+            
+            if let type = moduleType {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+        }
+        
+        if let searchString = searchString?.lowercased(),
+            !searchString.isEmpty {
+            predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 
     //MARK: Navigation
@@ -258,61 +280,22 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     @objc private func close() {
         dismiss(animated: true, completion: nil)
     }
-    
+
 }
 
-//MARK: Fetched results controller delegate
+//MARK: Search results updating
 
-extension ModulesTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
+extension ModulesTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
         
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError()
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
-        default:
-            return
+        fetchedResultsController?.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController?.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
         }
     }
 }
