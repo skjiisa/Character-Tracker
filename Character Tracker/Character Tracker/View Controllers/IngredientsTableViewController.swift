@@ -17,6 +17,8 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     var ingredientController: IngredientController?
     var callbacks: [( (Ingredient) -> Void )] = []
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     lazy var fetchedResultsController: NSFetchedResultsController<Ingredient> = {
         let fetchRequest: NSFetchRequest<Ingredient> = Ingredient.fetchRequest()
         
@@ -24,10 +26,8 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
             NSSortDescriptor(key: "name", ascending: true)
         ]
         
-        if let game = gameReference?.game {
-            fetchRequest.predicate = NSPredicate(format: "ANY games == %@", game)
-        }
-        
+        fetchRequest.predicate = frcPredicate()
+                
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
                                              sectionNameKeyPath: nil,
@@ -43,15 +43,17 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         
         return frc
     }()
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 
     // MARK: - Table view data source
@@ -83,25 +85,8 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         if editingStyle == .delete {
             let ingredient = fetchedResultsController.object(at: indexPath)
             ingredientController?.delete(ingredient: ingredient, context: CoreDataStack.shared.mainContext)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }  
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ingredient = fetchedResultsController.object(at: indexPath)
@@ -114,6 +99,19 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         for callback in callbacks {
             callback(ingredient)
         }
+    }
+    
+    private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
+        guard let game = gameReference?.game else { return nil }
+        
+        var predicates: [NSPredicate] = [NSPredicate(format: "ANY games == %@", game)]
+        
+        if let searchString = searchString?.lowercased(),
+            !searchString.isEmpty {
+            predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
     //MARK: Public
@@ -239,6 +237,23 @@ extension IngredientsTableViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteSections(indexSet, with: .automatic)
         default:
             return
+        }
+    }
+}
+
+//MARK: Search results updating
+
+extension IngredientsTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
+        
+        fetchedResultsController.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
         }
     }
 }
