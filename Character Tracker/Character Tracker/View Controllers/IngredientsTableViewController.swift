@@ -185,62 +185,6 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     
 }
 
-//MARK: Fetched Results Controller Delegate
-
-extension IngredientsTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError()
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
-        default:
-            return
-        }
-    }
-}
-
 //MARK: Search results updating
 
 extension IngredientsTableViewController: UISearchResultsUpdating {
