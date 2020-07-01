@@ -80,10 +80,19 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         let game = fetchedResultsController.object(at: indexPath)
         
         cell.textLabel?.text = game.name
+        
         if checkedGames?.contains(game) ?? false {
             cell.accessoryType = .checkmark
+            cell.detailTextLabel?.text = nil
         } else {
             cell.accessoryType = .none
+            
+            let charactersCount = game.characters?.count ?? 0
+            if charactersCount > 0 {
+                cell.detailTextLabel?.text = "\(charactersCount) character\(charactersCount == 1 ? "" : "s")"
+            } else {
+                cell.detailTextLabel?.text = nil
+            }
         }
 
         return cell
@@ -108,21 +117,8 @@ class GamesTableViewController: UITableViewController, CharacterTrackerViewContr
         }    
     }
     */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    
+    //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let game = fetchedResultsController.object(at: indexPath)
