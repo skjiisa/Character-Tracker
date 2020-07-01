@@ -10,6 +10,10 @@ import UIKit
 
 class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
+    //MARK: Outlets
+    
+    @IBOutlet weak var sectionsButtonView: UIView!
+    
     //MARK: Properties
     
     let attributeController = AttributeController()
@@ -81,6 +85,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         return sections
     }
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +95,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.rightBarButtonItem?.isEnabled = false
+            sectionsButtonView.isHidden = true
+            sectionsButtonView.isUserInteractionEnabled = false
         } else {
             navigationItem.rightBarButtonItem = editButton
         }
@@ -413,9 +421,12 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         moduleController.removeMissingTempModules(from: savedCharacter, context: context)
         moduleController.saveTempModules(to: savedCharacter, context: context)
         
-        self.character = savedCharacter
-        
         gameReference?.isSafeToChangeGame = true
+        
+        if character == nil {
+            dismiss(animated: true, completion: nil)
+        }
+        
         return true
     }
     
