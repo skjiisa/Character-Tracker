@@ -114,6 +114,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if checkedModules?.contains(module) ?? false {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
 
         return cell
@@ -143,13 +145,14 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if !showAll,
             checkedModules != nil {
+            let cell = tableView.cellForRow(at: indexPath)
             
-            if let cell = tableView.cellForRow(at: indexPath) {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+            if let index = checkedModules?.firstIndex(of: module) {
+                checkedModules?.remove(at: index)
+                cell?.accessoryType = .none
+            } else {
+                checkedModules?.append(module)
+                cell?.accessoryType = .checkmark
             }
         }
     }

@@ -135,6 +135,8 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         if checkedAttributes.contains(attribute) {
             cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
 
         return cell
@@ -155,20 +157,23 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         }
     }
     
+    //MARK: Table view delegate
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let attribute = fetchedResultsController?.object(at: indexPath) else { return }
         
         choose(attribute: attribute)
         
         if !showAll {
-            tableView.deselectRow(at: indexPath, animated: true)
+            let cell = tableView.cellForRow(at: indexPath)
             
-            if let cell = tableView.cellForRow(at: indexPath) {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+            if let index = checkedAttributes.firstIndex(of: attribute) {
+                checkedAttributes.remove(at: index)
+                cell?.accessoryType = .none
+            } else {
+                checkedAttributes.append(attribute)
+                cell?.accessoryType = .checkmark
             }
         }
     }
