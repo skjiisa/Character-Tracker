@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CharacterNameCellDelegate {
+protocol CharacterNameCellDelegate: class {
     func valueChanged(_ sender: UISegmentedControl)
 }
 
@@ -16,7 +16,7 @@ class CharacterNameTableViewCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var femaleSegmentedControl: UISegmentedControl!
     
-    var delegate: CharacterNameCellDelegate?
+    weak var delegate: CharacterNameCellDelegate?
     
     @IBAction func femaleChanged(_ sender: UISegmentedControl) {
         delegate?.valueChanged(sender)
