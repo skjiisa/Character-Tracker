@@ -11,3 +11,4 @@ Not yet released.
 * Show number of characters per game when selecting a game ([3346bb4](https://github.com/Isvvc/Character-Tracker/commit/3346bb427ff23085c1fac1da1705bd979a83d070))
 * Make ingredient info dialogue more clear ([2d7efda](https://github.com/Isvvc/Character-Tracker/commit/2d7efdae07b629ae5741fc879f646085934d3e5a))
 * Automatically scroll to things in lists after they're created ([af76ef7](https://github.com/Isvvc/Character-Tracker/commit/af76ef7b88cda0c8b37cc0067be8000e090a206e))
+* Performance improvements ([#88](https://github.com/Isvvc/Character-Tracker/pull/88) among other commits)
