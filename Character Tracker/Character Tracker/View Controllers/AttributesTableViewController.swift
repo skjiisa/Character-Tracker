@@ -253,11 +253,11 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         
         let alertController = UIAlertController(title: "New \(typeName)", message: "", preferredStyle: .alert)
         
-        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
+        let saveVanilla = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.attributeController?.create(attribute: name, game: game, type: type, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
+            self?.attributeController?.create(attribute: name, game: game, type: type, context: CoreDataStack.shared.mainContext )
+            self?.tableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

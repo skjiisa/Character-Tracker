@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol LevelTableViewCellDelegate: class {
+    func levelChanged()
+}
+
 class LevelTableViewCell: UITableViewCell {
     
     //MARK: Outlets
@@ -17,12 +21,7 @@ class LevelTableViewCell: UITableViewCell {
     
     //MARK: Properties
     
-    var callback: ( () -> Void )?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    weak var delegate: LevelTableViewCellDelegate?
     
     //MARK: Actions
 
@@ -33,7 +32,7 @@ class LevelTableViewCell: UITableViewCell {
         } else {
             textField.text = String(level)
         }
-        callback?()
+        delegate?.levelChanged()
     }
     
 }

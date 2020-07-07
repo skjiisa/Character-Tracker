@@ -156,11 +156,11 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         let alertController = UIAlertController(title: "New Race", message: "", preferredStyle: .alert)
         
-        let saveVanilla = UIAlertAction(title: "Save", style: .default) { (_) in
+        let saveVanilla = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
             guard let name = alertController.textFields?[0].text else { return }
             
-            self.raceController.create(race: name, game: game, context: CoreDataStack.shared.mainContext )
-            self.tableView.reloadData()
+            self?.raceController.create(race: name, game: game, context: CoreDataStack.shared.mainContext )
+            self?.tableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
