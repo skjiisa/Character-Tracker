@@ -64,26 +64,26 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var sections: [(name: String, type: SectionTypes)] = []
     var sectionsToReload: [SectionTypes] = []
     
-    var nameTextField: UITextField?
-    var levelTextField: UITextField?
-    var levelStepper: UIStepper?
+    weak var nameTextField: UITextField?
+    weak var levelTextField: UITextField?
+    weak var levelStepper: UIStepper?
     
-    var cancelButton: UIBarButtonItem {
+    weak var cancelButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         barButton.tag = 1
         return barButton
     }
-    var editButton: UIBarButtonItem {
+    weak var editButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         barButton.tag = 2
         return barButton
     }
-    var saveButton: UIBarButtonItem {
+    weak var saveButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
         barButton.tag = 3
         return barButton
     }
-    var cancelEditButton: UIBarButtonItem {
+    weak var cancelEditButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
         barButton.tag = 4
         return barButton
@@ -94,11 +94,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return lhs.textView == rhs.textView
         }
         
-        var textView: UITextView?
+        weak var textView: UITextView?
     }
     
     var notesTextView = TextViewReference()
     var characterNotesTextView = TextViewReference()
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,7 +185,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else {
                 if let levelCell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath) as? LevelTableViewCell {
-                    levelCell.callback = moduleHasBeenModified
+                    levelCell.delegate = self
                     
                     levelTextField = levelCell.textField
                     levelTextField?.delegate = self
@@ -731,11 +733,21 @@ extension ModuleDetailTableViewController: UITextViewDelegate {
     
 }
 
+//MARK: Ingredients table delegate
+
 extension ModuleDetailTableViewController: IngredientsTableDelegate {
     func choose(ingredient: Ingredient, quantity: Int16) {
         self.ingredientController.add(tempEntity: ingredient, value: quantity)
         self.markSectionForReload(section: .ingredients)
         self.moduleHasBeenModified()
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+//MARK: Level table view cell delegate
+
+extension ModuleDetailTableViewController: LevelTableViewCellDelegate {
+    func levelChanged() {
+        moduleHasBeenModified()
     }
 }
