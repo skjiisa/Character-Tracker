@@ -608,16 +608,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             
             if let ingredientsVC = vc as? IngredientsTableViewController {
                 ingredientsVC.ingredientController = ingredientController
-                ingredientsVC.callbacks.append { ingredient in
-                    ingredientsVC.askForQuantity { quantity in
-                        if let quantity = quantity {
-                            self.ingredientController.add(tempEntity: ingredient, value: quantity)
-                            self.markSectionForReload(section: .ingredients)
-                            self.moduleHasBeenModified()
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }
-                }
+                ingredientsVC.delegate = self
             } else if let modulesVC = vc as? ModulesTableViewController {
                 let selectedModules = moduleController.tempEntities.map({ $0.entity })
                 
@@ -738,4 +729,13 @@ extension ModuleDetailTableViewController: UITextViewDelegate {
         moduleHasBeenModified()
     }
     
+}
+
+extension ModuleDetailTableViewController: IngredientsTableDelegate {
+    func choose(ingredient: Ingredient, quantity: Int16) {
+        self.ingredientController.add(tempEntity: ingredient, value: quantity)
+        self.markSectionForReload(section: .ingredients)
+        self.moduleHasBeenModified()
+        self.navigationController?.popViewController(animated: true)
+    }
 }

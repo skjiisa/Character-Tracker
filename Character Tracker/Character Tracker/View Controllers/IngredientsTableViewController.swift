@@ -9,13 +9,17 @@
 import UIKit
 import CoreData
 
+protocol IngredientsTableDelegate: class {
+    func choose(ingredient: Ingredient, quantity: Int16)
+}
+
 class IngredientsTableViewController: UITableViewController, CharacterTrackerViewController {
     
     //MARK: Properties
     
     var gameReference: GameReference?
     var ingredientController: IngredientController?
-    var callbacks: [( (Ingredient) -> Void )] = []
+    weak var delegate: IngredientsTableDelegate?
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -72,14 +76,6 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -90,16 +86,10 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ingredient = fetchedResultsController.object(at: indexPath)
-        choose(ingredient: ingredient)
+        askForQuantity(ingredient: ingredient)
     }
     
     //MARK: Private
-    
-    private func choose(ingredient: Ingredient) {
-        for callback in callbacks {
-            callback(ingredient)
-        }
-    }
     
     private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
         guard let game = gameReference?.game else { return nil }
@@ -114,24 +104,20 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
-    //MARK: Public
-    
-    func askForQuantity(completion: @escaping (Int16?) -> Void ) {
+    private func askForQuantity(ingredient: Ingredient) {
         let alertController = UIAlertController(title: "How many?", message: nil, preferredStyle: .alert)
         
-        let add = UIAlertAction(title: "Add", style: .default) { _ in
+        let add = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
             guard let quantityText = alertController.textFields?[0].text,
                 let quantity = Int16(quantityText) else {
-                completion(0)
-                return
+                    self?.delegate?.choose(ingredient: ingredient, quantity: 0)
+                    return
             }
             
-            completion(quantity)
+            self?.delegate?.choose(ingredient: ingredient, quantity: quantity)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            completion(nil)
-        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
         alertController.addTextField { textField in
             textField.placeholder = "Quantity (optional)"
@@ -152,13 +138,13 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
         
         let alertController = UIAlertController(title: "New Ingredient", message: nil, preferredStyle: .alert)
         
-        let save = UIAlertAction(title: "Save", style: .default) { _ in
+        let save = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
             guard let name = alertController.textFields?[0].text else { return }
             
             let id: String? = alertController.textFields?[1].text
             
-            self.ingredientController?.create(ingredient: name, game: game, id: id, context: CoreDataStack.shared.mainContext)
-            self.tableView.reloadData()
+            self?.ingredientController?.create(ingredient: name, game: game, id: id, context: CoreDataStack.shared.mainContext)
+            self?.tableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
