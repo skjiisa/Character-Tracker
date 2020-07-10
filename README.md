@@ -20,6 +20,8 @@ Character Tracker is an iOS app for keeping track of characters and other inform
   * and more
 * Track crafting ingredients for armors, weapons, etc.
 
+[Changelog](Changelog.md)
+
 ### Screenshots
 
 <img src="Screenshots/iPhone 11 Pro Max 1 - Characters.png" height=450 /> <img src="Screenshots/iPhone 11 Pro Max 4 - Character Dark Collapsed.png" height=450 /> <img src="Screenshots/iPhone 11 Pro Max 3 - Module.png" height=450 /> <img src="Screenshots/iPhone 11 Pro Max 5 - Ingredients.png" height=450 />
