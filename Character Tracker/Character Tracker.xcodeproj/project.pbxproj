@@ -10,6 +10,7 @@
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
+		5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */; };
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
@@ -58,6 +59,7 @@
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
 		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
+		5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFilterForm.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5945EE2D24CA9D330091E72E /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
 		594D7ABD2371210D00F0795D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +169,7 @@
 			children = (
 				595F771A236A55EF00151209 /* AppDelegate.swift */,
 				595F771C236A55EF00151209 /* SceneDelegate.swift */,
+				5945EE2D24CA9D330091E72E /* SwiftUI Views */,
 				595F7732236A562E00151209 /* Model */,
 				59BB3D21236AA8B300A4A14E /* Model Controllers */,
 				592F0D8923DAB28400F06F75 /* Helpers */,
@@ -329,6 +340,7 @@
 				59850F46237D0FD400286067 /* LevelTableViewCell.swift in Sources */,
 				594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
+				5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */,
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,

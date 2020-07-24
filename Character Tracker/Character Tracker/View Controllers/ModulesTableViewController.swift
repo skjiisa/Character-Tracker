@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import CoreData
 
 class ModulesTableViewController: UITableViewController, CharacterTrackerViewController {
@@ -78,6 +79,23 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        // Add filter button only if there are parameters to filter
+        
+        if moduleType == nil || fetchedResultsController?.fetchedObjects?.first(where: { $0.attributes?.anyObject() != nil }) != nil {
+            let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilter))
+            navigationItem.rightBarButtonItem = filterButton
+        }
+    }
+    
+    @objc private func showFilter() {
+        let modulesFilterForm = UIHostingController(rootView:
+            NavigationView {
+                ModulesFilterForm(modules: fetchedResultsController?.fetchedObjects ?? [], showTypes: moduleType == nil, delegate: self)
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+            }
+        )
+        present(modulesFilterForm, animated: true)
     }
 
     //MARK: Table view data source
@@ -325,5 +343,17 @@ extension ModulesTableViewController: UISearchResultsUpdating {
         } catch {
             NSLog("Error performing fetch for module FRC: \(error)")
         }
+    }
+}
+
+//MARK: Modules filter form delegate
+
+extension ModulesTableViewController: ModulesFilterFormDelegate {
+    func toggle(_ moduleType: ModuleType) {
+        print(moduleType.typeName)
+    }
+    
+    func toggle(_ attribute: Attribute) {
+        print(attribute.name ?? "Attribute")
     }
 }
