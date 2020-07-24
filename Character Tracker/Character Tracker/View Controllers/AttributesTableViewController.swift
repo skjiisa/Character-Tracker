@@ -91,8 +91,11 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         title = typeName.pluralize()
         addAttributeButton.setTitle("Add \(typeName)", for: .normal)
         
-        if showAll {
+        if attributeType == nil || showAll {
             addAttributeView.isHidden = true
+        }
+        
+        if showAll {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
         
