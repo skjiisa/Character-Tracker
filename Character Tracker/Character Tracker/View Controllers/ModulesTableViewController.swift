@@ -26,6 +26,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var character: Character?
     var gameReference: GameReference?
     var showAll = false
+    var filteredTypes = Set<ModuleType>()
     var filteredAttributes = Set<Attribute>()
     var callbacks: [( (Module) -> Void )] = []
     
@@ -257,6 +258,10 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
             predicates.append(NSPredicate(format: "ANY attributes.attribute in %@", filteredAttributes))
         }
         
+        if !filteredTypes.isEmpty {
+            predicates.append(NSPredicate(format: "type in %@", filteredTypes))
+        }
+        
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 
@@ -359,7 +364,8 @@ extension ModulesTableViewController: UISearchResultsUpdating {
 
 extension ModulesTableViewController: ModulesFilterFormDelegate {
     func toggle(_ moduleType: ModuleType) {
-        print(moduleType.typeName)
+        filteredTypes.formSymmetricDifference([moduleType])
+        filter()
     }
     
     func toggle(_ attribute: Attribute) {
