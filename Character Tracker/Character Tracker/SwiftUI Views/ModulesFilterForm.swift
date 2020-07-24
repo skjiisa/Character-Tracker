@@ -15,22 +15,26 @@ protocol ModulesFilterFormDelegate: class {
 
 struct ModulesFilterForm: View {
     @FetchRequest(entity: ModuleType.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var moduleTypes: FetchedResults<ModuleType>
+    var attributesFetchRequest: FetchRequest<Attribute>
+    var attributes: FetchedResults<Attribute> {
+        attributesFetchRequest.wrappedValue
+    }
     
-    let attributes: [Attribute]
     let showTypes: Bool
     weak var delegate: ModulesFilterFormDelegate?
     
-    init(modules: [Module]?, showTypes: Bool, delegate: ModulesFilterFormDelegate? = nil) {
+    init(type: ModuleType? = nil, delegate: ModulesFilterFormDelegate? = nil) {
         self.delegate = delegate
         
-        var attributesSet = Set<Attribute>()
-        (modules ?? []).forEach { module in
-            guard let moduleAttributes = module.attributes as? Set<ModuleAttribute> else { return }
-            attributesSet.formUnion(moduleAttributes.compactMap { $0.attribute })
-        }
-        self.attributes = attributesSet.sorted(by: { $0.name ?? "" > $1.name ?? "" })
+        showTypes = type == nil
         
-        self.showTypes = showTypes
+        let predicate: NSPredicate?
+        if let type = type {
+            predicate = NSPredicate(format: "ANY modules.module.type = %@", type)
+        } else {
+            predicate = NSPredicate(format: "ANY modules != nil")
+        }
+        attributesFetchRequest = FetchRequest(entity: Attribute.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: predicate)
     }
     
     var body: some View {
@@ -63,6 +67,6 @@ struct ModulesFilterForm: View {
 
 struct ModulesFilterForm_Previews: PreviewProvider {
     static var previews: some View {
-        ModulesFilterForm(modules: [], showTypes: true)
+        ModulesFilterForm()
     }
 }

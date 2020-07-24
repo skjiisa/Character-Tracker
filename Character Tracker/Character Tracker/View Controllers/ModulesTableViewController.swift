@@ -26,6 +26,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var character: Character?
     var gameReference: GameReference?
     var showAll = false
+    var filteredAttributes = Set<Attribute>()
     var callbacks: [( (Module) -> Void )] = []
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -91,7 +92,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     @objc private func showFilter() {
         let modulesFilterForm = UIHostingController(rootView:
             NavigationView {
-                ModulesFilterForm(modules: fetchedResultsController?.fetchedObjects ?? [], showTypes: moduleType == nil, delegate: self)
+                ModulesFilterForm(type: moduleType, delegate: self)
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
             }
         )
@@ -211,6 +212,19 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
     }
     
+    private func filter() {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
+        
+        fetchedResultsController?.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController?.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
+        }
+    }
+    
     private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
         guard let game = gameReference?.game else { return nil }
         
@@ -237,6 +251,10 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         if let searchString = searchString?.lowercased(),
             !searchString.isEmpty {
             predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+        
+        if !filteredAttributes.isEmpty {
+            predicates.append(NSPredicate(format: "ANY attributes.attribute in %@", filteredAttributes))
         }
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -333,16 +351,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
 
 extension ModulesTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchString = searchController.searchBar.text,
-            let predicate = frcPredicate(searchString: searchString) else { return }
-        
-        fetchedResultsController?.fetchRequest.predicate = predicate
-        do {
-            try fetchedResultsController?.performFetch()
-            tableView.reloadData()
-        } catch {
-            NSLog("Error performing fetch for module FRC: \(error)")
-        }
+        filter()
     }
 }
 
@@ -354,6 +363,7 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
     }
     
     func toggle(_ attribute: Attribute) {
-        print(attribute.name ?? "Attribute")
+        filteredAttributes.formSymmetricDifference([attribute])
+        filter()
     }
 }
