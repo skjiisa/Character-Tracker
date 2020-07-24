@@ -114,8 +114,13 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         if checkedModules?.contains(module) ?? false {
             cell.accessoryType = .checkmark
+            cell.tintColor = .systemBlue
+        } else if module.characters?.anyObject() != nil {
+            cell.accessoryType = .checkmark
+            cell.tintColor = .systemGray
         } else {
             cell.accessoryType = .none
+            cell.tintColor = .systemBlue
         }
 
         return cell
