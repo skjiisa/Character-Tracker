@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import CoreData
 
 class AttributesTableViewController: UITableViewController, CharacterTrackerViewController {
@@ -26,6 +27,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
     var callbacks: [( (Attribute) -> Void )] = []
     
     let searchController = UISearchController(searchResultsController: nil)
+    var filteredTypes: Set<AttributeType>?
     
     var typeName: String {
         if let name = attributeType?.name {
@@ -99,6 +101,26 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        // Add filter button only if there is no type set
+        
+        if attributeType == nil {
+            filteredTypes = Set<AttributeType>()
+            
+            let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilter))
+            navigationItem.rightBarButtonItem = filterButton
+        }
+    }
+    
+    @objc private func showFilter() {
+        let attributesFilterForm = UIHostingController(rootView:
+            NavigationView {
+                AttributesFilterForm(checkedTypes: filteredTypes,
+                                     delegate: self)
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+            }
+        )
+        present(attributesFilterForm, animated: true)
     }
 
     // MARK: - Table view data source
@@ -186,6 +208,19 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         }
     }
     
+    private func filter() {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
+        
+        fetchedResultsController?.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController?.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
+        }
+    }
+    
     private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
         guard let game = gameReference?.game else { return nil }
         
@@ -210,6 +245,11 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         if let searchString = searchString?.lowercased(),
             !searchString.isEmpty {
             predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+        
+        if let filteredTypes = filteredTypes,
+            !filteredTypes.isEmpty {
+            predicates.append(NSPredicate(format: "type in %@", filteredTypes))
         }
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -305,15 +345,24 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
 
 extension AttributesTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchString = searchController.searchBar.text,
-            let predicate = frcPredicate(searchString: searchString) else { return }
-        
-        fetchedResultsController?.fetchRequest.predicate = predicate
-        do {
-            try fetchedResultsController?.performFetch()
-            tableView.reloadData()
-        } catch {
-            NSLog("Error performing fetch for module FRC: \(error)")
-        }
+        filter()
+    }
+}
+
+//MARK: Attributes filter form delegate
+
+extension AttributesTableViewController: AttributesFilterFormDelegate {
+    func toggle(_ attributeType: AttributeType) {
+        filteredTypes?.formSymmetricDifference([attributeType])
+        filter()
+    }
+    
+    func clearFilter() {
+        filteredTypes?.removeAll()
+        filter()
+    }
+    
+    func dismiss() {
+        dismiss(animated: true)
     }
 }

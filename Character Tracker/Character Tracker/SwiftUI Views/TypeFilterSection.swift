@@ -28,7 +28,7 @@ struct TypeFilterSection<Entity: NamedEntity>: View {
                     self.checkedTypes.formSymmetricDifference([moduleType])
                 }) {
                     HStack {
-                        Text(moduleType.name ?? "Type")
+                        Text(moduleType.name?.capitalized ?? "Type")
                             .foregroundColor(.primary)
                         if self.checkedTypes.contains(moduleType) {
                             Spacer()
