@@ -51,141 +51,142 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
 class JSONController {
     
     static func preloadData() {
-        let context = CoreDataStack.shared.mainContext
-        
         do {
             let preloadDataURL = Bundle.main.url(forResource: "Preload", withExtension: "json")!
             let preloadData = try Data(contentsOf: preloadDataURL)
             let importJSON = try JSON(data: preloadData)
-            
-            // Import Games
-            
-            let allGames: [Game] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "games",
-                attributes: ["name", "index", "mainline"],
-                context: context)
-            
-            // Import Attribute Types
-            
-            let allAttributeTypes: [AttributeType] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "attribute_types",
-                attributes: ["name"],
-                context: context)
-            
-            // Import Attribute Type Sections
-            
-            let attributeTypesRelationship = Relationship(key: "type", allObjects: allAttributeTypes)
-            let _: [AttributeTypeSection] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "attribute_type_sections",
-                attributes: ["name", "maxPriority", "minPriority"],
-                toOneRelationships: [attributeTypesRelationship],
-                context: context)
-            
-            // Import Attributes
-            
-            let gamesRelationship = Relationship(key: "games", allObjects: allGames)
-            let allAttributes: [Attribute] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "attributes",
-                attributes: ["name"],
-                toOneRelationships: [attributeTypesRelationship],
-                toManyRelationships: [gamesRelationship],
-                context: context)
-            
-            // Import Module Types
-            
-            let allModuleTypes: [ModuleType] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "module_types",
-                attributes: ["name"],
-                context: context)
-            
-            // Import Ingredients
-            
-            let allIngredients: [Ingredient] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "ingredients",
-                attributes: ["name"],
-                toManyRelationships: [gamesRelationship],
-                idIsUUID: false,
-                context: context)
-            
-            // Import Modules
-            
-            let moduleTypesRelationship = Relationship(key: "type", allObjects: allModuleTypes)
-            let allModules: [Module] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "modules",
-                attributes: ["name", "level", "notes"],
-                toOneRelationships: [moduleTypesRelationship],
-                toManyRelationships: [gamesRelationship],
-                context: context)
-            
-            // Import Module Ingredients
-            
-            let ingredientRelationship = Relationship(key: "ingredient", allObjects: allIngredients)
-            let moduleRelationship = Relationship(key: "module", allObjects: allModules)
-            let _: [ModuleIngredient] = try fetchAndImportAllRelationshipObjects(
-                from: importJSON,
-                arrayKey: "modules",
-                relationshipKey: "ingredients",
-                attributes: ["quantity"],
-                parentRelationship: moduleRelationship,
-                childRelationship: ingredientRelationship,
-                context: context)
-            
-            // Import Module Attributes
-            
-            let attributeRelationship = Relationship(key: "attribute", allObjects: allAttributes)
-            let _: [ModuleAttribute] = try fetchAndImportAllRelationshipObjects(
-                from: importJSON,
-                arrayKey: "modules",
-                relationshipKey: "attributes",
-                attributes: [],
-                parentRelationship: moduleRelationship,
-                childRelationship: attributeRelationship,
-                context: context)
-            
-            // Import Module Modules
-            
-            let parentModuleRelationship = Relationship(key: "parent", allObjects: allModules)
-            let childModuleRelationship = Relationship(key: "child", allObjects: allModules)
-            let _: [ModuleModule] = try fetchAndImportAllRelationshipObjects(
-                from: importJSON,
-                arrayKey: "modules",
-                relationshipKey: "modules",
-                attributes: [],
-                parentRelationship: parentModuleRelationship,
-                childRelationship: childModuleRelationship,
-                context: context)
-            
-            // Import Races
-            
-            let allRaces: [Race] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "races",
-                attributes: ["name"],
-                toManyRelationships: [gamesRelationship],
-                context: context)
-            
-            // Import Characters
-            
-            let raceRelationship = Relationship(key: "race", allObjects: allRaces)
-            let gameRelationship = Relationship(key: "game", allObjects: allGames)
-            let _: [Character] = try fetchAndImportAllObjects(
-                from: importJSON,
-                arrayKey: "characters",
-                attributes: ["female", "name"],
-                toOneRelationships: [raceRelationship, gameRelationship],
-                context: context)
-            
-            CoreDataStack.shared.save(context: context)
+            try loadData(json: importJSON, context: CoreDataStack.shared.mainContext)
         } catch {
-            NSLog("\(error)")
+            NSLog("Error preloading data: \(error)")
         }
+    }
+    
+    static func loadData(json importJSON: JSON, context: NSManagedObjectContext) throws {
+        // Import Games
+        
+        let allGames: [Game] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "games",
+            attributes: ["name", "index", "mainline"],
+            context: context)
+        
+        // Import Attribute Types
+        
+        let allAttributeTypes: [AttributeType] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "attribute_types",
+            attributes: ["name"],
+            context: context)
+        
+        // Import Attribute Type Sections
+        
+        let attributeTypesRelationship = Relationship(key: "type", allObjects: allAttributeTypes)
+        let _: [AttributeTypeSection] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "attribute_type_sections",
+            attributes: ["name", "maxPriority", "minPriority"],
+            toOneRelationships: [attributeTypesRelationship],
+            context: context)
+        
+        // Import Attributes
+        
+        let gamesRelationship = Relationship(key: "games", allObjects: allGames)
+        let allAttributes: [Attribute] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "attributes",
+            attributes: ["name"],
+            toOneRelationships: [attributeTypesRelationship],
+            toManyRelationships: [gamesRelationship],
+            context: context)
+        
+        // Import Module Types
+        
+        let allModuleTypes: [ModuleType] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "module_types",
+            attributes: ["name"],
+            context: context)
+        
+        // Import Ingredients
+        
+        let allIngredients: [Ingredient] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "ingredients",
+            attributes: ["name"],
+            toManyRelationships: [gamesRelationship],
+            idIsUUID: false,
+            context: context)
+        
+        // Import Modules
+        
+        let moduleTypesRelationship = Relationship(key: "type", allObjects: allModuleTypes)
+        let allModules: [Module] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "modules",
+            attributes: ["name", "level", "notes"],
+            toOneRelationships: [moduleTypesRelationship],
+            toManyRelationships: [gamesRelationship],
+            context: context)
+        
+        // Import Module Ingredients
+        
+        let ingredientRelationship = Relationship(key: "ingredient", allObjects: allIngredients)
+        let moduleRelationship = Relationship(key: "module", allObjects: allModules)
+        let _: [ModuleIngredient] = try fetchAndImportAllRelationshipObjects(
+            from: importJSON,
+            arrayKey: "modules",
+            relationshipKey: "ingredients",
+            attributes: ["quantity"],
+            parentRelationship: moduleRelationship,
+            childRelationship: ingredientRelationship,
+            context: context)
+        
+        // Import Module Attributes
+        
+        let attributeRelationship = Relationship(key: "attribute", allObjects: allAttributes)
+        let _: [ModuleAttribute] = try fetchAndImportAllRelationshipObjects(
+            from: importJSON,
+            arrayKey: "modules",
+            relationshipKey: "attributes",
+            attributes: [],
+            parentRelationship: moduleRelationship,
+            childRelationship: attributeRelationship,
+            context: context)
+        
+        // Import Module Modules
+        
+        let parentModuleRelationship = Relationship(key: "parent", allObjects: allModules)
+        let childModuleRelationship = Relationship(key: "child", allObjects: allModules)
+        let _: [ModuleModule] = try fetchAndImportAllRelationshipObjects(
+            from: importJSON,
+            arrayKey: "modules",
+            relationshipKey: "modules",
+            attributes: [],
+            parentRelationship: parentModuleRelationship,
+            childRelationship: childModuleRelationship,
+            context: context)
+        
+        // Import Races
+        
+        let allRaces: [Race] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "races",
+            attributes: ["name"],
+            toManyRelationships: [gamesRelationship],
+            context: context)
+        
+        // Import Characters
+        
+        let raceRelationship = Relationship(key: "race", allObjects: allRaces)
+        let gameRelationship = Relationship(key: "game", allObjects: allGames)
+        let _: [Character] = try fetchAndImportAllObjects(
+            from: importJSON,
+            arrayKey: "characters",
+            attributes: ["female", "name"],
+            toOneRelationships: [raceRelationship, gameRelationship],
+            context: context)
+        
+        CoreDataStack.shared.save(context: context)
     }
     
     static private func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
