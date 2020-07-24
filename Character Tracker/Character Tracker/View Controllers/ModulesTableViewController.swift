@@ -76,8 +76,11 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         title = typeName.pluralize()
         addModuleButton.setTitle("Add \(typeName)", for: .normal)
         
-        if showAll {
+        if moduleType == nil || showAll {
             addModuleView.isHidden = true
+        }
+        
+        if showAll {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
         
