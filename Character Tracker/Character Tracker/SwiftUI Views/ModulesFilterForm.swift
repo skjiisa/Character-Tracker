@@ -17,37 +17,31 @@ protocol ModulesFilterFormDelegate: class {
 }
 
 struct ModulesFilterForm: View {
-    @FetchRequest(entity: ModuleType.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var moduleTypes: FetchedResults<ModuleType>
     var attributesFetchRequest: FetchRequest<Attribute>
     var attributes: FetchedResults<Attribute> {
         attributesFetchRequest.wrappedValue
     }
-    @State var checkedTypes: Set<ModuleType>
-    @State var checkedAttributes: Set<Attribute>
+    
     @Binding var requireAllAttributes: Bool
+    @State var checkedAttributes: Set<Attribute>
+    let checkedTypes: Set<ModuleType>?
     
     let showTypes: Bool
     weak var delegate: ModulesFilterFormDelegate?
     
     init(type: ModuleType? = nil, checkedTypes: Set<ModuleType>? = nil, checkedAttributes: Set<Attribute>? = nil, requireAllAttributes: Bool = true, delegate: ModulesFilterFormDelegate? = nil) {
-        if let checkedTypes = checkedTypes {
-            _checkedTypes = .init(initialValue: checkedTypes)
-        } else {
-            _checkedTypes = .init(initialValue: Set<ModuleType>())
-        }
-        if let checkedAttributes = checkedAttributes {
-            _checkedAttributes = .init(initialValue: checkedAttributes)
-        } else {
-            _checkedAttributes = .init(initialValue: Set<Attribute>())
-        }
+        
+        self.showTypes = type == nil
+        self.checkedTypes = checkedTypes
+        self.delegate = delegate
+        
+        _checkedAttributes = .init(initialValue: checkedAttributes ?? Set<Attribute>())
+        
         _requireAllAttributes = .init(get: {
             delegate?.requireAllAttributes ?? true
         }, set: { value in
             delegate?.requireAllAttributes = value
         })
-        self.delegate = delegate
-        
-        showTypes = type == nil
         
         let predicate: NSPredicate?
         if let type = type {
@@ -77,24 +71,8 @@ struct ModulesFilterForm: View {
     
     var body: some View {
         Form {
-            if showTypes && moduleTypes.count > 0 {
-                SwiftUI.Section(header: Text("Type")) {
-                    ForEach(moduleTypes, id: \.self) { moduleType in
-                        Button(action: {
-                            self.delegate?.toggle(moduleType)
-                            self.checkedTypes.formSymmetricDifference([moduleType])
-                        }) {
-                            HStack {
-                                Text(moduleType.name ?? "Module Type")
-                                    .foregroundColor(.primary)
-                                if self.checkedTypes.contains(moduleType) {
-                                    Spacer()
-                                    SwiftUI.Image(systemName: "checkmark")
-                                }
-                            }
-                        }
-                    }
-                }
+            if showTypes {
+                TypeFilterSection<ModuleType>(checkedTypes: checkedTypes, toggle: delegate?.toggle(_:))
             }
             
             if attributes.count > 0 {

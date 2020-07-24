@@ -47,3 +47,5 @@ extension Module: NamedEntity {}
 extension Attribute: NamedEntity {}
 extension Mod: NamedEntity {}
 extension Character: NamedEntity {}
+extension ModuleType: NamedEntity {}
+extension AttributeType: NamedEntity {}
