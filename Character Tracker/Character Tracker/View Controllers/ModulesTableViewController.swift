@@ -93,7 +93,10 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     @objc private func showFilter() {
         let modulesFilterForm = UIHostingController(rootView:
             NavigationView {
-                ModulesFilterForm(type: moduleType, delegate: self)
+                ModulesFilterForm(type: moduleType,
+                                  checkedTypes: filteredTypes,
+                                  checkedAttributes: filteredAttributes,
+                                  delegate: self)
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
             }
         )

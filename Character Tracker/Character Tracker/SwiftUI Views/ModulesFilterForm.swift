@@ -19,11 +19,23 @@ struct ModulesFilterForm: View {
     var attributes: FetchedResults<Attribute> {
         attributesFetchRequest.wrappedValue
     }
+    @State var checkedTypes: Set<ModuleType>
+    @State var checkedAttributes: Set<Attribute>
     
     let showTypes: Bool
     weak var delegate: ModulesFilterFormDelegate?
     
-    init(type: ModuleType? = nil, delegate: ModulesFilterFormDelegate? = nil) {
+    init(type: ModuleType? = nil, checkedTypes: Set<ModuleType>? = nil, checkedAttributes: Set<Attribute>? = nil, delegate: ModulesFilterFormDelegate? = nil) {
+        if let checkedTypes = checkedTypes {
+            _checkedTypes = .init(initialValue: checkedTypes)
+        } else {
+            _checkedTypes = .init(initialValue: Set<ModuleType>())
+        }
+        if let checkedAttributes = checkedAttributes {
+            _checkedAttributes = .init(initialValue: checkedAttributes)
+        } else {
+            _checkedAttributes = .init(initialValue: Set<Attribute>())
+        }
         self.delegate = delegate
         
         showTypes = type == nil
@@ -42,10 +54,19 @@ struct ModulesFilterForm: View {
             if showTypes && moduleTypes.count > 0 {
                 SwiftUI.Section(header: Text("Type")) {
                     ForEach(moduleTypes, id: \.self) { moduleType in
-                        Button(moduleType.name ?? "Module Type") {
+                        Button(action: {
                             self.delegate?.toggle(moduleType)
+                            self.checkedTypes.formSymmetricDifference([moduleType])
+                        }) {
+                            HStack {
+                                Text(moduleType.name ?? "Module Type")
+                                    .foregroundColor(.primary)
+                                if self.checkedTypes.contains(moduleType) {
+                                    Spacer()
+                                    SwiftUI.Image(systemName: "checkmark")
+                                }
+                            }
                         }
-                        .foregroundColor(.primary)
                     }
                 }
             }
@@ -53,10 +74,19 @@ struct ModulesFilterForm: View {
             if attributes.count > 0 {
                 SwiftUI.Section(header: Text("Attributes")) {
                     ForEach(attributes, id: \.self) { attribute in
-                        Button(attribute.name ?? "Attribute") {
+                        Button(action: {
                             self.delegate?.toggle(attribute)
+                            self.checkedAttributes.formSymmetricDifference([attribute])
+                        }) {
+                            HStack {
+                                Text(attribute.name ?? "Attribute")
+                                    .foregroundColor(.primary)
+                                if self.checkedAttributes.contains(attribute) {
+                                    Spacer()
+                                    SwiftUI.Image(systemName: "checkmark")
+                                }
+                            }
                         }
-                        .foregroundColor(.primary)
                     }
                 }
             }
