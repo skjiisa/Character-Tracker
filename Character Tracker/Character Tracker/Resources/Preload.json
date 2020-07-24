@@ -1776,6 +1776,141 @@
           "quantity": 25000
         }
       ]
+    },
+    {
+      "id": "76C5902F-0B70-457F-8F96-A669FBD8350E",
+      "level": 0,
+      "name": "Find 13 Standing Stones",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "CDC1D77C-721E-433D-BA1B-839EDD874535",
+      "level": 0,
+      "name": "Collect 15 Daedric Artifacts",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "02B71115-0ADB-4A9F-9765-8FD62A9307F1",
+      "level": 0,
+      "name": "Learn 20 shouts",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "2F52C9A2-D687-45AC-B9A9-17F59A2B9FC8",
+      "level": 0,
+      "name": "Become a vampire",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "E1D7690D-FBBE-46F5-869C-B7D319FF7F05",
+      "level": 0,
+      "name": "Collect all Unusual Gems",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "B57CDDBA-3243-4CDB-939D-76B4152DF70B",
+      "level": 0,
+      "name": "Argis the Bulwark",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "16D57D7B-CD0A-4CBD-9672-9A3366061485"
+        }
+      ]
+    },
+    {
+      "id": "1C691737-D651-46B3-B6B2-70DF4BCFB2EC",
+      "level": 0,
+      "name": "Calder",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "4D015946-BAB1-4788-99C2-2F81DA9302F0"
+        }
+      ]
+    },
+    {
+      "id": "57C84CB7-8441-4CA7-BF88-0CB5FA46B74E",
+      "level": 0,
+      "name": "Iona",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "B20A9886-F534-4640-A4E1-7C09E5AFC740"
+        }
+      ]
+    },
+    {
+      "id": "109A22DF-7492-43E1-B38C-2D524303A833",
+      "level": 0,
+      "name": "Jordis the Sword-Maiden",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "750C67AB-90D1-40CB-8502-81371BD208EE"
+        }
+      ]
+    },
+    {
+      "id": "38E335B7-4263-4A2E-8E1C-8FDE6D0144D0",
+      "level": 0,
+      "name": "Lydia",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85"
+        }
+      ]
     }
   ],
   "characters": [
