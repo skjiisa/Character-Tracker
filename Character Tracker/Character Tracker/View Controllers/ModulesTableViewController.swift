@@ -22,6 +22,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var moduleType: ModuleType?
     var checkedModules: [Module]?
     var excludedModule: Module?
+    var character: Character?
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
@@ -80,6 +81,52 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     }
 
     //MARK: Table view data source
+    
+    func loadCell(_ cell: UITableViewCell, at indexPath: IndexPath) {
+        guard let module = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        cell.textLabel?.text = module.name
+        
+        if showAll,
+            let gameNames = module.games?.compactMap({ ($0 as? Game)?.name }) {
+            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
+        } else {
+            let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
+            let attiributeNames = attributes?.compactMap({ $0.attribute?.name })
+            cell.detailTextLabel?.text = attiributeNames?.joined(separator: ", ")
+        }
+        
+        if checkedModules?.contains(module) ?? false {
+            cell.accessoryType = .checkmark
+            cell.tintColor = .systemBlue
+        } else if let characterModules = module.characters as? Set<CharacterModule>,
+            !characterModules.isEmpty,
+            // We don't want a green or grey checkmark if the selected character is the only one with this module
+            characterModules.count > 1 || !characterModules.contains(where: { $0.character == character }) {
+            cell.accessoryType = .checkmark
+            
+            // Grey if a different character has this module but not completed
+            // Green if a different character has this module completed
+            // Prominant colors if this is the general list (like in Settings)
+            // Faded colors if this is selecting modules for a character
+            if characterModules.contains(where: { $0.completed }) {
+                if checkedModules == nil {
+                    cell.tintColor = .systemGreen
+                } else {
+                    cell.tintColor = UIColor(red: 0.00, green: 0.80, blue: 0.28, alpha: 0.25)
+                }
+            } else {
+                if checkedModules == nil {
+                    cell.tintColor = .systemGray
+                } else {
+                    cell.tintColor = .systemGray4
+                }
+            }
+        } else {
+            cell.accessoryType = .none
+            cell.tintColor = .systemBlue
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
@@ -97,31 +144,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
-        guard let module = fetchedResultsController?.object(at: indexPath) else {
-            return cell
-        }
-        
-        cell.textLabel?.text = module.name
-        
-        if showAll,
-            let gameNames = module.games?.compactMap({ ($0 as? Game)?.name }) {
-            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
-        } else {
-            let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
-            let attiributeNames = attributes?.compactMap({ $0.attribute?.name })
-            cell.detailTextLabel?.text = attiributeNames?.joined(separator: ", ")
-        }
-        
-        if checkedModules?.contains(module) ?? false {
-            cell.accessoryType = .checkmark
-            cell.tintColor = .systemBlue
-        } else if module.characters?.anyObject() != nil {
-            cell.accessoryType = .checkmark
-            cell.tintColor = .systemGray
-        } else {
-            cell.accessoryType = .none
-            cell.tintColor = .systemBlue
-        }
+        loadCell(cell, at: indexPath)
 
         return cell
     }
@@ -149,15 +172,15 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         choose(module: module)
         
         if !showAll,
-            checkedModules != nil {
-            let cell = tableView.cellForRow(at: indexPath)
-            
+            checkedModules != nil,
+            let cell = tableView.cellForRow(at: indexPath) {
+
             if let index = checkedModules?.firstIndex(of: module) {
                 checkedModules?.remove(at: index)
-                cell?.accessoryType = .none
+                loadCell(cell, at: indexPath)
             } else {
                 checkedModules?.append(module)
-                cell?.accessoryType = .checkmark
+                loadCell(cell, at: indexPath)
             }
         }
     }
