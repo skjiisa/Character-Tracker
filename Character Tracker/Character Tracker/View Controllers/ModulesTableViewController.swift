@@ -384,4 +384,14 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
         filteredAttributes.formSymmetricDifference([attribute])
         filter()
     }
+    
+    func clearFilter() {
+        filteredAttributes.removeAll()
+        filteredTypes.removeAll()
+        filter()
+    }
+    
+    func dismiss() {
+        dismiss(animated: true)
+    }
 }

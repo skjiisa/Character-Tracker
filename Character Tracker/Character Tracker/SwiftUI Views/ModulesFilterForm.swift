@@ -11,6 +11,8 @@ import SwiftUI
 protocol ModulesFilterFormDelegate: class {
     func toggle(_: ModuleType)
     func toggle(_: Attribute)
+    func clearFilter()
+    func dismiss()
     var requireAllAttributes: Bool { get set }
 }
 
@@ -55,6 +57,23 @@ struct ModulesFilterForm: View {
         }
         attributesFetchRequest = FetchRequest(entity: Attribute.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: predicate)
     }
+    
+    //MARK: Views
+    
+    var cancelButton: some View {
+        Button("Cancel") {
+            self.delegate?.clearFilter()
+            self.delegate?.dismiss()
+        }
+    }
+    
+    var doneButton: some View {
+        Button("Done") {
+            self.delegate?.dismiss()
+        }
+    }
+    
+    //MARK: Body
     
     var body: some View {
         Form {
@@ -101,6 +120,7 @@ struct ModulesFilterForm: View {
             }
         }
         .navigationBarTitle("Filter Modules")
+        .navigationBarItems(leading: cancelButton, trailing: doneButton)
     }
 }
 
