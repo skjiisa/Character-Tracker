@@ -11,6 +11,7 @@ import SwiftUI
 protocol ModulesFilterFormDelegate: class {
     func toggle(_: ModuleType)
     func toggle(_: Attribute)
+    var requireAllAttributes: Bool { get set }
 }
 
 struct ModulesFilterForm: View {
@@ -21,11 +22,12 @@ struct ModulesFilterForm: View {
     }
     @State var checkedTypes: Set<ModuleType>
     @State var checkedAttributes: Set<Attribute>
+    @Binding var requireAllAttributes: Bool
     
     let showTypes: Bool
     weak var delegate: ModulesFilterFormDelegate?
     
-    init(type: ModuleType? = nil, checkedTypes: Set<ModuleType>? = nil, checkedAttributes: Set<Attribute>? = nil, delegate: ModulesFilterFormDelegate? = nil) {
+    init(type: ModuleType? = nil, checkedTypes: Set<ModuleType>? = nil, checkedAttributes: Set<Attribute>? = nil, requireAllAttributes: Bool = true, delegate: ModulesFilterFormDelegate? = nil) {
         if let checkedTypes = checkedTypes {
             _checkedTypes = .init(initialValue: checkedTypes)
         } else {
@@ -36,6 +38,11 @@ struct ModulesFilterForm: View {
         } else {
             _checkedAttributes = .init(initialValue: Set<Attribute>())
         }
+        _requireAllAttributes = .init(get: {
+            delegate?.requireAllAttributes ?? true
+        }, set: { value in
+            delegate?.requireAllAttributes = value
+        })
         self.delegate = delegate
         
         showTypes = type == nil
@@ -73,6 +80,8 @@ struct ModulesFilterForm: View {
             
             if attributes.count > 0 {
                 SwiftUI.Section(header: Text("Attributes")) {
+                    Toggle("Require all of the below", isOn: $requireAllAttributes)
+                    
                     ForEach(attributes, id: \.self) { attribute in
                         Button(action: {
                             self.delegate?.toggle(attribute)

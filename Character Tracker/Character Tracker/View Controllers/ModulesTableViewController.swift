@@ -26,11 +26,16 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var character: Character?
     var gameReference: GameReference?
     var showAll = false
+    var callbacks: [( (Module) -> Void )] = []
+
+    let searchController = UISearchController(searchResultsController: nil)
     var filteredTypes = Set<ModuleType>()
     var filteredAttributes = Set<Attribute>()
-    var callbacks: [( (Module) -> Void )] = []
-    
-    let searchController = UISearchController(searchResultsController: nil)
+    public var requireAllAttributes: Bool = true {
+        didSet {
+            filter()
+        }
+    }
     
     var typeName: String {
         if let name = moduleType?.name {
@@ -258,7 +263,11 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         }
         
         if !filteredAttributes.isEmpty {
-            predicates.append(NSPredicate(format: "ANY attributes.attribute in %@", filteredAttributes))
+            if requireAllAttributes {
+                predicates.append(NSPredicate(format: "SUBQUERY(attributes, $moduleAttribute, $moduleAttribute.attribute in %@).@count = %d", filteredAttributes, filteredAttributes.count))
+            } else {
+                predicates.append(NSPredicate(format: "ANY attributes.attribute in %@", filteredAttributes))
+            }
         }
         
         if !filteredTypes.isEmpty {
