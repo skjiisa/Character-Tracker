@@ -1836,6 +1836,7 @@
       "id": "B57CDDBA-3243-4CDB-939D-76B4152DF70B",
       "level": 0,
       "name": "Argis the Bulwark",
+      "notes": "Available after you become thane of the Reach.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1846,12 +1847,27 @@
         {
           "child": "16D57D7B-CD0A-4CBD-9672-9A3366061485"
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
       ]
     },
     {
       "id": "1C691737-D651-46B3-B6B2-70DF4BCFB2EC",
       "level": 0,
       "name": "Calder",
+      "notes": "Available after you become thane of Eastmarch.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1862,12 +1878,27 @@
         {
           "child": "4D015946-BAB1-4788-99C2-2F81DA9302F0"
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
       ]
     },
     {
       "id": "57C84CB7-8441-4CA7-BF88-0CB5FA46B74E",
       "level": 0,
       "name": "Iona",
+      "notes": "Available after you become thane of the Rift.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1878,12 +1909,27 @@
         {
           "child": "B20A9886-F534-4640-A4E1-7C09E5AFC740"
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
       ]
     },
     {
       "id": "109A22DF-7492-43E1-B38C-2D524303A833",
       "level": 0,
       "name": "Jordis the Sword-Maiden",
+      "notes": "Available after you become thane of Haafingar.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1894,12 +1940,27 @@
         {
           "child": "750C67AB-90D1-40CB-8502-81371BD208EE"
         }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
       ]
     },
     {
       "id": "38E335B7-4263-4A2E-8E1C-8FDE6D0144D0",
       "level": 0,
       "name": "Lydia",
+      "notes": "Available after you become thane of Whiterun (completing Dragon Rising).",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1909,6 +1970,23 @@
       "modules": [
         {
           "child": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85"
+        },
+        {
+          "child": "CECF69BA-ED02-43FF-BEB8-B4251067C187"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
       ]
     }
