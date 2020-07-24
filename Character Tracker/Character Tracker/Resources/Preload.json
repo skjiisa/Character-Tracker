@@ -899,6 +899,66 @@
         "620A5BF0-648A-404A-AD6D-8E6D4F9994BE",
         "227CA73A-8143-462C-B97E-20F5FCB6E18B"
       ]
+    },
+    {
+      "id": "4ECD8530-F13C-48DB-ACF3-DD7FFE515F74",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Necromancer",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "id": "73D79F93-842B-455C-894A-53B50BB8401C",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Summoner",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "id": "4E2A188B-C305-4208-872A-EFC507BFE890",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Bound Weapons",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "id": "35D92230-A257-4D47-9468-03CB1854E6E2",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Uses Followers",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "id": "E874B24E-7CD7-4261-8916-B4DCF1F73322",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Unarmed",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
+    },
+    {
+      "id": "7AA7CAC2-37F1-48A4-92A5-B1C15A5CF4FE",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "name": "Dual-Wielding",
+      "type": "C7D6EF66-DA61-480F-9508-13D1EF65F768"
     }
   ],
   "module_types": [
@@ -1130,6 +1190,15 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
+    },
+    {
+      "name": "Gold",
+      "id": "Skyrim.esm 00000f",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
     }
   ],
   "modules": [
@@ -1163,7 +1232,7 @@
       "name": "Elven Armor",
       "id": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68",
       "level": 12,
-      "notes": "Crafting ingredients for non-guilded armor and no shield.",
+      "notes": "Crafting ingredients for non-gilded armor and no shield.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1237,10 +1306,10 @@
       ]
     },
     {
-      "name": "Elven Guilded Armor",
+      "name": "Elven Gilded Armor",
       "id": "FF027441-F56C-4ED0-8F6A-878B33DBFD3E",
       "level": 27,
-      "notes": "Crafting ingredients for Guilded Armor only.",
+      "notes": "Crafting ingredients for Gilded Armor only.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1603,6 +1672,381 @@
       "attributes": [
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
+      ]
+    },
+    {
+      "name": "Main Quest",
+      "id": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "College of Winterhold",
+      "id": "AB6F7507-335E-4098-93D4-C705A8335C81",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Companions",
+      "id": "1F4C8C63-7C9E-448B-A3CB-4CE37CA5CDB9",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Dark Brotherhood",
+      "id": "71EC6C04-5E90-4BB1-B5EA-4AF87CD95BA2",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Imperial Legion",
+      "id": "62EDE47A-C89A-4ACD-90C4-BB76B9439C54",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Stormcloaks",
+      "id": "AB9A13E7-F9BD-46D4-A591-BD6B13F9AA43",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Thieves Guild",
+      "id": "1380AE98-2057-48C2-B454-22330C21BEF9",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "id": "CECF69BA-ED02-43FF-BEB8-B4251067C187",
+      "level": 0,
+      "name": "Breezehome",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ]
+    },
+    {
+      "id": "B20A9886-F534-4640-A4E1-7C09E5AFC740",
+      "level": 0,
+      "name": "Honeyside",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ]
+    },
+    {
+      "id": "16D57D7B-CD0A-4CBD-9672-9A3366061485",
+      "level": 0,
+      "name": "Vlindrel Hall",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 8000
+        }
+      ]
+    },
+    {
+      "id": "4D015946-BAB1-4788-99C2-2F81DA9302F0",
+      "level": 0,
+      "name": "Hjerim",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 8000
+        }
+      ]
+    },
+    {
+      "id": "750C67AB-90D1-40CB-8502-81371BD208EE",
+      "level": 0,
+      "name": "Proudspire Manor",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 25000
+        }
+      ]
+    },
+    {
+      "id": "76C5902F-0B70-457F-8F96-A669FBD8350E",
+      "level": 0,
+      "name": "Find 13 Standing Stones",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "CDC1D77C-721E-433D-BA1B-839EDD874535",
+      "level": 0,
+      "name": "Collect 15 Daedric Artifacts",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "02B71115-0ADB-4A9F-9765-8FD62A9307F1",
+      "level": 0,
+      "name": "Learn 20 shouts",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "2F52C9A2-D687-45AC-B9A9-17F59A2B9FC8",
+      "level": 0,
+      "name": "Become a vampire",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "E1D7690D-FBBE-46F5-869C-B7D319FF7F05",
+      "level": 0,
+      "name": "Collect all Unusual Gems",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "B57CDDBA-3243-4CDB-939D-76B4152DF70B",
+      "level": 0,
+      "name": "Argis the Bulwark",
+      "notes": "Available after you become thane of the Reach.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "16D57D7B-CD0A-4CBD-9672-9A3366061485"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ]
+    },
+    {
+      "id": "1C691737-D651-46B3-B6B2-70DF4BCFB2EC",
+      "level": 0,
+      "name": "Calder",
+      "notes": "Available after you become thane of Eastmarch.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "4D015946-BAB1-4788-99C2-2F81DA9302F0"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ]
+    },
+    {
+      "id": "57C84CB7-8441-4CA7-BF88-0CB5FA46B74E",
+      "level": 0,
+      "name": "Iona",
+      "notes": "Available after you become thane of the Rift.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "B20A9886-F534-4640-A4E1-7C09E5AFC740"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ]
+    },
+    {
+      "id": "109A22DF-7492-43E1-B38C-2D524303A833",
+      "level": 0,
+      "name": "Jordis the Sword-Maiden",
+      "notes": "Available after you become thane of Haafingar.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "750C67AB-90D1-40CB-8502-81371BD208EE"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ]
+    },
+    {
+      "id": "38E335B7-4263-4A2E-8E1C-8FDE6D0144D0",
+      "level": 0,
+      "name": "Lydia",
+      "notes": "Available after you become thane of Whiterun (completing Dragon Rising).",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "modules": [
+        {
+          "child": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85"
+        },
+        {
+          "child": "CECF69BA-ED02-43FF-BEB8-B4251067C187"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
       ]
     }
