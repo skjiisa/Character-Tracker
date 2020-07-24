@@ -269,7 +269,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 if tempModule.value {
                     cell.accessoryType = .checkmark
+                    cell.tintColor = .systemGreen
                 } else {
+                    cell.tintColor = .systemBlue
                     if moduleIsExcluded(at: indexPath) {
                         cell.accessoryType = .none
                     } else {

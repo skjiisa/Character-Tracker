@@ -218,8 +218,10 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 
                 if moduleController.tempEntities.first(where: { $0.entity == module })?.value ?? false {
                     cell.accessoryType = .checkmark
+                    cell.tintColor = .systemGreen
                 } else {
                     cell.accessoryType = .disclosureIndicator
+                    cell.tintColor = .systemBlue
                 }
             } else {
                 // This shouldn't happen and is just a fallback in case something breaks
@@ -555,6 +557,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     let modulesSection = section.section as? ModuleType {
                     if let modulesVC = vc as? ModulesTableViewController,
                         let selectedModules = moduleController.getTempModules(from: section.section) {
+                        modulesVC.character = character
                         
                         modulesVC.checkedModules = selectedModules
                         
