@@ -1172,7 +1172,7 @@
       "name": "Elven Armor",
       "id": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68",
       "level": 12,
-      "notes": "Crafting ingredients for non-guilded armor and no shield.",
+      "notes": "Crafting ingredients for non-gilded armor and no shield.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
@@ -1246,10 +1246,10 @@
       ]
     },
     {
-      "name": "Elven Guilded Armor",
+      "name": "Elven Gilded Armor",
       "id": "FF027441-F56C-4ED0-8F6A-878B33DBFD3E",
       "level": 27,
-      "notes": "Crafting ingredients for Guilded Armor only.",
+      "notes": "Crafting ingredients for Gilded Armor only.",
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
