@@ -1,0 +1,81 @@
+{
+  "modules": [
+    {
+      "name": "Main Quest",
+      "id": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "College of Winterhold",
+      "id": "AB6F7507-335E-4098-93D4-C705A8335C81",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Companions",
+      "id": "1F4C8C63-7C9E-448B-A3CB-4CE37CA5CDB9",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Dark Brotherhood",
+      "id": "71EC6C04-5E90-4BB1-B5EA-4AF87CD95BA2",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Imperial Legion",
+      "id": "62EDE47A-C89A-4ACD-90C4-BB76B9439C54",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Stormcloaks",
+      "id": "AB9A13E7-F9BD-46D4-A591-BD6B13F9AA43",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "name": "Thieves Guild",
+      "id": "1380AE98-2057-48C2-B454-22330C21BEF9",
+      "level": 0,
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    }
+  ]
+}
