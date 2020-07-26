@@ -29,9 +29,11 @@ extension UITableViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .automatic)
-            if self.view.window != nil {
+            let rowCount = tableView.numberOfRows(inSection: newIndexPath.section)
+            if self.view.window != nil,
+                rowCount > 0 {
                 let scrollIndexPath: IndexPath
-                if newIndexPath.row >= tableView.numberOfRows(inSection: newIndexPath.section) {
+                if newIndexPath.row >= rowCount {
                     scrollIndexPath = IndexPath(row: newIndexPath.row - 1, section: newIndexPath.section)
                 } else {
                     scrollIndexPath = newIndexPath
