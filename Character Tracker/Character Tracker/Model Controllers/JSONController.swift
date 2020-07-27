@@ -59,20 +59,24 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
 }
 
 class JSONController {
+    static func allObjects<ObjectType: NSManagedObject>(for rep: JSONRepresentation<ObjectType>, context: NSManagedObjectContext) throws -> [ObjectType] {
+        if let repObjects = rep.allObjects {
+            return repObjects
+        } else {
+            let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
+            return try context.fetch(fetchRequest)
+        }
+    }
+    
     static func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
         from json: JSON,
         jsonRepresentation rep: JSONRepresentation<ObjectType>,
         context: NSManagedObjectContext) throws {
         
-        var allObjects: [ObjectType]
-        if let repObjects = rep.allObjects {
-            allObjects = repObjects
-        } else {
-            let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
-            allObjects = try context.fetch(fetchRequest)
-        }
-        
-        if let objects = json[rep.arrayKey].array {
+        if let objects = json[rep.arrayKey].array,
+            objects.count > 0 {
+            var allObjects = try self.allObjects(for: rep, context: context)
+            
             for objectJSON in objects {
                 guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: rep.idIsUUID, context: context) else { continue }
                 
@@ -173,13 +177,7 @@ class JSONController {
     
     static func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws {
         
-        let relationshipObjects: [RelationshipType]
-        if let repObjects = relationship.jsonRepresentation.allObjects {
-            relationshipObjects = repObjects
-        } else {
-            let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<RelationshipType>
-            relationshipObjects = try context.fetch(fetchRequest)
-        }
+        let relationshipObjects = try allObjects(for: relationship.jsonRepresentation, context: context)
         
         guard let id = json[relationship.key].string,
             let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
@@ -198,18 +196,12 @@ class JSONController {
     }
     
     static func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws {
-        
-        let relationshipObjects: [RelationshipType]
-        if let repObjects = relationship.jsonRepresentation.allObjects {
-            relationshipObjects = repObjects
-        } else {
-            let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<RelationshipType>
-            relationshipObjects = try context.fetch(fetchRequest)
-        }
+        guard let idArray = json[relationship.key].array,
+            idArray.count > 0 else { return }
         
         let relationshipsSet = object.mutableSetValue(forKey: relationship.key)
+        let relationshipObjects = try allObjects(for: relationship.jsonRepresentation, context: context)
         
-        guard let idArray = json[relationship.key].array else { return }
         for idJSON in idArray {
             guard let id = idJSON.string,
                 let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
