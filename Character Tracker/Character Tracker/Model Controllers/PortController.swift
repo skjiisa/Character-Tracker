@@ -64,6 +64,11 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType> {
             try? json.merge(with: relationshipJSON)
         }
         
+        for relationship in relationshipObjects {
+            guard let relationshipJSON = relationship.json(object) else { continue }
+            try? json.merge(with: relationshipJSON)
+        }
+        
         return json
     }
 }
@@ -75,6 +80,7 @@ protocol JSONRelationshipProtocol {
     var child: RelationshipProtocol { get set }
     
     func addRelationship<FunctionType: NSManagedObject>(to object: FunctionType, json: JSON, context: NSManagedObjectContext) throws
+    func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON?
 }
 
 class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRelationshipProtocol {
@@ -113,6 +119,41 @@ class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSO
         }
         
         self.allObjects = allObjects
+    }
+    
+    func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON? {
+        guard let relationshipObjects = object.value(forKey: key) as? Set<NSManagedObject> else { return nil }
+        
+        var objects: [JSON] = []
+        
+        for object in relationshipObjects {
+            guard let relationshipObject = object.value(forKey: child.key) as? NSManagedObject else { return nil }
+            let idObject = relationshipObject.value(forKey: "id")
+            let id: String
+            
+            if let idString = idObject as? String {
+                id = idString
+            } else if let uuid = idObject as? UUID {
+                id = uuid.uuidString
+            } else {
+                continue
+            }
+            
+            var json = JSON([child.key:id])
+            
+            for attribute in attributes {
+                guard let attributeValue = object.value(forKey: attribute) else { continue }
+                json[attribute].object = attributeValue
+            }
+            
+            objects.append(json)
+        }
+        
+        if objects.count == 0 {
+            return nil
+        }
+        
+        return JSON([key: objects])
     }
 }
 

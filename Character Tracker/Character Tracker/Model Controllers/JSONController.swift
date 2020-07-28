@@ -10,6 +10,8 @@ import CoreData
 import SwiftyJSON
 
 protocol RelationshipProtocol {
+    var key: String { get }
+    
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, from string: String, context: NSManagedObjectContext) throws
     func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, relationshipObject: RelationshipType, context: NSManagedObjectContext)
@@ -21,7 +23,7 @@ protocol RelationshipProtocol {
 }
 
 struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
-    let key: String
+    var key: String
     let jsonRepresentation: JSONRepresentation<ObjectType>
     
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws {
