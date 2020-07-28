@@ -23,11 +23,20 @@ import SwiftyJSON
 
 //MARK: JSONRepresentation
 
-class JSONRepresentation<ObjectType: NSManagedObject> {
+class JSONEntity<ObjectType: NSManagedObject> {
+    var allObjects: [ObjectType]?
+    
+    func clearObjects() {
+        allObjects = nil
+    }
+}
+
+class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType> {
     var arrayKey: String
     var attributes: [String]
     var toOneRelationships: [RelationshipProtocol]
     var toManyRelationships: [RelationshipProtocol]
+    var relationshipObjects: [JSONRelationshipProtocol] = []
     var idIsUUID: Bool = true
     
     init(arrayKey: String, attributes: [String], toOneRelationships: [RelationshipProtocol] = [], toManyRelationships: [RelationshipProtocol] = [], idIsUUID: Bool = true) {
@@ -36,12 +45,6 @@ class JSONRepresentation<ObjectType: NSManagedObject> {
         self.toOneRelationships = toOneRelationships
         self.toManyRelationships = toManyRelationships
         self.idIsUUID = idIsUUID
-    }
-    
-    var allObjects: [ObjectType]?
-    
-    func clearObjects() {
-        allObjects = nil
     }
     
     func json(_ object: ObjectType) -> JSON {
@@ -65,6 +68,54 @@ class JSONRepresentation<ObjectType: NSManagedObject> {
     }
 }
 
+protocol JSONRelationshipProtocol {
+    var key: String { get set }
+    var attributes: [String] { get set }
+    var parent: RelationshipProtocol { get set }
+    var child: RelationshipProtocol { get set }
+    
+    func addRelationship<FunctionType: NSManagedObject>(to object: FunctionType, json: JSON, context: NSManagedObjectContext) throws
+}
+
+class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRelationshipProtocol {
+    var key: String
+    var attributes: [String]
+    var parent: RelationshipProtocol
+    var child: RelationshipProtocol
+    
+    init(key: String, attributes: [String], parent: RelationshipProtocol, child: RelationshipProtocol) {
+        self.key = key
+        self.attributes = attributes
+        self.parent = parent
+        self.child = child
+    }
+    
+    func addRelationship<FunctionType: NSManagedObject>(to inputObject: FunctionType, json: JSON, context: NSManagedObjectContext) throws {
+        guard let objects = json[key].array else { return }
+        
+        var allObjects = try JSONController.allObjects(for: self, context: context)
+        
+        for objectJSON in objects {
+            let object: ObjectType
+            if let existingObject = allObjects.first(where: { existingObject -> Bool in
+                return parent.object(existingObject, isRelatedTo: inputObject)
+                    && child.object(existingObject, matches: objectJSON)
+            }) {
+                object = existingObject
+            } else {
+                object = ObjectType(context: context)
+                parent.addRelationship(to: object, relationshipObject: inputObject, context: context)
+                try child.addRelationship(to: object, json: objectJSON, context: context)
+            }
+
+            JSONController.importAttributes(with: attributes, for: object, from: objectJSON)
+            allObjects.append(object)
+        }
+        
+        self.allObjects = allObjects
+    }
+}
+
 //MARK: PortController
 
 // Import and Export
@@ -81,20 +132,24 @@ class PortController {
     static private(set) var shared: PortController = PortController()
     
     init() {
+        // Games
         games = JSONRepresentation<Game>(
             arrayKey: "games",
             attributes: ["name", "index", "mainline"])
         
+        // Attribute Types
         attributeTypes = JSONRepresentation<AttributeType>(
             arrayKey: "attribute_types",
             attributes: ["name"])
         
+        // Attribute Type Sections
         attributeTypesRelationship = Relationship(key: "type", jsonRepresentation: attributeTypes)
         attributeTypeSections = JSONRepresentation<AttributeTypeSection>(
             arrayKey: "attribute_type_sections",
             attributes: ["name", "maxPriority", "minPriority"],
             toOneRelationships: [attributeTypesRelationship])
         
+        // Attributes
         gamesRelationship = Relationship(key: "games", jsonRepresentation: games)
         attributes = JSONRepresentation<Attribute>(
             arrayKey: "attributes",
@@ -102,16 +157,19 @@ class PortController {
             toOneRelationships: [attributeTypesRelationship],
             toManyRelationships: [gamesRelationship])
         
+        // Module Types
         moduleTypes = JSONRepresentation<ModuleType>(
             arrayKey: "module_types",
             attributes: ["name"])
         
+        // Ingredients
         ingredients = JSONRepresentation<Ingredient>(
             arrayKey: "ingredients",
             attributes: ["name"],
             toManyRelationships: [gamesRelationship],
             idIsUUID: false)
         
+        // Modules
         moduleTypesRelationship = Relationship(key: "type", jsonRepresentation: moduleTypes)
         modules = JSONRepresentation<Module>(
             arrayKey: "modules",
@@ -119,11 +177,30 @@ class PortController {
             toOneRelationships: [moduleTypesRelationship],
             toManyRelationships: [gamesRelationship])
         
+        // Module Ingredients
+        ingredientRelationship = Relationship(key: "ingredient", jsonRepresentation: ingredients)
+        moduleRelationship = Relationship(key: "module", jsonRepresentation: modules)
+        moduleIngredients = JSONRelationship<ModuleIngredient>(key: "ingredients", attributes: ["quantity"], parent: moduleRelationship, child: ingredientRelationship)
+        modules.relationshipObjects.append(moduleIngredients)
+        
+        // Module Attributes
+        attributeRelationship = Relationship(key: "attribute", jsonRepresentation: attributes)
+        moduleAttributes = JSONRelationship<ModuleAttribute>(key: "attributes", attributes: [], parent: moduleRelationship, child: attributeRelationship)
+        modules.relationshipObjects.append(moduleAttributes)
+        
+        // Module Modules
+        parentModuleRelationship = Relationship(key: "parent", jsonRepresentation: modules)
+        childModuleRelationship = Relationship(key: "child", jsonRepresentation: modules)
+        moduleModules = JSONRelationship<ModuleModule>(key: "modules", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
+        modules.relationshipObjects.append(moduleModules)
+        
+        // Import Races
         races = JSONRepresentation<Race>(
             arrayKey: "races",
             attributes: ["name"],
             toManyRelationships: [gamesRelationship])
         
+        // Import Characters
         raceRelationship = Relationship(key: "race", jsonRepresentation: races)
         gameRelationship = Relationship(key: "game", jsonRepresentation: games)
         characters = JSONRepresentation<Character>(
@@ -149,6 +226,17 @@ class PortController {
     var moduleTypesRelationship: Relationship<ModuleType>
     var modules: JSONRepresentation<Module>
     
+    var ingredientRelationship: Relationship<Ingredient>
+    var moduleRelationship: Relationship<Module>
+    var moduleIngredients: JSONRelationship<ModuleIngredient>
+
+    var attributeRelationship: Relationship<Attribute>
+    var moduleAttributes: JSONRelationship<ModuleAttribute>
+    
+    var parentModuleRelationship: Relationship<Module>
+    var childModuleRelationship: Relationship<Module>
+    var moduleModules: JSONRelationship<ModuleModule>
+    
     var races: JSONRepresentation<Race>
     
     var raceRelationship: Relationship<Race>
@@ -167,78 +255,14 @@ class PortController {
     }
     
     func loadData(json importJSON: JSON, context: NSManagedObjectContext) throws {
-        // Import Games
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: games, context: context)
-        
-        // Import Attribute Types
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypes, context: context)
-        
-        // Import Attribute Type Sections
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypeSections, context: context)
-        
-        // Import Attributes
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributes, context: context)
-        
-        // Import Module Types
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: moduleTypes, context: context)
-        
-        // Import Ingredients
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: ingredients, context: context)
-        
-        // Import Modules
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: modules, context: context)
-        
-        // Import Module Ingredients
-        
-        let ingredientRelationship = Relationship(key: "ingredient", jsonRepresentation: ingredients)
-        let moduleRelationship = Relationship(key: "module", jsonRepresentation: modules)
-        let _: [ModuleIngredient] = try JSONController.fetchAndImportAllRelationshipObjects(
-            from: importJSON,
-            arrayKey: "modules",
-            relationshipKey: "ingredients",
-            attributes: ["quantity"],
-            parentRelationship: moduleRelationship,
-            childRelationship: ingredientRelationship,
-            context: context)
-        
-        // Import Module Attributes
-        
-        let attributeRelationship = Relationship(key: "attribute", jsonRepresentation: attributes)
-        let _: [ModuleAttribute] = try JSONController.fetchAndImportAllRelationshipObjects(
-            from: importJSON,
-            arrayKey: "modules",
-            relationshipKey: "attributes",
-            attributes: [],
-            parentRelationship: moduleRelationship,
-            childRelationship: attributeRelationship,
-            context: context)
-        
-        // Import Module Modules
-        
-        let parentModuleRelationship = Relationship(key: "parent", jsonRepresentation: modules)
-        let childModuleRelationship = Relationship(key: "child", jsonRepresentation: modules)
-        let _: [ModuleModule] = try JSONController.fetchAndImportAllRelationshipObjects(
-            from: importJSON,
-            arrayKey: "modules",
-            relationshipKey: "modules",
-            attributes: [],
-            parentRelationship: parentModuleRelationship,
-            childRelationship: childModuleRelationship,
-            context: context)
-        
-        // Import Races
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: races, context: context)
-        
-        // Import Characters
-        
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: characters, context: context)
         
         CoreDataStack.shared.save(context: context)

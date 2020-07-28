@@ -12,9 +12,11 @@ import SwiftyJSON
 protocol RelationshipProtocol {
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, from string: String, context: NSManagedObjectContext) throws
+    func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, relationshipObject: RelationshipType, context: NSManagedObjectContext)
     func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches json: JSON) -> Bool
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches string: String) -> Bool
+    func object<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(_ object: ObjectType, isRelatedTo relative: RelationshipType) -> Bool
     func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON?
 }
 
@@ -30,6 +32,10 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
         let dictionary: [String: String] = [key: string]
         let json = JSON(dictionary)
         try JSONController.addRelationship(to: object, json: json, with: self, context: context)
+    }
+    
+    func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, relationshipObject: RelationshipType, context: NSManagedObjectContext) {
+        object.setValue(relationshipObject, forKey: key)
     }
     
     func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws {
@@ -48,6 +54,11 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
         return self.object(object, matches: idString)
     }
     
+    func object<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(_ object: ObjectType, isRelatedTo relative: RelationshipType) -> Bool {
+        guard let relationshipObject = object.value(forKey: key) as? RelationshipType else { return false }
+        return relationshipObject == object
+    }
+    
     func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON? {
         guard let relationshipObject = object.value(forKey: key) as? NSManagedObject,
             let relationshipID = relationshipObject.value(forKey: "id") as? UUID else { return nil }
@@ -59,7 +70,9 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
 }
 
 class JSONController {
-    static func allObjects<ObjectType: NSManagedObject>(for rep: JSONRepresentation<ObjectType>, context: NSManagedObjectContext) throws -> [ObjectType] {
+    private init() {}
+    
+    static func allObjects<ObjectType: NSManagedObject>(for rep: JSONEntity<ObjectType>, context: NSManagedObjectContext) throws -> [ObjectType] {
         if let repObjects = rep.allObjects {
             return repObjects
         } else {
@@ -90,50 +103,15 @@ class JSONController {
                     try relationship.addRelationships(to: object, json: objectJSON, context: context)
                 }
                 
+                for relationship in rep.relationshipObjects {
+                    try relationship.addRelationship(to: object, json: objectJSON, context: context)
+                }
+                
                 allObjects.append(object)
             }
             
             rep.allObjects = allObjects
         }
-    }
-    
-    static func fetchAndImportAllRelationshipObjects<ObjectType: NSManagedObject>(
-        from json: JSON,
-        arrayKey: String,                                   // "modules"
-        relationshipKey: String,                            // "ingredients"
-        attributes: [String],                               // "quantity"
-        parentRelationship: RelationshipProtocol,           // "module", [Module]
-        childRelationship: RelationshipProtocol,            // "ingredient", [Ingredient]
-        context: NSManagedObjectContext) throws -> [ObjectType] {
-        
-        let fetchRequest = ObjectType.fetchRequest() as! NSFetchRequest<ObjectType>
-        var allObjects = try context.fetch(fetchRequest)    // [ModuleIngredient]
-        
-        if let parentObjects = json[arrayKey].array {
-            for parentObjectJSON in parentObjects {
-                guard let parentObjectID = parentObjectJSON["id"].string,
-                    let objects = parentObjectJSON[relationshipKey].array else { continue }
-                
-                for objectJSON in objects {
-                    let object: ObjectType
-                    if let existingObject = allObjects.first(where: { existingObject -> Bool in
-                        return parentRelationship.object(existingObject, matches: parentObjectID)
-                            && childRelationship.object(existingObject, matches: objectJSON)
-                    }) {
-                        object = existingObject
-                    } else {
-                        object = ObjectType(context: context)
-                        try parentRelationship.addRelationship(to: object, from: parentObjectID, context: context)
-                        try childRelationship.addRelationship(to: object, json: objectJSON, context: context)
-                    }
-                    
-                    importAttributes(with: attributes, for: object, from: objectJSON)
-                    allObjects.append(object)
-                }
-            }
-        }
-        
-        return allObjects
     }
     
     // This could maybe be simplified using implicit conversions between Strings and UUIDs
@@ -167,7 +145,7 @@ class JSONController {
         }
     }
     
-    static private func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
+    static func importAttributes<ObjectType: NSManagedObject>(with keys: [String], for object: ObjectType, from json: JSON) {
         for key in keys {
             let value = json[key].object
             if value is NSNull { continue }
