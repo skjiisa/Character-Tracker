@@ -62,12 +62,23 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     }
     
     func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON? {
-        guard let relationshipObject = object.value(forKey: key) as? NSManagedObject,
-            let relationshipID = relationshipObject.value(forKey: "id") as? UUID else { return nil }
+        guard let relationship = object.value(forKey: key) else { return nil }
         
-        var json = JSON([:])
-        json[key].object = relationshipID.uuidString
-        return json
+        if let relationshipObject = relationship as? NSManagedObject,
+            let id = relationshipObject.idString {
+            return JSON([key: id])
+        }
+        
+        if let relationshipObjects = relationship as? Set<NSManagedObject> {
+            var ids: [String] = []
+            for object in relationshipObjects {
+                guard let id = object.idString else { continue }
+                ids.append(id)
+            }
+            return JSON([key:ids])
+        }
+        
+        return nil
     }
 }
 

@@ -64,6 +64,11 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType> {
             try? json.merge(with: relationshipJSON)
         }
         
+        for relationship in toManyRelationships {
+            guard let relationshipJSON = relationship.json(object) else { continue }
+            try? json.merge(with: relationshipJSON)
+        }
+        
         for relationship in relationshipObjects {
             guard let relationshipJSON = relationship.json(object) else { continue }
             try? json.merge(with: relationshipJSON)
@@ -127,17 +132,8 @@ class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSO
         var objects: [JSON] = []
         
         for object in relationshipObjects {
-            guard let relationshipObject = object.value(forKey: child.key) as? NSManagedObject else { return nil }
-            let idObject = relationshipObject.value(forKey: "id")
-            let id: String
-            
-            if let idString = idObject as? String {
-                id = idString
-            } else if let uuid = idObject as? UUID {
-                id = uuid.uuidString
-            } else {
-                continue
-            }
+            guard let relationshipObject = object.value(forKey: child.key) as? NSManagedObject,
+                let id = relationshipObject.idString else { continue }
             
             var json = JSON([child.key:id])
             
