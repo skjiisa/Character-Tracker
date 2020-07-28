@@ -162,136 +162,112 @@ class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSO
 // Import and Export
 class PortController {
     
-//    func rep<ObjectType: NSManagedObject>() -> JSONRepresentation<ObjectType>? {
-//        if ObjectType.self == Game.self {
-//            return games as? JSONRepresentation<ObjectType>
-//        }
-//
-//        return nil
-//    }
+    static private(set) var shared: PortController = PortController()
     
-    func jsonRepresentation<ObjectType: NSManagedObject>(for _: ObjectType) -> JSONRepresentationProtocol? {
-        jsonRepresentations[String(describing: ObjectType.self)]
+    private var jsonRepresentations: [String: JSONRepresentationProtocol] = [:]
+    
+    func jsonRepresentation<ObjectType: NSManagedObject>(for _: ObjectType) -> JSONRepresentation<ObjectType>? {
+        jsonRepresentations[String(describing: ObjectType.self)] as? JSONRepresentation<ObjectType>
     }
     
-    lazy var jsonRepresentations: [String: JSONRepresentationProtocol] = [
-        "Game": games,
-        "Module": modules
-    ]
+    func jsonRepresentation<ObjectType: NSManagedObject>() -> JSONRepresentation<ObjectType>?  {
+        jsonRepresentations[String(describing: ObjectType.self)] as? JSONRepresentation<ObjectType>
+    }
     
-    static private(set) var shared: PortController = PortController()
+    func jsonRepresentation<ObjectType: NSManagedObject>(_: ObjectType.Type) -> JSONRepresentation<ObjectType>?  {
+        jsonRepresentations[String(describing: ObjectType.self)] as? JSONRepresentation<ObjectType>
+    }
+    
+    func setRep<ObjectType: NSManagedObject>(_ rep: JSONRepresentation<ObjectType>) {
+        jsonRepresentations[String(describing: ObjectType.self)] = rep
+    }
     
     init() {
         // Games
-        games = JSONRepresentation<Game>(
+        let games = JSONRepresentation<Game>(
             arrayKey: "games",
             attributes: ["name", "index", "mainline"])
+        setRep(games)
         
         // Attribute Types
-        attributeTypes = JSONRepresentation<AttributeType>(
+        let attributeTypes = JSONRepresentation<AttributeType>(
             arrayKey: "attribute_types",
             attributes: ["name"])
+        setRep(attributeTypes)
         
         // Attribute Type Sections
-        attributeTypesRelationship = Relationship(key: "type", jsonRepresentation: attributeTypes)
-        attributeTypeSections = JSONRepresentation<AttributeTypeSection>(
+        let attributeTypesRelationship = Relationship(key: "type", jsonRepresentation: attributeTypes)
+        let attributeTypeSections = JSONRepresentation<AttributeTypeSection>(
             arrayKey: "attribute_type_sections",
             attributes: ["name", "maxPriority", "minPriority"],
             toOneRelationships: [attributeTypesRelationship])
+        setRep(attributeTypeSections)
         
         // Attributes
-        gamesRelationship = Relationship(key: "games", jsonRepresentation: games)
-        attributes = JSONRepresentation<Attribute>(
+        let gamesRelationship = Relationship(key: "games", jsonRepresentation: games)
+        let attributes = JSONRepresentation<Attribute>(
             arrayKey: "attributes",
             attributes: ["name"],
             toOneRelationships: [attributeTypesRelationship],
             toManyRelationships: [gamesRelationship])
+        setRep(attributes)
         
         // Module Types
-        moduleTypes = JSONRepresentation<ModuleType>(
+        let moduleTypes = JSONRepresentation<ModuleType>(
             arrayKey: "module_types",
             attributes: ["name"])
+        setRep(moduleTypes)
         
         // Ingredients
-        ingredients = JSONRepresentation<Ingredient>(
+        let ingredients = JSONRepresentation<Ingredient>(
             arrayKey: "ingredients",
             attributes: ["name"],
             toManyRelationships: [gamesRelationship],
             idIsUUID: false)
+        setRep(ingredients)
         
         // Modules
-        moduleTypesRelationship = Relationship(key: "type", jsonRepresentation: moduleTypes)
-        modules = JSONRepresentation<Module>(
+        let moduleTypesRelationship = Relationship(key: "type", jsonRepresentation: moduleTypes)
+        let modules = JSONRepresentation<Module>(
             arrayKey: "modules",
             attributes: ["name", "level", "notes"],
             toOneRelationships: [moduleTypesRelationship],
             toManyRelationships: [gamesRelationship])
+        setRep(modules)
         
         // Module Ingredients
-        ingredientRelationship = Relationship(key: "ingredient", jsonRepresentation: ingredients)
-        moduleRelationship = Relationship(key: "module", jsonRepresentation: modules)
-        moduleIngredients = JSONRelationship<ModuleIngredient>(key: "ingredients", attributes: ["quantity"], parent: moduleRelationship, child: ingredientRelationship)
+        let ingredientRelationship = Relationship(key: "ingredient", jsonRepresentation: ingredients)
+        let moduleRelationship = Relationship(key: "module", jsonRepresentation: modules)
+        let moduleIngredients = JSONRelationship<ModuleIngredient>(key: "ingredients", attributes: ["quantity"], parent: moduleRelationship, child: ingredientRelationship)
         modules.relationshipObjects.append(moduleIngredients)
         
         // Module Attributes
-        attributeRelationship = Relationship(key: "attribute", jsonRepresentation: attributes)
-        moduleAttributes = JSONRelationship<ModuleAttribute>(key: "attributes", attributes: [], parent: moduleRelationship, child: attributeRelationship)
+        let attributeRelationship = Relationship(key: "attribute", jsonRepresentation: attributes)
+        let moduleAttributes = JSONRelationship<ModuleAttribute>(key: "attributes", attributes: [], parent: moduleRelationship, child: attributeRelationship)
         modules.relationshipObjects.append(moduleAttributes)
         
         // Module Modules
-        parentModuleRelationship = Relationship(key: "parent", jsonRepresentation: modules)
-        childModuleRelationship = Relationship(key: "child", jsonRepresentation: modules)
-        moduleModules = JSONRelationship<ModuleModule>(key: "children", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
+        let parentModuleRelationship = Relationship(key: "parent", jsonRepresentation: modules)
+        let childModuleRelationship = Relationship(key: "child", jsonRepresentation: modules)
+        let moduleModules = JSONRelationship<ModuleModule>(key: "children", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
         modules.relationshipObjects.append(moduleModules)
         
         // Import Races
-        races = JSONRepresentation<Race>(
+        let races = JSONRepresentation<Race>(
             arrayKey: "races",
             attributes: ["name"],
             toManyRelationships: [gamesRelationship])
+        setRep(races)
         
         // Import Characters
-        raceRelationship = Relationship(key: "race", jsonRepresentation: races)
-        gameRelationship = Relationship(key: "game", jsonRepresentation: games)
-        characters = JSONRepresentation<Character>(
+        let raceRelationship = Relationship(key: "race", jsonRepresentation: races)
+        let gameRelationship = Relationship(key: "game", jsonRepresentation: games)
+        let characters = JSONRepresentation<Character>(
             arrayKey: "characters",
             attributes: ["female", "name"],
             toOneRelationships: [raceRelationship, gameRelationship])
+        setRep(characters)
     }
-    
-    var games: JSONRepresentation<Game>
-    
-    var attributeTypes: JSONRepresentation<AttributeType>
-    
-    var attributeTypesRelationship: Relationship<AttributeType>
-    var attributeTypeSections: JSONRepresentation<AttributeTypeSection>
-    
-    var gamesRelationship: Relationship<Game>
-    var attributes: JSONRepresentation<Attribute>
-    
-    var moduleTypes: JSONRepresentation<ModuleType>
-    
-    var ingredients: JSONRepresentation<Ingredient>
-    
-    var moduleTypesRelationship: Relationship<ModuleType>
-    var modules: JSONRepresentation<Module>
-    
-    var ingredientRelationship: Relationship<Ingredient>
-    var moduleRelationship: Relationship<Module>
-    var moduleIngredients: JSONRelationship<ModuleIngredient>
-
-    var attributeRelationship: Relationship<Attribute>
-    var moduleAttributes: JSONRelationship<ModuleAttribute>
-    
-    var parentModuleRelationship: Relationship<Module>
-    var childModuleRelationship: Relationship<Module>
-    var moduleModules: JSONRelationship<ModuleModule>
-    
-    var races: JSONRepresentation<Race>
-    
-    var raceRelationship: Relationship<Race>
-    var gameRelationship: Relationship<Game>
-    var characters: JSONRepresentation<Character>
     
     func preloadData() {
         do {
@@ -304,22 +280,28 @@ class PortController {
         }
     }
     
+    func importClass<ObjectType: NSManagedObject>(_: ObjectType.Type, json importJSON: JSON, context: NSManagedObjectContext) throws {
+        if let rep = jsonRepresentation(ObjectType.self) {
+            try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: rep, context: context)
+        }
+    }
+    
     func importData(json importJSON: JSON, context: NSManagedObjectContext) throws {
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: games, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypes, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypeSections, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributes, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: moduleTypes, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: ingredients, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: modules, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: races, context: context)
-        try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: characters, context: context)
+        try importClass(Game.self, json: importJSON, context: context)
+        try importClass(AttributeType.self, json: importJSON, context: context)
+        try importClass(AttributeTypeSection.self, json: importJSON, context: context)
+        try importClass(Attribute.self, json: importJSON, context: context)
+        try importClass(ModuleType.self, json: importJSON, context: context)
+        try importClass(Ingredient.self, json: importJSON, context: context)
+        try importClass(Module.self, json: importJSON, context: context)
+        try importClass(Race.self, json: importJSON, context: context)
+        try importClass(Character.self, json: importJSON, context: context)
         
         CoreDataStack.shared.save(context: context)
     }
     
     func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
-        guard let jsonRep = jsonRepresentation(for: object) as? JSONRepresentation<ObjectType>,
+        guard let jsonRep = jsonRepresentation(for: object),
             let json = jsonRep.json(object).rawString(),
             let icon = UIImage(named: "IconVector"),
             let inputImage = CIImage(image: icon) else { return nil }
@@ -329,7 +311,7 @@ class PortController {
         let context = CIContext(options: nil)
         let blur = CIFilter(name: "CIGaussianBlur")
         blur?.setValue(inputImage, forKey: kCIInputImageKey)
-        //        blur?.setValue(10, forKey: kCIInputRadiusKey)
+//        blur?.setValue(10, forKey: kCIInputRadiusKey)
         let ciImage = blur?.outputImage
         if let ciImage = ciImage {
             watermark = context.createCGImage(ciImage, from: inputImage.extent)
