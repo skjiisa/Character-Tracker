@@ -191,7 +191,7 @@ class PortController {
         // Module Modules
         parentModuleRelationship = Relationship(key: "parent", jsonRepresentation: modules)
         childModuleRelationship = Relationship(key: "child", jsonRepresentation: modules)
-        moduleModules = JSONRelationship<ModuleModule>(key: "modules", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
+        moduleModules = JSONRelationship<ModuleModule>(key: "children", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
         modules.relationshipObjects.append(moduleModules)
         
         // Import Races

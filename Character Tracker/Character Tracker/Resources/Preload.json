@@ -1343,7 +1343,7 @@
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
       ],
-      "modules": [
+      "children": [
         {
           "child": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68"
         }
@@ -1903,7 +1903,7 @@
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
       "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
-      "modules": [
+      "children": [
         {
           "child": "16D57D7B-CD0A-4CBD-9672-9A3366061485"
         }
@@ -1934,7 +1934,7 @@
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
       "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
-      "modules": [
+      "children": [
         {
           "child": "4D015946-BAB1-4788-99C2-2F81DA9302F0"
         }
@@ -1965,7 +1965,7 @@
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
       "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
-      "modules": [
+      "children": [
         {
           "child": "B20A9886-F534-4640-A4E1-7C09E5AFC740"
         }
@@ -1996,7 +1996,7 @@
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
       "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
-      "modules": [
+      "children": [
         {
           "child": "750C67AB-90D1-40CB-8502-81371BD208EE"
         }
@@ -2027,7 +2027,7 @@
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
       "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
-      "modules": [
+      "children": [
         {
           "child": "268B2D42-93D8-4243-A1AA-0F6BDFF29C85"
         },
