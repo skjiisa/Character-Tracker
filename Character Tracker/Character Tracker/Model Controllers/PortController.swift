@@ -6,8 +6,10 @@
 //  Copyright © 2020 Isaac Lyons. All rights reserved.
 //
 
+import UIKit
 import CoreData
 import SwiftyJSON
+import EFQRCode
 
 //  JSON -> NSManagedObjects
 //      Key of the array of objects in the JSON
@@ -31,7 +33,9 @@ class JSONEntity<ObjectType: NSManagedObject> {
     }
 }
 
-class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType> {
+protocol JSONRepresentationProtocol {}
+
+class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRepresentationProtocol {
     var arrayKey: String
     var attributes: [String]
     var toOneRelationships: [RelationshipProtocol]
@@ -166,6 +170,15 @@ class PortController {
 //        return nil
 //    }
     
+    func jsonRepresentation<ObjectType: NSManagedObject>(for _: ObjectType) -> JSONRepresentationProtocol? {
+        jsonRepresentations[String(describing: ObjectType.self)]
+    }
+    
+    lazy var jsonRepresentations: [String: JSONRepresentationProtocol] = [
+        "Game": games,
+        "Module": modules
+    ]
+    
     static private(set) var shared: PortController = PortController()
     
     init() {
@@ -285,13 +298,13 @@ class PortController {
             let preloadDataURL = Bundle.main.url(forResource: "Preload", withExtension: "json")!
             let preloadData = try Data(contentsOf: preloadDataURL)
             let importJSON = try JSON(data: preloadData)
-            try loadData(json: importJSON, context: CoreDataStack.shared.mainContext)
+            try importData(json: importJSON, context: CoreDataStack.shared.mainContext)
         } catch {
             NSLog("Error preloading data: \(error)")
         }
     }
     
-    func loadData(json importJSON: JSON, context: NSManagedObjectContext) throws {
+    func importData(json importJSON: JSON, context: NSManagedObjectContext) throws {
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: games, context: context)
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypes, context: context)
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: attributeTypeSections, context: context)
@@ -303,6 +316,30 @@ class PortController {
         try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: characters, context: context)
         
         CoreDataStack.shared.save(context: context)
+    }
+    
+    func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
+        guard let jsonRep = jsonRepresentation(for: object) as? JSONRepresentation<ObjectType>,
+            let json = jsonRep.json(object).rawString(),
+            let icon = UIImage(named: "IconVector"),
+            let inputImage = CIImage(image: icon) else { return nil }
+        
+        var watermark: CGImage?
+        
+        let context = CIContext(options: nil)
+        let blur = CIFilter(name: "CIGaussianBlur")
+        blur?.setValue(inputImage, forKey: kCIInputImageKey)
+        //        blur?.setValue(10, forKey: kCIInputRadiusKey)
+        let ciImage = blur?.outputImage
+        if let ciImage = ciImage {
+            watermark = context.createCGImage(ciImage, from: inputImage.extent)
+        }
+        
+        return EFQRCode.generate(content: json,
+                                 size: EFIntSize(width: 512, height: 512),
+                                 watermark: watermark,
+                                 inputCorrectionLevel: .m,
+                                 magnification: EFIntSize(width: 10, height: 10))
     }
     
 }
