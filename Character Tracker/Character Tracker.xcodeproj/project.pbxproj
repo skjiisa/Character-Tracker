@@ -20,6 +20,7 @@
 		595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 595F7723236A55EF00151209 /* Character_Tracker.xcdatamodeld */; };
 		595F7727236A55F300151209 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595F7726236A55F300151209 /* Assets.xcassets */; };
 		595F772A236A55F300151209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7728236A55F300151209 /* LaunchScreen.storyboard */; };
+		596C947424CFC23400EAA609 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 596C947324CFC23400EAA609 /* EFQRCode */; };
 		5972482F24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */; };
 		597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F124CB8EA900471664 /* TypeFilterSection.swift */; };
 		597545F424CB92DF00471664 /* AttributesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F324CB92DF00471664 /* AttributesFilterForm.swift */; };
@@ -119,6 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */,
+				596C947424CFC23400EAA609 /* EFQRCode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +282,7 @@
 			name = "Character Tracker";
 			packageProductDependencies = (
 				5946EF9323BD660A0077770D /* SwiftyJSON */,
+				596C947324CFC23400EAA609 /* EFQRCode */,
 			);
 			productName = "Character Tracker";
 			productReference = 595F7717236A55EF00151209 /* Character Tracker.app */;
@@ -311,6 +314,7 @@
 			mainGroup = 595F770E236A55EF00151209;
 			packageReferences = (
 				5946EF9223BD66090077770D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 			);
 			productRefGroup = 595F7718236A55EF00151209 /* Products */;
 			projectDirPath = "";
@@ -596,6 +600,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EFPrefix/EFQRCode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -603,6 +615,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5946EF9223BD66090077770D /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		596C947324CFC23400EAA609 /* EFQRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */;
+			productName = EFQRCode;
 		};
 /* End XCSwiftPackageProductDependency section */
 
