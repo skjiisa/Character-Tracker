@@ -14,6 +14,8 @@
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
+		5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073324DCA7FC00BE372F /* QRCodeView.swift */; };
+		5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073524DCB14F00BE372F /* ShareSheet.swift */; };
 		595F771B236A55EF00151209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771A236A55EF00151209 /* AppDelegate.swift */; };
 		595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771C236A55EF00151209 /* SceneDelegate.swift */; };
 		595F7722236A55EF00151209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7720236A55EF00151209 /* Main.storyboard */; };
@@ -67,6 +69,8 @@
 		5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFilterForm.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
+		5959073324DCA7FC00BE372F /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		5959073524DCB14F00BE372F /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		595F771A236A55EF00151209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		595F771C236A55EF00151209 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 				597545F124CB8EA900471664 /* TypeFilterSection.swift */,
 				5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */,
 				597545F324CB92DF00471664 /* AttributesFilterForm.swift */,
+				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
+				5959073524DCB14F00BE372F /* ShareSheet.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -354,6 +360,7 @@
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
+				5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */,
 				59850F46237D0FD400286067 /* LevelTableViewCell.swift in Sources */,
 				594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
@@ -365,6 +372,7 @@
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
+				5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */,
 				59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */,
 				592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */,
 				59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */,

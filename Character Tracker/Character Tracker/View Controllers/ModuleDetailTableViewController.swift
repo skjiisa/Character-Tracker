@@ -6,7 +6,7 @@
 //  Copyright © 2019 Isaac Lyons. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -15,6 +15,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBOutlet weak var completeView: UIView!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var exportView: UIView!
+    @IBOutlet weak var exportButton: UIButton!
     
     //MARK: Properties
     
@@ -469,6 +471,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             completeButton.setTitle("Save to a character to add notes", for: .disabled)
         }
         
+        if editMode {
+            exportView.isHidden = true
+            exportButton.isEnabled = false
+        } else {
+            exportButton.isEnabled = true
+            exportView.isHidden = false
+        }
+        
     }
     
     private func prompt(title: String, message: String) {
@@ -576,6 +586,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
+        updateViews()
     }
     
     @objc private func edit() {
@@ -583,6 +594,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         editMode = true
         
         tableView.reloadData()
+        updateViews()
     }
     
     @objc private func endEdit() {
@@ -591,6 +603,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         view.endEditing(true)
         
         tableView.reloadData()
+        updateViews()
+    }
+    
+    @IBAction func export(_ sender: Any) {
+        guard let module = module,
+            let qrCode = PortController.shared.exportToQRCode(for: module) else { return }
+        
+        let qrCodeView = UIHostingController(rootView:
+            NavigationView {
+                QRCodeView(name: self.module?.name, qrCode: qrCode, delegate: self)
+            }
+        )
+        
+        present(qrCodeView, animated: true)
     }
     
     // MARK: - Navigation
@@ -751,5 +777,13 @@ extension ModuleDetailTableViewController: IngredientsTableDelegate {
 extension ModuleDetailTableViewController: LevelTableViewCellDelegate {
     func levelChanged() {
         moduleHasBeenModified()
+    }
+}
+
+//MARK: SwiftUIModalDelegate
+
+extension ModuleDetailTableViewController: SwiftUIModalDelegate {
+    func dismiss() {
+        dismiss(animated: true)
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import SwiftyJSON
 import EFQRCode
+import MobileCoreServices
 
 //  JSON -> NSManagedObjects
 //      Key of the array of objects in the JSON
@@ -81,6 +82,8 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
         return json
     }
 }
+
+//MARK: JSONRelationship
 
 protocol JSONRelationshipProtocol {
     var key: String { get set }
@@ -163,6 +166,8 @@ class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSO
 class PortController {
     
     static private(set) var shared: PortController = PortController()
+    
+    //MARK: Config
     
     private var jsonRepresentations: [String: JSONRepresentationProtocol] = [:]
     
@@ -269,6 +274,8 @@ class PortController {
         setRep(characters)
     }
     
+    //MARK: Import
+    
     func preloadData() {
         do {
             let preloadDataURL = Bundle.main.url(forResource: "Preload", withExtension: "json")!
@@ -300,9 +307,14 @@ class PortController {
         CoreDataStack.shared.save(context: context)
     }
     
+    //MARK: Export
+    
     func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
         guard let jsonRep = jsonRepresentation(for: object),
-            let json = jsonRep.json(object).rawString(),
+            // I don't specifically want fragments allowed here,
+            // but you have to chose an option, otherwise it defaults to pretty printed
+            // which will take up a lot of extra space in the QR code
+            let json = jsonRep.json(object).rawString(options: .fragmentsAllowed),
             let icon = UIImage(named: "IconVector"),
             let inputImage = CIImage(image: icon) else { return nil }
         
@@ -322,6 +334,20 @@ class PortController {
                                  watermark: watermark,
                                  inputCorrectionLevel: .m,
                                  magnification: EFIntSize(width: 10, height: 10))
+    }
+    
+    func saveTempQRCode(cgImage: CGImage) -> URL? {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("QRCode")
+            .appendingPathExtension("png")
+        guard let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, cgImage, nil)
+        return CGImageDestinationFinalize(destination) ? url : nil
+    }
+    
+    func saveTempQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
+        guard let qrCode = exportToQRCode(for: object) else { return nil }
+        return saveTempQRCode(cgImage: qrCode)
     }
     
 }
