@@ -370,4 +370,10 @@ class PortController {
         return nil
     }
     
+    func exportJSONText<ObjectType: NSManagedObject>(for object: ObjectType) -> String? {
+        guard let jsonString = jsonString(for: object) else { return nil }
+        
+        return UserDefaults.standard.bool(forKey: "jsonExportBackticks") ? "```json\n" + jsonString + "\n```" : jsonString
+    }
+    
 }

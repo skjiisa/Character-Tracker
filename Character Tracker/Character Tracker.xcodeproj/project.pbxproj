@@ -16,6 +16,7 @@
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
 		5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073324DCA7FC00BE372F /* QRCodeView.swift */; };
 		5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073524DCB14F00BE372F /* ShareSheet.swift */; };
+		5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073724DCBC8E00BE372F /* PreferencesForm.swift */; };
 		595F771B236A55EF00151209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771A236A55EF00151209 /* AppDelegate.swift */; };
 		595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771C236A55EF00151209 /* SceneDelegate.swift */; };
 		595F7722236A55EF00151209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7720236A55EF00151209 /* Main.storyboard */; };
@@ -71,6 +72,7 @@
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		5959073324DCA7FC00BE372F /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		5959073524DCB14F00BE372F /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		5959073724DCBC8E00BE372F /* PreferencesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesForm.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		595F771A236A55EF00151209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		595F771C236A55EF00151209 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				597545F324CB92DF00471664 /* AttributesFilterForm.swift */,
 				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
 				5959073524DCB14F00BE372F /* ShareSheet.swift */,
+				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
+				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
 				59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */,

@@ -613,9 +613,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             self.qrCode()
         }
         
-        let json = UIAlertAction(title: "JSON", style: .default) { _ in
+        let json = UIAlertAction(title: "JSON Text", style: .default) { _ in
             guard let module = self.module,
-                let json = PortController.shared.jsonString(for: module) else { return }
+                let json = PortController.shared.exportJSONText(for: module) else { return }
             let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
             self.present(activityVC, animated: true)
         }

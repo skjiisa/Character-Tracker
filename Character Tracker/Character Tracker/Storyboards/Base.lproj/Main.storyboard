@@ -158,6 +158,23 @@
                                     <outlet property="button" destination="Dod-Dt-NtF" id="Hh3-HK-4jt"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BasicCell" textLabel="f9d-Iv-8j1" style="IBUITableViewCellStyleDefault" id="pF4-xL-BLA" customClass="LinkTableViewCell" customModule="Character_Tracker" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="316.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pF4-xL-BLA" id="D6F-tU-gfp">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f9d-Iv-8j1">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="9w1-We-Xi2" id="cjh-7p-Oub"/>
@@ -1268,12 +1285,12 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="DTF-qi-Fya"/>
-        <segue reference="lR8-jg-YER"/>
-        <segue reference="x2i-i4-wE1"/>
-        <segue reference="9dZ-mf-KGH"/>
+        <segue reference="Adg-Vf-5jE"/>
+        <segue reference="7MN-57-o6h"/>
+        <segue reference="GZ6-Pz-ZgO"/>
         <segue reference="YvR-e2-XSd"/>
         <segue reference="hwD-cT-7uC"/>
-        <segue reference="TKY-Ee-oVW"/>
+        <segue reference="Jjo-ZB-lgx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gear" catalog="system" width="128" height="119"/>
