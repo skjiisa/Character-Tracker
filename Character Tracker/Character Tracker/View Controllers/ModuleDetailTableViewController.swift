@@ -607,6 +607,44 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     @IBAction func export(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Export \(module?.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
+        
+        let qrCode = UIAlertAction(title: "QR Code", style: .default) { _ in
+            self.qrCode()
+        }
+        
+        let json = UIAlertAction(title: "JSON", style: .default) { _ in
+            guard let module = self.module,
+                let json = PortController.shared.jsonString(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { _ in
+            guard let module = self.module,
+                let url = PortController.shared.saveTempJSON(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        actionSheet.addAction(qrCode)
+        actionSheet.addAction(json)
+        actionSheet.addAction(jsonFile)
+        actionSheet.addAction(cancel)
+        actionSheet.pruneNegativeWidthConstraints()
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = exportButton.convert(exportButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func qrCode() {
         guard let module = module,
             let qrCode = PortController.shared.exportToQRCode(for: module) else { return }
         

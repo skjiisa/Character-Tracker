@@ -309,12 +309,15 @@ class PortController {
     
     //MARK: Export
     
+    func jsonString<ObjectType: NSManagedObject>(for object: ObjectType, prettyPrinted: Bool = true) -> String? {
+        let jsonRep = jsonRepresentation(for: object)
+        // I don't specifically want fragments allowed here,
+        // but you can't have no option. It defaults to pretty printed
+        return jsonRep?.json(object).rawString(options: prettyPrinted ? .prettyPrinted : .fragmentsAllowed)
+    }
+    
     func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
-        guard let jsonRep = jsonRepresentation(for: object),
-            // I don't specifically want fragments allowed here,
-            // but you have to chose an option, otherwise it defaults to pretty printed
-            // which will take up a lot of extra space in the QR code
-            let json = jsonRep.json(object).rawString(options: .fragmentsAllowed),
+        guard let json = jsonString(for: object, prettyPrinted: false),
             let icon = UIImage(named: "IconVector"),
             let inputImage = CIImage(image: icon) else { return nil }
         
@@ -348,6 +351,23 @@ class PortController {
     func saveTempQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
         guard let qrCode = exportToQRCode(for: object) else { return nil }
         return saveTempQRCode(cgImage: qrCode)
+    }
+    
+    func saveTempJSON<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
+        guard let json = jsonString(for: object) else { return nil }
+        
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("export")
+            .appendingPathExtension("json")
+        
+        do {
+            try json.write(to: url, atomically: true, encoding: .utf8)
+            return url
+        } catch {
+            NSLog("Error writing JSON to file: \(error)")
+        }
+        
+        return nil
     }
     
 }
