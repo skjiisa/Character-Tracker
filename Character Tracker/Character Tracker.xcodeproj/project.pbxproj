@@ -56,6 +56,7 @@
 		59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF976237A450D000E90B7 /* ModuleController.swift */; };
 		59BCF979237A5968000E90B7 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF978237A5968000E90B7 /* Section.swift */; };
 		59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */; };
+		59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C116C424DE44560078AA10 /* ScannerViewController.swift */; };
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
@@ -113,6 +114,7 @@
 		59BCF976237A450D000E90B7 /* ModuleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleController.swift; sourceTree = "<group>"; };
 		59BCF978237A5968000E90B7 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Section.swift"; sourceTree = "<group>"; };
+		59C116C424DE44560078AA10 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				59850F41237D061500286067 /* ModuleDetailTableViewController.swift */,
 				59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */,
 				59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */,
+				59C116C424DE44560078AA10 /* ScannerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
 				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
 				59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */,
+				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,

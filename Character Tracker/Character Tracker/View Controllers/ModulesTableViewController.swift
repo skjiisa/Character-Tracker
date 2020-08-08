@@ -90,12 +90,21 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        var rightBarButtonItems: [UIBarButtonItem] = []
+        
         // Add filter button only if there are parameters to filter
         
         if moduleType == nil || fetchedResultsController?.fetchedObjects?.first(where: { $0.attributes?.anyObject() != nil }) != nil {
             let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilter))
-            navigationItem.rightBarButtonItem = filterButton
+            rightBarButtonItems.append(filterButton)
         }
+        
+        // Add QR Code scanner button
+        
+        let qrScannerButton = UIBarButtonItem(image: UIImage(systemName: "qrcode.viewfinder"), style: .plain, target: self, action: #selector(openScanner))
+        rightBarButtonItems.append(qrScannerButton)
+        
+        navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
     @objc private func showFilter() {
@@ -279,6 +288,14 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
+    
+    @objc func openScanner() {
+        let scannerVC = ScannerViewController()
+        scannerVC.title = "Import \(moduleType?.typeName ?? "Module") from QR Code"
+        scannerVC.delegate = self
+        let navigationVC = UINavigationController(rootViewController: scannerVC)
+        present(navigationVC, animated: true)
+    }
 
     //MARK: Navigation
 
@@ -396,5 +413,13 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
     
     func dismiss() {
         dismiss(animated: true)
+    }
+}
+
+//MARK: Scanner view controller delegate
+
+extension ModulesTableViewController: ScannerViewControllerDelegate {
+    func found(code: String) {
+        print(code)
     }
 }
