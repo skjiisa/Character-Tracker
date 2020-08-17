@@ -415,35 +415,3 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
         dismiss(animated: true)
     }
 }
-
-//MARK: Scanner view controller delegate
-
-extension ModulesTableViewController: ScannerViewControllerDelegate {
-    func found(code: String) {
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        dismiss(animated: true) {
-            dispatchGroup.leave()
-        }
-        
-        let context = CoreDataStack.shared.container.newBackgroundContext()
-        
-        context.performAndWait {
-            PortController.shared.importOnBackgroundContext(string: code, context: context)
-            
-            let alert = UIAlertController(title: "Would you like to save changes?", message: nil, preferredStyle: .alert)
-            
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-            let save = UIAlertAction(title: "Save", style: .default) { _ in
-                CoreDataStack.shared.save(context: context)
-            }
-            
-            alert.addAction(cancel)
-            alert.addAction(save)
-            
-            dispatchGroup.notify(queue: .main, execute: {
-                self.present(alert, animated: true)
-            })
-        }
-    }
-}
