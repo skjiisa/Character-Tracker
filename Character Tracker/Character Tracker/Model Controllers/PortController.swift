@@ -307,17 +307,14 @@ class PortController {
         try importClass(Character.self, json: importJSON, context: context)
     }
     
-    func importOnBackgroundContext(string: String) {
+    func importOnBackgroundContext(string: String, context: NSManagedObjectContext) {
         let json = JSON(parseJSON: string)
-        let context = CoreDataStack.shared.mainContext
         
         do {
             try importData(json: json, context: context)
         } catch {
             NSLog("Error importing JSON: \(error)")
         }
-        
-        CoreDataStack.shared.save(context: context)
     }
     
     //MARK: Export

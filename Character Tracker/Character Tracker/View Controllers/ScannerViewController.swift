@@ -92,8 +92,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             found(code: stringValue)
         }
-
-        dismiss(animated: true)
     }
 
     func found(code: String) {
