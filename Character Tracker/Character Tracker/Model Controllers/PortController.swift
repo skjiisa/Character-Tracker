@@ -79,7 +79,17 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
             try? json.merge(with: relationshipJSON)
         }
         
-        return JSON([arrayKey: [json]])
+        return json
+    }
+    
+    func json(_ objects: [ObjectType]) -> JSON {
+        var jsonObjects: [JSON] = []
+        
+        for object in objects {
+            jsonObjects.append(json(object))
+        }
+        
+        return JSON([arrayKey: jsonObjects])
     }
 }
 
@@ -167,11 +177,17 @@ class PortController {
     
     static private(set) var shared: PortController = PortController()
     
+    var lastImport: [String] = []
+    
     //MARK: Config
     
     private var jsonRepresentations: [String: JSONRepresentationProtocol] = [:]
     
     func jsonRepresentation<ObjectType: NSManagedObject>(for _: ObjectType) -> JSONRepresentation<ObjectType>? {
+        jsonRepresentations[String(describing: ObjectType.self)] as? JSONRepresentation<ObjectType>
+    }
+    
+    func jsonRepresentation<ObjectType: NSManagedObject>(for _: [ObjectType]) -> JSONRepresentation<ObjectType>? {
         jsonRepresentations[String(describing: ObjectType.self)] as? JSONRepresentation<ObjectType>
     }
     
@@ -277,6 +293,8 @@ class PortController {
     //MARK: Import
     
     func preloadData() {
+        lastImport.removeAll()
+        
         do {
             let preloadDataURL = Bundle.main.url(forResource: "Preload", withExtension: "json")!
             let preloadData = try Data(contentsOf: preloadDataURL)
@@ -291,7 +309,7 @@ class PortController {
     
     func importClass<ObjectType: NSManagedObject>(_: ObjectType.Type, json importJSON: JSON, context: NSManagedObjectContext) throws {
         if let rep = jsonRepresentation(ObjectType.self) {
-            try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: rep, context: context)
+            lastImport.append(contentsOf: try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: rep, context: context))
         }
     }
     
@@ -307,27 +325,35 @@ class PortController {
         try importClass(Character.self, json: importJSON, context: context)
     }
     
-    func importOnBackgroundContext(string: String, context: NSManagedObjectContext) {
+    @discardableResult
+    func importOnBackgroundContext(string: String, context: NSManagedObjectContext) -> [String] {
         let json = JSON(parseJSON: string)
+        lastImport.removeAll()
         
         do {
             try importData(json: json, context: context)
         } catch {
             NSLog("Error importing JSON: \(error)")
         }
+        
+        return lastImport
     }
     
     //MARK: Export
     
-    func jsonString<ObjectType: NSManagedObject>(for object: ObjectType, prettyPrinted: Bool = true) -> String? {
-        let jsonRep = jsonRepresentation(for: object)
+    func jsonString<ObjectType: NSManagedObject>(for objects: [ObjectType], prettyPrinted: Bool = true) -> String? {
+        let jsonRep = jsonRepresentation(for: objects)
         // I don't specifically want fragments allowed here,
         // but you can't have no option. It defaults to pretty printed
-        return jsonRep?.json(object).rawString(options: prettyPrinted ? .prettyPrinted : .fragmentsAllowed)
+        return jsonRep?.json(objects).rawString(options: prettyPrinted ? .prettyPrinted : .fragmentsAllowed)
     }
     
     func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
-        guard let json = jsonString(for: object, prettyPrinted: false),
+        exportToQRCode(for: [object])
+    }
+    
+    func exportToQRCode<ObjectType: NSManagedObject>(for objects: [ObjectType]) -> CGImage? {
+        guard let json = jsonString(for: objects, prettyPrinted: false),
             let icon = UIImage(named: "IconVector"),
             let inputImage = CIImage(image: icon) else { return nil }
         
@@ -364,7 +390,7 @@ class PortController {
     }
     
     func saveTempJSON<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
-        guard let json = jsonString(for: object) else { return nil }
+        guard let json = jsonString(for: [object]) else { return nil }
         
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("export")
@@ -381,7 +407,7 @@ class PortController {
     }
     
     func exportJSONText<ObjectType: NSManagedObject>(for object: ObjectType) -> String? {
-        guard let jsonString = jsonString(for: object) else { return nil }
+        guard let jsonString = jsonString(for: [object]) else { return nil }
         
         return UserDefaults.standard.bool(forKey: "jsonExportBackticks") ? "```json\n" + jsonString + "\n```" : jsonString
     }

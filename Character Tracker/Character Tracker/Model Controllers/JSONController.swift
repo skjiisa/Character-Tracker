@@ -94,10 +94,12 @@ class JSONController {
         }
     }
     
-    static func fetchAndImportAllObjects<ObjectType: NSManagedObject>(
+    @discardableResult
+    static func fetchAndImportAllObjects<ObjectType: NSManagedObject> (
         from json: JSON,
         jsonRepresentation rep: JSONRepresentation<ObjectType>,
-        context: NSManagedObjectContext) throws {
+        context: NSManagedObjectContext) throws -> [String] {
+        var output: [String] = []
         
         if let objects = json[rep.arrayKey].array,
             objects.count > 0 {
@@ -107,6 +109,10 @@ class JSONController {
                 guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: rep.idIsUUID, context: context) else { continue }
                 
                 importAttributes(with: rep.attributes, for: object, from: objectJSON)
+                
+                if let name = object.value(forKey: "name") as? String {
+                    output.append(name)
+                }
                 
                 for relationship in rep.toOneRelationships {
                     try relationship.addRelationship(to: object, json: objectJSON, context: context)
@@ -125,6 +131,8 @@ class JSONController {
             
             rep.allObjects = allObjects
         }
+        
+        return output
     }
     
     // This could maybe be simplified using implicit conversions between Strings and UUIDs

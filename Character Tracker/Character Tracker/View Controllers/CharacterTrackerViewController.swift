@@ -25,9 +25,9 @@ extension CharacterTrackerViewController {
         let context = CoreDataStack.shared.container.newBackgroundContext()
         
         context.performAndWait {
-            PortController.shared.importOnBackgroundContext(string: code, context: context)
+            let importedNames = PortController.shared.importOnBackgroundContext(string: code, context: context)
             
-            let alert = UIAlertController(title: "Would you like to save changes?", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Imported objects", message: importedNames.joined(separator: ", "), preferredStyle: .alert)
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             let save = UIAlertAction(title: "Save", style: .default) { _ in
