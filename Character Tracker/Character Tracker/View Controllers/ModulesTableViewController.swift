@@ -291,7 +291,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     
     @objc func openScanner() {
         let scannerVC = ScannerViewController()
-        scannerVC.title = "Import \(moduleType?.typeName ?? "Module") from QR Code"
+        scannerVC.title = "Import from QR Code"
         scannerVC.delegate = self
         let navigationVC = UINavigationController(rootViewController: scannerVC)
         present(navigationVC, animated: true)
@@ -420,6 +420,6 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
 
 extension ModulesTableViewController: ScannerViewControllerDelegate {
     func found(code: String) {
-        print(code)
+        PortController.shared.importOnBackgroundContext(string: code)
     }
 }

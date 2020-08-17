@@ -79,7 +79,7 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
             try? json.merge(with: relationshipJSON)
         }
         
-        return json
+        return JSON([arrayKey: [json]])
     }
 }
 
@@ -282,6 +282,8 @@ class PortController {
             let preloadData = try Data(contentsOf: preloadDataURL)
             let importJSON = try JSON(data: preloadData)
             try importData(json: importJSON, context: CoreDataStack.shared.mainContext)
+            
+            CoreDataStack.shared.save(context: CoreDataStack.shared.mainContext)
         } catch {
             NSLog("Error preloading data: \(error)")
         }
@@ -303,6 +305,17 @@ class PortController {
         try importClass(Module.self, json: importJSON, context: context)
         try importClass(Race.self, json: importJSON, context: context)
         try importClass(Character.self, json: importJSON, context: context)
+    }
+    
+    func importOnBackgroundContext(string: String) {
+        let json = JSON(parseJSON: string)
+        let context = CoreDataStack.shared.mainContext
+        
+        do {
+            try importData(json: json, context: context)
+        } catch {
+            NSLog("Error importing JSON: \(error)")
+        }
         
         CoreDataStack.shared.save(context: context)
     }
