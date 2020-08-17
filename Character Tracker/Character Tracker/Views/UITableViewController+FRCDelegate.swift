@@ -29,8 +29,17 @@ extension UITableViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             guard let newIndexPath = newIndexPath else { return }
             tableView.insertRows(at: [newIndexPath], with: .automatic)
-            if self.view.window != nil {
-                tableView.scrollToRow(at: newIndexPath, at: .none, animated: true)
+            let rowCount = tableView.numberOfRows(inSection: newIndexPath.section)
+            if self.view.window != nil,
+                rowCount > 0 {
+                let scrollIndexPath: IndexPath
+                if newIndexPath.row >= rowCount {
+                    scrollIndexPath = IndexPath(row: newIndexPath.row - 1, section: newIndexPath.section)
+                } else {
+                    scrollIndexPath = newIndexPath
+                }
+
+                tableView.scrollToRow(at: scrollIndexPath, at: .none, animated: true)
             }
         case .delete:
             guard let indexPath = indexPath else { return }
@@ -40,9 +49,6 @@ extension UITableViewController: NSFetchedResultsControllerDelegate {
                 let newIndexPath = newIndexPath else { return }
             
             tableView.moveRow(at: indexPath, to: newIndexPath)
-            if self.view.window != nil {
-                tableView.scrollToRow(at: newIndexPath, at: .none, animated: true)
-            }
         case .update:
             guard let indexPath = indexPath else { return }
             tableView.reloadRows(at: [indexPath], with: .automatic)
