@@ -45,4 +45,5 @@ Building Character Tracker requires Xcode 11+ on macOS 10.15 or later for iOS Sw
 Dependencies:
 
 * [Pluralize.swift](https://github.com/joshualat/Pluralize.swift) (included)
-* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) (Swift Package Manager)
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) (SPM)
+* [EFQRCode](https://github.com/EFPrefix/EFQRCode) (SPM)
