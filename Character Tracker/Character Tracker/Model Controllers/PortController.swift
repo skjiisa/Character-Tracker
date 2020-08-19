@@ -34,7 +34,9 @@ class JSONEntity<ObjectType: NSManagedObject> {
     }
 }
 
-protocol JSONRepresentationProtocol {}
+protocol JSONRepresentationProtocol {
+    func clearObjects()
+}
 
 class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRepresentationProtocol {
     var arrayKey: String
@@ -91,6 +93,11 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
         
         return JSON([arrayKey: jsonObjects])
     }
+    
+    override func clearObjects() {
+        super.clearObjects()
+        relationshipObjects.forEach { $0.clearObjects() }
+    }
 }
 
 //MARK: JSONRelationship
@@ -103,6 +110,7 @@ protocol JSONRelationshipProtocol {
     
     func addRelationship<FunctionType: NSManagedObject>(to object: FunctionType, json: JSON, context: NSManagedObjectContext) throws
     func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON?
+    func clearObjects()
 }
 
 class JSONRelationship<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRelationshipProtocol {
@@ -323,6 +331,8 @@ class PortController {
         try importClass(Module.self, json: importJSON, context: context)
         try importClass(Race.self, json: importJSON, context: context)
         try importClass(Character.self, json: importJSON, context: context)
+        
+        jsonRepresentations.values.forEach { $0.clearObjects() }
     }
     
     @discardableResult

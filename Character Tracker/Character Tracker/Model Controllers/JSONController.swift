@@ -58,7 +58,7 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     
     func object<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(_ object: ObjectType, isRelatedTo relative: RelationshipType) -> Bool {
         guard let relationshipObject = object.value(forKey: key) as? RelationshipType else { return false }
-        return relationshipObject == object
+        return relationshipObject == relative
     }
     
     func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON? {
