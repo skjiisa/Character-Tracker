@@ -309,6 +309,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard editMode else { return false }
         
+        //TODO: replace this array with an integer
         let array: [Any]
         switch sections[indexPath.section].type {
         case .ingredients:
