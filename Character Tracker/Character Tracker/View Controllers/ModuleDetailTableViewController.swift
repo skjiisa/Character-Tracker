@@ -6,7 +6,7 @@
 //  Copyright © 2019 Isaac Lyons. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -15,6 +15,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBOutlet weak var completeView: UIView!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var exportView: UIView!
+    @IBOutlet weak var exportButton: UIButton!
     
     //MARK: Properties
     
@@ -307,6 +309,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard editMode else { return false }
         
+        //TODO: replace this array with an integer
         let array: [Any]
         switch sections[indexPath.section].type {
         case .ingredients:
@@ -469,6 +472,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             completeButton.setTitle("Save to a character to add notes", for: .disabled)
         }
         
+        if editMode {
+            exportView.isHidden = true
+            exportButton.isEnabled = false
+        } else {
+            exportButton.isEnabled = true
+            exportView.isHidden = false
+        }
+        
     }
     
     private func prompt(title: String, message: String) {
@@ -576,6 +587,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
+        updateViews()
     }
     
     @objc private func edit() {
@@ -583,6 +595,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         editMode = true
         
         tableView.reloadData()
+        updateViews()
     }
     
     @objc private func endEdit() {
@@ -591,6 +604,58 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         view.endEditing(true)
         
         tableView.reloadData()
+        updateViews()
+    }
+    
+    @IBAction func export(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Export \(module?.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
+        
+        let qrCode = UIAlertAction(title: "QR Code", style: .default) { _ in
+            self.qrCode()
+        }
+        
+        let json = UIAlertAction(title: "JSON Text", style: .default) { _ in
+            guard let module = self.module,
+                let json = PortController.shared.exportJSONText(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { _ in
+            guard let module = self.module,
+                let url = PortController.shared.saveTempJSON(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        actionSheet.addAction(qrCode)
+        actionSheet.addAction(json)
+        actionSheet.addAction(jsonFile)
+        actionSheet.addAction(cancel)
+        actionSheet.pruneNegativeWidthConstraints()
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = exportButton.convert(exportButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func qrCode() {
+        guard let module = module,
+            let qrCode = PortController.shared.exportToQRCode(for: module) else { return }
+        
+        let qrCodeView = UIHostingController(rootView:
+            NavigationView {
+                QRCodeView(name: self.module?.name, qrCode: qrCode, delegate: self)
+            }
+        )
+        
+        present(qrCodeView, animated: true)
     }
     
     // MARK: - Navigation
@@ -751,5 +816,13 @@ extension ModuleDetailTableViewController: IngredientsTableDelegate {
 extension ModuleDetailTableViewController: LevelTableViewCellDelegate {
     func levelChanged() {
         moduleHasBeenModified()
+    }
+}
+
+//MARK: SwiftUIModalDelegate
+
+extension ModuleDetailTableViewController: SwiftUIModalDelegate {
+    func dismiss() {
+        dismiss(animated: true)
     }
 }

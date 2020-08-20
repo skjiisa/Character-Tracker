@@ -6,7 +6,7 @@
 //  Copyright © 2019 Isaac Lyons. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class SettingsTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -38,7 +38,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -50,6 +50,8 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         case 4:
             return "Modules"
         case 5:
+            return "Preferences"
+        case 6:
             return "App Information"
         default:
             return nil
@@ -68,7 +70,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0..<3:
+        case 0..<3, 5:
             return 1
         case 3:
             return attributeTypeController?.types.count ?? 0
@@ -101,6 +103,10 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             if let moduleTypeName = moduleTypeController?.types[indexPath.row].name {
                 cell.textLabel?.text = moduleTypeName.pluralize()
             }
+        case 5:
+            cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
+            cell.textLabel?.text = "User Preferences"
+            cell.accessoryType = .disclosureIndicator
         default:
             guard let linkCell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath) as? LinkTableViewCell else { return UITableViewCell() }
             let link = links[indexPath.row]
@@ -116,10 +122,16 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
     //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 5,
-            let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell {
+        switch indexPath.section {
+        case 5:
+            let preferencesForm = UIHostingController(rootView: PreferencesForm())
+            navigationController?.pushViewController(preferencesForm, animated: true)
+        case 6:
+            guard let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell else { break }
             cell.openLink(self)
             tableView.deselectRow(at: indexPath, animated: true)
+        default:
+            break
         }
     }
 

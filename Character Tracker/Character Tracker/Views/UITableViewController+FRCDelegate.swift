@@ -34,7 +34,7 @@ extension UITableViewController: NSFetchedResultsControllerDelegate {
                 rowCount > 0 {
                 let scrollIndexPath: IndexPath
                 if newIndexPath.row >= rowCount {
-                    scrollIndexPath = IndexPath(row: newIndexPath.row - 1, section: newIndexPath.section)
+                    scrollIndexPath = IndexPath(row: rowCount - 1, section: newIndexPath.section)
                 } else {
                     scrollIndexPath = newIndexPath
                 }

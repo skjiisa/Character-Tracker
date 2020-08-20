@@ -99,10 +99,6 @@ class CharactersTableViewController: UITableViewController, CharacterTrackerView
         }
     }
     
-    @IBAction func importJSON(_ sender: UIBarButtonItem) {
-        JSONController.preloadData()
-    }
-    
     //MARK: Private
     
     private func changeGame() {
