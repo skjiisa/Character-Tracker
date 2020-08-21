@@ -155,7 +155,7 @@ class JSONController {
         } else {
             if let existingObject = existingObjects.first(where: { existingObject -> Bool in
                 guard let id = existingObject.value(forKey: "id") as? String else { return false }
-                return id == idString
+                return id.lowercased() == idString.lowercased()
             }) {
                 return existingObject
             }
@@ -185,7 +185,7 @@ class JSONController {
                 if let uuid = objectID as? UUID {
                     return uuid.uuidString == id
                 } else if let idString = objectID as? String {
-                    return idString == id
+                    return idString.lowercased() == id.lowercased()
                 }
                 
                 return false
@@ -205,7 +205,7 @@ class JSONController {
             guard let id = idJSON.string,
                 let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
                     guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
-                    return uuid.uuidString == id
+                    return uuid.uuidString.lowercased() == id.lowercased()
             }) else { continue }
             
             relationshipsSet.add(relationshipObject)
@@ -217,7 +217,7 @@ class JSONController {
         if let objectUUID = objectID as? UUID {
             return id == objectUUID.uuidString
         } else if let objectIDString = objectID as? String {
-            return id == objectIDString
+            return id.lowercased() == objectIDString.lowercased()
         }
         
         return false
