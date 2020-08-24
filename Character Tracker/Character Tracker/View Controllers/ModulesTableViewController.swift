@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import CoreData
 
 class ModulesTableViewController: UITableViewController, CharacterTrackerViewController {
@@ -22,9 +23,19 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var moduleType: ModuleType?
     var checkedModules: [Module]?
     var excludedModule: Module?
+    var character: Character?
     var gameReference: GameReference?
     var showAll = false
     var callbacks: [( (Module) -> Void )] = []
+
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredTypes = Set<ModuleType>()
+    var filteredAttributes = Set<Attribute>()
+    public var requireAllAttributes: Bool = true {
+        didSet {
+            filter()
+        }
+    }
     
     var typeName: String {
         if let name = moduleType?.name {
@@ -39,29 +50,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
-        guard let game = gameReference?.game else { return nil }
-        
-        var predicates: [NSPredicate] = []
-        
-        if !showAll {
-            predicates.append(NSPredicate(format: "ANY games == %@", game))
-            
-            if let type = moduleType {
-                predicates.append(NSPredicate(format: "type == %@", type))
-            }
-            
-            if let excludedModuleUUID = excludedModule?.id {
-                predicates.append(NSPredicate(format: "id != %@", excludedModuleUUID as CVarArg))
-            }
-        } else if let gameModules = game.modules {
-            predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameModules))
-            
-            if let type = moduleType {
-                predicates.append(NSPredicate(format: "type == %@", type))
-            }
-        }
-        
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        fetchRequest.predicate = frcPredicate()
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                              managedObjectContext: CoreDataStack.shared.mainContext,
@@ -78,6 +67,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         return frc
     }()
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,13 +76,97 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         title = typeName.pluralize()
         addModuleButton.setTitle("Add \(typeName)", for: .normal)
         
-        if showAll {
+        if moduleType == nil || showAll {
             addModuleView.isHidden = true
+        }
+        
+        if showAll {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        var rightBarButtonItems: [UIBarButtonItem] = []
+        
+        // Add filter button only if there are parameters to filter
+        
+        if moduleType == nil || fetchedResultsController?.fetchedObjects?.first(where: { $0.attributes?.anyObject() != nil }) != nil {
+            let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(showFilter))
+            rightBarButtonItems.append(filterButton)
+        }
+        
+        // Add QR Code scanner button
+        
+        let qrScannerButton = UIBarButtonItem(image: UIImage(systemName: "qrcode.viewfinder"), style: .plain, target: self, action: #selector(openScanner))
+        rightBarButtonItems.append(qrScannerButton)
+        
+        navigationItem.rightBarButtonItems = rightBarButtonItems
+    }
+    
+    @objc private func showFilter() {
+        let modulesFilterForm = UIHostingController(rootView:
+            NavigationView {
+                ModulesFilterForm(type: moduleType,
+                                  checkedTypes: filteredTypes,
+                                  checkedAttributes: filteredAttributes,
+                                  delegate: self)
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+            }
+        )
+        present(modulesFilterForm, animated: true)
     }
 
     //MARK: Table view data source
+    
+    func loadCell(_ cell: UITableViewCell, at indexPath: IndexPath) {
+        guard let module = fetchedResultsController?.object(at: indexPath) else { return }
+        
+        cell.textLabel?.text = module.name
+        
+        if showAll,
+            let gameNames = module.games?.compactMap({ ($0 as? Game)?.name }) {
+            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
+        } else {
+            let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
+            let attiributeNames = attributes?.compactMap({ $0.attribute?.name })
+            cell.detailTextLabel?.text = attiributeNames?.joined(separator: ", ")
+        }
+        
+        if checkedModules?.contains(module) ?? false {
+            cell.accessoryType = .checkmark
+            cell.tintColor = .systemBlue
+        } else if let characterModules = module.characters as? Set<CharacterModule>,
+            !characterModules.isEmpty,
+            // We don't want a green or grey checkmark if the selected character is the only one with this module
+            characterModules.count > 1 || !characterModules.contains(where: { $0.character == character }) {
+            cell.accessoryType = .checkmark
+            
+            // Grey if a different character has this module but not completed
+            // Green if a different character has this module completed
+            // Prominant colors if this is the general list (like in Settings)
+            // Faded colors if this is selecting modules for a character
+            if characterModules.contains(where: { $0.completed }) {
+                if checkedModules == nil {
+                    cell.tintColor = .systemGreen
+                } else {
+                    cell.tintColor = UIColor(red: 0.00, green: 0.80, blue: 0.28, alpha: 0.25)
+                }
+            } else {
+                if checkedModules == nil {
+                    cell.tintColor = .systemGray
+                } else {
+                    cell.tintColor = .systemGray4
+                }
+            }
+        } else {
+            cell.accessoryType = .none
+            cell.tintColor = .systemBlue
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController?.sections?[section].numberOfObjects ?? 0
@@ -109,24 +184,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
-        guard let module = fetchedResultsController?.object(at: indexPath) else {
-            return cell
-        }
-        
-        cell.textLabel?.text = module.name
-        
-        if showAll,
-            let gameNames = module.games?.compactMap({ ($0 as? Game)?.name }) {
-            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
-        } else {
-            let attributes = module.attributes?.sortedArray(using: [NSSortDescriptor(key: "attribute.name", ascending: true)]) as? [ModuleAttribute]
-            let attiributeNames = attributes?.compactMap({ $0.attribute?.name })
-            cell.detailTextLabel?.text = attiributeNames?.joined(separator: ", ")
-        }
-        
-        if checkedModules?.contains(module) ?? false {
-            cell.accessoryType = .checkmark
-        }
+        loadCell(cell, at: indexPath)
 
         return cell
     }
@@ -154,24 +212,89 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         choose(module: module)
         
         if !showAll,
-            checkedModules != nil {
-            
-            if let cell = tableView.cellForRow(at: indexPath) {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+            checkedModules != nil,
+            let cell = tableView.cellForRow(at: indexPath) {
+
+            if let index = checkedModules?.firstIndex(of: module) {
+                checkedModules?.remove(at: index)
+                loadCell(cell, at: indexPath)
+            } else {
+                checkedModules?.append(module)
+                loadCell(cell, at: indexPath)
             }
         }
     }
     
     //MARK: Private
     
-    func choose(module: Module) {
+    private func choose(module: Module) {
         for callback in callbacks {
             callback(module)
         }
+    }
+    
+    private func filter() {
+        guard let searchString = searchController.searchBar.text,
+            let predicate = frcPredicate(searchString: searchString) else { return }
+        
+        fetchedResultsController?.fetchRequest.predicate = predicate
+        do {
+            try fetchedResultsController?.performFetch()
+            tableView.reloadData()
+        } catch {
+            NSLog("Error performing fetch for module FRC: \(error)")
+        }
+    }
+    
+    private func frcPredicate(searchString: String? = nil) -> NSPredicate? {
+        guard let game = gameReference?.game else { return nil }
+        
+        var predicates: [NSPredicate] = []
+        
+        if !showAll {
+            predicates.append(NSPredicate(format: "ANY games == %@", game))
+            
+            if let type = moduleType {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+            
+            if let excludedModuleUUID = excludedModule?.id {
+                predicates.append(NSPredicate(format: "id != %@", excludedModuleUUID as CVarArg))
+            }
+        } else if let gameModules = game.modules {
+            predicates.append(NSPredicate(format: "NOT (SELF in %@)", gameModules))
+            
+            if let type = moduleType {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+        }
+        
+        if let searchString = searchString?.lowercased(),
+            !searchString.isEmpty {
+            predicates.append(NSPredicate(format: "name CONTAINS[c] %@", searchString))
+        }
+        
+        if !filteredAttributes.isEmpty {
+            if requireAllAttributes {
+                predicates.append(NSPredicate(format: "SUBQUERY(attributes, $moduleAttribute, $moduleAttribute.attribute in %@).@count = %d", filteredAttributes, filteredAttributes.count))
+            } else {
+                predicates.append(NSPredicate(format: "ANY attributes.attribute in %@", filteredAttributes))
+            }
+        }
+        
+        if !filteredTypes.isEmpty {
+            predicates.append(NSPredicate(format: "type in %@", filteredTypes))
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    }
+    
+    @objc func openScanner() {
+        let scannerVC = ScannerViewController()
+        scannerVC.title = "Import from QR Code"
+        scannerVC.delegate = self
+        let navigationVC = UINavigationController(rootViewController: scannerVC)
+        present(navigationVC, animated: true)
     }
 
     //MARK: Navigation
@@ -258,61 +381,37 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     @objc private func close() {
         dismiss(animated: true, completion: nil)
     }
-    
+
 }
 
-//MARK: Fetched results controller delegate
+//MARK: Search results updating
 
-extension ModulesTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
+extension ModulesTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filter()
+    }
+}
+
+//MARK: Modules filter form delegate
+
+extension ModulesTableViewController: ModulesFilterFormDelegate {
+    func toggle(_ moduleType: ModuleType) {
+        filteredTypes.formSymmetricDifference([moduleType])
+        filter()
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
+    func toggle(_ attribute: Attribute) {
+        filteredAttributes.formSymmetricDifference([attribute])
+        filter()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard let indexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            
-            tableView.moveRow(at: indexPath, to: newIndexPath)
-        case .update:
-            guard let indexPath = indexPath else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError()
-        }
+    func clearFilter() {
+        filteredAttributes.removeAll()
+        filteredTypes.removeAll()
+        filter()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
-        
-        let indexSet = IndexSet(integer: sectionIndex)
-        
-        switch type {
-        case .insert:
-            tableView.insertSections(indexSet, with: .automatic)
-        case .delete:
-            tableView.deleteSections(indexSet, with: .automatic)
-        default:
-            return
-        }
+    func dismiss() {
+        dismiss(animated: true)
     }
 }

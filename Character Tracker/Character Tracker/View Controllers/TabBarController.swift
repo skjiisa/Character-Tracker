@@ -9,10 +9,6 @@
 import UIKit
 import SwiftUI
 
-protocol CharacterTrackerViewController: UIViewController {
-    var gameReference: GameReference? { get set }
-}
-
 class TabBarController: UITabBarController {
     
     let gameReference = GameReference()

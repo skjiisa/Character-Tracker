@@ -6,7 +6,7 @@
 //  Copyright © 2019 Isaac Lyons. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -15,6 +15,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     @IBOutlet weak var completeView: UIView!
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var exportView: UIView!
+    @IBOutlet weak var exportButton: UIButton!
     
     //MARK: Properties
     
@@ -64,26 +66,26 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     var sections: [(name: String, type: SectionTypes)] = []
     var sectionsToReload: [SectionTypes] = []
     
-    var nameTextField: UITextField?
-    var levelTextField: UITextField?
-    var levelStepper: UIStepper?
+    weak var nameTextField: UITextField?
+    weak var levelTextField: UITextField?
+    weak var levelStepper: UIStepper?
     
-    var cancelButton: UIBarButtonItem {
+    weak var cancelButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         barButton.tag = 1
         return barButton
     }
-    var editButton: UIBarButtonItem {
+    weak var editButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         barButton.tag = 2
         return barButton
     }
-    var saveButton: UIBarButtonItem {
+    weak var saveButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(_:)))
         barButton.tag = 3
         return barButton
     }
-    var cancelEditButton: UIBarButtonItem {
+    weak var cancelEditButton: UIBarButtonItem? {
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(endEdit))
         barButton.tag = 4
         return barButton
@@ -94,11 +96,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return lhs.textView == rhs.textView
         }
         
-        var textView: UITextView?
+        weak var textView: UITextView?
     }
     
     var notesTextView = TextViewReference()
     var characterNotesTextView = TextViewReference()
+    
+    //MARK: View loading
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,7 +187,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 }
             } else {
                 if let levelCell = tableView.dequeueReusableCell(withIdentifier: "LevelCell", for: indexPath) as? LevelTableViewCell {
-                    levelCell.callback = moduleHasBeenModified
+                    levelCell.delegate = self
                     
                     levelTextField = levelCell.textField
                     levelTextField?.delegate = self
@@ -267,7 +271,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 
                 if tempModule.value {
                     cell.accessoryType = .checkmark
+                    cell.tintColor = .systemGreen
                 } else {
+                    cell.tintColor = .systemBlue
                     if moduleIsExcluded(at: indexPath) {
                         cell.accessoryType = .none
                     } else {
@@ -303,6 +309,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard editMode else { return false }
         
+        //TODO: replace this array with an integer
         let array: [Any]
         switch sections[indexPath.section].type {
         case .ingredients:
@@ -405,7 +412,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if indexPath.row < ingredientController.tempEntities.count {
                 let ingredient = ingredientController.tempEntities[indexPath.row].entity
                 tableView.deselectRow(at: indexPath, animated: true)
-                prompt(title: ingredient.name ?? "Ingredient", message: ingredient.id ?? "")
+                prompt(title: ingredient.name ?? "Ingredient", message: "Plugin and FormID:\n\(ingredient.id ?? "")")
             }
         default:
             break
@@ -463,6 +470,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             undoButton.isHidden = true
             completeButton.isEnabled = false
             completeButton.setTitle("Save to a character to add notes", for: .disabled)
+        }
+        
+        if editMode {
+            exportView.isHidden = true
+            exportButton.isEnabled = false
+        } else {
+            exportButton.isEnabled = true
+            exportView.isHidden = false
         }
         
     }
@@ -572,6 +587,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
+        updateViews()
     }
     
     @objc private func edit() {
@@ -579,6 +595,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         editMode = true
         
         tableView.reloadData()
+        updateViews()
     }
     
     @objc private func endEdit() {
@@ -587,6 +604,58 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         view.endEditing(true)
         
         tableView.reloadData()
+        updateViews()
+    }
+    
+    @IBAction func export(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Export \(module?.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
+        
+        let qrCode = UIAlertAction(title: "QR Code", style: .default) { _ in
+            self.qrCode()
+        }
+        
+        let json = UIAlertAction(title: "JSON Text", style: .default) { _ in
+            guard let module = self.module,
+                let json = PortController.shared.exportJSONText(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { _ in
+            guard let module = self.module,
+                let url = PortController.shared.saveTempJSON(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(activityVC, animated: true)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        actionSheet.addAction(qrCode)
+        actionSheet.addAction(json)
+        actionSheet.addAction(jsonFile)
+        actionSheet.addAction(cancel)
+        actionSheet.pruneNegativeWidthConstraints()
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            let buttonBounds = exportButton.convert(exportButton.bounds, to: self.view)
+            popoverController.sourceRect = buttonBounds
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func qrCode() {
+        guard let module = module,
+            let qrCode = PortController.shared.exportToQRCode(for: module) else { return }
+        
+        let qrCodeView = UIHostingController(rootView:
+            NavigationView {
+                QRCodeView(name: self.module?.name, qrCode: qrCode, delegate: self)
+            }
+        )
+        
+        present(qrCodeView, animated: true)
     }
     
     // MARK: - Navigation
@@ -608,16 +677,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             
             if let ingredientsVC = vc as? IngredientsTableViewController {
                 ingredientsVC.ingredientController = ingredientController
-                ingredientsVC.callbacks.append { ingredient in
-                    ingredientsVC.askForQuantity { quantity in
-                        if let quantity = quantity {
-                            self.ingredientController.add(tempEntity: ingredient, value: quantity)
-                            self.markSectionForReload(section: .ingredients)
-                            self.moduleHasBeenModified()
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }
-                }
+                ingredientsVC.delegate = self
             } else if let modulesVC = vc as? ModulesTableViewController {
                 let selectedModules = moduleController.tempEntities.map({ $0.entity })
                 
@@ -738,4 +798,31 @@ extension ModuleDetailTableViewController: UITextViewDelegate {
         moduleHasBeenModified()
     }
     
+}
+
+//MARK: Ingredients table delegate
+
+extension ModuleDetailTableViewController: IngredientsTableDelegate {
+    func choose(ingredient: Ingredient, quantity: Int16) {
+        self.ingredientController.add(tempEntity: ingredient, value: quantity)
+        self.markSectionForReload(section: .ingredients)
+        self.moduleHasBeenModified()
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+//MARK: Level table view cell delegate
+
+extension ModuleDetailTableViewController: LevelTableViewCellDelegate {
+    func levelChanged() {
+        moduleHasBeenModified()
+    }
+}
+
+//MARK: SwiftUIModalDelegate
+
+extension ModuleDetailTableViewController: SwiftUIModalDelegate {
+    func dismiss() {
+        dismiss(animated: true)
+    }
 }

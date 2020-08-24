@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
             (loadedVersion ?? "0").compare(appVersion, options: .numeric) == .orderedAscending {
             print("Preloading data...")
-            JSONController.preloadData()
+            PortController.shared.preloadData()
             userDefaults.set(appVersion, forKey: preloadedDataKey)
         }
     }

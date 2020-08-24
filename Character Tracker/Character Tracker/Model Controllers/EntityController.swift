@@ -34,7 +34,8 @@ extension EntityController {
     }
     
     func remove(tempEntity entity: Entity) {
-        tempEntities.removeAll(where: { $0.entity == entity })
+        guard let index = tempEntities.firstIndex(where: { $0.entity == entity }) else { return }
+        tempEntities.remove(at: index)
     }
 }
 
@@ -47,3 +48,5 @@ extension Module: NamedEntity {}
 extension Attribute: NamedEntity {}
 extension Mod: NamedEntity {}
 extension Character: NamedEntity {}
+extension ModuleType: NamedEntity {}
+extension AttributeType: NamedEntity {}
