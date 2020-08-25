@@ -93,6 +93,7 @@
 		595F7729236A55F300151209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		595F772B236A55F300151209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+FRCDelegate.swift"; sourceTree = "<group>"; };
+		5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Character_Tracker 2.xcdatamodel"; sourceTree = "<group>"; };
 		597545F124CB8EA900471664 /* TypeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeFilterSection.swift; sourceTree = "<group>"; };
 		597545F324CB92DF00471664 /* AttributesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFilterForm.swift; sourceTree = "<group>"; };
 		597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SectionsTableViewController.swift; path = "Character Tracker/Storyboards/SectionsTableViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -663,9 +664,10 @@
 		595F7723236A55EF00151209 /* Character_Tracker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */,
 				595F7724236A55EF00151209 /* Character_Tracker.xcdatamodel */,
 			);
-			currentVersion = 595F7724236A55EF00151209 /* Character_Tracker.xcdatamodel */;
+			currentVersion = 5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */;
 			path = Character_Tracker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

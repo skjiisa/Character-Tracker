@@ -89,7 +89,7 @@ struct ModulesFilterForm: View {
                                     .foregroundColor(.primary)
                                 if self.checkedAttributes.contains(attribute) {
                                     Spacer()
-                                    SwiftUI.Image(systemName: "checkmark")
+                                    Image(systemName: "checkmark")
                                 }
                             }
                         }

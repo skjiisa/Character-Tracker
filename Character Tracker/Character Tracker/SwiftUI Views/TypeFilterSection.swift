@@ -32,7 +32,7 @@ struct TypeFilterSection<Entity: NamedEntity>: View {
                             .foregroundColor(.primary)
                         if self.checkedTypes.contains(moduleType) {
                             Spacer()
-                            SwiftUI.Image(systemName: "checkmark")
+                            Image(systemName: "checkmark")
                         }
                     }
                 }

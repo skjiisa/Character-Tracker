@@ -21,7 +21,7 @@ struct ModsView: View {
             let newMod = self.modController.create(context: self.moc)
             self.newMod = newMod
         }) {
-            SwiftUI.Image(systemName: "plus")
+            Image(systemName: "plus")
                 .imageScale(.large)
         }
     }

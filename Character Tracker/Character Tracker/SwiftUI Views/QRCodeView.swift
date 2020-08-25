@@ -27,7 +27,7 @@ struct QRCodeView: View {
             self.shareURL = url
             self.showingShareSheet = true
         }) {
-            SwiftUI.Image.init(systemName: "square.and.arrow.up")
+            Image.init(systemName: "square.and.arrow.up")
                 .imageScale(.large)
         }
     }
@@ -39,7 +39,7 @@ struct QRCodeView: View {
     }
     
     var body: some View {
-        SwiftUI.Image(decorative: qrCode, scale: 1)
+        Image(decorative: qrCode, scale: 1)
             .resizable()
             .scaledToFit()
             .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
