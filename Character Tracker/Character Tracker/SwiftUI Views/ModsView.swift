@@ -14,11 +14,12 @@ struct ModsView: View {
     
     @EnvironmentObject var modController: ModController
     
-    @State private var showingNewMod = false
+    @State private var newMod: Mod?
     
     var newModButton: some View {
         Button(action: {
-            self.showingNewMod = true
+            let newMod = self.modController.create(context: self.moc)
+            self.newMod = newMod
         }) {
             SwiftUI.Image(systemName: "plus")
                 .imageScale(.large)
@@ -53,9 +54,9 @@ struct ModsView: View {
             }
             .navigationBarTitle("Mods")
             .navigationBarItems(leading: deleteAllButton, trailing: newModButton)
-            .sheet(isPresented: $showingNewMod) {
+            .sheet(item: $newMod) { mod in
                 NavigationView {
-                    ModDetailView()
+                    ModDetailView(mod: mod)
                         .environment(\.managedObjectContext, self.moc)
                         .environmentObject(self.modController)
                 }

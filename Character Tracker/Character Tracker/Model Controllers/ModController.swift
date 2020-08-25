@@ -12,6 +12,7 @@ class ModController: ObservableObject {
     
     @discardableResult func create(mod name: String? = nil, context: NSManagedObjectContext) -> Mod {
         let mod = Mod(context: context)
+        mod.id = UUID()
         mod.name = name
         CoreDataStack.shared.save(context: context)
         return mod
@@ -32,6 +33,18 @@ class ModController: ObservableObject {
         let modules = mod.mutableSetValue(forKey: "modules")
         modules.add(module)
         CoreDataStack.shared.save(context: context)
+    }
+    
+    func deleteIfEmpty(_ mod: Mod, context: NSManagedObjectContext) {
+        if mod.wrappedName.isEmpty,
+            mod.attributes?.anyObject() == nil,
+            mod.images?.anyObject() == nil,
+            mod.ingredients?.anyObject() == nil,
+            mod.links?.anyObject() == nil,
+            mod.modules?.anyObject() == nil,
+            mod.races?.anyObject() == nil {
+            delete(mod: mod, context: context)
+        }
     }
     
 }

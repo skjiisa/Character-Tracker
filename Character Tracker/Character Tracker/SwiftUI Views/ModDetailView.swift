@@ -10,28 +10,20 @@ import SwiftUI
 
 struct ModDetailView: View {
     @Environment(\.managedObjectContext) var moc
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @EnvironmentObject var modController: ModController
-    @State private var mod: Mod?
     
-    @State private var name = ""
+    @ObservedObject var mod: Mod
     @State private var showingNewModule = false
-
-    init(mod: Mod? = nil) {
-        _name = .init(initialValue: mod?.name ?? "")
-        _mod = .init(initialValue: mod)
-    }
     
     var body: some View {
         Form {
-            if mod != nil {
                 SwiftUI.Section {
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $mod.wrappedName)
                 }
                 
-                ModulesSection(mod: mod!)
+                ModulesSection(mod: mod)
                 
                 SwiftUI.Section {
                     NavigationLink(destination: ModulesView() { module in
@@ -40,12 +32,12 @@ struct ModDetailView: View {
                         // on top of the old one before popping back to this view.
                         // Popping it first by setting showingNewModule to false fixes that.
                         self.showingNewModule = false
-                        self.modController.add(module, to: self.mod!, context: self.moc)
+                        self.modController.add(module, to: self.mod, context: self.moc)
                     }, isActive: $showingNewModule) {
                         Text("Add module")
                     }
                 }
-                
+                /*
                 SwiftUI.Section {
                     Button("Save") {
                         guard !self.name.isEmpty else { return }
@@ -55,18 +47,12 @@ struct ModDetailView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
-            }
+ */
         }
-        .navigationBarTitle(mod?.name ?? "Unknown mod")
-        .onAppear {
-            if self.mod == nil {
-                self.mod = self.modController.create(mod: "New Mod", context: self.moc)
-            }
-        }
+        .navigationBarTitle("Mod")
         .onDisappear {
-            if let mod = self.mod,
-                mod.name == "New Mod" {
-                self.moc.delete(mod)
+            if !self.presentationMode.wrappedValue.isPresented {
+                self.modController.deleteIfEmpty(self.mod, context: self.moc)
             }
         }
     }
@@ -102,9 +88,10 @@ struct ModuleTypeSection: View {
         }
     }
 }
-
+/*
 struct ModDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ModDetailView()
     }
 }
+*/
