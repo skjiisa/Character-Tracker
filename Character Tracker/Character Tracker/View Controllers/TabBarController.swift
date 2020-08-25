@@ -41,10 +41,14 @@ class TabBarController: UITabBarController {
             }
         }
         
-        let modsView = ModsView()
-            .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
-            .environmentObject(modController)
-        let modsViewHost = UIHostingController(rootView: modsView)
+        let modsViewHost = UIHostingController(rootView:
+            NavigationView {
+                ModsView()
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+                    .environmentObject(modController)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        )
         modsViewHost.tabBarItem.title = "Mods"
         modsViewHost.tabBarItem.image = UIImage(systemName: "circle.grid.hex.fill")
         viewControllers?.insert(modsViewHost, at: 1)

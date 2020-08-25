@@ -35,7 +35,7 @@ class ModController: ObservableObject {
         CoreDataStack.shared.save(context: context)
     }
     
-    func deleteIfEmpty(_ mod: Mod, context: NSManagedObjectContext) {
+    func saveOrDeleteIfEmpty(_ mod: Mod, context: NSManagedObjectContext) {
         if mod.wrappedName.isEmpty,
             mod.attributes?.anyObject() == nil,
             mod.images?.anyObject() == nil,
@@ -45,6 +45,8 @@ class ModController: ObservableObject {
             mod.races?.anyObject() == nil {
             delete(mod: mod, context: context)
         }
+        
+        CoreDataStack.shared.save(context: context)
     }
     
 }

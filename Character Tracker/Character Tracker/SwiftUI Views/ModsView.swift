@@ -26,43 +26,30 @@ struct ModsView: View {
         }
     }
     
-    var deleteAllButton: some View {
-        Button(action: {
-            for mod in self.mods {
-                self.moc.delete(mod)
-            }
-        }) {
-            Text("Delete all")
-        }
-    }
-    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(mods, id: \.self) { mod in
-                    NavigationLink(destination:
-                        ModDetailView(mod: mod)
-                            .environment(\.managedObjectContext, self.moc)
-                            .environmentObject(self.modController)) {
-                                Text(mod.name ?? "")
-                    }
-                }
-                .onDelete { indexSet in
-                    let mod = self.mods[indexSet.first!]
-                    self.modController.delete(mod: mod, context: self.moc)
-                }
-            }
-            .navigationBarTitle("Mods")
-            .navigationBarItems(leading: deleteAllButton, trailing: newModButton)
-            .sheet(item: $newMod) { mod in
-                NavigationView {
+        List {
+            ForEach(mods, id: \.self) { mod in
+                NavigationLink(destination:
                     ModDetailView(mod: mod)
                         .environment(\.managedObjectContext, self.moc)
-                        .environmentObject(self.modController)
+                        .environmentObject(self.modController)) {
+                            Text(mod.name ?? "")
                 }
             }
+            .onDelete { indexSet in
+                let mod = self.mods[indexSet.first!]
+                self.modController.delete(mod: mod, context: self.moc)
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarTitle("Mods")
+        .navigationBarItems(trailing: newModButton)
+        .sheet(item: $newMod) { mod in
+            NavigationView {
+                ModDetailView(mod: mod)
+                    .environment(\.managedObjectContext, self.moc)
+                    .environmentObject(self.modController)
+            }
+        }
     }
 }
 
