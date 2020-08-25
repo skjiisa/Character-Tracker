@@ -19,13 +19,13 @@ struct ModDetailView: View {
     
     var body: some View {
         Form {
-                SwiftUI.Section {
+                Section {
                     TextField("Name", text: $mod.wrappedName)
                 }
                 
                 ModulesSection(mod: mod)
                 
-                SwiftUI.Section {
+                Section {
                     NavigationLink(destination: ModulesView() { module in
                         // If this showingNewModule isn't here, trying to add a module
                         // to the mod will cause a new copy of ModulesView to get pushed
@@ -81,7 +81,7 @@ struct ModuleTypeSection: View {
     }
     
     var body: some View {
-        SwiftUI.Section(header: Text(type.typeName)) {
+        Section(header: Text(type.typeName)) {
             ForEach (fetchRequest.wrappedValue, id: \.self) { module in
                 Text(module.name ?? "Unknown module")
             }

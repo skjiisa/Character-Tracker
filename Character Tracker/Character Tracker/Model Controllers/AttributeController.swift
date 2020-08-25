@@ -83,7 +83,7 @@ class AttributeController: EntityController {
         return result
     }
     
-    func getTempAttributes(from section: Section) -> [Attribute]? {
+    func getTempAttributes(from section: TypeSection) -> [Attribute]? {
         if let typeSection = section as? AttributeTypeSection,
             let type = typeSection.type {
             let priority = typeSection.minPriority

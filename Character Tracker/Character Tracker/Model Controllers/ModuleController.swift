@@ -101,7 +101,7 @@ class ModuleController: EntityController {
         return result
     }
     
-    func getTempModules(from section: Section) -> [Module]? {
+    func getTempModules(from section: TypeSection) -> [Module]? {
         if let type = section as? ModuleType {
             return getTempModules(ofType: type)
         }

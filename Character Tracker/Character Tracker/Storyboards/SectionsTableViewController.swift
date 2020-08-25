@@ -25,8 +25,8 @@ class SectionsTableViewController: UITableViewController {
     var moduleController: ModuleController?
     var delegate: SectionsTableDelegate?
     
-    var shownSections: [Section] = []
-    var hiddenSections: [Section] = []
+    var shownSections: [TypeSection] = []
+    var hiddenSections: [TypeSection] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,7 @@ class SectionsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SectionCell", for: indexPath)
 
-        let section: Section
+        let section: TypeSection
         if indexPath.section == 0 {
             section = shownSections[indexPath.row]
         } else {

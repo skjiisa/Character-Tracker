@@ -1,5 +1,5 @@
 //
-//  Character_Tracker+Section.swift
+//  Character_Tracker+TypeSection.swift
 //  Character Tracker
 //
 //  Created by Isaac Lyons on 11/11/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension AttributeTypeSection: Section {
+extension AttributeTypeSection: TypeSection {
     var typeName: String {
         if let typeName = self.type?.name {
             return typeName
@@ -18,7 +18,7 @@ extension AttributeTypeSection: Section {
     }
 }
 
-extension ModuleType: Section {
+extension ModuleType: TypeSection {
     var typeName: String {
         if let typeName = self.name {
             return typeName

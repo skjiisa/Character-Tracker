@@ -76,7 +76,7 @@ struct ModulesFilterForm: View {
             }
             
             if attributes.count > 0 {
-                SwiftUI.Section(header: Text("Attributes")) {
+                Section(header: Text("Attributes")) {
                     Toggle("Require all of the below", isOn: $requireAllAttributes)
                     
                     ForEach(attributes, id: \.self) { attribute in

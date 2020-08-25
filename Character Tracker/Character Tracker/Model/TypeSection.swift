@@ -1,5 +1,5 @@
 //
-//  Section.swift
+//  TypeSection.swift
 //  Character Tracker
 //
 //  Created by Isaac Lyons on 11/11/19.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol Section {
+protocol TypeSection {
     var name: String? { get set }
     var id: UUID? { get set }
     var typeName: String { get }
 }
 
 class TempSection {
-    var section: Section
+    var section: TypeSection
     var collapsed: Bool
     
-    init(section: Section, collapsed: Bool = false) {
+    init(section: TypeSection, collapsed: Bool = false) {
         self.section = section
         self.collapsed = collapsed
     }
