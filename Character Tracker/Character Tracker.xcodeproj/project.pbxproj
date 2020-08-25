@@ -13,6 +13,8 @@
 		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
 		591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591B236224EB299B0002096A /* CharacterTrackerViewController.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
+		593DDF0924F47B0900D9E357 /* ModController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0824F47B0900D9E357 /* ModController.swift */; };
+		593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0A24F47B1F00D9E357 /* ModulesView.swift */; };
 		5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */; };
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
@@ -74,6 +76,8 @@
 		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
 		591B236224EB299B0002096A /* CharacterTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTrackerViewController.swift; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
+		593DDF0824F47B0900D9E357 /* ModController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModController.swift; sourceTree = "<group>"; };
+		593DDF0A24F47B1F00D9E357 /* ModulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModulesView.swift; sourceTree = "<group>"; };
 		5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFilterForm.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
@@ -141,16 +145,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		59019C4A245F2FA30072E8EA /* SwiftUI Views */ = {
-			isa = PBXGroup;
-			children = (
-				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
-				59019C4D245F35760072E8EA /* ModDetailView.swift */,
-				59C20BFF245F57CE0003FDC7 /* ModulesView.swift */,
-			);
-			path = "SwiftUI Views";
-			sourceTree = "<group>";
-		};
 		592F0D8923DAB28400F06F75 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +163,9 @@
 				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
 				5959073524DCB14F00BE372F /* ShareSheet.swift */,
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
+				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
+				59019C4D245F35760072E8EA /* ModDetailView.swift */,
+				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -215,7 +212,6 @@
 				59BB3D1E236AA19800A4A14E /* View Controllers */,
 				594D7ABD2371210D00F0795D /* Views */,
 				595F7731236A561800151209 /* Storyboards */,
-				59019C4A245F2FA30072E8EA /* SwiftUI Views */,
 				59B3A774236B9EE800B3D33B /* Resources */,
 				595F772B236A55F300151209 /* Info.plist */,
 			);
@@ -290,7 +286,7 @@
 				59C33EF423BD6E3500FC1F11 /* JSONController.swift */,
 				59E7A7BA24CCD56D006E77D7 /* PortController.swift */,
 				59ADFD59240B228F00B5E828 /* EntityController.swift */,
-				59C20BFD245F3AE30003FDC7 /* ModController.swift */,
+				593DDF0824F47B0900D9E357 /* ModController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -387,10 +383,12 @@
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
+				593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */,
 				5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */,
 				59850F46237D0FD400286067 /* LevelTableViewCell.swift in Sources */,
 				594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
+				593DDF0924F47B0900D9E357 /* ModController.swift in Sources */,
 				5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */,
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
@@ -398,7 +396,6 @@
 				59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
-				59C20C00245F57CE0003FDC7 /* ModulesView.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
 				5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */,
@@ -416,7 +413,6 @@
 				59850F44237D0F4B00286067 /* ModuleNameTableViewCell.swift in Sources */,
 				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
-				59C20BFE245F3AE30003FDC7 /* ModController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
