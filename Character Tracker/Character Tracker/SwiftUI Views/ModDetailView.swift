@@ -76,14 +76,22 @@ struct ModuleTypeSection: View {
     }
     
     var body: some View {
-        Section(header: Text(type.typeName)) {
-            ForEach (fetchRequest.wrappedValue, id: \.self) { module in
-                Text(module.name ?? "Unknown module")
-            }
-            .onDelete { indexSet in
-                guard let index = indexSet.first else { return }
-                let module = self.fetchRequest.wrappedValue[index]
-                self.modController.remove(module, from: self.mod, context: self.moc)
+        // I honestly don't really like this solution using Group
+        // since it adds so many layers, but we can't have the if
+        // statement top-level or do the check in the parent view
+        // with how things are set up right now.
+        Group {
+            if fetchRequest.wrappedValue.count > 0 {
+                Section(header: Text(type.typeName)) {
+                    ForEach (fetchRequest.wrappedValue, id: \.self) { module in
+                        Text(module.name ?? "Unknown module")
+                    }
+                    .onDelete { indexSet in
+                        guard let index = indexSet.first else { return }
+                        let module = self.fetchRequest.wrappedValue[index]
+                        self.modController.remove(module, from: self.mod, context: self.moc)
+                    }
+                }
             }
         }
     }
