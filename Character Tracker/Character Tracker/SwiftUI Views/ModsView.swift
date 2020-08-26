@@ -13,8 +13,10 @@ struct ModsView: View {
     @FetchRequest(entity: Character_Tracker.Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: false)]) var mods: FetchedResults<Mod>
     
     @EnvironmentObject var modController: ModController
+    var moduleController = ModuleController()
     
     @State private var newMod: Mod?
+    @State private var deleteMod: Mod?
     
     var newModButton: some View {
         Button(action: {
@@ -38,7 +40,7 @@ struct ModsView: View {
             }
             .onDelete { indexSet in
                 let mod = self.mods[indexSet.first!]
-                self.modController.delete(mod: mod, context: self.moc)
+                self.deleteMod = mod
             }
         }
         .navigationBarTitle("Mods")
@@ -49,6 +51,18 @@ struct ModsView: View {
                     .environment(\.managedObjectContext, self.moc)
                     .environmentObject(self.modController)
             }
+        }
+        .actionSheet(item: $deleteMod) { mod in
+            ActionSheet(title: Text("Delete" + (mod.name ?? "mod")), message: Text("Keep \(mod.name ?? "mod") contents (modules, ingredients)?"), buttons: [
+                .cancel(),
+                .default(Text("Keep contents"), action: {
+                    self.modController.delete(mod: mod, context: self.moc)
+                }),
+                .destructive(Text("Delete all"), action: {
+                    self.moduleController.deleteAllModules(from: mod, context: self.moc)
+                    self.modController.delete(mod: mod, context: self.moc)
+                })
+            ])
         }
     }
 }

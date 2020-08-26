@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ModulesView: View {
-    @FetchRequest(entity: Module.entity(), sortDescriptors: []) var modules: FetchedResults<Module>
+    @FetchRequest(entity: Module.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var modules: FetchedResults<Module>
     
     var didSelect: (Module) -> Void
     
@@ -28,6 +28,7 @@ struct ModulesView: View {
                 .foregroundColor(.primary)
             }
         }
+        .navigationBarTitle("Modules")
     }
 }
 

@@ -47,6 +47,8 @@ struct ModDetailView: View {
     }
 }
 
+//MARK: Modules
+
 struct ModulesSection: View {
     @FetchRequest(entity: ModuleType.entity(), sortDescriptors: []) var types: FetchedResults<ModuleType>
     

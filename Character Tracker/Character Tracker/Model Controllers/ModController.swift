@@ -26,7 +26,6 @@ class ModController: ObservableObject {
     }
     
     func delete(mod: Mod, context: NSManagedObjectContext) {
-        // delete relationship objects
         context.delete(mod)
         CoreDataStack.shared.save(context: context)
     }

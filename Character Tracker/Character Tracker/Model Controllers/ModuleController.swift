@@ -43,8 +43,7 @@ class ModuleController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func delete(module: Module, context: NSManagedObjectContext) {
-        
+    func deleteWithoutSaving(module: Module, context: NSManagedObjectContext) {
         tempEntities.removeAll(where: { $0.entity == module })
         
         module.deleteRelationshipObjects(forKeys: ["characters",
@@ -55,6 +54,10 @@ class ModuleController: EntityController {
                                          context: context)
         
         context.delete(module)
+    }
+    
+    func delete(module: Module, context: NSManagedObjectContext) {
+        deleteWithoutSaving(module: module, context: context)
         CoreDataStack.shared.save(context: context)
     }
     
@@ -238,6 +241,23 @@ class ModuleController: EntityController {
         
         for child in childrenToDelete {
             context.delete(child)
+        }
+    }
+    
+    //MARK: Mods
+    
+    /// Deletes all Modules in a Mod.
+    /// Note that this does not just remove the Modules from the Mod, but deletes them.
+    /// Does not save the context as this will typically be called with similar functions to delete other objects,
+    /// so saving is not necessary after each step.
+    /// - Parameters:
+    ///   - mod: the Mod to delete Modules of.
+    ///   - context: the context to delete them from.
+    func deleteAllModules(from mod: Mod, context: NSManagedObjectContext) {
+        guard let modules = mod.modules else { return }
+        for module in modules {
+            guard let module = module as? Module else { continue }
+            deleteWithoutSaving(module: module, context: context)
         }
     }
     
