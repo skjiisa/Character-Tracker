@@ -60,11 +60,17 @@ struct ModulesSection: View {
 }
 
 struct ModuleTypeSection: View {
+    @Environment(\.managedObjectContext) var moc
+    
     var fetchRequest: FetchRequest<Module>
     
+    @EnvironmentObject var modController: ModController
+    
+    var mod: Mod
     var type: ModuleType
     
     init(mod: Mod, type: ModuleType) {
+        self.mod = mod
         self.type = type
         self.fetchRequest = FetchRequest(entity: Module.entity(), sortDescriptors: [], predicate: NSPredicate(format: "mod = %@ AND type = %@", mod, type))
     }
@@ -73,6 +79,11 @@ struct ModuleTypeSection: View {
         Section(header: Text(type.typeName)) {
             ForEach (fetchRequest.wrappedValue, id: \.self) { module in
                 Text(module.name ?? "Unknown module")
+            }
+            .onDelete { indexSet in
+                guard let index = indexSet.first else { return }
+                let module = self.fetchRequest.wrappedValue[index]
+                self.modController.remove(module, from: self.mod, context: self.moc)
             }
         }
     }

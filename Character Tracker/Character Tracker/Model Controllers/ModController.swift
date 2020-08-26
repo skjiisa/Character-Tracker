@@ -10,6 +10,8 @@ import CoreData
 
 class ModController: ObservableObject {
     
+    //MARK: CRUD
+    
     @discardableResult func create(mod name: String? = nil, context: NSManagedObjectContext) -> Mod {
         let mod = Mod(context: context)
         mod.id = UUID()
@@ -29,12 +31,6 @@ class ModController: ObservableObject {
         CoreDataStack.shared.save(context: context)
     }
     
-    func add(_ module: Module, to mod: Mod, context: NSManagedObjectContext) {
-        let modules = mod.mutableSetValue(forKey: "modules")
-        modules.add(module)
-        CoreDataStack.shared.save(context: context)
-    }
-    
     func saveOrDeleteIfEmpty(_ mod: Mod, context: NSManagedObjectContext) {
         if mod.wrappedName.isEmpty,
             mod.attributes?.anyObject() == nil,
@@ -46,6 +42,20 @@ class ModController: ObservableObject {
             delete(mod: mod, context: context)
         }
         
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    //MARK: Modules
+    
+    func add(_ module: Module, to mod: Mod, context: NSManagedObjectContext) {
+        let modules = mod.mutableSetValue(forKey: "modules")
+        modules.add(module)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func remove(_ module: Module, from mod: Mod, context: NSManagedObjectContext) {
+        let modules = mod.mutableSetValue(forKey: "modules")
+        modules.remove(module)
         CoreDataStack.shared.save(context: context)
     }
     

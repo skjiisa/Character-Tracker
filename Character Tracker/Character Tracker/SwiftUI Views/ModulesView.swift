@@ -25,6 +25,7 @@ struct ModulesView: View {
                 }) {
                     Text(module.name ?? "Unknown module")
                 }
+                .foregroundColor(.primary)
             }
         }
     }
