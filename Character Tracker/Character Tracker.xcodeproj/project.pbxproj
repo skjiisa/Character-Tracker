@@ -11,6 +11,7 @@
 		59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4D245F35760072E8EA /* ModDetailView.swift */; };
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
+		591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591040E924F874DE00FDA521 /* IngredientsView.swift */; };
 		591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591B236224EB299B0002096A /* CharacterTrackerViewController.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
 		593DDF0924F47B0900D9E357 /* ModController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0824F47B0900D9E357 /* ModController.swift */; };
@@ -74,6 +75,7 @@
 		59019C4D245F35760072E8EA /* ModDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModDetailView.swift; sourceTree = "<group>"; };
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
 		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
+		591040E924F874DE00FDA521 /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
 		591B236224EB299B0002096A /* CharacterTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTrackerViewController.swift; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
 		593DDF0824F47B0900D9E357 /* ModController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
 				59019C4D245F35760072E8EA /* ModDetailView.swift */,
 				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
+				591040E924F874DE00FDA521 /* IngredientsView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
+				591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */,
 				59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */,
 				591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */,
 				59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */,

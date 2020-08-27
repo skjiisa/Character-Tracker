@@ -58,4 +58,18 @@ class ModController: ObservableObject {
         CoreDataStack.shared.save(context: context)
     }
     
+    //MARK: Ingredients
+    
+    func add(_ ingredient: Ingredient, to mod: Mod, context: NSManagedObjectContext) {
+        let ingredients = mod.mutableSetValue(forKey: "ingredients")
+        ingredients.add(ingredient)
+        CoreDataStack.shared.save(context: context)
+    }
+    
+    func remove(_ ingredient: Ingredient, from mod: Mod, context: NSManagedObjectContext) {
+        let ingredients = mod.mutableSetValue(forKey: "ingredients")
+        ingredients.remove(ingredient)
+        CoreDataStack.shared.save(context: context)
+    }
+    
 }
