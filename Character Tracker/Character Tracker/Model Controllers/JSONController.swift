@@ -183,7 +183,7 @@ class JSONController {
                 
                 let objectID = relationshipObject.value(forKey: "id")
                 if let uuid = objectID as? UUID {
-                    return uuid.uuidString == id
+                    return uuid.uuidString.lowercased() == id.lowercased()
                 } else if let idString = objectID as? String {
                     return idString.lowercased() == id.lowercased()
                 }
@@ -204,8 +204,14 @@ class JSONController {
         for idJSON in idArray {
             guard let id = idJSON.string,
                 let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
-                    guard let uuid = relationshipObject.value(forKey: "id") as? UUID else { return false }
-                    return uuid.uuidString.lowercased() == id.lowercased()
+                    let objectID = relationshipObject.value(forKey: "id")
+                    if let uuid = objectID as? UUID {
+                        return uuid.uuidString.lowercased() == id.lowercased()
+                    } else if let idString = objectID as? String {
+                        return idString.lowercased() == id.lowercased()
+                    }
+                    
+                    return false
             }) else { continue }
             
             relationshipsSet.add(relationshipObject)
