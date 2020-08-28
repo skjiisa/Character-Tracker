@@ -305,7 +305,7 @@ class PortController {
         // Mods
         let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
         let ingredientsRelationship = Relationship(key: "ingredients", jsonRepresentation: ingredients)
-        let imagesRelationship = Relationship(key: "images", createIfNotFound: true, jsonRepresentation: images)
+        let imagesRelationship = Relationship(key: "images", orderedSet: true, createIfNotFound: true, jsonRepresentation: images)
         let mods = JSONRepresentation<Mod>(
             arrayKey: "mods",
             attributes: ["name"],

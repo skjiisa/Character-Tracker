@@ -106,7 +106,7 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="mods" inverseEntity="Category"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="mods" inverseEntity="Character"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="mods" inverseEntity="Game"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="mods" inverseEntity="ImageLink"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ImageLink" inverseName="mods" inverseEntity="ImageLink"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="mod" inverseEntity="Ingredient"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="mods" inverseEntity="ExternalLink"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="mod" inverseEntity="Module"/>
@@ -170,7 +170,7 @@
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
         <element name="ImageLink" positionX="178" positionY="370" width="128" height="103"/>
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
-        <element name="Mod" positionX="173" positionY="-12" width="128" height="28"/>
+        <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
         <element name="Module" positionX="343" positionY="203" width="128" height="253"/>
         <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
         <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="103"/>
