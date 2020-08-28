@@ -21,3 +21,10 @@ extension NSManagedObject {
         return nil
     }
 }
+
+extension Mod: Identifiable {
+    var wrappedName: String {
+        get { self.name ?? "" }
+        set { self.name = newValue }
+    }
+}

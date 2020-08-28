@@ -21,7 +21,7 @@ struct TypeFilterSection<Entity: NamedEntity>: View {
     }
     
     var body: some View {
-        SwiftUI.Section(header: Text("Type")) {
+        Section(header: Text("Type")) {
             ForEach(types, id: \.self) { moduleType in
                 Button(action: {
                     self.toggle?(moduleType)
@@ -32,7 +32,7 @@ struct TypeFilterSection<Entity: NamedEntity>: View {
                             .foregroundColor(.primary)
                         if self.checkedTypes.contains(moduleType) {
                             Spacer()
-                            SwiftUI.Image(systemName: "checkmark")
+                            Image(systemName: "checkmark")
                         }
                     }
                 }

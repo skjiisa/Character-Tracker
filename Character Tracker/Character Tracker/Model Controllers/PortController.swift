@@ -281,14 +281,14 @@ class PortController {
         let moduleModules = JSONRelationship<ModuleModule>(key: "children", attributes: [], parent: parentModuleRelationship, child: childModuleRelationship)
         modules.relationshipObjects.append(moduleModules)
         
-        // Import Races
+        // Races
         let races = JSONRepresentation<Race>(
             arrayKey: "races",
             attributes: ["name"],
             toManyRelationships: [gamesRelationship])
         setRep(races)
         
-        // Import Characters
+        // Characters
         let raceRelationship = Relationship(key: "race", jsonRepresentation: races)
         let gameRelationship = Relationship(key: "game", jsonRepresentation: games)
         let characters = JSONRepresentation<Character>(
@@ -296,6 +296,14 @@ class PortController {
             attributes: ["female", "name"],
             toOneRelationships: [raceRelationship, gameRelationship])
         setRep(characters)
+        
+        // Mods
+        let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
+        let ingredientsRelationship = Relationship(key: "ingredients", jsonRepresentation: ingredients)
+        let mods = JSONRepresentation<Mod>(arrayKey: "mods",
+                                           attributes: ["name"],
+                                           toManyRelationships: [gamesRelationship, modulesRelationship, ingredientsRelationship])
+        setRep(mods)
     }
     
     //MARK: Import
@@ -331,6 +339,7 @@ class PortController {
         try importClass(Module.self, json: importJSON, context: context)
         try importClass(Race.self, json: importJSON, context: context)
         try importClass(Character.self, json: importJSON, context: context)
+        try importClass(Mod.self, json: importJSON, context: context)
         
         jsonRepresentations.values.forEach { $0.clearObjects() }
     }

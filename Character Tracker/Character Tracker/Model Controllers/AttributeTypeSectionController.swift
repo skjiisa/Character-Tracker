@@ -9,7 +9,7 @@
 import CoreData
 
 class AttributeTypeSectionController {
-    var sections: [Section] = []
+    var sections: [TypeSection] = []
     var tempSectionsToShow: [TempSection] = []
     var sectionsByCharacter: [Character: [TempSection]] = [:]
     var defaultSectionsByGame: [Game: [TempSection]] = [:]
@@ -96,7 +96,7 @@ class AttributeTypeSectionController {
         tempSectionsToShow = defaultSectionsByGame[game] ?? []
     }
     
-    func contains(section: Section) -> Bool {
+    func contains(section: TypeSection) -> Bool {
         for item in tempSectionsToShow {
             if let inputAttributeTypeSection = section as? AttributeTypeSection {
                 if let itemAttributeTypeSection = item.section as? AttributeTypeSection,
@@ -113,7 +113,7 @@ class AttributeTypeSectionController {
         return false
     }
     
-    func remove(section: Section) {
+    func remove(section: TypeSection) {
         for i in 0..<tempSectionsToShow.count {
             if let inputAttributeTypeSection = section as? AttributeTypeSection {
                 if let iAttributeTypeSection = tempSectionsToShow[i].section as? AttributeTypeSection,

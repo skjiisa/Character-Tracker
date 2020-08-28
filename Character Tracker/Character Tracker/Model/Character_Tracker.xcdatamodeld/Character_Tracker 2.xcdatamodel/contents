@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Attribute" representedClassName="Attribute" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="attribute" inverseEntity="CharacterAttribute"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="attributes" inverseEntity="Game"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="attributes" inverseEntity="ExternalLink"/>
+        <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="attributes" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleAttribute" inverseName="attribute" inverseEntity="ModuleAttribute"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="attributes" inverseEntity="AttributeType"/>
+    </entity>
+    <entity name="AttributeType" representedClassName="AttributeType" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="type" inverseEntity="Attribute"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AttributeTypeSection" inverseName="type" inverseEntity="AttributeTypeSection"/>
+    </entity>
+    <entity name="AttributeTypeSection" representedClassName="AttributeTypeSection" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="maxPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttributeType" inverseName="sections" inverseEntity="AttributeType"/>
+    </entity>
+    <entity name="Author" representedClassName="Author" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="authors" inverseEntity="Category"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="author" inverseEntity="ImageLink"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="authors" inverseEntity="ExternalLink"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="author" inverseEntity="Mod"/>
+    </entity>
+    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="categories" inverseEntity="Author"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="categories" inverseEntity="Mod"/>
+    </entity>
+    <entity name="Character" representedClassName="Character" syncable="YES" codeGenerationType="class">
+        <attribute name="female" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="modified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterAttribute" inverseName="character" inverseEntity="CharacterAttribute"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="characters" inverseEntity="Game"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="characters" inverseEntity="Mod"/>
+        <relationship name="moduleIngredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="characters" inverseEntity="ModuleIngredient"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterModule" inverseName="character" inverseEntity="CharacterModule"/>
+        <relationship name="race" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Race" inverseName="character" inverseEntity="Race"/>
+    </entity>
+    <entity name="CharacterAttribute" representedClassName="CharacterAttribute" syncable="YES" codeGenerationType="class">
+        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="attribute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attribute" inverseName="characters" inverseEntity="Attribute"/>
+        <relationship name="character" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Character" inverseName="attributes" inverseEntity="Character"/>
+    </entity>
+    <entity name="CharacterModule" representedClassName="CharacterModule" syncable="YES" codeGenerationType="class">
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="character" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Character" inverseName="modules" inverseEntity="Character"/>
+        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="characters" inverseEntity="Module"/>
+    </entity>
+    <entity name="ExternalLink" representedClassName="ExternalLink" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="links" inverseEntity="Attribute"/>
+        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="links" inverseEntity="Author"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="links" inverseEntity="Game"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="links" inverseEntity="Ingredient"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="links" inverseEntity="Mod"/>
+        <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="links" inverseEntity="Race"/>
+    </entity>
+    <entity name="Game" representedClassName="Game" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mainline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="games" inverseEntity="Attribute"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="games" inverseEntity="Ingredient"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="games" inverseEntity="ExternalLink"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="games" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="games" inverseEntity="Module"/>
+        <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="games" inverseEntity="Race"/>
+    </entity>
+    <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
+        <attribute name="url" optional="YES" attributeType="URI"/>
+        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="images" inverseEntity="Author"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="images" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="images" inverseEntity="Module"/>
+    </entity>
+    <entity name="Ingredient" representedClassName="Ingredient" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="ingredients" inverseEntity="Game"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="ingredients" inverseEntity="ExternalLink"/>
+        <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="ingredients" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="ingredient" inverseEntity="ModuleIngredient"/>
+    </entity>
+    <entity name="Mod" representedClassName="Mod" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="mod" inverseEntity="Attribute"/>
+        <relationship name="author" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="mods" inverseEntity="Author"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="mods" inverseEntity="Category"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="mods" inverseEntity="Character"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="mods" inverseEntity="Game"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="mods" inverseEntity="ImageLink"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="mod" inverseEntity="Ingredient"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="mods" inverseEntity="ExternalLink"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="mod" inverseEntity="Module"/>
+        <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="mod" inverseEntity="Race"/>
+    </entity>
+    <entity name="Module" representedClassName="Module" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleAttribute" inverseName="module" inverseEntity="ModuleAttribute"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterModule" inverseName="module" inverseEntity="CharacterModule"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="parent" inverseEntity="ModuleModule"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="modules" inverseEntity="Game"/>
+        <relationship name="images" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="modules" inverseEntity="ImageLink"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="module" inverseEntity="ModuleIngredient"/>
+        <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="modules" inverseEntity="Mod"/>
+        <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="child" inverseEntity="ModuleModule"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModuleType" inverseName="modules" inverseEntity="ModuleType"/>
+    </entity>
+    <entity name="ModuleAttribute" representedClassName="ModuleAttribute" syncable="YES" codeGenerationType="class">
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="attribute" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attribute" inverseName="modules" inverseEntity="Attribute"/>
+        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="attributes" inverseEntity="Module"/>
+    </entity>
+    <entity name="ModuleIngredient" representedClassName="ModuleIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="moduleIngredients" inverseEntity="Character"/>
+        <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="modules" inverseEntity="Ingredient"/>
+        <relationship name="module" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="ingredients" inverseEntity="Module"/>
+    </entity>
+    <entity name="ModuleModule" representedClassName="ModuleModule" syncable="YES" codeGenerationType="class">
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="child" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="parents" inverseEntity="Module"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Module" inverseName="children" inverseEntity="Module"/>
+    </entity>
+    <entity name="ModuleType" representedClassName="ModuleType" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="type" inverseEntity="Module"/>
+    </entity>
+    <entity name="Race" representedClassName="Race" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="character" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="race" inverseEntity="Character"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="races" inverseEntity="Game"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="races" inverseEntity="ExternalLink"/>
+        <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="races" inverseEntity="Mod"/>
+    </entity>
+    <elements>
+        <element name="Attribute" positionX="473" positionY="-155" width="128" height="163"/>
+        <element name="AttributeType" positionX="636" positionY="-90" width="128" height="103"/>
+        <element name="AttributeTypeSection" positionX="826" positionY="-76" width="128" height="118"/>
+        <element name="Author" positionX="-60" positionY="-57" width="128" height="133"/>
+        <element name="Category" positionX="-88" positionY="194" width="128" height="103"/>
+        <element name="Character" positionX="157" positionY="-242" width="128" height="193"/>
+        <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
+        <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
+        <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
+        <element name="ImageLink" positionX="178" positionY="370" width="128" height="103"/>
+        <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
+        <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="163"/>
+        <element name="Mod" positionX="173" positionY="-12" width="128" height="28"/>
+        <element name="Module" positionX="343" positionY="203" width="128" height="253"/>
+        <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
+        <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="103"/>
+        <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>
+        <element name="ModuleType" positionX="411" positionY="445" width="128" height="88"/>
+        <element name="Race" positionX="-93" positionY="-221" width="128" height="133"/>
+    </elements>
+</model>

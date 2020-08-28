@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SwiftUI
 
 class TabBarController: UITabBarController {
     
     let gameReference = GameReference()
     let attributeTypeController = AttributeTypeController()
     let moduleTypeController = ModuleTypeController()
+    let modController = ModController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,18 @@ class TabBarController: UITabBarController {
                 }
             }
         }
+        
+        let modsViewHost = UIHostingController(rootView:
+            NavigationView {
+                ModsView()
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+                    .environmentObject(modController)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        )
+        modsViewHost.tabBarItem.title = "Mods"
+        modsViewHost.tabBarItem.image = UIImage(systemName: "circle.grid.hex.fill")
+        viewControllers?.insert(modsViewHost, at: 1)
     }
-    
+
 }

@@ -10,7 +10,7 @@ import CoreData
 
 //MARK: EntityController
 
-protocol EntityController: AnyObject {
+protocol EntityController: ObservableObject {
     associatedtype Entity: NamedEntity
     associatedtype Value: Hashable
     

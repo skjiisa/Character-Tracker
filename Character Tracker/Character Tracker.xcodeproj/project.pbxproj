@@ -7,10 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4B245F2FEE0072E8EA /* ModsView.swift */; };
+		59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4D245F35760072E8EA /* ModDetailView.swift */; };
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		590B3A5723FCDC790058D236 /* Bool+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590B3A5623FCDC790058D236 /* Bool+Int.swift */; };
+		591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591040E924F874DE00FDA521 /* IngredientsView.swift */; };
 		591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591B236224EB299B0002096A /* CharacterTrackerViewController.swift */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
+		593DDF0924F47B0900D9E357 /* ModController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0824F47B0900D9E357 /* ModController.swift */; };
+		593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0A24F47B1F00D9E357 /* ModulesView.swift */; };
 		5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */; };
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
@@ -55,8 +60,8 @@
 		59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */; };
 		59BCF975237A4488000E90B7 /* ModulesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF974237A4488000E90B7 /* ModulesTableViewController.swift */; };
 		59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF976237A450D000E90B7 /* ModuleController.swift */; };
-		59BCF979237A5968000E90B7 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF978237A5968000E90B7 /* Section.swift */; };
-		59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */; };
+		59BCF979237A5968000E90B7 /* TypeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF978237A5968000E90B7 /* TypeSection.swift */; };
+		59BCF97B237A59B0000E90B7 /* Character_Tracker+TypeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCF97A237A59B0000E90B7 /* Character_Tracker+TypeSection.swift */; };
 		59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C116C424DE44560078AA10 /* ScannerViewController.swift */; };
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
@@ -66,10 +71,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59019C4B245F2FEE0072E8EA /* ModsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsView.swift; sourceTree = "<group>"; };
+		59019C4D245F35760072E8EA /* ModDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModDetailView.swift; sourceTree = "<group>"; };
 		59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIngredientsTableViewController.swift; sourceTree = "<group>"; };
 		590B3A5623FCDC790058D236 /* Bool+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Int.swift"; sourceTree = "<group>"; };
+		591040E924F874DE00FDA521 /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
 		591B236224EB299B0002096A /* CharacterTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTrackerViewController.swift; sourceTree = "<group>"; };
 		592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
+		593DDF0824F47B0900D9E357 /* ModController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModController.swift; sourceTree = "<group>"; };
+		593DDF0A24F47B1F00D9E357 /* ModulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModulesView.swift; sourceTree = "<group>"; };
 		5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFilterForm.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
@@ -85,6 +95,7 @@
 		595F7729236A55F300151209 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		595F772B236A55F300151209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+FRCDelegate.swift"; sourceTree = "<group>"; };
+		5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Character_Tracker 2.xcdatamodel"; sourceTree = "<group>"; };
 		597545F124CB8EA900471664 /* TypeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeFilterSection.swift; sourceTree = "<group>"; };
 		597545F324CB92DF00471664 /* AttributesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFilterForm.swift; sourceTree = "<group>"; };
 		597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SectionsTableViewController.swift; path = "Character Tracker/Storyboards/SectionsTableViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -114,8 +125,8 @@
 		59BCF972237A3F62000E90B7 /* ModuleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTypeController.swift; sourceTree = "<group>"; };
 		59BCF974237A4488000E90B7 /* ModulesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModulesTableViewController.swift; path = "Character Tracker/View Controllers/ModulesTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		59BCF976237A450D000E90B7 /* ModuleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleController.swift; sourceTree = "<group>"; };
-		59BCF978237A5968000E90B7 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Section.swift"; sourceTree = "<group>"; };
+		59BCF978237A5968000E90B7 /* TypeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSection.swift; sourceTree = "<group>"; };
+		59BCF97A237A59B0000E90B7 /* Character_Tracker+TypeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+TypeSection.swift"; sourceTree = "<group>"; };
 		59C116C424DE44560078AA10 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
@@ -155,6 +166,10 @@
 				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
 				5959073524DCB14F00BE372F /* ShareSheet.swift */,
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
+				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
+				59019C4D245F35760072E8EA /* ModDetailView.swift */,
+				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
+				591040E924F874DE00FDA521 /* IngredientsView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -223,8 +238,8 @@
 				59BB3D24236AA92D00A4A14E /* Character_Tracker+Convenience.swift */,
 				59BB3D26236AA95700A4A14E /* CoreDataStack.swift */,
 				59B3A78E236CF68E00B3D33B /* GameReference.swift */,
-				59BCF978237A5968000E90B7 /* Section.swift */,
-				59BCF97A237A59B0000E90B7 /* Character_Tracker+Section.swift */,
+				59BCF978237A5968000E90B7 /* TypeSection.swift */,
+				59BCF97A237A59B0000E90B7 /* Character_Tracker+TypeSection.swift */,
 				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
 				59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */,
 			);
@@ -275,6 +290,7 @@
 				59C33EF423BD6E3500FC1F11 /* JSONController.swift */,
 				59E7A7BA24CCD56D006E77D7 /* PortController.swift */,
 				59ADFD59240B228F00B5E828 /* EntityController.swift */,
+				593DDF0824F47B0900D9E357 /* ModController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -361,7 +377,7 @@
 			files = (
 				59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */,
 				5972482F24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift in Sources */,
-				59BCF979237A5968000E90B7 /* Section.swift in Sources */,
+				59BCF979237A5968000E90B7 /* TypeSection.swift in Sources */,
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
 				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
@@ -369,17 +385,21 @@
 				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
+				59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
+				593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */,
 				5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */,
 				59850F46237D0FD400286067 /* LevelTableViewCell.swift in Sources */,
 				594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */,
 				59BB3D27236AA95700A4A14E /* CoreDataStack.swift in Sources */,
+				593DDF0924F47B0900D9E357 /* ModController.swift in Sources */,
 				5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */,
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
-				59BCF97B237A59B0000E90B7 /* Character_Tracker+Section.swift in Sources */,
+				59BCF97B237A59B0000E90B7 /* Character_Tracker+TypeSection.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
+				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
 				5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */,
@@ -401,6 +421,7 @@
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
+				591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */,
 				59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */,
 				591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */,
 				59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */,
@@ -647,9 +668,10 @@
 		595F7723236A55EF00151209 /* Character_Tracker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */,
 				595F7724236A55EF00151209 /* Character_Tracker.xcdatamodel */,
 			);
-			currentVersion = 595F7724236A55EF00151209 /* Character_Tracker.xcdatamodel */;
+			currentVersion = 5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */;
 			path = Character_Tracker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
