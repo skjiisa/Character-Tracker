@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ModDetailView: View {
     @Environment(\.managedObjectContext) var moc
@@ -34,6 +35,26 @@ struct ModDetailView: View {
     
     var body: some View {
         Form {
+            
+            // Images
+            
+            if mod.images?.count ?? 0 > 0 {
+                Section {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(mod.images!.array as! [ImageLink], id: \.self) { image in
+                                WebImage(url: URL(string: image.id ?? ""))
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
+                    }
+                    .frame(height: 200)
+                }
+            }
+            
+            // Name
+            
             Section {
                 TextField("Name", text: $mod.wrappedName)
             }
@@ -75,7 +96,7 @@ struct ModDetailView: View {
                 }, isActive: $showingNewIngredient)
             }
         }
-        .navigationBarTitle("Mod")
+        .navigationBarTitle(mod.name ?? "Mod")
         .onDisappear {
             if !self.presentationMode.wrappedValue.isPresented {
                 self.modController.saveOrDeleteIfEmpty(self.mod, context: self.moc)
