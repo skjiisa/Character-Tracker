@@ -297,12 +297,19 @@ class PortController {
             toOneRelationships: [raceRelationship, gameRelationship])
         setRep(characters)
         
+        // Images
+        // There aren't actually going to be any Images in the top-level JSON.
+        // They will be created implicitly with each entity.
+        let images = JSONRepresentation<ImageLink>(arrayKey: "images", attributes: [])
+        
         // Mods
         let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
         let ingredientsRelationship = Relationship(key: "ingredients", jsonRepresentation: ingredients)
-        let mods = JSONRepresentation<Mod>(arrayKey: "mods",
-                                           attributes: ["name"],
-                                           toManyRelationships: [gamesRelationship, modulesRelationship, ingredientsRelationship])
+        let imagesRelationship = Relationship(key: "images", createIfNotFound: true, jsonRepresentation: images)
+        let mods = JSONRepresentation<Mod>(
+            arrayKey: "mods",
+            attributes: ["name"],
+            toManyRelationships: [gamesRelationship, modulesRelationship, ingredientsRelationship, imagesRelationship])
         setRep(mods)
     }
     

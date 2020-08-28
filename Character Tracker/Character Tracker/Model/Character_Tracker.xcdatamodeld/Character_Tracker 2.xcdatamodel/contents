@@ -85,7 +85,7 @@
         <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="games" inverseEntity="Race"/>
     </entity>
     <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
-        <attribute name="url" optional="YES" attributeType="URI"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="images" inverseEntity="Author"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="images" inverseEntity="Mod"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="images" inverseEntity="Module"/>
@@ -166,10 +166,10 @@
         <element name="Character" positionX="157" positionY="-242" width="128" height="193"/>
         <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
         <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
+        <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
         <element name="ImageLink" positionX="178" positionY="370" width="128" height="103"/>
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
-        <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="28"/>
         <element name="Module" positionX="343" positionY="203" width="128" height="253"/>
         <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
