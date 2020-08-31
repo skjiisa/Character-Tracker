@@ -48,6 +48,8 @@
 		59B3A793236D01B300B3D33B /* CharactersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */; };
 		59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A794236D063C00B3D33B /* RacesTableViewController.swift */; };
 		59B3A797236D506000B3D33B /* AttributeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A796236D506000B3D33B /* AttributeController.swift */; };
+		59B6B1C824FDA28C003D168A /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B6B1C724FDA28C003D168A /* ScannerView.swift */; };
+		59B6B1CA24FDABFF003D168A /* AlertContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B6B1C924FDABFF003D168A /* AlertContainer.swift */; };
 		59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */; };
 		59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8D942237F8F6C00C7A28F /* IngredientController.swift */; };
 		59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B8EA112373A0360008ED11 /* AttributeTypeController.swift */; };
@@ -113,6 +115,8 @@
 		59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersTableViewController.swift; sourceTree = "<group>"; };
 		59B3A794236D063C00B3D33B /* RacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacesTableViewController.swift; sourceTree = "<group>"; };
 		59B3A796236D506000B3D33B /* AttributeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeController.swift; sourceTree = "<group>"; };
+		59B6B1C724FDA28C003D168A /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		59B6B1C924FDABFF003D168A /* AlertContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertContainer.swift; sourceTree = "<group>"; };
 		59B8D940237F8C7B00C7A28F /* IngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsTableViewController.swift; sourceTree = "<group>"; };
 		59B8D942237F8F6C00C7A28F /* IngredientController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientController.swift; sourceTree = "<group>"; };
 		59B8EA112373A0360008ED11 /* AttributeTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeTypeController.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 			children = (
 				592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */,
 				590B3A5623FCDC790058D236 /* Bool+Int.swift */,
+				59B6B1C924FDABFF003D168A /* AlertContainer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				59019C4D245F35760072E8EA /* ModDetailView.swift */,
 				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
 				591040E924F874DE00FDA521 /* IngredientsView.swift */,
+				59B6B1C724FDA28C003D168A /* ScannerView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -412,6 +418,7 @@
 				59B8D941237F8C7B00C7A28F /* IngredientsTableViewController.swift in Sources */,
 				59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */,
 				59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */,
+				59B6B1C824FDA28C003D168A /* ScannerView.swift in Sources */,
 				59BB3D20236AA1C400A4A14E /* CharacterDetailTableViewController.swift in Sources */,
 				59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */,
 				59BB3D29236AAB2F00A4A14E /* AttributesTableViewController.swift in Sources */,
@@ -420,6 +427,7 @@
 				597545F424CB92DF00471664 /* AttributesFilterForm.swift in Sources */,
 				59850F44237D0F4B00286067 /* ModuleNameTableViewCell.swift in Sources */,
 				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
+				59B6B1CA24FDABFF003D168A /* AlertContainer.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,

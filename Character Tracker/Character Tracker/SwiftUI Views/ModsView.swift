@@ -17,6 +17,9 @@ struct ModsView: View {
     
     @State private var newMod: Mod?
     @State private var deleteMod: Mod?
+    @State private var alert: Alert?
+    @State private var showingScanner = false
+    @State private var showingAlert: AlertContainer?
     
     var newModButton: some View {
         Button(action: {
@@ -25,6 +28,35 @@ struct ModsView: View {
         }) {
             Image(systemName: "plus")
                 .imageScale(.large)
+        }
+    }
+    
+    var scannerButton: some View {
+        Button(action: {
+            self.showingScanner = true
+        }) {
+            Image(systemName: "qrcode.viewfinder")
+                .imageScale(.large)
+        }
+        .sheet(isPresented: $showingScanner, onDismiss: {
+            // alert is set from the ScannerView binding, but it is set too fast,
+            // before this sheet is dismissed, so the alert item needs to be set
+            // after the sheet is dismissed.
+            guard let alert = self.alert else { return }
+            self.showingAlert = AlertContainer(alert)
+        }) {
+            ScannerView(showing: self.$showingScanner, alert: self.$alert)
+            }
+        .alert(item: $showingAlert) { alertContainer -> Alert in
+            alertContainer.alert
+        }
+    }
+    
+    var buttonsView: some View {
+        HStack {
+            scannerButton
+            newModButton
+                .padding(.leading)
         }
     }
     
@@ -44,7 +76,7 @@ struct ModsView: View {
             }
         }
         .navigationBarTitle("Mods")
-        .navigationBarItems(trailing: newModButton)
+        .navigationBarItems(trailing: buttonsView)
         .sheet(item: $newMod) { mod in
             NavigationView {
                 ModDetailView(mod: mod)
