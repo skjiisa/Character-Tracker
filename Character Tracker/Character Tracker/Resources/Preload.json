@@ -1226,6 +1226,42 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
+    },
+    {
+      "name": "Netch Jelly",
+      "id": "Dragonborn.esm 01cd72",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Bonemold Formula",
+      "id": "Dragonborn.esm 02AD3C",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Bone Meal",
+      "id": "Skyrim.esm 034cdd",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Void Salts",
+      "id": "Skyrim.esm 03ad60",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
     }
   ],
   "modules": [
@@ -2271,6 +2307,92 @@
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
       ]
+    },
+    {
+      "name": "Bonemold Armor",
+      "id": "244E53C7-B566-403E-9E8F-F1D9B9AFCF44",
+      "level": 1,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "Dragonborn.esm 01cd7c",
+          "quantity": 5
+        },
+        {
+          "ingredient": "Skyrim.esm 05ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Skyrim.esm 034cdd",
+          "quantity": 26
+        },
+        {
+          "ingredient": "Skyrim.esm 0cb40d",
+          "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
+      ]
+    },
+    {
+      "name": "Improved Bonemold Armor",
+      "id": "B3F5A78B-D083-46A1-91E8-F5D9D4F98085",
+      "level": 7,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "Dragonborn.esm 01cd7c",
+          "quantity": 5
+        },
+        {
+          "ingredient": "Skyrim.esm 05ace4",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Skyrim.esm 034cdd",
+          "quantity": 26
+        },
+        {
+          "ingredient": "Dragonborn.esm 01cd72",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Dragonborn.esm 02b06b",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Skyrim.esm 03ad60",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Skyrim.esm 0cb40d",
+          "quantity": 0
+        },
+        {
+          "ingredient": "Dragonborn.esm 02AD3C",
+          "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
+      ]
     }
   ],
   "characters": [
@@ -2293,12 +2415,18 @@
         "B514B7B0-3ECA-453D-8867-2825B2A39DE6",
         "33A821CA-544B-4F51-83B7-0FB7D1215EE6",
         "84CFAEB5-A479-4356-8039-299D691C8B08",
-        "3E9DA791-1AEC-4557-9ABB-D25C44996D3F"
+        "3E9DA791-1AEC-4557-9ABB-D25C44996D3F",
+        "244E53C7-B566-403E-9E8F-F1D9B9AFCF44",
+        "B3F5A78B-D083-46A1-91E8-F5D9D4F98085"
       ],
       "ingredients": [
         "Dragonborn.esm 02b06b",
         "Dragonborn.esm 01cd7c",
-        "Dragonborn.esm 02b04e"
+        "Dragonborn.esm 02b04e",
+        "Dragonborn.esm 01cd72",
+        "Dragonborn.esm 02AD3C",
+        "Skyrim.esm 034cdd",
+        "Skyrim.esm 03ad60"
       ],
       "images": [
         "https://images.uesp.net/2/2e/SR-cover-Dragonborn_Box_Art.jpg",
