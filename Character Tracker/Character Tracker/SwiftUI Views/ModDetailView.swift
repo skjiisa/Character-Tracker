@@ -12,6 +12,11 @@ import SDWebImageSwiftUI
 struct ModDetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.editMode) private var editModeBinding: Binding<EditMode>?
+    
+    var editMode: Bool {
+        editModeBinding?.wrappedValue.isEditing ?? false
+    }
     
     var ingredientsFetchRequest: FetchRequest<Ingredient>
     var ingredients: FetchedResults<Ingredient> {
@@ -61,17 +66,19 @@ struct ModDetailView: View {
             
             // Modules
             
-            ModulesSection(mod: mod)
+            ModulesSection(mod: mod, deleteDisabled: !editMode)
             
-            Section {
-                NavigationLink("Add module", destination: ModulesView() { module in
-                    // If this showingNewModule isn't here, trying to add a module
-                    // to the mod will cause a new copy of ModulesView to get pushed
-                    // on top of the old one before popping back to this view.
-                    // Popping it first by setting showingNewModule to false fixes that.
-                    self.showingNewModule = false
-                    self.modController.add(module, to: self.mod, context: self.moc)
-                }, isActive: $showingNewModule)
+            if editMode {
+                Section {
+                    NavigationLink("Add module", destination: ModulesView() { module in
+                        // If this showingNewModule isn't here, trying to add a module
+                        // to the mod will cause a new copy of ModulesView to get pushed
+                        // on top of the old one before popping back to this view.
+                        // Popping it first by setting showingNewModule to false fixes that.
+                        self.showingNewModule = false
+                        self.modController.add(module, to: self.mod, context: self.moc)
+                    }, isActive: $showingNewModule)
+                }
             }
             
             // Ingredients
@@ -86,17 +93,21 @@ struct ModDetailView: View {
                         let ingredient = self.ingredients[index]
                         self.modController.remove(ingredient, from: self.mod, context: self.moc)
                     }
+                    .deleteDisabled(!editMode)
                 }
             }
             
-            Section() {
-                NavigationLink("Add ingredient", destination: IngredientsView() { ingredient in
-                    self.showingNewIngredient = false
-                    self.modController.add(ingredient, to: self.mod, context: self.moc)
-                }, isActive: $showingNewIngredient)
+            if editMode {
+                Section {
+                    NavigationLink("Add ingredient", destination: IngredientsView() { ingredient in
+                        self.showingNewIngredient = false
+                        self.modController.add(ingredient, to: self.mod, context: self.moc)
+                    }, isActive: $showingNewIngredient)
+                }
             }
         }
         .navigationBarTitle(mod.name ?? "Mod")
+        .navigationBarItems(trailing: EditButton())
         .onDisappear {
             if !self.presentationMode.wrappedValue.isPresented {
                 self.modController.saveOrDeleteIfEmpty(self.mod, context: self.moc)
@@ -111,10 +122,11 @@ struct ModulesSection: View {
     @FetchRequest(entity: ModuleType.entity(), sortDescriptors: []) var types: FetchedResults<ModuleType>
     
     var mod: Mod
+    var deleteDisabled: Bool
     
     var body: some View {
         ForEach(types, id: \.self) { type in
-            ModuleTypeSection(mod: self.mod, type: type)
+            ModuleTypeSection(mod: self.mod, type: type, deleteDisabled: self.deleteDisabled)
         }
     }
 }
@@ -131,10 +143,12 @@ struct ModuleTypeSection: View {
     
     var mod: Mod
     var type: ModuleType
+    var deleteDisabled: Bool
     
-    init(mod: Mod, type: ModuleType) {
+    init(mod: Mod, type: ModuleType, deleteDisabled: Bool) {
         self.mod = mod
         self.type = type
+        self.deleteDisabled = deleteDisabled
         self.fetchRequest = FetchRequest(entity: Module.entity(), sortDescriptors: [], predicate: NSPredicate(format: "mod = %@ AND type = %@", mod, type))
     }
     
@@ -154,6 +168,7 @@ struct ModuleTypeSection: View {
                         let module = self.modules[index]
                         self.modController.remove(module, from: self.mod, context: self.moc)
                     }
+                    .deleteDisabled(deleteDisabled)
                 }
             }
         }
