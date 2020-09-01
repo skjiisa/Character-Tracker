@@ -159,7 +159,7 @@ struct ModuleTypeSection: View {
         // with how things are set up right now.
         Group {
             if modules.count > 0 {
-                Section(header: Text(type.typeName)) {
+                Section(header: Text(type.typeName.pluralize())) {
                     ForEach (modules, id: \.self) { module in
                         Text(module.name ?? "Unknown module")
                     }
