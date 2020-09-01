@@ -12,11 +12,6 @@ import SDWebImageSwiftUI
 struct ModDetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Environment(\.editMode) private var editModeBinding: Binding<EditMode>?
-    
-    var editMode: Bool {
-        editModeBinding?.wrappedValue.isEditing ?? false
-    }
     
     var ingredientsFetchRequest: FetchRequest<Ingredient>
     var ingredients: FetchedResults<Ingredient> {
@@ -28,6 +23,7 @@ struct ModDetailView: View {
     @ObservedObject var mod: Mod
     @State private var showingNewModule = false
     @State private var showingNewIngredient = false
+    @State private var editMode = false
     
     init(mod: Mod) {
         self.mod = mod
@@ -36,6 +32,18 @@ struct ModDetailView: View {
         // NSSet which will be harder to deal with declaratively than a
         // fetch request with a sort descriptor.
         self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "mod = %@", mod))
+    }
+    
+    var editButton: some View {
+        Button(action: {
+            self.editMode.toggle()
+        }) {
+            if editMode {
+                Text("Done")
+            } else {
+                Text("Edit")
+            }
+        }
     }
     
     var body: some View {
@@ -107,7 +115,7 @@ struct ModDetailView: View {
             }
         }
         .navigationBarTitle(mod.name ?? "Mod")
-        .navigationBarItems(trailing: EditButton())
+        .navigationBarItems(trailing: editButton)
         .onDisappear {
             if !self.presentationMode.wrappedValue.isPresented {
                 self.modController.saveOrDeleteIfEmpty(self.mod, context: self.moc)
