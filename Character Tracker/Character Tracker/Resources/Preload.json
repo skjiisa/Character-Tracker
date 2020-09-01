@@ -1199,6 +1199,15 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
+    },
+    {
+      "name": "Stalhrim",
+      "id": "Dragonborn.esm 02b06b",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
     }
   ],
   "modules": [
@@ -2049,6 +2058,131 @@
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
       ]
+    },
+    {
+      "id": "8982D486-F2DF-4B7C-9C6B-9DE78149DE07",
+      "level": 30,
+      "name": "Dragonborn",
+      "notes": "Official DLC",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+    },
+    {
+      "id": "2A0DA09A-0DB1-45D2-977E-25AB6EE53455",
+      "level": 0,
+      "name": "Frea",
+      "notes": "Available after The Fate of the Skaal.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "8982D486-F2DF-4B7C-9C6B-9DE78149DE07"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "83D71DF6-F1FF-40FF-8F90-B6B1B515B389"
+        },
+        {
+          "attribute": "3BB5036C-FDCC-4197-9559-B42212B1FAF7"
+        },
+        {
+          "attribute": "548EA51C-6A03-4C51-A1F4-8610B6E67E75"
+        }
+      ]
+    },
+    {
+      "id": "2F3877D6-6945-4B20-8A6B-E1CD6CEF6DAF",
+      "level": 25,
+      "name": "Severin Manor",
+      "notes": "Awarded after Served Cold.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863"
+    },
+    {
+      "name": "Stalhrim Light Armor",
+      "id": "B514B7B0-3ECA-453D-8867-2825B2A39DE6",
+      "level": 35,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 0800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "Skyrim.esm 05ace5",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Dragonborn.esm 02b06b",
+          "quantity": 13
+        },
+        {
+          "ingredient": "Skyrim.esm 0cb412",
+          "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
+        }
+      ]
+    },
+    {
+      "name": "Stalhrim Heavy Armor",
+      "id": "33A821CA-544B-4F51-83B7-0FB7D1215EE6",
+      "level": 35,
+      "notes": "Crafting ingredients do not include shield.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 0800e4",
+          "quantity": 9
+        },
+        {
+          "ingredient": "Skyrim.esm 05ada0",
+          "quantity": 4
+        },
+        {
+          "ingredient": "Dragonborn.esm 02b06b",
+          "quantity": 17
+        },
+        {
+          "ingredient": "Skyrim.esm 0cb412",
+          "quantity": 0
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
+        }
+      ]
     }
   ],
   "characters": [
@@ -2058,6 +2192,26 @@
       "id": "8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E",
       "name": "Ja’Zakajirr",
       "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+    }
+  ],
+  "mods": [
+    {
+      "name": "Dragonborn",
+      "id": "3E20B4A9-5171-45BC-88AC-CCFA2EEEF143",
+      "modules": [
+        "8982D486-F2DF-4B7C-9C6B-9DE78149DE07",
+        "2A0DA09A-0DB1-45D2-977E-25AB6EE53455",
+        "2F3877D6-6945-4B20-8A6B-E1CD6CEF6DAF",
+        "B514B7B0-3ECA-453D-8867-2825B2A39DE6",
+        "33A821CA-544B-4F51-83B7-0FB7D1215EE6"
+      ],
+      "ingredients": [
+        "Dragonborn.esm 02b06b"
+      ],
+      "images": [
+        "https://images.uesp.net/2/2e/SR-cover-Dragonborn_Box_Art.jpg",
+        "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ]
     }
   ]
 }
