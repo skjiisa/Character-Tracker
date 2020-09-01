@@ -80,7 +80,7 @@ class IngredientsTableViewController: UITableViewController, CharacterTrackerVie
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let ingredient = fetchedResultsController.object(at: indexPath)
-            ingredientController?.delete(ingredient: ingredient, context: CoreDataStack.shared.mainContext)
+            ingredientController?.delete(ingredient, context: CoreDataStack.shared.mainContext)
         }  
     }
     

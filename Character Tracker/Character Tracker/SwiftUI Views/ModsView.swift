@@ -14,6 +14,7 @@ struct ModsView: View {
     
     @EnvironmentObject var modController: ModController
     var moduleController = ModuleController()
+    var ingredientController = IngredientController()
     
     @State private var newMod: Mod?
     @State private var deleteMod: Mod?
@@ -92,6 +93,7 @@ struct ModsView: View {
                 }),
                 .destructive(Text("Delete all"), action: {
                     self.moduleController.deleteAllModules(from: mod, context: self.moc)
+                    self.ingredientController.removeOrDeleteAllIngredients(from: mod, context: self.moc)
                     self.modController.delete(mod: mod, context: self.moc)
                 })
             ])

@@ -24,13 +24,12 @@ class AttributeController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func delete(attribute: Attribute, context: NSManagedObjectContext) {
+    func deleteWithoutSaving(_ attribute: Attribute, context: NSManagedObjectContext) {
         tempEntities.removeAll(where: { $0.entity == attribute })
         
         attribute.deleteRelationshipObjects(forKeys: ["characters", "modules"], context: context)
         
         context.delete(attribute)
-        CoreDataStack.shared.save(context: context)
     }
     
     func add(game: Game, to attribute: Attribute, context: NSManagedObjectContext) {

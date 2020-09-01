@@ -95,7 +95,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="ingredients" inverseEntity="Game"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="ingredients" inverseEntity="ExternalLink"/>
-        <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="ingredients" inverseEntity="Mod"/>
+        <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="ingredients" inverseEntity="Mod"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="ingredient" inverseEntity="ModuleIngredient"/>
     </entity>
     <entity name="Mod" representedClassName="Mod" syncable="YES" codeGenerationType="class">
@@ -107,7 +107,7 @@
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="mods" inverseEntity="Character"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="mods" inverseEntity="Game"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ImageLink" inverseName="mods" inverseEntity="ImageLink"/>
-        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="mod" inverseEntity="Ingredient"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="mods" inverseEntity="Ingredient"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="mods" inverseEntity="ExternalLink"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="mod" inverseEntity="Module"/>
         <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="mod" inverseEntity="Race"/>

@@ -31,7 +31,7 @@ struct ModDetailView: View {
         // The mod's ingredients property will give an optional, unordered
         // NSSet which will be harder to deal with declaratively than a
         // fetch request with a sort descriptor.
-        self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "mod = %@", mod))
+        self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "%@ in mods", mod))
     }
     
     var editButton: some View {

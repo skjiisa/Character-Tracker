@@ -23,13 +23,12 @@ class IngredientController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func delete(ingredient: Ingredient, context: NSManagedObjectContext) {
+    func deleteWithoutSaving(_ ingredient: Ingredient, context: NSManagedObjectContext) {
         tempEntities.removeAll(where: { $0.entity == ingredient })
         
         ingredient.deleteRelationshipObjects(forKey: "modules", context: context)
         
         context.delete(ingredient)
-        CoreDataStack.shared.save(context: context)
     }
     
     //MARK: Temp Ingredients
@@ -90,6 +89,30 @@ class IngredientController: EntityController {
         
         for moduleIngredient in moduleIngredientsToDelete {
             context.delete(moduleIngredient)
+        }
+    }
+    
+    //MARK: Mods
+    
+    /// Removes all Ingredients from a Mod in preparation for the Mod being deleted.
+    ///
+    /// If this is the only Mod to have added an Ingredient, that Ingredient will be deleted.
+    /// If another Mod also added the Ingredient, it will only be removed from this Mod.
+    /// - Note: Does not save the context. 
+    /// - Parameters:
+    ///   - mod: The Mod to remove Ingredients from.
+    ///   - context: The context to delete them from.
+    func removeOrDeleteAllIngredients(from mod: Mod, context: NSManagedObjectContext) {
+        guard let ingredients = mod.ingredients as? Set<Ingredient> else { return }
+        for ingredient in ingredients {
+            // If other mods have added this ingredient, just remove it from this mod.
+            // Otherwise, delete it.
+            if ingredient.mods?.count ?? 0 > 1 {
+                let mods = ingredient.mutableSetValue(forKey: "mods")
+                mods.remove(mod)
+            } else {
+                deleteWithoutSaving(ingredient, context: context)
+            }
         }
     }
     
