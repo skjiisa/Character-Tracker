@@ -168,16 +168,12 @@
 			isa = PBXGroup;
 			children = (
 				597545F124CB8EA900471664 /* TypeFilterSection.swift */,
-				5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */,
 				597545F324CB92DF00471664 /* AttributesFilterForm.swift */,
-				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
-				5959073524DCB14F00BE372F /* ShareSheet.swift */,
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
-				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
-				59019C4D245F35760072E8EA /* ModDetailView.swift */,
-				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
 				591040E924F874DE00FDA521 /* IngredientsView.swift */,
-				59B6B1C724FDA28C003D168A /* ScannerView.swift */,
+				59B6B1CF24FDC674003D168A /* Porting */,
+				59B6B1CB24FDC5E7003D168A /* Modules */,
+				59B6B1CE24FDC62C003D168A /* Mods */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -261,6 +257,34 @@
 				59C33EF623BD6EF700FC1F11 /* Preload.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		59B6B1CB24FDC5E7003D168A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */,
+				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		59B6B1CE24FDC62C003D168A /* Mods */ = {
+			isa = PBXGroup;
+			children = (
+				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
+				59019C4D245F35760072E8EA /* ModDetailView.swift */,
+			);
+			name = Mods;
+			sourceTree = "<group>";
+		};
+		59B6B1CF24FDC674003D168A /* Porting */ = {
+			isa = PBXGroup;
+			children = (
+				5959073324DCA7FC00BE372F /* QRCodeView.swift */,
+				5959073524DCB14F00BE372F /* ShareSheet.swift */,
+				59B6B1C724FDA28C003D168A /* ScannerView.swift */,
+			);
+			name = Porting;
 			sourceTree = "<group>";
 		};
 		59BB3D1E236AA19800A4A14E /* View Controllers */ = {
