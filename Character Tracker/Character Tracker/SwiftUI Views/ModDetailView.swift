@@ -148,6 +148,9 @@ struct ModuleTypeSection: View {
     }
     
     @EnvironmentObject var modController: ModController
+    @EnvironmentObject var gameReference: GameReference
+    
+    @State private var showingModule: Module?
     
     var mod: Mod
     var type: ModuleType
@@ -169,7 +172,14 @@ struct ModuleTypeSection: View {
             if modules.count > 0 {
                 Section(header: Text(type.typeName.pluralize())) {
                     ForEach (modules, id: \.self) { module in
-                        Text(module.name ?? "Unknown module")
+                        // I would have preferred to have navigation links here,
+                        // but since ModuleDetailView is currently just a container
+                        // for a UITableView, the navigation bar gets all messed up
+                        // when you try navigating to it from SwiftUI.
+                        Button(module.name ?? "Unknown module") {
+                            self.showingModule = module
+                        }
+                        .foregroundColor(.primary)
                     }
                     .onDelete { indexSet in
                         guard let index = indexSet.first else { return }
@@ -179,6 +189,10 @@ struct ModuleTypeSection: View {
                     .deleteDisabled(deleteDisabled)
                 }
             }
+        }
+        .sheet(item: $showingModule) { module in
+            ModuleDetailView(module: module)
+                .environmentObject(self.gameReference)
         }
     }
 }

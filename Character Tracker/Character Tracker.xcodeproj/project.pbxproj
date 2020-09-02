@@ -71,6 +71,7 @@
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */; };
+		59FFF31B250050210067DA17 /* ModuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFF31A250050210067DA17 /* ModuleDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		59E7A7BA24CCD56D006E77D7 /* PortController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortController.swift; sourceTree = "<group>"; };
 		59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Wrapping.swift"; sourceTree = "<group>"; };
+		59FFF31A250050210067DA17 /* ModuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 			children = (
 				5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */,
 				593DDF0A24F47B1F00D9E357 /* ModulesView.swift */,
+				59FFF31A250050210067DA17 /* ModuleDetailView.swift */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
+				59FFF31B250050210067DA17 /* ModuleDetailView.swift in Sources */,
 				591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */,
 				59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */,
 				591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */,

@@ -46,6 +46,7 @@ class TabBarController: UITabBarController {
                 ModsView()
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
                     .environmentObject(modController)
+                    .environmentObject(gameReference)
             }
             .navigationViewStyle(StackNavigationViewStyle())
         )
