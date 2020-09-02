@@ -14,9 +14,21 @@ struct ScannerView: UIViewControllerRepresentable {
     @Binding var showing: Bool
     @Binding var alert: Alert?
     
+    var dispatchGroup = DispatchGroup()
+    
     func makeUIViewController(context: Context) -> ScannerViewController {
         let scannerVC = ScannerViewController()
         scannerVC.delegate = context.coordinator
+        
+        // If a code is scanned too fast, it will try to dismiss before it's finished being presented.
+        // Since it's being presented with SwiftUI, we don't have a completion parameter,
+        // so here instead it's just waiting 1 second after being presented before it'll dismiss.
+        // I tried shorter amounts of time and this seems like the right amount.
+        dispatchGroup.enter()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.dispatchGroup.leave()
+        }
+        
         return scannerVC
     }
     
@@ -44,7 +56,7 @@ struct ScannerView: UIViewControllerRepresentable {
                                   primaryButton: save,
                                   secondaryButton: Alert.Button.cancel())
                 
-                DispatchQueue.main.async {
+                self.parent.dispatchGroup.notify(queue: .main) {
                     self.parent.showing = false
                     self.parent.alert = alert
                 }
