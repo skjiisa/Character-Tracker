@@ -30,3 +30,5 @@ extension Mod: Identifiable {
 }
 
 extension Module: Identifiable {}
+
+extension Ingredient: Identifiable {}

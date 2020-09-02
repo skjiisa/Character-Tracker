@@ -24,6 +24,7 @@ struct ModDetailView: View {
     @State private var showingNewModule = false
     @State private var showingNewIngredient = false
     @State private var editMode = false
+    @State private var selectedIngredient: Ingredient?
     
     init(mod: Mod) {
         self.mod = mod
@@ -94,7 +95,10 @@ struct ModDetailView: View {
             if ingredients.count > 0 {
                 Section(header: Text("Ingredients")) {
                     ForEach(ingredients, id: \.self) { ingredient in
-                        Text(ingredient.name ?? "Unknown ingredient")
+                        Button(ingredient.name ?? "Unknown ingredient") {
+                            self.selectedIngredient = ingredient
+                        }
+                        .foregroundColor(.primary)
                     }
                     .onDelete { indexSet in
                         guard let index = indexSet.first else { return }
@@ -120,6 +124,9 @@ struct ModDetailView: View {
             if !self.presentationMode.wrappedValue.isPresented {
                 self.modController.saveOrDeleteIfEmpty(self.mod, context: self.moc)
             }
+        }
+        .alert(item: $selectedIngredient) { ingredient in
+            Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
         }
     }
 }
