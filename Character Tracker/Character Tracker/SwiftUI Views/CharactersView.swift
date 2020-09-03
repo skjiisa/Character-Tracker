@@ -33,7 +33,7 @@ struct CharactersView: View {
                 VStack(alignment: .leading) {
                     Text(character.name ?? "New Character")
                         .fontWeight(.medium)
-                    Text(character.race?.name ?? "")
+                    Text(optionalString: character.race?.name)?
                         .font(.footnote)
                 }
                 .padding(.vertical, 4)
