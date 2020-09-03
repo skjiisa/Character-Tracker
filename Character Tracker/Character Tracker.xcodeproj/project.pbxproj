@@ -68,6 +68,8 @@
 		59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C116C424DE44560078AA10 /* ScannerViewController.swift */; };
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
+		59DA455525006FA2005B10EA /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA455425006FA2005B10EA /* CharactersView.swift */; };
+		59DA455725007503005B10EA /* CharactersViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA455625007503005B10EA /* CharactersViewContainer.swift */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */; };
@@ -136,6 +138,8 @@
 		59C116C424DE44560078AA10 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
+		59DA455425006FA2005B10EA /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
+		59DA455625007503005B10EA /* CharactersViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewContainer.swift; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		59E7A7BA24CCD56D006E77D7 /* PortController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortController.swift; sourceTree = "<group>"; };
 		59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Wrapping.swift"; sourceTree = "<group>"; };
@@ -176,6 +180,8 @@
 				59B6B1CF24FDC674003D168A /* Porting */,
 				59B6B1CB24FDC5E7003D168A /* Modules */,
 				59B6B1CE24FDC62C003D168A /* Mods */,
+				59DA455425006FA2005B10EA /* CharactersView.swift */,
+				59DA455625007503005B10EA /* CharactersViewContainer.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 				594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */,
 				59B8EA122373A0360008ED11 /* AttributeTypeController.swift in Sources */,
 				595F771B236A55EF00151209 /* AppDelegate.swift in Sources */,
+				59DA455725007503005B10EA /* CharactersViewContainer.swift in Sources */,
 				59BCF97B237A59B0000E90B7 /* Character_Tracker+TypeSection.swift in Sources */,
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
@@ -462,6 +469,7 @@
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
 				59FFF31B250050210067DA17 /* ModuleDetailView.swift in Sources */,
 				591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */,
+				59DA455525006FA2005B10EA /* CharactersView.swift in Sources */,
 				59BCF977237A450D000E90B7 /* ModuleController.swift in Sources */,
 				591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */,
 				59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */,

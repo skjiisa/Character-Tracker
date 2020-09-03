@@ -9,7 +9,7 @@
 import CoreData
 
 class GameReference: ObservableObject {
-    private(set) var game: Game?
+    @Published private(set) var game: Game?
     var name: String {
         return game?.name ?? ""
     }

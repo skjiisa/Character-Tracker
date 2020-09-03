@@ -41,6 +41,20 @@ class TabBarController: UITabBarController {
             }
         }
         
+        let charactersHost = UIHostingController(rootView:
+            NavigationView {
+                // This needs both the argument and the environment object
+                // because gameReference is used in the initializer
+                CharactersViewContainer()
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+                    .environmentObject(gameReference)
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        )
+        charactersHost.tabBarItem.title = "Characters SwiftUI"
+        charactersHost.tabBarItem.image = UIImage(systemName: "person.2.fill")
+        viewControllers?.insert(charactersHost, at: 1)
+        
         let modsViewHost = UIHostingController(rootView:
             NavigationView {
                 ModsView()
@@ -52,7 +66,7 @@ class TabBarController: UITabBarController {
         )
         modsViewHost.tabBarItem.title = "Mods"
         modsViewHost.tabBarItem.image = UIImage(systemName: "circle.grid.hex.fill")
-        viewControllers?.insert(modsViewHost, at: 1)
+        viewControllers?.insert(modsViewHost, at: 2)
     }
 
 }
