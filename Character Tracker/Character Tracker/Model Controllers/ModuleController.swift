@@ -43,7 +43,7 @@ class ModuleController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func deleteWithoutSaving(module: Module, context: NSManagedObjectContext) {
+    func deleteWithoutSaving(_ module: Module, context: NSManagedObjectContext) {
         tempEntities.removeAll(where: { $0.entity == module })
         
         module.deleteRelationshipObjects(forKeys: ["characters",
@@ -54,11 +54,6 @@ class ModuleController: EntityController {
                                          context: context)
         
         context.delete(module)
-    }
-    
-    func delete(module: Module, context: NSManagedObjectContext) {
-        deleteWithoutSaving(module: module, context: context)
-        CoreDataStack.shared.save(context: context)
     }
     
     func add(game: Game, to module: Module, context: NSManagedObjectContext) {
@@ -246,18 +241,17 @@ class ModuleController: EntityController {
     
     //MARK: Mods
     
-    /// Deletes all Modules in a Mod.
-    /// Note that this does not just remove the Modules from the Mod, but deletes them.
-    /// Does not save the context as this will typically be called with similar functions to delete other objects,
-    /// so saving is not necessary after each step.
+    /// Deletes all Modules in a Mod in preparation for the Mod being deleted.
+    ///
+    /// This does not just remove the Modules from the Mod, but deletes them.
+    /// - Note: Does not save the context.
     /// - Parameters:
-    ///   - mod: the Mod to delete Modules of.
-    ///   - context: the context to delete them from.
+    ///   - mod: The Mod to delete Modules of.
+    ///   - context: The context to delete them from.
     func deleteAllModules(from mod: Mod, context: NSManagedObjectContext) {
-        guard let modules = mod.modules else { return }
+        guard let modules = mod.modules as? Set<Module> else { return }
         for module in modules {
-            guard let module = module as? Module else { continue }
-            deleteWithoutSaving(module: module, context: context)
+            deleteWithoutSaving(module, context: context)
         }
     }
     

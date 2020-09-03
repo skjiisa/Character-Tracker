@@ -21,6 +21,11 @@ protocol EntityController: ObservableObject {
     func sortTempEntities()
     func add(tempEntity: Entity, value: Value)
     func remove(tempEntity: Entity)
+    
+    // Objects
+    
+    func deleteWithoutSaving(_: Entity, context: NSManagedObjectContext)
+    func delete(_: Entity, context: NSManagedObjectContext)
 }
 
 //MARK: EntityController default implementations
@@ -36,6 +41,11 @@ extension EntityController {
     func remove(tempEntity entity: Entity) {
         guard let index = tempEntities.firstIndex(where: { $0.entity == entity }) else { return }
         tempEntities.remove(at: index)
+    }
+    
+    func delete(_ object: Entity, context: NSManagedObjectContext) {
+        deleteWithoutSaving(object, context: context)
+        CoreDataStack.shared.save(context: context)
     }
 }
 

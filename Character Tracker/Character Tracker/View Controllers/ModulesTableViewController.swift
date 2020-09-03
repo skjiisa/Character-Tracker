@@ -198,7 +198,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
                 guard let game = gameReference?.game else { return }
                 moduleController?.remove(game: game, from: module, context: CoreDataStack.shared.mainContext)
             } else {
-                moduleController?.delete(module: module, context: CoreDataStack.shared.mainContext)
+                moduleController?.delete(module, context: CoreDataStack.shared.mainContext)
             }
         }
     }

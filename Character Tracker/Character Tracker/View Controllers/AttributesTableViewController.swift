@@ -177,7 +177,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
                 guard let game = gameReference?.game else { return }
                 attributeController?.remove(game: game, from: attribute, context: CoreDataStack.shared.mainContext)
             } else {
-                attributeController?.delete(attribute: attribute, context: CoreDataStack.shared.mainContext)
+                attributeController?.delete(attribute, context: CoreDataStack.shared.mainContext)
             }
         }
     }

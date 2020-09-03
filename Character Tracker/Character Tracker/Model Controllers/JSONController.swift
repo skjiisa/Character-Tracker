@@ -24,6 +24,8 @@ protocol RelationshipProtocol {
 
 struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     var key: String
+    var orderedSet: Bool = false
+    var createIfNotFound: Bool = false
     let jsonRepresentation: JSONRepresentation<ObjectType>
     
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws {
@@ -196,25 +198,51 @@ class JSONController {
     
     static func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws {
         guard let idArray = json[relationship.key].array,
-            idArray.count > 0 else { return }
+            idArray.count > 0 || relationship.createIfNotFound else { return }
         
-        let relationshipsSet = object.mutableSetValue(forKey: relationship.key)
         let relationshipObjects = try allObjects(for: relationship.jsonRepresentation, context: context)
         
         for idJSON in idArray {
-            guard let id = idJSON.string,
-                let relationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
-                    let objectID = relationshipObject.value(forKey: "id")
-                    if let uuid = objectID as? UUID {
-                        return uuid.uuidString.lowercased() == id.lowercased()
-                    } else if let idString = objectID as? String {
-                        return idString.lowercased() == id.lowercased()
-                    }
-                    
-                    return false
-            }) else { continue }
+            guard let id = idJSON.string else { continue }
+            let relationshipObject: RelationshipType
             
-            relationshipsSet.add(relationshipObject)
+            if let existingRelationshipObject = relationshipObjects.first(where: { relationshipObject -> Bool in
+                let objectID = relationshipObject.value(forKey: "id")
+                if let uuid = objectID as? UUID {
+                    return uuid.uuidString.lowercased() == id.lowercased()
+                } else if let idString = objectID as? String {
+                    return idString.lowercased() == id.lowercased()
+                }
+                
+                return false
+            }) {
+                relationshipObject = existingRelationshipObject
+            } else if relationship.createIfNotFound {
+                let newRelationshipObject = RelationshipType(context: context)
+                switch newRelationshipObject.entity.attributesByName["id"]?.attributeType {
+                case .UUIDAttributeType:
+                    guard let uuid = UUID(uuidString: id) else {
+                        context.delete(newRelationshipObject)
+                        continue
+                    }
+                    newRelationshipObject.setValue(uuid, forKey: "id")
+                case .stringAttributeType:
+                    newRelationshipObject.setValue(id, forKey: "id")
+                default:
+                    context.delete(newRelationshipObject)
+                    continue
+                }
+                
+                relationshipObject = newRelationshipObject
+            } else {
+                continue
+            }
+            
+            if relationship.orderedSet {
+                object.mutableOrderedSetValue(forKey: relationship.key).add(relationshipObject)
+            } else {
+                object.mutableSetValue(forKey: relationship.key).add(relationshipObject)
+            }
         }
     }
     

@@ -6,10 +6,9 @@
 //  Copyright © 2019 Isaac Lyons. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
-class GameReference {
+class GameReference: ObservableObject {
     private(set) var game: Game?
     var name: String {
         return game?.name ?? ""
@@ -35,7 +34,7 @@ class GameReference {
             if games.count > 0 {
                 game = games[0]
             } else {
-                throw NSError()
+                NSLog("No games found to load.")
             }
         } catch {
             NSLog("Could not load previously selected game: \(error)")

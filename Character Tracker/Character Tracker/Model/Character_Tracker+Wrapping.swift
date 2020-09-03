@@ -28,3 +28,7 @@ extension Mod: Identifiable {
         set { self.name = newValue }
     }
 }
+
+extension Module: Identifiable {}
+
+extension Ingredient: Identifiable {}

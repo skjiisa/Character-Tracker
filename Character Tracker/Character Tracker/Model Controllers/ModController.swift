@@ -33,7 +33,7 @@ class ModController: ObservableObject {
     func saveOrDeleteIfEmpty(_ mod: Mod, context: NSManagedObjectContext) {
         if mod.wrappedName.isEmpty,
             mod.attributes?.anyObject() == nil,
-            mod.images?.anyObject() == nil,
+            mod.images?.count == 0,
             mod.ingredients?.anyObject() == nil,
             mod.links?.anyObject() == nil,
             mod.modules?.anyObject() == nil,

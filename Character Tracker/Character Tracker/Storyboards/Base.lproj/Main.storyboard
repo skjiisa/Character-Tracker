@@ -853,7 +853,7 @@
         <!--Module-->
         <scene sceneID="Z60-xu-Wef">
             <objects>
-                <tableViewController id="FcM-PG-5WN" customClass="ModuleDetailTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ModuleDetail" id="FcM-PG-5WN" customClass="ModuleDetailTableViewController" customModule="Character_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5BS-lZ-RTL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1285,12 +1285,12 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="DTF-qi-Fya"/>
-        <segue reference="Adg-Vf-5jE"/>
-        <segue reference="7MN-57-o6h"/>
-        <segue reference="GZ6-Pz-ZgO"/>
+        <segue reference="lR8-jg-YER"/>
+        <segue reference="x2i-i4-wE1"/>
+        <segue reference="9dZ-mf-KGH"/>
         <segue reference="YvR-e2-XSd"/>
         <segue reference="hwD-cT-7uC"/>
-        <segue reference="Jjo-ZB-lgx"/>
+        <segue reference="TKY-Ee-oVW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gear" catalog="system" width="128" height="119"/>
