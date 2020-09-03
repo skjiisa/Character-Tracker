@@ -31,6 +31,8 @@ extension Mod: Identifiable {
 
 extension Module: Identifiable {}
 
+extension CharacterModule: Identifiable {}
+
 extension Ingredient: Identifiable {}
 
 extension Character {

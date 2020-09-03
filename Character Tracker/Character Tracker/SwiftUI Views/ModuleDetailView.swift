@@ -18,7 +18,16 @@ struct ModuleDetailView: UIViewControllerRepresentable {
     var moduleController = ModuleController()
     
     var module: Module
-    var character: Character? = nil
+    var characterModule: CharacterModule? = nil
+    
+    init(module: Module) {
+        self.module = module
+    }
+    
+    init(characterModule: CharacterModule) {
+        self.module = characterModule.module!
+        self.characterModule = characterModule
+    }
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
         // Note that this is a navigation controller meant to be shown in a sheet
@@ -29,11 +38,7 @@ struct ModuleDetailView: UIViewControllerRepresentable {
         moduleDetailVC.gameReference = gameReference
         moduleDetailVC.moduleType = module.type
         moduleDetailVC.module = module
-        
-        if let character = character {
-            let characterModules = character.modules as? Set<CharacterModule>
-            moduleDetailVC.characterModule = characterModules?.first(where: { $0.module == module })
-        }
+        moduleDetailVC.characterModule = characterModule
         
         moduleDetailVC.callbacks.append { characterModule, completed in
             self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: self.moc)

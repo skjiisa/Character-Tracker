@@ -65,7 +65,7 @@ struct CharacterDetailView: View {
                 ) {
                     if !section.collapsed {
                         if section.section is ModuleType {
-                            ModuleSection(section.section as! ModuleType, character: self.character)
+                            CharacterModuleSection(section.section as! ModuleType, character: self.character)
                         }
                     }
                 }
@@ -76,15 +76,15 @@ struct CharacterDetailView: View {
     }
 }
 
-struct ModuleSection: View {
-    var fetchRequest: FetchRequest<Module>
-    var modules: FetchedResults<Module> {
+struct CharacterModuleSection: View {
+    var fetchRequest: FetchRequest<CharacterModule>
+    var characterModules: FetchedResults<CharacterModule> {
         fetchRequest.wrappedValue
     }
     
     @EnvironmentObject var gameReference: GameReference
     
-    @State private var showingModule: Module?
+    @State private var showingModule: CharacterModule?
     
     var type: ModuleType
     var character: Character
@@ -93,29 +93,36 @@ struct ModuleSection: View {
         self.type = type
         self.character = character
         
-        let predicate = NSPredicate(format: "type == %@ AND SUBQUERY(characters, $characterModule, $characterModule.module == self AND $characterModule.character = %@).@count > 0", type, character)
-        self.fetchRequest = FetchRequest(entity: Module.entity(),
+        let predicate = NSPredicate(format: "character == %@ AND module.type == %@", character, type)
+        self.fetchRequest = FetchRequest(entity: CharacterModule.entity(),
                                          sortDescriptors: [
-                                            NSSortDescriptor(key: "level", ascending: true),
-                                            NSSortDescriptor(key: "name", ascending: true)],
+                                            NSSortDescriptor(key: "module.level", ascending: true),
+                                            NSSortDescriptor(key: "module.name", ascending: true)],
                                          predicate: predicate)
     }
     
     var body: some View {
-        ForEach(modules, id: \.self) { module in
+        ForEach(characterModules, id: \.self) { characterModule in
             Button(action: {
-                self.showingModule = module
+                self.showingModule = characterModule
             }) {
                 HStack {
-                    Text(module.name ?? "Unknown \(self.type.typeName)")
+                    Text(characterModule.module?.name ?? "Unknown \(self.type.typeName)")
                     Spacer()
-                    Text("Level \(module.level)")
+                    if characterModule.module?.level ?? 0 > 0 {
+                        Text("Level \(characterModule.module?.level ?? 0)")
+                    }
+                    if characterModule.completed {
+                        Image(systemName: "checkmark")
+                            .font(Font.body.bold())
+                            .foregroundColor(.green)
+                    }
                 }
                 .foregroundColor(.primary)
             }
         }
-        .sheet(item: $showingModule) { module in
-            ModuleDetailView(module: module, character: self.character)
+        .sheet(item: $showingModule) { characterModule in
+            ModuleDetailView(characterModule: characterModule)
                 .environmentObject(self.gameReference)
         }
     }
