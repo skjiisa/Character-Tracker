@@ -87,9 +87,11 @@ struct ModuleSection: View {
     @State private var showingModule: Module?
     
     var type: ModuleType
+    var character: Character
     
     init(_ type: ModuleType, character: Character) {
         self.type = type
+        self.character = character
         
         let predicate = NSPredicate(format: "type == %@ AND SUBQUERY(characters, $characterModule, $characterModule.module == self AND $characterModule.character = %@).@count > 0", type, character)
         self.fetchRequest = FetchRequest(entity: Module.entity(),
@@ -113,7 +115,7 @@ struct ModuleSection: View {
             }
         }
         .sheet(item: $showingModule) { module in
-            ModuleDetailView(module: module)
+            ModuleDetailView(module: module, character: self.character)
                 .environmentObject(self.gameReference)
         }
     }

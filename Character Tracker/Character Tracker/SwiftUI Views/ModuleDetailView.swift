@@ -11,9 +11,14 @@ import SwiftUI
 struct ModuleDetailView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UINavigationController
     
+    @Environment(\.managedObjectContext) var moc
+    @Environment(\.presentationMode) var presentationMode
+    
     @EnvironmentObject var gameReference: GameReference
+    var moduleController = ModuleController()
     
     var module: Module
+    var character: Character? = nil
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
         // Note that this is a navigation controller meant to be shown in a sheet
@@ -24,6 +29,18 @@ struct ModuleDetailView: UIViewControllerRepresentable {
         moduleDetailVC.gameReference = gameReference
         moduleDetailVC.moduleType = module.type
         moduleDetailVC.module = module
+        
+        if let character = character {
+            let characterModules = character.modules as? Set<CharacterModule>
+            moduleDetailVC.characterModule = characterModules?.first(where: { $0.module == module })
+        }
+        
+        moduleDetailVC.callbacks.append { characterModule, completed in
+            self.moduleController.setCompleted(characterModule: characterModule, completed: completed, context: self.moc)
+            if completed {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }
         
         let navigationVC = UINavigationController(rootViewController: moduleDetailVC)
         
