@@ -66,6 +66,8 @@ struct CharacterDetailView: View {
                     if !section.collapsed {
                         if section.section is ModuleType {
                             CharacterModuleSection(section.section as! ModuleType, character: self.character)
+                        } else if section.section is AttributeTypeSection {
+                            CharacterAttributeSection(section.section as! AttributeTypeSection, character: self.character)
                         }
                     }
                 }
@@ -124,6 +126,30 @@ struct CharacterModuleSection: View {
         .sheet(item: $showingModule) { characterModule in
             ModuleDetailView(characterModule: characterModule)
                 .environmentObject(self.gameReference)
+        }
+    }
+}
+
+struct CharacterAttributeSection: View {
+    var fetchRequest: FetchRequest<CharacterAttribute>
+    var characterAttributes: FetchedResults<CharacterAttribute> {
+        fetchRequest.wrappedValue
+    }
+    
+    var type: AttributeTypeSection
+    
+    init(_ type: AttributeTypeSection, character: Character) {
+        self.type = type
+        
+        let predicate = NSPredicate(format: "character == %@ AND attribute.type == %@ AND priority == %d", character, type.type!, type.minPriority)
+        self.fetchRequest = FetchRequest(entity: CharacterAttribute.entity(),
+                                         sortDescriptors: [],
+                                         predicate: predicate)
+    }
+    
+    var body: some View {
+        ForEach(characterAttributes, id: \.self) { characterAttribute in
+            Text(characterAttribute.attribute?.name ?? "Unknown \(self.type.typeName)")
         }
     }
 }
