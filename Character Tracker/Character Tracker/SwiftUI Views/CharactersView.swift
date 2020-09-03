@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CharactersView: View {
     var fetchRequest: FetchRequest<Character>
@@ -15,6 +16,8 @@ struct CharactersView: View {
     }
     
     @EnvironmentObject var gameReference: GameReference
+    
+    @State private var selectedCharacter: NSManagedObjectID?
     
     init(game: Game?) {
         var predicate: NSPredicate?
@@ -26,7 +29,15 @@ struct CharactersView: View {
     
     var body: some View {
         List(characters, id: \.self) { character in
-            Text(character.name ?? "New Character")
+            NavigationLink(destination: Text(character.name ?? "New Character"), tag: character.objectID, selection: self.$selectedCharacter) {
+                VStack(alignment: .leading) {
+                    Text(character.name ?? "New Character")
+                        .fontWeight(.medium)
+                    Text(character.race?.name ?? "")
+                        .font(.footnote)
+                }
+                .padding(.vertical, 4)
+            }
         }
         .navigationBarTitle(gameReference.name)
     }
