@@ -41,8 +41,8 @@ extension Character {
 }
 
 extension Race: Identifiable {
-    var gamesList: String {
-        guard let gameNames = games?.compactMap({ ($0 as? Game)?.name }) else { return "" }
+    var gamesList: String? {
+        guard let gameNames = games?.compactMap({ ($0 as? Game)?.name }) else { return nil }
         return gameNames.joined(separator: ", ")
     }
 }

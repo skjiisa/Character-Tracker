@@ -8,7 +8,7 @@
 
 import CoreData
 
-class RaceController {
+class RaceController: ObservableObject {
     
     func create(race name: String, game: Game, mod: Mod? = nil, context: NSManagedObjectContext) {
         Race(name: name, game: game, mod: mod, context: context)
@@ -25,12 +25,14 @@ class RaceController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func add(game: Game, to race: Race, context: NSManagedObjectContext) {
+    func add(game: Game?, to race: Race, context: NSManagedObjectContext) {
+        guard let game = game else { return }
         race.mutableSetValue(forKey: "games").add(game)
         CoreDataStack.shared.save(context: context)
     }
     
-    func remove(game: Game, from race: Race, context: NSManagedObjectContext) {
+    func remove(game: Game?, from race: Race, context: NSManagedObjectContext) {
+        guard let game = game else { return }
         race.mutableSetValue(forKey: "games").remove(game)
         CoreDataStack.shared.save(context: context)
     }
