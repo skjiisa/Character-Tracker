@@ -8,15 +8,19 @@
 
 import Foundation
 
-protocol TypeSection {
+protocol TypeSection: NSObject {
     var name: String? { get set }
     var id: UUID? { get set }
     var typeName: String { get }
 }
 
-class TempSection {
+class TempSection: NSObject, ObservableObject {
     var section: TypeSection
-    var collapsed: Bool
+    @Published var collapsed: Bool
+    
+    var name: String {
+        section.name ?? ""
+    }
     
     init(section: TypeSection, collapsed: Bool = false) {
         self.section = section

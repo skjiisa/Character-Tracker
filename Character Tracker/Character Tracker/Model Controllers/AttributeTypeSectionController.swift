@@ -8,10 +8,10 @@
 
 import CoreData
 
-class AttributeTypeSectionController {
+class AttributeTypeSectionController: ObservableObject {
     var sections: [TypeSection] = []
     var tempSectionsToShow: [TempSection] = []
-    var sectionsByCharacter: [Character: [TempSection]] = [:]
+    @Published var sectionsByCharacter: [Character: [TempSection]] = [:]
     var defaultSectionsByGame: [Game: [TempSection]] = [:]
     
     init() {
@@ -77,6 +77,17 @@ class AttributeTypeSectionController {
         }
     }
     
+    func toggleSection(_ section: TempSection, for character: Character) {
+        // TempSections should be passed by reference,
+        // so don't know why I have to do this for them to update,
+        // but it doesn't work if I just toggle them directly.
+        guard let index = sectionsByCharacter[character]?.firstIndex(where: { $0 == section }),
+            let tempSection = sectionsByCharacter[character]?[index] else { return }
+        
+        tempSection.collapsed.toggle()
+        sectionsByCharacter[character]?[index] = tempSection
+    }
+    
     func saveTempSections(to character: Character) {
         sectionsByCharacter[character] = tempSectionsToShow
         saveToPersistentStore()
@@ -94,6 +105,10 @@ class AttributeTypeSectionController {
     func loadTempSections(for game: Game) {
         loadFromPersistentStore()
         tempSectionsToShow = defaultSectionsByGame[game] ?? []
+    }
+    
+    func tempSections(for character: Character) -> [TempSection] {
+        sectionsByCharacter[character] ?? []
     }
     
     func contains(section: TypeSection) -> Bool {
