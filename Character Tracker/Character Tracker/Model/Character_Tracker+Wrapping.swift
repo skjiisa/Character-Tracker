@@ -32,3 +32,10 @@ extension Mod: Identifiable {
 extension Module: Identifiable {}
 
 extension Ingredient: Identifiable {}
+
+extension Character {
+    var wrappedName: String {
+        get { self.name ?? "" }
+        set { self.name = newValue }
+    }
+}

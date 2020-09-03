@@ -29,7 +29,7 @@ struct CharactersView: View {
     
     var body: some View {
         List(characters, id: \.self) { character in
-            NavigationLink(destination: Text(character.name ?? "New Character"), tag: character.objectID, selection: self.$selectedCharacter) {
+            NavigationLink(destination: CharacterDetailView(character: character), tag: character.objectID, selection: self.$selectedCharacter) {
                 VStack(alignment: .leading) {
                     Text(character.name ?? "New Character")
                         .fontWeight(.medium)

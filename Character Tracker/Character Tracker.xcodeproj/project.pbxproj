@@ -70,6 +70,7 @@
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DA455525006FA2005B10EA /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA455425006FA2005B10EA /* CharactersView.swift */; };
 		59DA455725007503005B10EA /* CharactersViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA455625007503005B10EA /* CharactersViewContainer.swift */; };
+		59DA455925007AEE005B10EA /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA455825007AEE005B10EA /* CharacterDetailView.swift */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */; };
@@ -140,6 +141,7 @@
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DA455425006FA2005B10EA /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
 		59DA455625007503005B10EA /* CharactersViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewContainer.swift; sourceTree = "<group>"; };
+		59DA455825007AEE005B10EA /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		59E7A7BA24CCD56D006E77D7 /* PortController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortController.swift; sourceTree = "<group>"; };
 		59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Wrapping.swift"; sourceTree = "<group>"; };
@@ -180,8 +182,7 @@
 				59B6B1CF24FDC674003D168A /* Porting */,
 				59B6B1CB24FDC5E7003D168A /* Modules */,
 				59B6B1CE24FDC62C003D168A /* Mods */,
-				59DA455425006FA2005B10EA /* CharactersView.swift */,
-				59DA455625007503005B10EA /* CharactersViewContainer.swift */,
+				59DA455A25007CF3005B10EA /* Characters */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -336,6 +337,16 @@
 			path = "Model Controllers";
 			sourceTree = "<group>";
 		};
+		59DA455A25007CF3005B10EA /* Characters */ = {
+			isa = PBXGroup;
+			children = (
+				59DA455625007503005B10EA /* CharactersViewContainer.swift */,
+				59DA455425006FA2005B10EA /* CharactersView.swift */,
+				59DA455825007AEE005B10EA /* CharacterDetailView.swift */,
+			);
+			name = Characters;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -420,6 +431,7 @@
 			files = (
 				59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */,
 				5972482F24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift in Sources */,
+				59DA455925007AEE005B10EA /* CharacterDetailView.swift in Sources */,
 				59BCF979237A5968000E90B7 /* TypeSection.swift in Sources */,
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
