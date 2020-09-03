@@ -13,6 +13,7 @@ struct CharacterDetailView: View {
     @ObservedObject var character: Character
     
     @State private var editMode = false
+    @State private var showingRaces = false
     
     var editButton: some View {
         Button(action: {
@@ -38,6 +39,15 @@ struct CharacterDetailView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .disabled(!editMode)
+                }
+                
+                if editMode {
+                    NavigationLink(character.race?.name ?? "Select Race", destination: RacesView(game: character.game) { race in
+                        self.showingRaces = false
+                        self.character.race = race
+                    }, isActive: $showingRaces)
+                } else {
+                    Text(character.race?.name ?? "Select Race")
                 }
             }
         }
