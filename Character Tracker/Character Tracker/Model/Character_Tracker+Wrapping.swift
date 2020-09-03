@@ -39,3 +39,10 @@ extension Character {
         set { self.name = newValue }
     }
 }
+
+extension Race: Identifiable {
+    var gamesList: String {
+        guard let gameNames = games?.compactMap({ ($0 as? Game)?.name }) else { return "" }
+        return gameNames.joined(separator: ", ")
+    }
+}

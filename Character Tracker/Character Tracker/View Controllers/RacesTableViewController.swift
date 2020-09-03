@@ -88,9 +88,8 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         
         cell.textLabel?.text = race?.name
         
-        if showAll,
-            let gameNames = race?.games?.compactMap({ ($0 as? Game)?.name }) {
-            cell.detailTextLabel?.text = gameNames.joined(separator: ", ")
+        if showAll {
+            cell.detailTextLabel?.text = race?.gamesList
         } else {
             cell.detailTextLabel?.text = nil
         }
