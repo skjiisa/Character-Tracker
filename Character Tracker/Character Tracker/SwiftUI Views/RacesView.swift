@@ -19,7 +19,6 @@ struct RacesView: View {
     var raceController = RaceController()
     
     @State private var showingAddRaceSheet = false
-    @State private var showingNewRaceAlert = false
     @State private var showingAllRaces = false
     @State private var delete: Race?
     
@@ -51,6 +50,38 @@ struct RacesView: View {
         self.game = game
         self.didSelect = didSelect
         self.excluding = true
+    }
+    
+    func showNewRaceAlert() {
+        // SwiftUI alerts can't have TextFields in them, and I prefer this
+        // over presenting a form with just a single TextField
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter {$0.activationState == .foregroundActive}
+            .compactMap {$0 as? UIWindowScene}
+            .first?.windows.filter {$0.isKeyWindow}.first
+        guard let rootController = keyWindow?.rootViewController,
+            let game = self.game else { return }
+        
+        let alert = UIAlertController(title: "New Race", message: nil, preferredStyle: .alert)
+        
+        let save = UIAlertAction(title: "Save", style: .default) { _ in
+            guard let name = alert.textFields?.first?.text else { return }
+            self.raceController.create(race: name, game: game, context: self.moc)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Race name"
+            textField.autocapitalizationType = .words
+            textField.autocorrectionType = .no
+            textField.returnKeyType = .done
+        }
+                
+        alert.addAction(save)
+        alert.addAction(cancel)
+        
+        rootController.present(alert, animated: true, completion: nil)
     }
     
     func deleteButtons(for race: Race) -> [ActionSheet.Button] {
@@ -101,7 +132,7 @@ struct RacesView: View {
                     .actionSheet(isPresented: $showingAddRaceSheet) {
                         ActionSheet(title: Text("Add Race"), buttons: [
                             .default(Text("Create new race"), action: {
-                                self.showingNewRaceAlert = true
+                                self.showNewRaceAlert()
                             }),
                             .default(Text("Add race from other game"), action: {
                                 self.showingAllRaces = true
