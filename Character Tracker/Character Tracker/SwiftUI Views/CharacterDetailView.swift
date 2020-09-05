@@ -86,8 +86,8 @@ struct CharacterDetailView: View {
                 Group {
                     if section.section is ModuleType {
                         self.collapsibleSection(section, editModeSectionContent: {
-                            NavigationLink("Add new \(section.name)", destination: ModulesView(character: self.character, didSelect: { module in
-                                print(module.name)
+                            NavigationLink("Add new \(section.name)", destination: ModulesView(type: section.section as? ModuleType, character: self.character, didSelect: { module in
+//                                print(module.name)
                             }))
                         }) {
                             CharacterModuleSection(section.section as! ModuleType, character: self.character)

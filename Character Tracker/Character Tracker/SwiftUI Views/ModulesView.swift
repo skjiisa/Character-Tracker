@@ -9,24 +9,42 @@
 import SwiftUI
 
 struct ModulesView: View {
-    @FetchRequest(entity: Module.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var modules: FetchedResults<Module>
+    var fetchRequest: FetchRequest<Module>
+    var modules: FetchedResults<Module> {
+        fetchRequest.wrappedValue
+    }
     
     var didSelect: (Module) -> Void
+    var type: ModuleType?
     var character: Character?
     var module: Module?
     
-    init(didSelect: @escaping (Module) -> Void = {_ in}) {
-        self.didSelect = didSelect
+    var typeName: String {
+        // This computed property only exists because, for some reason, putting
+        // this directly in navigationBarTitle would crash the compiler.
+        type?.name ?? "Module"
     }
     
-    init(character: Character, didSelect: @escaping (Module) -> Void = {_ in}) {
+    init(type: ModuleType? = nil, didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.type = type
+        self.didSelect = didSelect
+        
+        var predicate: NSPredicate?
+        if let type = type {
+            predicate = NSPredicate(format: "type == %@", type)
+        }
+        
+        self.fetchRequest = FetchRequest(entity: Module.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: predicate)
+    }
+    
+    init(type: ModuleType? = nil, character: Character, didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.init(type: type, didSelect: didSelect)
         self.character = character
-        self.didSelect = didSelect
     }
     
-    init(module: Module, didSelect: @escaping (Module) -> Void = {_ in}) {
+    init(type: ModuleType? = nil, module: Module, didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.init(type: type, didSelect: didSelect)
         self.module = module
-        self.didSelect = didSelect
     }
     
     var body: some View {
@@ -49,7 +67,7 @@ struct ModulesView: View {
                 .foregroundColor(.primary)
             }
         }
-        .navigationBarTitle("Modules")
+        .navigationBarTitle(typeName.pluralize())
     }
 }
 
