@@ -12,8 +12,20 @@ struct ModulesView: View {
     @FetchRequest(entity: Module.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var modules: FetchedResults<Module>
     
     var didSelect: (Module) -> Void
+    var character: Character?
+    var module: Module?
     
     init(didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.didSelect = didSelect
+    }
+    
+    init(character: Character, didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.character = character
+        self.didSelect = didSelect
+    }
+    
+    init(module: Module, didSelect: @escaping (Module) -> Void = {_ in}) {
+        self.module = module
         self.didSelect = didSelect
     }
     
@@ -23,7 +35,16 @@ struct ModulesView: View {
                 Button(action: {
                     self.didSelect(module)
                 }) {
-                    Text(module.name ?? "Unknown module")
+                    HStack {
+                        Text(module.name ?? "Unknown module")
+                        if self.character?.modules?.contains(where: { ($0 as? CharacterModule)?.module == module }) ?? false
+                            || self.module?.children?.contains(where: { ($0 as? ModuleModule)?.child == module }) ?? false {
+                            Spacer()
+                            Image(systemName: "checkmark")
+                                .font(Font.body.bold())
+                                .foregroundColor(.blue)
+                        }
+                    }
                 }
                 .foregroundColor(.primary)
             }

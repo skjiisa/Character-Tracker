@@ -28,6 +28,34 @@ struct CharacterDetailView: View {
         }
     }
     
+    func section<Content: View>(_ section: TempSection, content: () -> Content) -> some View {
+        Section(header:
+            Button(action: {
+                self.sectionController.toggleSection(section, for: self.character)
+            }, label: {
+                Text((section.collapsed ? "▶︎" : "▼") + "\t" + section.name.uppercased())
+                // Spacer fills the width, allowing the empty space after to be tapped too.
+                Spacer()
+            })
+                .foregroundColor(.secondary)
+        ) {
+            content()
+        }
+    }
+    
+    func collapsibleSection<EditModeContent: View, SectionContent: View>(_ section: TempSection, editModeSectionContent: EditModeContent, content: () -> SectionContent) -> some View {
+        Group {
+            if !section.collapsed {
+                self.section(section, content: content)
+                if self.editMode {
+                    editModeSectionContent
+                }
+            } else {
+                self.section(section) { EmptyView() }
+            }
+        }
+    }
+    
     var body: some View {
         Form {
             Section(header: Text("CHARACTER")) {
@@ -52,21 +80,20 @@ struct CharacterDetailView: View {
                 }
             }
             
+            //
+            
             ForEach(sectionController.tempSections(for: character), id: \.self) { section in
-                Section(header:
-                    Button(action: {
-                        self.sectionController.toggleSection(section, for: self.character)
-                    }, label: {
-                        Text((section.collapsed ? "▶︎" : "▼") + "\t" + section.name.uppercased())
-                        // Spacer fills the width, allowing the empty space after to be tapped too.
-                        Spacer()
-                    })
-                    .foregroundColor(.secondary)
-                ) {
-                    if !section.collapsed {
-                        if section.section is ModuleType {
+                Group {
+                    if section.section is ModuleType {
+                        self.collapsibleSection(section, editModeSectionContent:
+                            NavigationLink("Add new \(section.name)", destination: ModulesView(character: self.character, didSelect: { module in
+                                print(module.name)
+                            }))
+                        ) {
                             CharacterModuleSection(section.section as! ModuleType, character: self.character)
-                        } else if section.section is AttributeTypeSection {
+                        }
+                    } else if section.section is AttributeTypeSection {
+                        self.collapsibleSection(section, editModeSectionContent: Text("Add new \(section.name)")) {
                             CharacterAttributeSection(section.section as! AttributeTypeSection, character: self.character)
                         }
                     }
