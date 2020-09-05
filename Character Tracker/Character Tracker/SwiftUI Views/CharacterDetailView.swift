@@ -34,9 +34,14 @@ struct CharacterDetailView: View {
                 Button(action: {
                     self.sectionController.toggleSection(section, for: self.character)
                 }, label: {
-                    Text((section.collapsed ? "▶︎" : "▼") + "\t" + section.name.uppercased())
-                    // Spacer fills the width, allowing the empty space after to be tapped too.
-                    Spacer()
+                    HStack {
+                        Image(systemName: "arrowtriangle.down.fill")
+                            .rotationEffect(section.collapsed ? .degrees(-90) : .zero)
+                            .animation(.easeOut)
+                        Text(section.name.uppercased())
+                        // Spacer fills the width, allowing the empty space after to be tapped too.
+                        Spacer()
+                    }
                 })
                     .foregroundColor(.secondary)
             ) {
