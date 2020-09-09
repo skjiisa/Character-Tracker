@@ -46,7 +46,7 @@ struct ModsView: View {
             guard let alert = self.alert else { return }
             self.showingAlert = AlertContainer(alert)
         }) {
-            ScannerView(showing: self.$showingScanner, alert: self.$alert)
+            ScannerNavigationView(showing: self.$showingScanner, alert: self.$alert)
             }
         .alert(item: $showingAlert) { alertContainer -> Alert in
             alertContainer.alert
