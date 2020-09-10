@@ -2,10 +2,11 @@
 //  ScannerViewController.swift
 //  Character Tracker
 //
-//  From https://www.hackingwithswift.com/example-code/media/how-to-scan-a-qr-code
+//  Originally from https://www.hackingwithswift.com/example-code/media/how-to-scan-a-qr-code
+//  Modified by Isaac Lyons starting 09/10/2020
 //
 
-import UIKit
+import SwiftUI
 import AVFoundation
 
 protocol ScannerViewControllerDelegate: class {
@@ -58,6 +59,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.layer.addSublayer(previewLayer)
 
         captureSession.startRunning()
+        
+        // Add navigation bar buttons
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(done))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(info))
     }
 
     func failed() {
@@ -104,5 +110,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+    
+    //MARK: Navigation
+    
+    @objc private func info() {
+        let scannerInfoView = UIHostingController(rootView: ScannerInfoView())
+        scannerInfoView.navigationItem.title = "QR Code Info"
+        scannerInfoView.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.pushViewController(scannerInfoView, animated: true)
+    }
+    
+    @objc private func done() {
+        dismiss(animated: true)
     }
 }
