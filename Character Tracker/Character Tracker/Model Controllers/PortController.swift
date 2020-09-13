@@ -57,8 +57,8 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
     func json(_ object: ObjectType) -> JSON {
         var json = JSON([:])
         
-        if let id = object.value(forKey: "id") as? UUID {
-            json["id"].string = id.uuidString
+        if let id = object.idString {
+            json["id"].string = id
         }
         
         for attribute in attributes {
