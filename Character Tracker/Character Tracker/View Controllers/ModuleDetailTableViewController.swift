@@ -625,6 +625,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             guard let module = self.module,
                 let url = PortController.shared.saveTempJSON(for: module) else { return }
             let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activityVC.completionWithItemsHandler = { _, _, _, _ in
+                PortController.shared.clearFilesFromTempDirectory()
+            }
             self.present(activityVC, animated: true)
         }
         

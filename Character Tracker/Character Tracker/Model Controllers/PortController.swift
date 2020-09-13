@@ -472,4 +472,17 @@ class PortController {
         return UserDefaults.standard.bool(forKey: "jsonExportBackticks") ? "```json\n" + jsonString + "\n```" : jsonString
     }
     
+    func clearFilesFromTempDirectory() {
+        let fileManager = FileManager.default
+        do {
+            let tmp = fileManager.temporaryDirectory
+            for file in try fileManager.contentsOfDirectory(atPath: tmp.path) {
+                try fileManager.removeItem(atPath: tmp.appendingPathComponent(file).path)
+            }
+            print("Cleaned temp directory.")
+        } catch {
+            NSLog("Error clearing files from temp directory: \(error)")
+        }
+    }
+    
 }

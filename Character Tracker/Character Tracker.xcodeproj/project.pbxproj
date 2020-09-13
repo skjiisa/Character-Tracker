@@ -21,6 +21,7 @@
 		593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0A24F47B1F00D9E357 /* ModulesView.swift */; };
 		5945EE2F24CA9D570091E72E /* ModulesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */; };
 		5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5946EF9323BD660A0077770D /* SwiftyJSON */; };
+		5948ED55250EAA0100D941C0 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5948ED54250EAA0100D941C0 /* Identifiable.swift */; };
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
 		5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073324DCA7FC00BE372F /* QRCodeView.swift */; };
@@ -89,6 +90,7 @@
 		593DDF0824F47B0900D9E357 /* ModController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModController.swift; sourceTree = "<group>"; };
 		593DDF0A24F47B1F00D9E357 /* ModulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModulesView.swift; sourceTree = "<group>"; };
 		5945EE2E24CA9D570091E72E /* ModulesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFilterForm.swift; sourceTree = "<group>"; };
+		5948ED54250EAA0100D941C0 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		5959073324DCA7FC00BE372F /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */,
 				590B3A5623FCDC790058D236 /* Bool+Int.swift */,
 				59B6B1C924FDABFF003D168A /* AlertContainer.swift */,
+				5948ED54250EAA0100D941C0 /* Identifiable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
+				5948ED55250EAA0100D941C0 /* Identifiable.swift in Sources */,
 				5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */,
 				59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */,
 				592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */,

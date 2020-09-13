@@ -25,6 +25,8 @@ struct ModDetailView: View {
     @State private var showingNewIngredient = false
     @State private var editMode = false
     @State private var selectedIngredient: Ingredient?
+    @State private var showingExport = false
+    @State private var qrCode: CGImage? = nil
     
     init(mod: Mod) {
         self.mod = mod
@@ -117,6 +119,20 @@ struct ModDetailView: View {
                     }, isActive: $showingNewIngredient)
                 }
             }
+            
+            if !editMode {
+                Section {
+                    Button(action: {
+                        self.showingExport = true
+                    }) {
+                        HStack {
+                            Spacer()
+                            Text("Export")
+                            Spacer()
+                        }
+                    }
+                }
+            }
         }
         .navigationBarTitle(mod.name ?? "Mod")
         .navigationBarItems(trailing: editButton)
@@ -127,6 +143,25 @@ struct ModDetailView: View {
         }
         .alert(item: $selectedIngredient) { ingredient in
             Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
+        }
+        .actionSheet(isPresented: $showingExport) {
+            ActionSheet(title: Text("Export \(self.mod.name ?? "mod")"), message: nil, buttons: [
+                .default(Text("QR Code")) {
+                    self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
+                },
+                .default(Text("JSON Text")) {
+                    
+                },
+                .default(Text("JSON File")) {
+                    
+                },
+                .cancel()
+            ])
+        }
+        .sheet(item: self.$qrCode) { qrCode in
+            NavigationView {
+                QRCodeView(name: self.mod.name, qrCode: qrCode)
+            }
         }
     }
 }
