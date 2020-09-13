@@ -21,12 +21,16 @@ struct ModDetailView: View {
     @EnvironmentObject var modController: ModController
     
     @ObservedObject var mod: Mod
+    
     @State private var showingNewModule = false
     @State private var showingNewIngredient = false
     @State private var editMode = false
     @State private var selectedIngredient: Ingredient?
     @State private var showingExport = false
     @State private var qrCode: CGImage? = nil
+    @State private var exportJSON: String? = nil
+    @State private var exportFile: URL? = nil
+    @State private var showingShareSheet = false
     
     init(mod: Mod) {
         self.mod = mod
@@ -131,6 +135,19 @@ struct ModDetailView: View {
                             Spacer()
                         }
                     }
+                    .sheet(isPresented: $showingShareSheet, onDismiss: {
+                        if self.exportFile != nil {
+                            PortController.shared.clearFilesFromTempDirectory()
+                        }
+                        self.exportJSON = nil
+                        self.exportFile = nil
+                    }) {
+                        if self.exportJSON != nil {
+                            ShareSheet(activityItems: [self.exportJSON!])
+                        } else if self.exportFile != nil {
+                            ShareSheet(activityItems: [self.exportFile!])
+                        }
+                    }
                 }
             }
         }
@@ -150,10 +167,14 @@ struct ModDetailView: View {
                     self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
                 },
                 .default(Text("JSON Text")) {
-                    
+                    guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
+                    self.exportJSON = json
+                    self.showingShareSheet = true
                 },
                 .default(Text("JSON File")) {
-                    
+                    guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
+                    self.exportFile = file
+                    self.showingShareSheet = true
                 },
                 .cancel()
             ])
