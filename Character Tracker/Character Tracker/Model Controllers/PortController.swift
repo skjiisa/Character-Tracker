@@ -41,12 +41,12 @@ protocol JSONRepresentationProtocol {
 class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRepresentationProtocol {
     var arrayKey: String
     var attributes: [String]
-    var toOneRelationships: [RelationshipProtocol]
-    var toManyRelationships: [RelationshipProtocol]
+    var toOneRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)]
+    var toManyRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)]
     var relationshipObjects: [JSONRelationshipProtocol] = []
     var idIsUUID: Bool = true
     
-    init(arrayKey: String, attributes: [String], toOneRelationships: [RelationshipProtocol] = [], toManyRelationships: [RelationshipProtocol] = [], idIsUUID: Bool = true) {
+    init(arrayKey: String, attributes: [String], toOneRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)], toManyRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)], idIsUUID: Bool = true) {
         self.arrayKey = arrayKey
         self.attributes = attributes
         self.toOneRelationships = toOneRelationships
@@ -54,8 +54,19 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
         self.idIsUUID = idIsUUID
     }
     
-    func json(_ object: ObjectType) -> JSON {
+    convenience init(arrayKey: String, attributes: [String], toOneRelationships: [RelationshipProtocol] = [], toManyRelationships: [RelationshipProtocol] = [], idIsUUID: Bool = true) {
+        self.init(
+            arrayKey: arrayKey,
+            attributes: attributes,
+            toOneRelationships: toOneRelationships.map { ($0, false) },
+            toManyRelationships: toManyRelationships.map { ($0, false) },
+            idIsUUID: idIsUUID
+        )
+    }
+    
+    func json(_ object: ObjectType) -> (objectJSON: JSON, relationshipsJSON: JSON) {
         var json = JSON([:])
+        var relationships = JSON()
         
         if let id = object.idString {
             json["id"].string = id
@@ -67,13 +78,25 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
         }
         
         for relationship in toOneRelationships {
-            guard let relationshipJSON = relationship.json(object) else { continue }
-            try? json.merge(with: relationshipJSON)
+            let tuple = relationship.relationship.json(object)
+            if relationship.exportObjects,
+                let object = tuple.objectJSON {
+                try? relationships.merge(with: object)
+            }
+            if let relationshipJSON = tuple.relationshipJSON {
+                try? json.merge(with: relationshipJSON)
+            }
         }
         
         for relationship in toManyRelationships {
-            guard let relationshipJSON = relationship.json(object) else { continue }
-            try? json.merge(with: relationshipJSON)
+            let tuple = relationship.relationship.json(object)
+            if relationship.exportObjects,
+                let object = tuple.objectJSON {
+                try? relationships.merge(with: object)
+            }
+            if let relationshipJSON = tuple.relationshipJSON {
+                try? json.merge(with: relationshipJSON)
+            }
         }
         
         for relationship in relationshipObjects {
@@ -81,17 +104,22 @@ class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, J
             try? json.merge(with: relationshipJSON)
         }
         
-        return json
+        return (json, relationships)
     }
     
     func json(_ objects: [ObjectType]) -> JSON {
         var jsonObjects: [JSON] = []
+        var relationships = JSON()
         
         for object in objects {
-            jsonObjects.append(json(object))
+            let tuple = json(object)
+            jsonObjects.append(tuple.objectJSON)
+            try? relationships.merge(with: tuple.relationshipsJSON)
         }
         
-        return JSON([arrayKey: jsonObjects])
+        let json = JSON([arrayKey: jsonObjects])
+        
+        return (try? json.merged(with: relationships)) ?? json
     }
     
     override func clearObjects() {
@@ -309,7 +337,13 @@ class PortController {
         let mods = JSONRepresentation<Mod>(
             arrayKey: "mods",
             attributes: ["name"],
-            toManyRelationships: [gamesRelationship, modulesRelationship, ingredientsRelationship, imagesRelationship])
+            toOneRelationships: [],
+            toManyRelationships: [
+                (gamesRelationship, false),
+                (modulesRelationship, true),
+                (ingredientsRelationship, true),
+                (imagesRelationship, true)
+        ])
         setRep(mods)
     }
     

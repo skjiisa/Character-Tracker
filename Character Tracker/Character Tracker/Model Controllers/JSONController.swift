@@ -19,7 +19,7 @@ protocol RelationshipProtocol {
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches json: JSON) -> Bool
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches string: String) -> Bool
     func object<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(_ object: ObjectType, isRelatedTo relative: RelationshipType) -> Bool
-    func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON?
+    func json<FunctionType: NSManagedObject>(_ object: FunctionType) -> (relationshipJSON: JSON?, objectJSON: JSON?)
 }
 
 struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
@@ -63,12 +63,19 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
         return relationshipObject == relative
     }
     
-    func json<ObjectType: NSManagedObject>(_ object: ObjectType) -> JSON? {
-        guard let relationship = object.value(forKey: key) else { return nil }
+    func json<FunctionType: NSManagedObject>(_ object: FunctionType) -> (relationshipJSON: JSON?, objectJSON: JSON?) {
+        guard let relationship = object.value(forKey: key) else { return (nil, nil) }
+        
+        var relationshipJSON: JSON?
+        var objectJSON: JSON?
         
         if let relationshipObject = relationship as? NSManagedObject,
             let id = relationshipObject.idString {
-            return JSON([key: id])
+            relationshipJSON = JSON([key: id])
+            
+            if let relationshipObject = relationshipObject as? ObjectType {
+                objectJSON = jsonRepresentation.json([relationshipObject])
+            }
         }
         
         if let relationshipObjects = relationship as? Set<NSManagedObject> {
@@ -77,10 +84,14 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
                 guard let id = object.idString else { continue }
                 ids.append(id)
             }
-            return JSON([key:ids])
+            
+            relationshipJSON = JSON([key:ids])
+            if let objects = relationshipObjects as? Set<ObjectType> {
+                objectJSON = jsonRepresentation.json(Array(objects))
+            }
         }
         
-        return nil
+        return (relationshipJSON, objectJSON)
     }
 }
 
@@ -117,11 +128,11 @@ class JSONController {
                 }
                 
                 for relationship in rep.toOneRelationships {
-                    try relationship.addRelationship(to: object, json: objectJSON, context: context)
+                    try relationship.relationship.addRelationship(to: object, json: objectJSON, context: context)
                 }
                 
                 for relationship in rep.toManyRelationships {
-                    try relationship.addRelationships(to: object, json: objectJSON, context: context)
+                    try relationship.relationship.addRelationships(to: object, json: objectJSON, context: context)
                 }
                 
                 for relationship in rep.relationshipObjects {
