@@ -125,6 +125,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         switch indexPath.section {
         case 5:
             let preferencesForm = UIHostingController(rootView: PreferencesForm())
+            preferencesForm.title = "Preferences"
             navigationController?.pushViewController(preferencesForm, animated: true)
         case 6:
             guard let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell else { break }
