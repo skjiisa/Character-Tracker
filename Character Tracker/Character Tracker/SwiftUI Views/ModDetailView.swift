@@ -18,7 +18,13 @@ struct ModDetailView: View {
         ingredientsFetchRequest.wrappedValue
     }
     
+    var gamesFetchRequest: FetchRequest<Game>
+    var games: FetchedResults<Game> {
+        gamesFetchRequest.wrappedValue
+    }
+    
     @EnvironmentObject var modController: ModController
+    @ObservedObject var gameController = GameController()
     
     @ObservedObject var mod: Mod
     
@@ -39,6 +45,8 @@ struct ModDetailView: View {
         // NSSet which will be harder to deal with declaratively than a
         // fetch request with a sort descriptor.
         self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "%@ in mods", mod))
+        
+        self.gamesFetchRequest = FetchRequest(entity: Game.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "ANY mods == %@", mod))
     }
     
     var editButton: some View {
@@ -96,7 +104,7 @@ struct ModDetailView: View {
                 }
             }
             
-            // Ingredients
+            //MARK: Ingredients
             
             if ingredients.count > 0 {
                 Section(header: Text("Ingredients")) {
@@ -123,6 +131,25 @@ struct ModDetailView: View {
                     }, isActive: $showingNewIngredient)
                 }
             }
+            
+            //MARK: Games
+            
+            Section(header: Text("Games")) {
+                ForEach(games) { game in
+                    Text(game.name ?? "Unknown game")
+                }
+            }
+            
+            if editMode {
+                Section {
+                    NavigationLink("Select games", destination:
+                        GamesView(mod: mod, gameController: gameController)
+                    )
+                        
+                }
+            }
+            
+            //MARK: Export
             
             if !editMode {
                 Section {

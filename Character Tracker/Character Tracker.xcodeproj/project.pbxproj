@@ -37,6 +37,9 @@
 		5972482F24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */; };
 		597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F124CB8EA900471664 /* TypeFilterSection.swift */; };
 		597545F424CB92DF00471664 /* AttributesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F324CB92DF00471664 /* AttributesFilterForm.swift */; };
+		5978EE8625115DB800AA9FB1 /* ModsViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978EE8525115DB800AA9FB1 /* ModsViewContainer.swift */; };
+		5978EE882511609500AA9FB1 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978EE872511609500AA9FB1 /* GameController.swift */; };
+		5978EE8A2511657000AA9FB1 /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978EE892511657000AA9FB1 /* GamesView.swift */; };
 		597AC99E2374E04800DC18E6 /* SectionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */; };
 		59850F42237D061500286067 /* ModuleDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59850F41237D061500286067 /* ModuleDetailTableViewController.swift */; };
 		59850F44237D0F4B00286067 /* ModuleNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59850F43237D0F4B00286067 /* ModuleNameTableViewCell.swift */; };
@@ -108,6 +111,9 @@
 		5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Character_Tracker 2.xcdatamodel"; sourceTree = "<group>"; };
 		597545F124CB8EA900471664 /* TypeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeFilterSection.swift; sourceTree = "<group>"; };
 		597545F324CB92DF00471664 /* AttributesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFilterForm.swift; sourceTree = "<group>"; };
+		5978EE8525115DB800AA9FB1 /* ModsViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewContainer.swift; sourceTree = "<group>"; };
+		5978EE872511609500AA9FB1 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		5978EE892511657000AA9FB1 /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		597AC99D2374E04800DC18E6 /* SectionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SectionsTableViewController.swift; path = "Character Tracker/Storyboards/SectionsTableViewController.swift"; sourceTree = SOURCE_ROOT; };
 		59850F41237D061500286067 /* ModuleDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailTableViewController.swift; sourceTree = "<group>"; };
 		59850F43237D0F4B00286067 /* ModuleNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleNameTableViewCell.swift; sourceTree = "<group>"; };
@@ -180,6 +186,7 @@
 				597545F324CB92DF00471664 /* AttributesFilterForm.swift */,
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
 				591040E924F874DE00FDA521 /* IngredientsView.swift */,
+				5978EE892511657000AA9FB1 /* GamesView.swift */,
 				59B6B1CF24FDC674003D168A /* Porting */,
 				59B6B1CB24FDC5E7003D168A /* Modules */,
 				59B6B1CE24FDC62C003D168A /* Mods */,
@@ -281,6 +288,7 @@
 		59B6B1CE24FDC62C003D168A /* Mods */ = {
 			isa = PBXGroup;
 			children = (
+				5978EE8525115DB800AA9FB1 /* ModsViewContainer.swift */,
 				59019C4B245F2FEE0072E8EA /* ModsView.swift */,
 				59019C4D245F35760072E8EA /* ModDetailView.swift */,
 			);
@@ -335,6 +343,7 @@
 				59E7A7BA24CCD56D006E77D7 /* PortController.swift */,
 				59ADFD59240B228F00B5E828 /* EntityController.swift */,
 				593DDF0824F47B0900D9E357 /* ModController.swift */,
+				5978EE872511609500AA9FB1 /* GameController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -432,7 +441,9 @@
 				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
+				5978EE8625115DB800AA9FB1 /* ModsViewContainer.swift in Sources */,
 				59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */,
+				5978EE882511609500AA9FB1 /* GameController.swift in Sources */,
 				59BCF9422377D88C000E90B7 /* UIAlertController+Fixes.swift in Sources */,
 				593DDF0B24F47B2000D9E357 /* ModulesView.swift in Sources */,
 				5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */,
@@ -469,6 +480,7 @@
 				59B6B1CA24FDABFF003D168A /* AlertContainer.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,
 				595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */,
+				5978EE8A2511657000AA9FB1 /* GamesView.swift in Sources */,
 				5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */,
 				597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */,
 				59BB3D25236AA92D00A4A14E /* Character_Tracker+Convenience.swift in Sources */,
