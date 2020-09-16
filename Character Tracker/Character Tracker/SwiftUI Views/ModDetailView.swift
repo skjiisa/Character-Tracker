@@ -83,8 +83,10 @@ struct ModDetailView: View {
             
             // Name
             
-            Section {
-                TextField("Name", text: $mod.wrappedName)
+            if editMode {
+                Section {
+                    TextField("Name", text: $mod.wrappedName)
+                }
             }
             
             // Modules
