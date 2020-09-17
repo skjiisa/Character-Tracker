@@ -68,16 +68,7 @@ struct ModDetailView: View {
             
             if mod.images?.count ?? 0 > 0 {
                 Section {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(mod.images!.array as! [ImageLink], id: \.self) { image in
-                                WebImage(url: URL(string: image.id ?? ""))
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                        }
-                    }
-                    .frame(height: 200)
+                    ImagesView(images: mod.images!.array as! [ImageLink])
                 }
             }
             

@@ -35,6 +35,7 @@
 		595F772A236A55F300151209 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7728236A55F300151209 /* LaunchScreen.storyboard */; };
 		596C947424CFC23400EAA609 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 596C947324CFC23400EAA609 /* EFQRCode */; };
 		5972482F24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */; };
+		59749CE32512DAFF009F46A8 /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59749CE22512DAFF009F46A8 /* ImagesView.swift */; };
 		597545F224CB8EA900471664 /* TypeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F124CB8EA900471664 /* TypeFilterSection.swift */; };
 		597545F424CB92DF00471664 /* AttributesFilterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597545F324CB92DF00471664 /* AttributesFilterForm.swift */; };
 		5978EE8625115DB800AA9FB1 /* ModsViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5978EE8525115DB800AA9FB1 /* ModsViewContainer.swift */; };
@@ -109,6 +110,7 @@
 		595F772B236A55F300151209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+FRCDelegate.swift"; sourceTree = "<group>"; };
 		5974752724F49DB10054C4DE /* Character_Tracker 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Character_Tracker 2.xcdatamodel"; sourceTree = "<group>"; };
+		59749CE22512DAFF009F46A8 /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		597545F124CB8EA900471664 /* TypeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeFilterSection.swift; sourceTree = "<group>"; };
 		597545F324CB92DF00471664 /* AttributesFilterForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesFilterForm.swift; sourceTree = "<group>"; };
 		5978EE8525115DB800AA9FB1 /* ModsViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModsViewContainer.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
 				591040E924F874DE00FDA521 /* IngredientsView.swift */,
 				5978EE892511657000AA9FB1 /* GamesView.swift */,
+				59749CE22512DAFF009F46A8 /* ImagesView.swift */,
 				59B6B1CF24FDC674003D168A /* Porting */,
 				59B6B1CB24FDC5E7003D168A /* Modules */,
 				59B6B1CE24FDC62C003D168A /* Mods */,
@@ -459,6 +462,7 @@
 				59B3A795236D063C00B3D33B /* RacesTableViewController.swift in Sources */,
 				59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */,
 				595F7725236A55EF00151209 /* Character_Tracker.xcdatamodeld in Sources */,
+				59749CE32512DAFF009F46A8 /* ImagesView.swift in Sources */,
 				59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */,
 				5948ED55250EAA0100D941C0 /* Identifiable.swift in Sources */,
 				5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */,
