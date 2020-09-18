@@ -15,6 +15,7 @@ struct ImagesView: View {
     var imageLinkController = ImageLinkController()
     
     @State private var newImage: ImageLink?
+    @State private var deleteImage: ImageLink?
     
     var images: [ImageLink]
     var insertNewImage: (ImageLink) -> Void
@@ -26,6 +27,9 @@ struct ImagesView: View {
                     WebImage(url: URL(string: image.id ?? ""))
                         .resizable()
                         .scaledToFill()
+                        .onTapGesture {
+                            self.deleteImage = image
+                    }
                 }
                 
                 Button("Add New") {
@@ -42,6 +46,11 @@ struct ImagesView: View {
                     .environment(\.managedObjectContext, self.moc)
                     .environmentObject(self.imageLinkController)
             }
+        }
+        .alert(item: $deleteImage) { imageLink in
+            Alert(title: Text("Delete this image?"), message: nil, primaryButton: .cancel(), secondaryButton: .destructive(Text("Delete"), action: {
+                self.imageLinkController.delete(imageLink, context: self.moc)
+            }))
         }
     }
 }
