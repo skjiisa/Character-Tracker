@@ -356,11 +356,22 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         if section == 0 {
             if module == nil {
                 return 0
+            } else if !(module?.images?.array.isEmpty ?? true) {
+                return 200
             }
             return 20
         }
 
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0,
+            let images = module?.images?.array as? [ImageLink] {
+            return UIHostingController(rootView: ImagesView(images: images)).view
+        }
+        
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
