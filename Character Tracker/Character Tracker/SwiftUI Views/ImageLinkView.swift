@@ -15,9 +15,11 @@ struct ImageLinkView: View {
     
     @EnvironmentObject var imageLinkController: ImageLinkController
     
-    @ObservedObject var imageLink: ImageLink
     @State private var imageURL: URL? = nil
     @State private var markedForDelete = false
+    
+    @ObservedObject var imageLink: ImageLink
+    var insertNewImage: (ImageLink) -> Void
     
     var cancelButton: some View {
         Button("Cancel") {
@@ -29,6 +31,7 @@ struct ImageLinkView: View {
     var doneButton: some View {
         Button("Done") {
             self.presentationMode.wrappedValue.dismiss()
+            self.insertNewImage(self.imageLink)
         }
     }
     
