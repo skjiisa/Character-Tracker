@@ -68,7 +68,9 @@ struct ModDetailView: View {
             
             if mod.images?.count ?? 0 > 0 {
                 Section {
-                    ImagesView(images: mod.images!.array as! [ImageLink])
+                    ImagesView(images: mod.images!.array as! [ImageLink]) { imageLink in
+                        self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
+                    }
                 }
             }
             

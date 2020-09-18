@@ -368,7 +368,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0,
             let images = module?.images?.array as? [ImageLink] {
-            return UIHostingController(rootView: ImagesView(images: images)).view
+            return UIHostingController(rootView: ImagesView(images: images) { imageLink in
+                self.module?.mutableOrderedSetValue(forKey: "images").add(imageLink)
+            }).view
         }
         
         return nil

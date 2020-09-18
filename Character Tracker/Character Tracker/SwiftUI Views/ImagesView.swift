@@ -10,7 +10,14 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ImagesView: View {
+    @Environment(\.managedObjectContext) var moc
+    
+    var imageLinkController = ImageLinkController()
+    
+    @State private var newImage: ImageLink?
+    
     var images: [ImageLink]
+    var insertNewImage: (ImageLink) -> Void
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -20,8 +27,21 @@ struct ImagesView: View {
                         .resizable()
                         .scaledToFill()
                 }
+                
+                Button("Add New") {
+                    let newImage = ImageLink(context: self.moc)
+                    self.newImage = newImage
+                    self.insertNewImage(newImage)
+                }
             }
         }
         .frame(height: 200)
+        .sheet(item: $newImage) { imageLink in
+            NavigationView {
+                ImageLinkView(imageLink: imageLink)
+                    .environment(\.managedObjectContext, self.moc)
+                    .environmentObject(self.imageLinkController)
+            }
+        }
     }
 }
