@@ -40,10 +40,15 @@ Character Tracker is an iOS app for keeping track of characters and other inform
 
 ## Build
 
-Building Character Tracker requires Xcode 11+ on macOS 10.15 or later for iOS Swift Package Manager.
+Building Character Tracker requires Xcode 12+ on macOS 10.15 or later for
++ iOS Swift Package Manager support
++ SwiftUI 2
 
 Dependencies:
 
 * [Pluralize.swift](https://github.com/joshualat/Pluralize.swift) (included)
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) (SPM)
 * [EFQRCode](https://github.com/EFPrefix/EFQRCode) (SPM)
+
+There may be build warnings for SPM packages about an iOS 8 deployment target.
+These are issues with the packages themselves and can safely be ignored.
