@@ -289,12 +289,14 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
+    //MARK: Scanner
+    
     @objc func openScanner() {
         let scannerVC = ScannerViewController()
         scannerVC.title = "Import from QR Code"
         scannerVC.delegate = self
-        let navigationVC = UINavigationController(rootViewController: scannerVC)
-        present(navigationVC, animated: true)
+        let scannerNavigationView = UINavigationController(rootViewController: scannerVC)
+        present(scannerNavigationView, animated: true)
     }
 
     //MARK: Navigation

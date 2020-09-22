@@ -13,13 +13,14 @@ protocol SwiftUIModalDelegate {
 }
 
 struct QRCodeView: View {
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var shareURL: URL?
     @State private var showingShareSheet: Bool = false
     
     var name: String?
     var qrCode: CGImage
-    var delegate: SwiftUIModalDelegate?
+    var delegate: SwiftUIModalDelegate? = nil
     
     var shareButton: some View {
         Button(action: {
@@ -35,6 +36,7 @@ struct QRCodeView: View {
     var doneButton: some View {
         Button("Done") {
             self.delegate?.dismiss()
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
     
@@ -44,7 +46,9 @@ struct QRCodeView: View {
             .scaledToFit()
             .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
             .navigationBarItems(leading: shareButton, trailing: doneButton)
-            .sheet(isPresented: $showingShareSheet) {
+            .sheet(isPresented: $showingShareSheet, onDismiss: {
+                PortController.shared.clearFilesFromTempDirectory()
+            }) {
                 if self.shareURL != nil {
                     ShareSheet(activityItems: [self.shareURL!])
                 }

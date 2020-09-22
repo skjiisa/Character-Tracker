@@ -10,7 +10,10 @@ import SwiftUI
 
 struct ModsView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Character_Tracker.Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: false)]) var mods: FetchedResults<Mod>
+    var fetchRequest: FetchRequest<Mod>
+    var mods: FetchedResults<Mod> {
+        fetchRequest.wrappedValue
+    }
     
     @EnvironmentObject var modController: ModController
     var moduleController = ModuleController()
@@ -21,6 +24,14 @@ struct ModsView: View {
     @State private var alert: Alert?
     @State private var showingScanner = false
     @State private var showingAlert: AlertContainer?
+    
+    init(game: Game?) {
+        var predicate: NSPredicate?
+        if let game = game {
+            predicate = NSPredicate(format: "%@ in games", game)
+        }
+        self.fetchRequest = FetchRequest(entity: Character_Tracker.Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: predicate)
+    }
     
     var newModButton: some View {
         Button(action: {
@@ -46,7 +57,7 @@ struct ModsView: View {
             guard let alert = self.alert else { return }
             self.showingAlert = AlertContainer(alert)
         }) {
-            ScannerView(showing: self.$showingScanner, alert: self.$alert)
+            ScannerNavigationView(showing: self.$showingScanner, alert: self.$alert)
             }
         .alert(item: $showingAlert) { alertContainer -> Alert in
             alertContainer.alert
@@ -103,6 +114,6 @@ struct ModsView: View {
 
 struct ModsView_Previews: PreviewProvider {
     static var previews: some View {
-        ModsView().environmentObject(ModController())
+        ModsView(game: nil).environmentObject(ModController())
     }
 }

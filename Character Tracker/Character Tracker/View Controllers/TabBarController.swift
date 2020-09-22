@@ -43,7 +43,7 @@ class TabBarController: UITabBarController {
         
         let modsViewHost = UIHostingController(rootView:
             NavigationView {
-                ModsView()
+                ModsViewContainer()
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
                     .environmentObject(modController)
                     .environmentObject(gameReference)

@@ -61,9 +61,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case modules
         case attributes
         case games
+        case spacer
     }
     
-    var sections: [(name: String, type: SectionTypes)] = []
+    var sections: [(name: String?, type: SectionTypes)] = []
     var sectionsToReload: [SectionTypes] = []
     
     weak var nameTextField: UITextField?
@@ -160,6 +161,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return attributeController.tempEntities.count + editMode.int
         case .games:
             return games.count + editMode.int
+        case .spacer:
+            return 0
         }
     }
     
@@ -300,6 +303,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
             }
+        default:
+            cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
         }
 
         return cell
@@ -353,14 +358,35 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+        if section == 1 {
             if module == nil {
                 return 0
+            } else if !(module?.images?.array.isEmpty ?? true) {
+                return 200
             }
-            return 20
+            return 44
         }
 
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 1 {
+            let images = module?.images?.array as? [ImageLink]
+            let imagesView = UIHostingController(rootView: ImagesView(images: images ?? [], imageRemoved: { _ in
+                self.tableView.reloadSections(IndexSet(integer: section), with: .none)
+            }) { imageLink in
+                self.module?.mutableOrderedSetValue(forKey: "images").add(imageLink)
+                self.tableView.reloadSections(IndexSet(integer: section), with: .none)
+            }
+            .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+            )
+            imagesView.view.layer.cornerRadius = 10
+            imagesView.view.clipsToBounds = true
+            return imagesView.view
+        }
+        
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -428,7 +454,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     private func setUpSections() {
-        sections.append(("", .name))
+        sections.append((nil, .spacer))
+        sections.append((nil, .spacer)) // The header the images appear in
+        sections.append((nil, .name))
         
         if let moduleTypeName = moduleType?.name {
             sections.append(("\(moduleTypeName) Description", .notes(notesTextView)))
@@ -625,6 +653,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             guard let module = self.module,
                 let url = PortController.shared.saveTempJSON(for: module) else { return }
             let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activityVC.completionWithItemsHandler = { _, _, _, _ in
+                PortController.shared.clearFilesFromTempDirectory()
+            }
             self.present(activityVC, animated: true)
         }
         

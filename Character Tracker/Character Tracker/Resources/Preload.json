@@ -2123,7 +2123,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ]
     },
     {
       "id": "2A0DA09A-0DB1-45D2-977E-25AB6EE53455",
@@ -2431,6 +2434,11 @@
       "images": [
         "https://images.uesp.net/2/2e/SR-cover-Dragonborn_Box_Art.jpg",
         "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ],
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
     }
   ]

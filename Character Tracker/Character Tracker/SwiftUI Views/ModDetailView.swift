@@ -18,13 +18,25 @@ struct ModDetailView: View {
         ingredientsFetchRequest.wrappedValue
     }
     
+    var gamesFetchRequest: FetchRequest<Game>
+    var games: FetchedResults<Game> {
+        gamesFetchRequest.wrappedValue
+    }
+    
     @EnvironmentObject var modController: ModController
+    @ObservedObject var gameController = GameController()
     
     @ObservedObject var mod: Mod
+    
     @State private var showingNewModule = false
     @State private var showingNewIngredient = false
     @State private var editMode = false
     @State private var selectedIngredient: Ingredient?
+    @State private var showingExport = false
+    @State private var qrCode: CGImage? = nil
+    @State private var exportJSON: String? = nil
+    @State private var exportFile: URL? = nil
+    @State private var showingShareSheet = false
     
     init(mod: Mod) {
         self.mod = mod
@@ -33,6 +45,8 @@ struct ModDetailView: View {
         // NSSet which will be harder to deal with declaratively than a
         // fetch request with a sort descriptor.
         self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "%@ in mods", mod))
+        
+        self.gamesFetchRequest = FetchRequest(entity: Game.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "ANY mods == %@", mod))
     }
     
     var editButton: some View {
@@ -52,25 +66,18 @@ struct ModDetailView: View {
             
             // Images
             
-            if mod.images?.count ?? 0 > 0 {
-                Section {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(mod.images!.array as! [ImageLink], id: \.self) { image in
-                                WebImage(url: URL(string: image.id ?? ""))
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                        }
-                    }
-                    .frame(height: 200)
+            Section {
+                ImagesView(images: mod.images!.array as! [ImageLink]) { imageLink in
+                    self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
                 }
             }
             
             // Name
             
-            Section {
-                TextField("Name", text: $mod.wrappedName)
+            if editMode {
+                Section {
+                    TextField("Name", text: $mod.wrappedName)
+                }
             }
             
             // Modules
@@ -90,7 +97,7 @@ struct ModDetailView: View {
                 }
             }
             
-            // Ingredients
+            //MARK: Ingredients
             
             if ingredients.count > 0 {
                 Section(header: Text("Ingredients")) {
@@ -117,6 +124,52 @@ struct ModDetailView: View {
                     }, isActive: $showingNewIngredient)
                 }
             }
+            
+            //MARK: Games
+            
+            Section(header: Text("Games")) {
+                ForEach(games) { game in
+                    Text(game.name ?? "Unknown game")
+                }
+            }
+            
+            if editMode {
+                Section {
+                    NavigationLink("Select games", destination:
+                        GamesView(mod: mod, gameController: gameController)
+                    )
+                        
+                }
+            }
+            
+            //MARK: Export
+            
+            if !editMode {
+                Section {
+                    Button(action: {
+                        self.showingExport = true
+                    }) {
+                        HStack {
+                            Spacer()
+                            Text("Export")
+                            Spacer()
+                        }
+                    }
+                    .sheet(isPresented: $showingShareSheet, onDismiss: {
+                        if self.exportFile != nil {
+                            PortController.shared.clearFilesFromTempDirectory()
+                        }
+                        self.exportJSON = nil
+                        self.exportFile = nil
+                    }) {
+                        if self.exportJSON != nil {
+                            ShareSheet(activityItems: [self.exportJSON!])
+                        } else if self.exportFile != nil {
+                            ShareSheet(activityItems: [self.exportFile!])
+                        }
+                    }
+                }
+            }
         }
         .navigationBarTitle(mod.name ?? "Mod")
         .navigationBarItems(trailing: editButton)
@@ -127,6 +180,29 @@ struct ModDetailView: View {
         }
         .alert(item: $selectedIngredient) { ingredient in
             Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
+        }
+        .actionSheet(isPresented: $showingExport) {
+            ActionSheet(title: Text("Export \(self.mod.name ?? "mod")"), message: nil, buttons: [
+                .default(Text("QR Code")) {
+                    self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
+                },
+                .default(Text("JSON Text")) {
+                    guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
+                    self.exportJSON = json
+                    self.showingShareSheet = true
+                },
+                .default(Text("JSON File")) {
+                    guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
+                    self.exportFile = file
+                    self.showingShareSheet = true
+                },
+                .cancel()
+            ])
+        }
+        .sheet(item: self.$qrCode) { qrCode in
+            NavigationView {
+                QRCodeView(name: self.mod.name, qrCode: qrCode)
+            }
         }
     }
 }

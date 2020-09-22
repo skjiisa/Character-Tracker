@@ -32,3 +32,12 @@ extension Mod: Identifiable {
 extension Module: Identifiable {}
 
 extension Ingredient: Identifiable {}
+
+extension Game: Identifiable {}
+
+extension ImageLink: Identifiable {
+    var wrappedID: String {
+        get { self.id ?? "" }
+        set { self.id = newValue }
+    }
+}
