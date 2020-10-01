@@ -22,20 +22,14 @@ extension NSManagedObject {
     }
 }
 
-extension Mod: Identifiable {
+extension Mod {
     var wrappedName: String {
         get { self.name ?? "" }
         set { self.name = newValue }
     }
 }
 
-extension Module: Identifiable {}
-
-extension Ingredient: Identifiable {}
-
-extension Game: Identifiable {}
-
-extension ImageLink: Identifiable {
+extension ImageLink {
     var wrappedID: String {
         get { self.id ?? "" }
         set { self.id = newValue }

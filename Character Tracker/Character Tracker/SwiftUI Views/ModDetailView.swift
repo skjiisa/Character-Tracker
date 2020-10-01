@@ -24,6 +24,7 @@ struct ModDetailView: View {
     }
     
     @EnvironmentObject var modController: ModController
+    @EnvironmentObject var gameReference: GameReference
     @ObservedObject var gameController = GameController()
     
     @ObservedObject var mod: Mod
@@ -216,7 +217,7 @@ struct ModulesSection: View {
     var deleteDisabled: Bool
     
     var body: some View {
-        ForEach(types, id: \.self) { type in
+        ForEach(types) { type in
             ModuleTypeSection(mod: self.mod, type: type, deleteDisabled: self.deleteDisabled)
         }
     }
@@ -254,7 +255,7 @@ struct ModuleTypeSection: View {
         Group {
             if modules.count > 0 {
                 Section(header: Text(type.typeName.pluralize())) {
-                    ForEach (modules, id: \.self) { module in
+                    ForEach (modules) { module in
                         // I would have preferred to have navigation links here,
                         // but since ModuleDetailView is currently just a container
                         // for a UITableView, the navigation bar gets all messed up
@@ -263,6 +264,10 @@ struct ModuleTypeSection: View {
                             self.showingModule = module
                         }
                         .foregroundColor(.primary)
+                        .sheet(item: $showingModule) { module in
+                            ModuleDetailView(module: module)
+                                .environmentObject(gameReference)
+                        }
                     }
                     .onDelete { indexSet in
                         guard let index = indexSet.first else { return }
@@ -272,10 +277,6 @@ struct ModuleTypeSection: View {
                     .deleteDisabled(deleteDisabled)
                 }
             }
-        }
-        .sheet(item: $showingModule) { module in
-            ModuleDetailView(module: module)
-                .environmentObject(self.gameReference)
         }
     }
 }

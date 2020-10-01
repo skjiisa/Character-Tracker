@@ -16,6 +16,7 @@ struct ModsView: View {
     }
     
     @EnvironmentObject var modController: ModController
+    @EnvironmentObject var gameReference: GameReference
     var moduleController = ModuleController()
     var ingredientController = IngredientController()
     
@@ -75,12 +76,11 @@ struct ModsView: View {
     var body: some View {
         List {
             ForEach(mods, id: \.self) { mod in
-                NavigationLink(destination:
-                    ModDetailView(mod: mod)
-                        .environment(\.managedObjectContext, self.moc)
-                        .environmentObject(self.modController)) {
-                            Text(mod.name ?? "")
-                }
+                NavigationLink(mod.wrappedName, destination: ModDetailView(mod: mod)
+                                .environment(\.managedObjectContext, moc)
+                                .environmentObject(modController)
+                                .environmentObject(gameReference)
+                )
             }
             .onDelete { indexSet in
                 let mod = self.mods[indexSet.first!]
@@ -94,6 +94,7 @@ struct ModsView: View {
                 ModDetailView(mod: mod)
                     .environment(\.managedObjectContext, self.moc)
                     .environmentObject(self.modController)
+                    .environmentObject(gameReference)
             }
         }
         .actionSheet(item: $deleteMod) { mod in
