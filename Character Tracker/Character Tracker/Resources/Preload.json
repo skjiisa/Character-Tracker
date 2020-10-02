@@ -2426,6 +2426,82 @@
         "https://images.uesp.net/c/cc/SR-item-Bonemold_Pauldron_Armor_Female.jpg",
         "https://images.uesp.net/a/a8/SR-item-Bonemold_Pauldron_Armor_Male.jpg"
       ]
+    },
+    {
+      "id": "26E4483F-9229-4D36-9822-2C62C9925CBF",
+      "level": 0,
+      "name": "Dawnguard",
+      "notes": "Official DLC",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
+      ]
+    },
+    {
+      "id": "80018D08-75EF-417E-8771-AE7A1A843D85",
+      "level": 0,
+      "name": "Acquire 11 werewolf perks",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/6/63/SR-perktree-Werewolf.jpg"
+      ]
+    },
+    {
+      "id": "3608D852-143D-4575-968F-D788852CD8A8",
+      "level": 0,
+      "name": "Acquire 11 vampire perks",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/f/f2/SR-perktree-Vampirism.jpg"
+      ]
+    },
+    {
+      "id": "BBDE99A5-3BAC-446C-BB9F-D03F11F64A8A",
+      "level": 0,
+      "name": "Serana",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "26E4483F-9229-4D36-9822-2C62C9925CBF"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "D4C82D7D-78A9-4DDF-B30C-80FA5A9F21B1"
+        },
+        {
+          "attribute": "14413FB8-EC18-48DA-BAA1-5EFE3574D8E8"
+        },
+        {
+          "attribute": "3BB5036C-FDCC-4197-9559-B42212B1FAF7"
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/a/a1/SR-npc-Serana.jpg"
+      ]
     }
   ],
   "characters": [
@@ -2464,6 +2540,25 @@
       "images": [
         "https://images.uesp.net/2/2e/SR-cover-Dragonborn_Box_Art.jpg",
         "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ],
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dawnguard",
+      "id": "B81FCF84-D3B2-46C7-B956-6FCE06F1DE4A",
+      "modules": [
+        "26E4483F-9229-4D36-9822-2C62C9925CBF",
+        "80018D08-75EF-417E-8771-AE7A1A843D85",
+        "3608D852-143D-4575-968F-D788852CD8A8",
+        "BBDE99A5-3BAC-446C-BB9F-D03F11F64A8A"
+      ],
+      "images": [
+        "https://images.uesp.net/0/00/SR-cover-Dawnguard_Box_Art.jpg",
+        "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
       ],
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
