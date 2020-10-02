@@ -2157,6 +2157,9 @@
         {
           "attribute": "548EA51C-6A03-4C51-A1F4-8610B6E67E75"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/thumb/d/d9/SR-npc-Frea.jpg/900px-SR-npc-Frea.jpg"
       ]
     },
     {
@@ -2169,7 +2172,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "D453D642-DE13-41F2-B129-A89D447E2863"
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "images": [
+        "https://images.uesp.net/0/01/SR-place-Severin_Manor.jpg"
+      ]
     },
     {
       "name": "Stalhrim Light Armor",
@@ -2204,6 +2210,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/f/fd/SR-item-Stalhrim_Light_Armor_Female.jpg",
+        "https://images.uesp.net/f/ff/SR-item-Stalhrim_Light_Armor_Male.jpg"
       ]
     },
     {
@@ -2239,6 +2249,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/b/b8/SR-item-Stalhrim_Heavy_Armor_Female.jpg",
+        "https://images.uesp.net/9/90/SR-item-Stalhrim_Heavy_Armor_Male.jpg"
       ]
     },
     {
@@ -2274,6 +2288,10 @@
         {
           "attribute": "3BB5036C-FDCC-4197-9559-B42212B1FAF7"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/5/53/SR-item-Chitin_Armor_Female.jpg",
+        "https://images.uesp.net/5/57/SR-item-Chitin_Armor_Male.jpg"
       ]
     },
     {
@@ -2309,6 +2327,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/9/94/SR-item-Chitin_Heavy_Armor_Female.jpg",
+        "https://images.uesp.net/8/82/SR-item-Chitin_Heavy_Armor_Male.jpg"
       ]
     },
     {
@@ -2344,6 +2366,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/65/SR-item-Bonemold_Armor_Female.jpg",
+        "https://images.uesp.net/c/cb/SR-item-Bonemold_Armor_Male.jpg"
       ]
     },
     {
@@ -2395,6 +2421,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/c/cc/SR-item-Bonemold_Pauldron_Armor_Female.jpg",
+        "https://images.uesp.net/a/a8/SR-item-Bonemold_Pauldron_Armor_Male.jpg"
       ]
     }
   ],
