@@ -2502,6 +2502,195 @@
       "images": [
         "https://images.uesp.net/a/a1/SR-npc-Serana.jpg"
       ]
+    },
+    {
+      "id": "FEE0B785-DDD8-4066-9971-611E29B7A276",
+      "level": 0,
+      "name": "Adopt a child",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "72D58669-91D5-4CB4-B544-A20120C57DC6",
+      "level": 0,
+      "name": "Build three houses",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg",
+        "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg",
+        "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ]
+    },
+    {
+      "id": "A6AC89F1-B214-4156-9A39-237A121E5027",
+      "level": 0,
+      "name": "Heljarchen Hall",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg"
+      ]
+    },
+    {
+      "id": "DD6D87C6-892E-49EB-A642-46BCE5810E06",
+      "level": 0,
+      "name": "Gregor",
+      "notes": "Available after you become thane of the Pale.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "A6AC89F1-B214-4156-9A39-237A121E5027"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/4/4a/SR-npc-Gregor.jpg"
+      ]
+    },
+    {
+      "id": "519616D8-5F03-41C7-A998-213DB8A8B253",
+      "level": 0,
+      "name": "Lakeview Manor",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg"
+      ]
+    },
+    {
+      "id": "F5FBB54D-50CE-408E-AA02-A282BCCFC6CF",
+      "level": 0,
+      "name": "Rayya",
+      "notes": "Available after you become thane of Falkreath.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "519616D8-5F03-41C7-A998-213DB8A8B253"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/b/be/SR-npc-Rayya.jpg"
+      ]
+    },
+    {
+      "id": "71F3F060-C22F-4881-B999-3377999A584B",
+      "level": 0,
+      "name": "Windstad Manor",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ]
+    },
+    {
+      "id": "49611A8E-DD43-4CDC-AF0A-E5FDAD4ED91C",
+      "level": 0,
+      "name": "Valdimar",
+      "notes": "Available after you become thane of Hjaalmarch.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "71F3F060-C22F-4881-B999-3377999A584B"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/d/de/SR-npc-Valdimar.jpg"
+      ]
     }
   ],
   "characters": [
@@ -2559,6 +2748,28 @@
       "images": [
         "https://images.uesp.net/0/00/SR-cover-Dawnguard_Box_Art.jpg",
         "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
+      ],
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Hearthfire",
+      "id": "3CDE88E6-0930-4A3C-9B45-15A96DBDAB32",
+      "modules": [
+        "FEE0B785-DDD8-4066-9971-611E29B7A276",
+        "72D58669-91D5-4CB4-B544-A20120C57DC6",
+        "A6AC89F1-B214-4156-9A39-237A121E5027",
+        "DD6D87C6-892E-49EB-A642-46BCE5810E06",
+        "519616D8-5F03-41C7-A998-213DB8A8B253",
+        "F5FBB54D-50CE-408E-AA02-A282BCCFC6CF",
+        "71F3F060-C22F-4881-B999-3377999A584B",
+        "49611A8E-DD43-4CDC-AF0A-E5FDAD4ED91C"
+      ],
+      "images": [
+        
       ],
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
