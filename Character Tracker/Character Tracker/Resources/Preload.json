@@ -1289,6 +1289,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/d7/SR-item-Leather_Armor_Female.jpg",
+        "https://images.uesp.net/f/f4/SR-item-Leather_Armor_Male.jpg"
       ]
     },
     {
@@ -1328,6 +1332,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/e6/SR-item-Elven_Armor_Female.jpg",
+        "https://images.uesp.net/b/ba/SR-item-Elven_Armor_Male.jpg"
       ]
     },
     {
@@ -1366,6 +1374,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/7/73/SR-item-Scaled_Armor_Female.jpg",
+        "https://images.uesp.net/c/c2/SR-item-Scaled_Armor_Male.jpg"
       ]
     },
     {
@@ -1449,6 +1461,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/ef/SR-item-Glass_Armor_Female.jpg",
+        "https://images.uesp.net/f/fe/SR-item-Glass_Armor_Male.jpg"
       ]
     },
     {
@@ -1488,6 +1504,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/1/1e/SR-item-Dragonscale_Armor_Female.jpg",
+        "https://images.uesp.net/3/3e/SR-item-Dragonscale_Armor_Male.jpg"
       ]
     },
     {
@@ -1523,6 +1543,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/9/96/SR-item-Dragonplate_Armor_Female.jpg",
+        "https://images.uesp.net/2/23/SR-item-Dragonplate_Armor_Male.jpg"
       ]
     },
     {
@@ -1558,6 +1582,12 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/2/24/SR-item-Steel_Armor_Female.jpg",
+        "https://images.uesp.net/9/90/SR-item-Steel_Armor_Male.jpg",
+        "https://images.uesp.net/7/7d/SR-item-Steel_Armor_Female_02.jpg",
+        "https://images.uesp.net/9/9e/SR-item-Steel_Armor_Male_02.jpg"
       ]
     },
     {
@@ -1597,6 +1627,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/5/5b/SR-item-Dwarven_Armor_Female.jpg",
+        "https://images.uesp.net/4/45/SR-item-Dwarven_Armor_Male.jpg"
       ]
     },
     {
@@ -1635,6 +1669,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/0/0e/SR-item-Steel_Plate_Armor_Female.jpg",
+        "https://images.uesp.net/e/e4/SR-item-Steel_Plate_Armor_Male.jpg"
       ]
     },
     {
@@ -1670,6 +1708,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/63/SR-item-Orcish_Armor_Female.jpg",
+        "https://images.uesp.net/e/e4/SR-item-Orcish_Armor_Male.jpg"
       ]
     },
     {
@@ -1701,6 +1743,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/3/3e/SR-item-Ebony_Armor_Female.jpg",
+        "https://images.uesp.net/f/f8/SR-item-Ebony_Armor_Male.jpg"
       ]
     },
     {
@@ -1736,6 +1782,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/db/SR-item-Daedric_Armor_Female.jpg",
+        "https://images.uesp.net/e/ef/SR-item-Daedric_Armor_Male.jpg"
       ]
     },
     {
@@ -1747,7 +1797,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/d/d6/SR-quest-Before_the_Storm_02.jpg"
+      ]
     },
     {
       "name": "College of Winterhold",
@@ -1758,7 +1811,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/e/e4/SR-place-College_of_Winterhold.jpg"
+      ]
     },
     {
       "name": "Companions",
@@ -1769,7 +1825,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/f/f5/SR-place-Jorrvaskr.jpg"
+      ]
     },
     {
       "name": "Dark Brotherhood",
@@ -1780,7 +1839,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/f/f0/SR-place-Dark_Brotherhood_Sanctuary.jpg"
+      ]
     },
     {
       "name": "Imperial Legion",
@@ -1791,7 +1853,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/2/2e/SR-quest-Reunification_of_Skyrim.jpg"
+      ]
     },
     {
       "name": "Stormcloaks",
@@ -1802,7 +1867,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/6/6e/SR-npc-Ulfric_Stormcloak.jpg"
+      ]
     },
     {
       "name": "Thieves Guild",
@@ -1813,7 +1881,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/4/42/SR-interior-The_Ragged_Flagon.jpg"
+      ]
     },
     {
       "id": "CECF69BA-ED02-43FF-BEB8-B4251067C187",
@@ -1830,6 +1901,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 5000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/d0/SR-place-Breezehome.jpg"
       ]
     },
     {
@@ -1847,6 +1921,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 5000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/3/31/SR-place-Honeyside.jpg"
       ]
     },
     {
@@ -1864,6 +1941,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 8000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/4/49/SR-place-Vlindrel_Hall.jpg"
       ]
     },
     {
@@ -1881,6 +1961,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 8000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/f/f5/SR-place-Hjerim.jpg"
       ]
     },
     {
@@ -1898,6 +1981,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 25000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/1/19/SR-place-Proudspire_Manor.jpg"
       ]
     },
     {
@@ -1909,7 +1995,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/3/35/SR-place-Guardian_Stones.jpg"
+      ]
     },
     {
       "id": "CDC1D77C-721E-433D-BA1B-839EDD874535",
@@ -1953,7 +2042,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/9/9a/SR-quest-No_Stone_Unturned.jpg"
+      ]
     },
     {
       "id": "B57CDDBA-3243-4CDB-939D-76B4152DF70B",
@@ -1984,6 +2076,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/4/4a/SR-npc-Argis_the_Bulwark.jpg"
       ]
     },
     {
@@ -2015,6 +2110,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/2/26/SR-npc-Calder.jpg"
       ]
     },
     {
@@ -2046,6 +2144,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/0/03/SR-npc-Iona.jpg"
       ]
     },
     {
@@ -2077,6 +2178,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/e2/SR-npc-Jordis_the_Sword-Maiden.jpg"
       ]
     },
     {
@@ -2111,6 +2215,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/68/SR-npc-Lydia.jpg"
       ]
     },
     {
