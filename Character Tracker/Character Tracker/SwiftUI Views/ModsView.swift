@@ -36,7 +36,8 @@ struct ModsView: View {
     
     var newModButton: some View {
         Button(action: {
-            let newMod = self.modController.create(context: self.moc)
+            guard let game = gameReference.game else { return }
+            let newMod = self.modController.create(game: game, context: self.moc)
             self.newMod = newMod
         }) {
             Image(systemName: "plus")
@@ -91,7 +92,7 @@ struct ModsView: View {
         .navigationBarItems(trailing: buttonsView)
         .sheet(item: $newMod) { mod in
             NavigationView {
-                ModDetailView(mod: mod)
+                ModDetailView(mod: mod, editMode: true)
                     .environment(\.managedObjectContext, self.moc)
                     .environmentObject(self.modController)
                     .environmentObject(gameReference)
