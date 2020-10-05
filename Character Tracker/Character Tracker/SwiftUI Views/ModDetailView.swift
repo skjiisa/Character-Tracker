@@ -68,7 +68,7 @@ struct ModDetailView: View {
             // Images
             
             Section {
-                ImagesView(images: mod.images!.array as! [ImageLink]) { imageLink in
+                ImagesView(images: mod.images!.array as! [ImageLink], parent: mod) { imageLink in
                     self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
                 }
             }

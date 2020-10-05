@@ -49,6 +49,7 @@
 		5988DC8025146DD1001D5505 /* ImageLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988DC7F25146DD1001D5505 /* ImageLinkView.swift */; };
 		5988DC8225147150001D5505 /* ImageLinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988DC8125147150001D5505 /* ImageLinkController.swift */; };
 		5997667F24204A3700953FC9 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5997667E24204A3700953FC9 /* LinkTableViewCell.swift */; };
+		59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */; };
 		59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ADFD59240B228F00B5E828 /* EntityController.swift */; };
 		59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */; };
 		59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78A236CF29900B3D33B /* TabBarController.swift */; };
@@ -127,6 +128,7 @@
 		5988DC7F25146DD1001D5505 /* ImageLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLinkView.swift; sourceTree = "<group>"; };
 		5988DC8125147150001D5505 /* ImageLinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLinkController.swift; sourceTree = "<group>"; };
 		5997667E24204A3700953FC9 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+OrderedImages.swift"; sourceTree = "<group>"; };
 		59ADFD59240B228F00B5E828 /* EntityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityController.swift; sourceTree = "<group>"; };
 		59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSManagedObject+Delete.swift"; path = "Character Tracker/Model/NSManagedObject+Delete.swift"; sourceTree = SOURCE_ROOT; };
 		59B3A78A236CF29900B3D33B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				59BCF97A237A59B0000E90B7 /* Character_Tracker+TypeSection.swift */,
 				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
 				59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */,
+				59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
 				59083982250990B3007A86D5 /* ScannerNavigationView.swift in Sources */,
 				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
+				59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */,
 				59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */,
 				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
