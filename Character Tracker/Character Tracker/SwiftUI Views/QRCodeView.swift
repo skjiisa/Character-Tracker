@@ -41,6 +41,12 @@ struct QRCodeView: View {
     }
     
     var body: some View {
+        if shareURL != nil {
+            // If we don't have anything observing shareURL,
+            // it won't update, meaning it'll be nil when
+            // we try accessing it for the Share Sheet.
+            EmptyView()
+        }
         Image(decorative: qrCode, scale: 1)
             .resizable()
             .scaledToFit()

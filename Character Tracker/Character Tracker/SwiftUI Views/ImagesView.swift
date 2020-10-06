@@ -18,6 +18,7 @@ struct ImagesView: View {
     @State private var deleteImage: ImageLink?
     
     var images: [ImageLink]
+    var parent: OrderedImages?
     var imageRemoved: (Int?) -> Void = { _ in }
     var insertNewImage: (ImageLink) -> Void
     
@@ -51,7 +52,7 @@ struct ImagesView: View {
         .alert(item: $deleteImage) { imageLink in
             Alert(title: Text("Delete this image?"), message: nil, primaryButton: .cancel(), secondaryButton: .destructive(Text("Delete"), action: {
                 let index = self.images.firstIndex(of: imageLink)
-                self.imageLinkController.delete(imageLink, context: self.moc)
+                self.imageLinkController.remove(imageLink, from: parent, context: moc)
                 self.imageRemoved(index)
             }))
         }

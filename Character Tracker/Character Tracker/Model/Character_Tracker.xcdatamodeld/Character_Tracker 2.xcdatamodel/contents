@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Attribute" representedClassName="Attribute" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -27,7 +27,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="authors" inverseEntity="Category"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="author" inverseEntity="ImageLink"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="author" inverseEntity="Image"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="authors" inverseEntity="ExternalLink"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="author" inverseEntity="Mod"/>
     </entity>
@@ -84,7 +84,7 @@
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="games" inverseEntity="Module"/>
         <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="games" inverseEntity="Race"/>
     </entity>
-    <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
+    <entity name="Image" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="images" inverseEntity="Author"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="images" inverseEntity="Mod"/>
@@ -106,7 +106,7 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="mods" inverseEntity="Category"/>
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Character" inverseName="mods" inverseEntity="Character"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="mods" inverseEntity="Game"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ImageLink" inverseName="mods" inverseEntity="ImageLink"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Image" inverseName="mods" inverseEntity="Image"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="mods" inverseEntity="Ingredient"/>
         <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="mods" inverseEntity="ExternalLink"/>
         <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="mod" inverseEntity="Module"/>
@@ -122,7 +122,7 @@
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterModule" inverseName="module" inverseEntity="CharacterModule"/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="parent" inverseEntity="ModuleModule"/>
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="modules" inverseEntity="Game"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ImageLink" inverseName="modules" inverseEntity="ImageLink"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Image" inverseName="modules" inverseEntity="Image"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="module" inverseEntity="ModuleIngredient"/>
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="modules" inverseEntity="Mod"/>
         <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="child" inverseEntity="ModuleModule"/>
@@ -168,7 +168,7 @@
         <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
         <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="163"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
-        <element name="ImageLink" positionX="178" positionY="370" width="128" height="103"/>
+        <element name="Image" positionX="178" positionY="370" width="128" height="103"/>
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
         <element name="Module" positionX="343" positionY="203" width="128" height="253"/>

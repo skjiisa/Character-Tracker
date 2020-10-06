@@ -31,7 +31,7 @@ struct ModDetailView: View {
     
     @State private var showingNewModule = false
     @State private var showingNewIngredient = false
-    @State private var editMode = false
+    @State private var editMode: Bool
     @State private var selectedIngredient: Ingredient?
     @State private var showingExport = false
     @State private var qrCode: CGImage? = nil
@@ -39,7 +39,7 @@ struct ModDetailView: View {
     @State private var exportFile: URL? = nil
     @State private var showingShareSheet = false
     
-    init(mod: Mod) {
+    init(mod: Mod, editMode: Bool = false) {
         self.mod = mod
         
         // The mod's ingredients property will give an optional, unordered
@@ -48,6 +48,8 @@ struct ModDetailView: View {
         self.ingredientsFetchRequest = FetchRequest(entity: Ingredient.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "%@ in mods", mod))
         
         self.gamesFetchRequest = FetchRequest(entity: Game.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(format: "ANY mods == %@", mod))
+        
+        _editMode = .init(initialValue: editMode)
     }
     
     var editButton: some View {
@@ -68,9 +70,10 @@ struct ModDetailView: View {
             // Images
             
             Section {
-                ImagesView(images: mod.images!.array as! [ImageLink]) { imageLink in
+                ImagesView(images: mod.images!.array as! [ImageLink], parent: mod) { imageLink in
                     self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
                 }
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             
             // Name
