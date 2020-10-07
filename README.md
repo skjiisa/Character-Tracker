@@ -32,6 +32,9 @@ Character Tracker is an iOS app for keeping track of characters and other inform
 
 In Character Tracker you can scan QR codes to import new data, such as new equipment, followers, etc.
 
+You can create QR codes in the app by tapping the "Export" button at the botton of mod and module screens.
+You can also automatically generate QR codes for armor mods, including level and crafting requirements, using [xEdit Armor Export](https://github.com/Isvvc/xEdit-Armor-Export).
+
 Below is an example QR code for the Skyrim mod [Nordic Wanderer Equipment](https://www.nexusmods.com/skyrim/mods/69103/) ([Skyrim Special Edition](https://www.nexusmods.com/skyrimspecialedition/mods/7943)).
 
 These QR codes are very dense and may be difficult to scan. **Click the QR code for a full-size image**. Open on a large display for easier scanning.
