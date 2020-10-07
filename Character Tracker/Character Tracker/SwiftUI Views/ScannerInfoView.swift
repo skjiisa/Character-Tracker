@@ -17,7 +17,7 @@ struct ScannerInfoView: View {
     
     var content: [Content] = [
         .text("Here you can scan QR codes to import data into Character Tracker."),
-        .text("You can generate QR codes from Modules you've added by tapping the \"Export\" button at the bottom of its detail page."),
+        .text("You can generate QR codes from Modules or Mods you've added by tapping the \"Export\" button at the bottom of its detail page."),
         .text("An example QR Code can be found in the readme on GitHub."),
         .link(title: "Character Tracker on GitHub", url: "https://github.com/Isvvc/Character-Tracker"),
         .text("QR Codes can also be generated from Skyrim armor sets using xEdit Armor Export."),
@@ -30,26 +30,32 @@ struct ScannerInfoView: View {
             return AnyView(Text(text))
                 .padding()
         case .link(title: let title, url: let url):
-            return AnyView(HStack {
-                Spacer()
+            return AnyView(
                 Button(title) {
                     guard let url = URL(string: url) else { return }
                     UIApplication.shared.open(url)
-                }
-                Spacer()
-            })
+                })
                 .padding(.bottom)
         }
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(content, id: \.self) { string in
-                self.contentItem(string)
+        ScrollView {
+            VStack(alignment: .center) {
+                Image(systemName: "qrcode")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150)
+                    .padding()
+                
+                ForEach(content, id: \.self) { string in
+                    self.contentItem(string)
+                }
+                .font(.body)
+                .multilineTextAlignment(.center)
             }
-            Spacer()
         }
-        .navigationBarTitle("QR Code Info", displayMode: .large)
+        .navigationBarTitle("QR Code Info", displayMode: .automatic)
     }
 }
 
