@@ -19,6 +19,8 @@ Character Tracker is an iOS app for keeping track of characters and other inform
   * Followers
   * and more
 * Track crafting ingredients for armors, weapons, etc.
+* Organize game mods and custom content
+* Scan QR codes to import data from a game mod
 
 [Changelog](Changelog.md)
 
@@ -26,17 +28,27 @@ Character Tracker is an iOS app for keeping track of characters and other inform
 
 <img src="Images/Screenshots/iPhone 11 Pro Max 1 - Characters.png" height=400 /> <img src="Images/Screenshots/iPhone 11 Pro Max 4 - Character Dark Collapsed.png" height=400 /> <img src="Images/Screenshots/iPhone 11 Pro Max 3 - Module.png" height=400 /> <img src="Images/Screenshots/iPhone 11 Pro Max 5 - Ingredients.png" height=400 />
 
+### QR Codes
+
+In Character Tracker you can scan QR codes to import new data, such as new equipment, followers, etc.
+
+Below is an example QR code for the Skyrim mod [Nordic Wanderer Equipment](https://www.nexusmods.com/skyrim/mods/69103/) ([Skyrim Special Edition](https://www.nexusmods.com/skyrimspecialedition/mods/7943)).
+
+These QR codes are very dense and may be difficult to scan. **Click the QR code for a full-size image**. Open on a large display for easier scanning.
+
+[<img src="Images/Nordic Wanderer.png" height=400 />](https://raw.githubusercontent.com/Isvvc/Character-Tracker/master/Images/Nordic%20Wanderer.png)
+
+This will add the Nordic Wanderer Equipment to your mods list, including images and the crafting recipe, which can be added to any character.
+
 ### Planned features
 
 * Custom games
 * Custom attribute and module types
-* Link images to characters and modules
-* Mod tracking support. Allow mods to add:
+* Link images to characters
+* Allow mods to add:
   * Attributes
-  * Modules
-  * Crafting ingredients
   * Races
-* Import and export modules and configurations
+* Import and export characters
 
 ## Build
 
