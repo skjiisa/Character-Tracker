@@ -87,6 +87,19 @@ struct ModsView: View {
                 let mod = self.mods[indexSet.first!]
                 self.deleteMod = mod
             }
+            .actionSheet(item: $deleteMod) { mod in
+                ActionSheet(title: Text("Delete" + (mod.name ?? "mod")), message: Text("Keep \(mod.name ?? "mod") contents (modules, ingredients)?"), buttons: [
+                    .cancel(),
+                    .default(Text("Keep contents"), action: {
+                        self.modController.delete(mod: mod, context: self.moc)
+                    }),
+                    .destructive(Text("Delete all"), action: {
+                        self.moduleController.deleteAllModules(from: mod, context: self.moc)
+                        self.ingredientController.removeOrDeleteAllIngredients(from: mod, context: self.moc)
+                        self.modController.delete(mod: mod, context: self.moc)
+                    })
+                ])
+            }
         }
         .navigationBarTitle("Mods")
         .navigationBarItems(trailing: buttonsView)
@@ -97,19 +110,6 @@ struct ModsView: View {
                     .environmentObject(self.modController)
                     .environmentObject(gameReference)
             }
-        }
-        .actionSheet(item: $deleteMod) { mod in
-            ActionSheet(title: Text("Delete" + (mod.name ?? "mod")), message: Text("Keep \(mod.name ?? "mod") contents (modules, ingredients)?"), buttons: [
-                .cancel(),
-                .default(Text("Keep contents"), action: {
-                    self.modController.delete(mod: mod, context: self.moc)
-                }),
-                .destructive(Text("Delete all"), action: {
-                    self.moduleController.deleteAllModules(from: mod, context: self.moc)
-                    self.ingredientController.removeOrDeleteAllIngredients(from: mod, context: self.moc)
-                    self.modController.delete(mod: mod, context: self.moc)
-                })
-            ])
         }
     }
 }
