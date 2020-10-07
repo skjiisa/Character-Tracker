@@ -207,6 +207,7 @@ struct ModDetailView: View {
             NavigationView {
                 QRCodeView(name: self.mod.name, qrCode: qrCode)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

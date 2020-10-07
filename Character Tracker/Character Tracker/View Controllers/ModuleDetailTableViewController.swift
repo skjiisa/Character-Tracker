@@ -683,7 +683,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         let qrCodeView = UIHostingController(rootView:
             NavigationView {
                 QRCodeView(name: self.module?.name, qrCode: qrCode, delegate: self)
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         )
         
         present(qrCodeView, animated: true)

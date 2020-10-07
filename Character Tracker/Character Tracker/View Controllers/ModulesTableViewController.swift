@@ -115,7 +115,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
                                   checkedAttributes: filteredAttributes,
                                   delegate: self)
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         )
         present(modulesFilterForm, animated: true)
     }
