@@ -27,6 +27,7 @@
 		5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073324DCA7FC00BE372F /* QRCodeView.swift */; };
 		5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073524DCB14F00BE372F /* ShareSheet.swift */; };
 		5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073724DCBC8E00BE372F /* PreferencesForm.swift */; };
+		595A065C2528F4B700BE6258 /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A065B2528F4B700BE6258 /* AcknowledgementsView.swift */; };
 		595F771B236A55EF00151209 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771A236A55EF00151209 /* AppDelegate.swift */; };
 		595F771D236A55EF00151209 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F771C236A55EF00151209 /* SceneDelegate.swift */; };
 		595F7722236A55EF00151209 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595F7720236A55EF00151209 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		5988DC8025146DD1001D5505 /* ImageLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988DC7F25146DD1001D5505 /* ImageLinkView.swift */; };
 		5988DC8225147150001D5505 /* ImageLinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988DC8125147150001D5505 /* ImageLinkController.swift */; };
 		5997667F24204A3700953FC9 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5997667E24204A3700953FC9 /* LinkTableViewCell.swift */; };
+		59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */; };
 		59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ADFD59240B228F00B5E828 /* EntityController.swift */; };
 		59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */; };
 		59B3A78B236CF29900B3D33B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B3A78A236CF29900B3D33B /* TabBarController.swift */; };
@@ -102,6 +104,7 @@
 		5959073324DCA7FC00BE372F /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		5959073524DCB14F00BE372F /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		5959073724DCBC8E00BE372F /* PreferencesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesForm.swift; sourceTree = "<group>"; };
+		595A065B2528F4B700BE6258 /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
 		595F7717236A55EF00151209 /* Character Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Character Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		595F771A236A55EF00151209 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		595F771C236A55EF00151209 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +128,7 @@
 		5988DC7F25146DD1001D5505 /* ImageLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLinkView.swift; sourceTree = "<group>"; };
 		5988DC8125147150001D5505 /* ImageLinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLinkController.swift; sourceTree = "<group>"; };
 		5997667E24204A3700953FC9 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+OrderedImages.swift"; sourceTree = "<group>"; };
 		59ADFD59240B228F00B5E828 /* EntityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityController.swift; sourceTree = "<group>"; };
 		59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSManagedObject+Delete.swift"; path = "Character Tracker/Model/NSManagedObject+Delete.swift"; sourceTree = SOURCE_ROOT; };
 		59B3A78A236CF29900B3D33B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -190,11 +194,11 @@
 			children = (
 				597545F124CB8EA900471664 /* TypeFilterSection.swift */,
 				597545F324CB92DF00471664 /* AttributesFilterForm.swift */,
-				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
 				591040E924F874DE00FDA521 /* IngredientsView.swift */,
 				5978EE892511657000AA9FB1 /* GamesView.swift */,
 				59749CE22512DAFF009F46A8 /* ImagesView.swift */,
 				5988DC7F25146DD1001D5505 /* ImageLinkView.swift */,
+				595A065A2528F49800BE6258 /* Settings */,
 				59B6B1CF24FDC674003D168A /* Porting */,
 				59B6B1CB24FDC5E7003D168A /* Modules */,
 				59B6B1CE24FDC62C003D168A /* Mods */,
@@ -214,6 +218,15 @@
 				5972482E24AD3E0B0005E711 /* UITableViewController+FRCDelegate.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		595A065A2528F49800BE6258 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
+				595A065B2528F4B700BE6258 /* AcknowledgementsView.swift */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		595F770E236A55EF00151209 = {
@@ -270,6 +283,7 @@
 				59BCF97A237A59B0000E90B7 /* Character_Tracker+TypeSection.swift */,
 				59AE903523DA8AEA00CD1D6F /* NSManagedObject+Delete.swift */,
 				59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */,
+				59ACCD38252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -446,6 +460,7 @@
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
 				59083982250990B3007A86D5 /* ScannerNavigationView.swift in Sources */,
 				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
+				59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */,
 				59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */,
 				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
@@ -502,6 +517,7 @@
 				591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */,
 				59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */,
 				59BB3D23236AA8FD00A4A14E /* RaceController.swift in Sources */,
+				595A065C2528F4B700BE6258 /* AcknowledgementsView.swift in Sources */,
 				5997667F24204A3700953FC9 /* LinkTableViewCell.swift in Sources */,
 				59BCF975237A4488000E90B7 /* ModulesTableViewController.swift in Sources */,
 				59B3A793236D01B300B3D33B /* CharactersTableViewController.swift in Sources */,

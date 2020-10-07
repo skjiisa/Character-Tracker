@@ -12,10 +12,11 @@ class ModController: ObservableObject {
     
     //MARK: CRUD
     
-    @discardableResult func create(mod name: String? = nil, context: NSManagedObjectContext) -> Mod {
+    @discardableResult func create(mod name: String? = nil, game: Game, context: NSManagedObjectContext) -> Mod {
         let mod = Mod(context: context)
         mod.id = UUID()
         mod.name = name
+        mod.games = [game]
         CoreDataStack.shared.save(context: context)
         return mod
     }

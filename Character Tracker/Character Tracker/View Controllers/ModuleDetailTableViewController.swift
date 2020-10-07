@@ -373,7 +373,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 1 {
             let images = module?.images?.array as? [ImageLink]
-            let imagesView = UIHostingController(rootView: ImagesView(images: images ?? [], imageRemoved: { _ in
+            let imagesView = UIHostingController(rootView: ImagesView(images: images ?? [], parent: module, imageRemoved: { _ in
                 self.tableView.reloadSections(IndexSet(integer: section), with: .none)
             }) { imageLink in
                 self.module?.mutableOrderedSetValue(forKey: "images").add(imageLink)

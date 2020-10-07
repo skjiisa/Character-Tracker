@@ -77,7 +77,7 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
         case 4:
             return moduleTypeController?.types.count ?? 0
         default:
-            return links.count
+            return links.count + 1
         }
     }
 
@@ -108,12 +108,18 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             cell.textLabel?.text = "User Preferences"
             cell.accessoryType = .disclosureIndicator
         default:
-            guard let linkCell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath) as? LinkTableViewCell else { return UITableViewCell() }
-            let link = links[indexPath.row]
-            
-            linkCell.button.setTitle(link.title, for: .normal)
-            linkCell.url = URL(string: link.urlString)
-            cell = linkCell
+            if indexPath.row < links.count,
+               let linkCell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath) as? LinkTableViewCell {
+                let link = links[indexPath.row]
+                
+                linkCell.button.setTitle(link.title, for: .normal)
+                linkCell.url = URL(string: link.urlString)
+                cell = linkCell
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
+                cell.textLabel?.text = "Acknowledgements"
+                cell.accessoryType = .disclosureIndicator
+            }
         }
 
         return cell
@@ -128,9 +134,15 @@ class SettingsTableViewController: UITableViewController, CharacterTrackerViewCo
             preferencesForm.title = "Preferences"
             navigationController?.pushViewController(preferencesForm, animated: true)
         case 6:
-            guard let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell else { break }
-            cell.openLink(self)
-            tableView.deselectRow(at: indexPath, animated: true)
+            if indexPath.row < links.count,
+               let cell = tableView.cellForRow(at: indexPath) as? LinkTableViewCell {
+                cell.openLink(self)
+                tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                let preferencesForm = UIHostingController(rootView: AcknowledgementsView())
+                preferencesForm.title = "Acknowledgements"
+                navigationController?.pushViewController(preferencesForm, animated: true)
+            }
         default:
             break
         }

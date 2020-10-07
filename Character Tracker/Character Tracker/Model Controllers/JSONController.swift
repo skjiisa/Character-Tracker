@@ -78,7 +78,18 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
             }
         }
         
-        if let relationshipObjects = relationship as? Set<NSManagedObject> {
+        let relationshipObjects: [NSManagedObject]?
+        
+        if let set = relationship as? Set<NSManagedObject> {
+            relationshipObjects = Array(set)
+        } else if let orderedSet = relationship as? NSOrderedSet,
+                  let array = orderedSet.array as? [NSManagedObject] {
+            relationshipObjects = array
+        } else {
+            relationshipObjects = nil
+        }
+        
+        if let relationshipObjects = relationshipObjects {
             var ids: [String] = []
             for object in relationshipObjects {
                 guard let id = object.idString else { continue }
@@ -86,7 +97,7 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
             }
             
             relationshipJSON = JSON([key:ids])
-            if let objects = relationshipObjects as? Set<ObjectType> {
+            if let objects = relationshipObjects as? [ObjectType] {
                 objectJSON = jsonRepresentation.json(Array(objects))
             }
         }

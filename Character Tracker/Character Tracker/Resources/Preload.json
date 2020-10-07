@@ -1289,6 +1289,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/d7/SR-item-Leather_Armor_Female.jpg",
+        "https://images.uesp.net/f/f4/SR-item-Leather_Armor_Male.jpg"
       ]
     },
     {
@@ -1328,6 +1332,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/e6/SR-item-Elven_Armor_Female.jpg",
+        "https://images.uesp.net/b/ba/SR-item-Elven_Armor_Male.jpg"
       ]
     },
     {
@@ -1366,6 +1374,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/7/73/SR-item-Scaled_Armor_Female.jpg",
+        "https://images.uesp.net/c/c2/SR-item-Scaled_Armor_Male.jpg"
       ]
     },
     {
@@ -1449,6 +1461,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/ef/SR-item-Glass_Armor_Female.jpg",
+        "https://images.uesp.net/f/fe/SR-item-Glass_Armor_Male.jpg"
       ]
     },
     {
@@ -1488,6 +1504,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/1/1e/SR-item-Dragonscale_Armor_Female.jpg",
+        "https://images.uesp.net/3/3e/SR-item-Dragonscale_Armor_Male.jpg"
       ]
     },
     {
@@ -1523,6 +1543,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/9/96/SR-item-Dragonplate_Armor_Female.jpg",
+        "https://images.uesp.net/2/23/SR-item-Dragonplate_Armor_Male.jpg"
       ]
     },
     {
@@ -1558,6 +1582,12 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/2/24/SR-item-Steel_Armor_Female.jpg",
+        "https://images.uesp.net/9/90/SR-item-Steel_Armor_Male.jpg",
+        "https://images.uesp.net/7/7d/SR-item-Steel_Armor_Female_02.jpg",
+        "https://images.uesp.net/9/9e/SR-item-Steel_Armor_Male_02.jpg"
       ]
     },
     {
@@ -1597,6 +1627,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/5/5b/SR-item-Dwarven_Armor_Female.jpg",
+        "https://images.uesp.net/4/45/SR-item-Dwarven_Armor_Male.jpg"
       ]
     },
     {
@@ -1635,6 +1669,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/0/0e/SR-item-Steel_Plate_Armor_Female.jpg",
+        "https://images.uesp.net/e/e4/SR-item-Steel_Plate_Armor_Male.jpg"
       ]
     },
     {
@@ -1670,6 +1708,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/63/SR-item-Orcish_Armor_Female.jpg",
+        "https://images.uesp.net/e/e4/SR-item-Orcish_Armor_Male.jpg"
       ]
     },
     {
@@ -1701,6 +1743,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/3/3e/SR-item-Ebony_Armor_Female.jpg",
+        "https://images.uesp.net/f/f8/SR-item-Ebony_Armor_Male.jpg"
       ]
     },
     {
@@ -1736,6 +1782,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/db/SR-item-Daedric_Armor_Female.jpg",
+        "https://images.uesp.net/e/ef/SR-item-Daedric_Armor_Male.jpg"
       ]
     },
     {
@@ -1747,7 +1797,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/d/d6/SR-quest-Before_the_Storm_02.jpg"
+      ]
     },
     {
       "name": "College of Winterhold",
@@ -1758,7 +1811,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/e/e4/SR-place-College_of_Winterhold.jpg"
+      ]
     },
     {
       "name": "Companions",
@@ -1769,7 +1825,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/f/f5/SR-place-Jorrvaskr.jpg"
+      ]
     },
     {
       "name": "Dark Brotherhood",
@@ -1780,7 +1839,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/f/f0/SR-place-Dark_Brotherhood_Sanctuary.jpg"
+      ]
     },
     {
       "name": "Imperial Legion",
@@ -1791,7 +1853,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/2/2e/SR-quest-Reunification_of_Skyrim.jpg"
+      ]
     },
     {
       "name": "Stormcloaks",
@@ -1802,7 +1867,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/6/6e/SR-npc-Ulfric_Stormcloak.jpg"
+      ]
     },
     {
       "name": "Thieves Guild",
@@ -1813,7 +1881,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E"
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/4/42/SR-interior-The_Ragged_Flagon.jpg"
+      ]
     },
     {
       "id": "CECF69BA-ED02-43FF-BEB8-B4251067C187",
@@ -1830,6 +1901,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 5000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/d/d0/SR-place-Breezehome.jpg"
       ]
     },
     {
@@ -1847,6 +1921,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 5000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/3/31/SR-place-Honeyside.jpg"
       ]
     },
     {
@@ -1864,6 +1941,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 8000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/4/49/SR-place-Vlindrel_Hall.jpg"
       ]
     },
     {
@@ -1881,6 +1961,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 8000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/f/f5/SR-place-Hjerim.jpg"
       ]
     },
     {
@@ -1898,6 +1981,9 @@
           "ingredient": "Skyrim.esm 00000f",
           "quantity": 25000
         }
+      ],
+      "images": [
+        "https://images.uesp.net/1/19/SR-place-Proudspire_Manor.jpg"
       ]
     },
     {
@@ -1909,7 +1995,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/3/35/SR-place-Guardian_Stones.jpg"
+      ]
     },
     {
       "id": "CDC1D77C-721E-433D-BA1B-839EDD874535",
@@ -1953,7 +2042,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/9/9a/SR-quest-No_Stone_Unturned.jpg"
+      ]
     },
     {
       "id": "B57CDDBA-3243-4CDB-939D-76B4152DF70B",
@@ -1984,6 +2076,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/4/4a/SR-npc-Argis_the_Bulwark.jpg"
       ]
     },
     {
@@ -2015,6 +2110,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/2/26/SR-npc-Calder.jpg"
       ]
     },
     {
@@ -2046,6 +2144,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/0/03/SR-npc-Iona.jpg"
       ]
     },
     {
@@ -2077,6 +2178,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/e/e2/SR-npc-Jordis_the_Sword-Maiden.jpg"
       ]
     },
     {
@@ -2111,6 +2215,9 @@
         {
           "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/68/SR-npc-Lydia.jpg"
       ]
     },
     {
@@ -2157,6 +2264,9 @@
         {
           "attribute": "548EA51C-6A03-4C51-A1F4-8610B6E67E75"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/thumb/d/d9/SR-npc-Frea.jpg/900px-SR-npc-Frea.jpg"
       ]
     },
     {
@@ -2169,7 +2279,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "D453D642-DE13-41F2-B129-A89D447E2863"
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "images": [
+        "https://images.uesp.net/0/01/SR-place-Severin_Manor.jpg"
+      ]
     },
     {
       "name": "Stalhrim Light Armor",
@@ -2204,6 +2317,10 @@
         {
           "attribute": "97113C70-BCF3-490D-9810-761A783B45D3"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/f/fd/SR-item-Stalhrim_Light_Armor_Female.jpg",
+        "https://images.uesp.net/f/ff/SR-item-Stalhrim_Light_Armor_Male.jpg"
       ]
     },
     {
@@ -2239,6 +2356,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/b/b8/SR-item-Stalhrim_Heavy_Armor_Female.jpg",
+        "https://images.uesp.net/9/90/SR-item-Stalhrim_Heavy_Armor_Male.jpg"
       ]
     },
     {
@@ -2274,6 +2395,10 @@
         {
           "attribute": "3BB5036C-FDCC-4197-9559-B42212B1FAF7"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/5/53/SR-item-Chitin_Armor_Female.jpg",
+        "https://images.uesp.net/5/57/SR-item-Chitin_Armor_Male.jpg"
       ]
     },
     {
@@ -2309,6 +2434,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/9/94/SR-item-Chitin_Heavy_Armor_Female.jpg",
+        "https://images.uesp.net/8/82/SR-item-Chitin_Heavy_Armor_Male.jpg"
       ]
     },
     {
@@ -2344,6 +2473,10 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/6/65/SR-item-Bonemold_Armor_Female.jpg",
+        "https://images.uesp.net/c/cb/SR-item-Bonemold_Armor_Male.jpg"
       ]
     },
     {
@@ -2395,6 +2528,275 @@
         {
           "attribute": "5BE4471A-F7CA-4F1C-B81C-E4A20C4C7525"
         }
+      ],
+      "images": [
+        "https://images.uesp.net/c/cc/SR-item-Bonemold_Pauldron_Armor_Female.jpg",
+        "https://images.uesp.net/a/a8/SR-item-Bonemold_Pauldron_Armor_Male.jpg"
+      ]
+    },
+    {
+      "id": "26E4483F-9229-4D36-9822-2C62C9925CBF",
+      "level": 0,
+      "name": "Dawnguard",
+      "notes": "Official DLC",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
+      "images": [
+        "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
+      ]
+    },
+    {
+      "id": "80018D08-75EF-417E-8771-AE7A1A843D85",
+      "level": 0,
+      "name": "Acquire 11 werewolf perks",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/6/63/SR-perktree-Werewolf.jpg"
+      ]
+    },
+    {
+      "id": "3608D852-143D-4575-968F-D788852CD8A8",
+      "level": 0,
+      "name": "Acquire 11 vampire perks",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/f/f2/SR-perktree-Vampirism.jpg"
+      ]
+    },
+    {
+      "id": "BBDE99A5-3BAC-446C-BB9F-D03F11F64A8A",
+      "level": 0,
+      "name": "Serana",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "26E4483F-9229-4D36-9822-2C62C9925CBF"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "D4C82D7D-78A9-4DDF-B30C-80FA5A9F21B1"
+        },
+        {
+          "attribute": "14413FB8-EC18-48DA-BAA1-5EFE3574D8E8"
+        },
+        {
+          "attribute": "3BB5036C-FDCC-4197-9559-B42212B1FAF7"
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/a/a1/SR-npc-Serana.jpg"
+      ]
+    },
+    {
+      "id": "FEE0B785-DDD8-4066-9971-611E29B7A276",
+      "level": 0,
+      "name": "Adopt a child",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+    },
+    {
+      "id": "72D58669-91D5-4CB4-B544-A20120C57DC6",
+      "level": 0,
+      "name": "Build three houses",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "images": [
+        "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg",
+        "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg",
+        "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ]
+    },
+    {
+      "id": "A6AC89F1-B214-4156-9A39-237A121E5027",
+      "level": 0,
+      "name": "Heljarchen Hall",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg"
+      ]
+    },
+    {
+      "id": "DD6D87C6-892E-49EB-A642-46BCE5810E06",
+      "level": 0,
+      "name": "Gregor",
+      "notes": "Available after you become thane of the Pale.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "A6AC89F1-B214-4156-9A39-237A121E5027"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/4/4a/SR-npc-Gregor.jpg"
+      ]
+    },
+    {
+      "id": "519616D8-5F03-41C7-A998-213DB8A8B253",
+      "level": 0,
+      "name": "Lakeview Manor",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg"
+      ]
+    },
+    {
+      "id": "F5FBB54D-50CE-408E-AA02-A282BCCFC6CF",
+      "level": 0,
+      "name": "Rayya",
+      "notes": "Available after you become thane of Falkreath.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "519616D8-5F03-41C7-A998-213DB8A8B253"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/b/be/SR-npc-Rayya.jpg"
+      ]
+    },
+    {
+      "id": "71F3F060-C22F-4881-B999-3377999A584B",
+      "level": 0,
+      "name": "Windstad Manor",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "D453D642-DE13-41F2-B129-A89D447E2863",
+      "ingredients": [
+        {
+          "ingredient": "Skyrim.esm 00000f",
+          "quantity": 5000
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ]
+    },
+    {
+      "id": "49611A8E-DD43-4CDC-AF0A-E5FDAD4ED91C",
+      "level": 0,
+      "name": "Valdimar",
+      "notes": "Available after you become thane of Hjaalmarch.",
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "type": "5DC0190E-4F18-4B72-8E24-B1DE80569BE4",
+      "children": [
+        {
+          "child": "71F3F060-C22F-4881-B999-3377999A584B"
+        }
+      ],
+      "attributes": [
+        {
+          "attribute": "DEBFA1F6-8DEC-45E3-9024-6134C87C1F73",
+        },
+        {
+          "attribute": "A8FCEFAA-A7F9-4069-8DD8-D9DECE3F6A55"
+        },
+        {
+          "attribute": "1C0DABAD-4BEB-4404-A69E-9F3DEFF2FBF3"
+        },
+        {
+          "attribute": "8244F7F5-139C-4D20-A19B-A777F7E246D4"
+        }
+      ],
+      "images": [
+        "https://images.uesp.net/d/de/SR-npc-Valdimar.jpg"
       ]
     }
   ],
@@ -2434,6 +2836,47 @@
       "images": [
         "https://images.uesp.net/2/2e/SR-cover-Dragonborn_Box_Art.jpg",
         "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ],
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Dawnguard",
+      "id": "B81FCF84-D3B2-46C7-B956-6FCE06F1DE4A",
+      "modules": [
+        "26E4483F-9229-4D36-9822-2C62C9925CBF",
+        "80018D08-75EF-417E-8771-AE7A1A843D85",
+        "3608D852-143D-4575-968F-D788852CD8A8",
+        "BBDE99A5-3BAC-446C-BB9F-D03F11F64A8A"
+      ],
+      "images": [
+        "https://images.uesp.net/0/00/SR-cover-Dawnguard_Box_Art.jpg",
+        "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
+      ],
+      "games": [
+        "33839302-E5B9-4299-AA81-444BED243F20",
+        "75CFE734-1107-4B03-8269-AC130D88A8B7",
+        "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ]
+    },
+    {
+      "name": "Hearthfire",
+      "id": "3CDE88E6-0930-4A3C-9B45-15A96DBDAB32",
+      "modules": [
+        "FEE0B785-DDD8-4066-9971-611E29B7A276",
+        "72D58669-91D5-4CB4-B544-A20120C57DC6",
+        "A6AC89F1-B214-4156-9A39-237A121E5027",
+        "DD6D87C6-892E-49EB-A642-46BCE5810E06",
+        "519616D8-5F03-41C7-A998-213DB8A8B253",
+        "F5FBB54D-50CE-408E-AA02-A282BCCFC6CF",
+        "71F3F060-C22F-4881-B999-3377999A584B",
+        "49611A8E-DD43-4CDC-AF0A-E5FDAD4ED91C"
+      ],
+      "images": [
+        
       ],
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",
