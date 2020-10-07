@@ -636,11 +636,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     @IBAction func export(_ sender: Any) {
-        let actionSheet = UIAlertController(title: "Export \(module?.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
+        guard let module = module,
+              let type = module.type else { return }
+        let qrCode = PortController.shared.exportToQRCode(for: module)
         
-        let qrCode = UIAlertAction(title: "QR Code", style: .default) { _ in
-            self.qrCode()
-        }
+        let actionSheet = UIAlertController(title: "Export \(module.name ?? "Module")", message: qrCode == nil ? "\(type.typeName) too large to generate QR code." : nil, preferredStyle: .actionSheet)
         
         let json = UIAlertAction(title: "JSON Text", style: .default) { _ in
             guard let module = self.module,
@@ -661,7 +661,13 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
-        actionSheet.addAction(qrCode)
+        if let qrCode = qrCode {
+            let qrCodeAction = UIAlertAction(title: "QR Code", style: .default) { _ in
+                self.qrCode(qrCode)
+            }
+            
+            actionSheet.addAction(qrCodeAction)
+        }
         actionSheet.addAction(json)
         actionSheet.addAction(jsonFile)
         actionSheet.addAction(cancel)
@@ -676,13 +682,10 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         present(actionSheet, animated: true)
     }
     
-    private func qrCode() {
-        guard let module = module,
-            let qrCode = PortController.shared.exportToQRCode(for: module) else { return }
-        
+    private func qrCode(_ code: CGImage) {
         let qrCodeView = UIHostingController(rootView:
             NavigationView {
-                QRCodeView(name: self.module?.name, qrCode: qrCode, delegate: self)
+                QRCodeView(name: self.module?.name, qrCode: code, delegate: self)
             }.navigationViewStyle(StackNavigationViewStyle())
         )
         
