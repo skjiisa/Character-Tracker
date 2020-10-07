@@ -1,8 +1,22 @@
 # Character Tracker Changelog
 
+## v1.2
+
+### Major Features
+
+You can now track game mods!
+These are a way of better organizing new modules and ingredients.
+
+Along with Mods comes QR code scanning.
+From a module or mod in the app, you can now generate a QR code
+which can be scanned by other users to load that data into their app.
+
+You can also use [xEdit Armor Export](https://github.com/Isvvc/xEdit-Armor-Export)
+on PC to automatically generate QR codes for armor mods.
+
 ## v1.1
 
-Not yet released.
+Rejected from App Store.
 
 ### Major Features
 
