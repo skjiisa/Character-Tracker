@@ -61,6 +61,7 @@ Dependencies:
 * [Pluralize.swift](https://github.com/joshualat/Pluralize.swift) (included)
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) (SPM)
 * [EFQRCode](https://github.com/EFPrefix/EFQRCode) (SPM)
+* [ActionOver](https://github.com/AndreaMiotto/ActionOver) (SPM)
 
 There may be build warnings for SPM packages about an iOS 8 deployment target.
 These are issues with the packages themselves and can safely be ignored.
