@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import ActionOver
 
 struct ModDetailView: View {
     @Environment(\.managedObjectContext) var moc
@@ -172,6 +173,25 @@ struct ModDetailView: View {
                             ShareSheet(activityItems: [self.exportFile!])
                         }
                     }
+                    // I wish I could just use the ActionSheet here that was in
+                    // earlier builds, but the popover location is busted on iPad.
+                    // I'm pretty sure it's just a SwiftUI bug.
+                    .actionOver(presented: $showingExport, title: "Export \(self.mod.name ?? "mod")", message: nil, buttons: [
+                        ActionOverButton(title: "QR Code", type: .normal) {
+                            self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
+                        },
+                        ActionOverButton(title: "JSON Text", type: .normal) {
+                            guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
+                            self.exportJSON = json
+                            self.showingShareSheet = true
+                        },
+                        ActionOverButton(title: "JSON File", type: .normal) {
+                            guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
+                            self.exportFile = file
+                            self.showingShareSheet = true
+                        },
+                        ActionOverButton(title: nil, type: .cancel, action: nil)
+                    ], ipadAndMacConfiguration: IpadAndMacConfiguration(anchor: nil, arrowEdge: nil), normalButtonColor: UIColor.systemBlue)
                 }
             }
         }
@@ -184,24 +204,6 @@ struct ModDetailView: View {
         }
         .alert(item: $selectedIngredient) { ingredient in
             Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
-        }
-        .actionSheet(isPresented: $showingExport) {
-            ActionSheet(title: Text("Export \(self.mod.name ?? "mod")"), message: nil, buttons: [
-                .default(Text("QR Code")) {
-                    self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
-                },
-                .default(Text("JSON Text")) {
-                    guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
-                    self.exportJSON = json
-                    self.showingShareSheet = true
-                },
-                .default(Text("JSON File")) {
-                    guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
-                    self.exportFile = file
-                    self.showingShareSheet = true
-                },
-                .cancel()
-            ])
         }
         .sheet(item: self.$qrCode) { qrCode in
             NavigationView {
