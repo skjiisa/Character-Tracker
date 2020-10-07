@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		59019C4C245F2FEE0072E8EA /* ModsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4B245F2FEE0072E8EA /* ModsView.swift */; };
 		59019C4E245F35760072E8EA /* ModDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59019C4D245F35760072E8EA /* ModDetailView.swift */; };
+		5901BC01252E70160056886F /* ActionOver in Frameworks */ = {isa = PBXBuildFile; productRef = 5901BC00252E70160056886F /* ActionOver */; };
 		59062C24238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59062C23238DE9340082F4E1 /* CharacterIngredientsTableViewController.swift */; };
 		59083982250990B3007A86D5 /* ScannerNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59083981250990B3007A86D5 /* ScannerNavigationView.swift */; };
 		59083984250992E9007A86D5 /* ScannerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59083983250992E9007A86D5 /* ScannerInfoView.swift */; };
@@ -169,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5901BC01252E70160056886F /* ActionOver in Frameworks */,
 				591040F024F896FF00FDA521 /* SDWebImageSwiftUI in Frameworks */,
 				5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */,
 				596C947424CFC23400EAA609 /* EFQRCode in Frameworks */,
@@ -391,6 +393,7 @@
 				5946EF9323BD660A0077770D /* SwiftyJSON */,
 				596C947324CFC23400EAA609 /* EFQRCode */,
 				591040EF24F896FF00FDA521 /* SDWebImageSwiftUI */,
+				5901BC00252E70160056886F /* ActionOver */,
 			);
 			productName = "Character Tracker";
 			productReference = 595F7717236A55EF00151209 /* Character Tracker.app */;
@@ -424,6 +427,7 @@
 				5946EF9223BD66090077770D /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 				591040EE24F896FF00FDA521 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				5901BBFF252E70160056886F /* XCRemoteSwiftPackageReference "ActionOver" */,
 			);
 			productRefGroup = 595F7718236A55EF00151209 /* Products */;
 			projectDirPath = "";
@@ -727,6 +731,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5901BBFF252E70160056886F /* XCRemoteSwiftPackageReference "ActionOver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AndreaMiotto/ActionOver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		591040EE24F896FF00FDA521 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -754,6 +766,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5901BC00252E70160056886F /* ActionOver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5901BBFF252E70160056886F /* XCRemoteSwiftPackageReference "ActionOver" */;
+			productName = ActionOver;
+		};
 		591040EF24F896FF00FDA521 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 591040EE24F896FF00FDA521 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
