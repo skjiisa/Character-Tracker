@@ -331,6 +331,12 @@ class PortController {
             toOneRelationships: [raceRelationship, gameRelationship])
         setRep(characters)
         
+        // Character Modules
+        
+        let characterRelationship = Relationship(key: "character", jsonRepresentation: characters)
+        let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: [], parent: characterRelationship, child: moduleRelationship)
+        characters.relationshipObjects.append(characterModules)
+        
         // Mods
         let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
         let ingredientsRelationship = Relationship(key: "ingredients", jsonRepresentation: ingredients)

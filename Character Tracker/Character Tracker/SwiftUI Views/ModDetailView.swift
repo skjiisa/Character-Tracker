@@ -8,8 +8,12 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import ActionOver
 
 struct ModDetailView: View {
+    
+    //MARK: Properties
+    
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -34,6 +38,7 @@ struct ModDetailView: View {
     @State private var editMode: Bool
     @State private var selectedIngredient: Ingredient?
     @State private var showingExport = false
+    @State private var qrCodeBuffer: CGImage? = nil
     @State private var qrCode: CGImage? = nil
     @State private var exportJSON: String? = nil
     @State private var exportFile: URL? = nil
@@ -52,6 +57,33 @@ struct ModDetailView: View {
         _editMode = .init(initialValue: editMode)
     }
     
+    var exportButtons: [ActionOverButton] {
+        var actions: [ActionOverButton] = [
+            ActionOverButton(title: "JSON Text", type: .normal) {
+                guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
+                self.exportJSON = json
+                self.showingShareSheet = true
+            },
+            ActionOverButton(title: "JSON File", type: .normal) {
+                guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
+                self.exportFile = file
+                self.showingShareSheet = true
+            },
+            ActionOverButton(title: nil, type: .cancel, action: nil)
+        ]
+        
+        if qrCodeBuffer != nil {
+            actions.insert(
+                ActionOverButton(title: "QR Code", type: .normal) {
+                    qrCode = qrCodeBuffer
+                }, at: 0)
+        }
+        
+        return actions
+    }
+    
+    //MARK: Views
+    
     var editButton: some View {
         Button(action: {
             self.editMode.toggle()
@@ -63,6 +95,8 @@ struct ModDetailView: View {
             }
         }
     }
+    
+    //MARK: Body
     
     var body: some View {
         Form {
@@ -151,6 +185,7 @@ struct ModDetailView: View {
             if !editMode {
                 Section {
                     Button(action: {
+                        self.qrCodeBuffer = PortController.shared.exportToQRCode(for: self.mod)
                         self.showingExport = true
                     }) {
                         HStack {
@@ -172,6 +207,15 @@ struct ModDetailView: View {
                             ShareSheet(activityItems: [self.exportFile!])
                         }
                     }
+                    // I wish I could just use the ActionSheet here that was in
+                    // earlier builds, but the popover location is busted on iPad.
+                    // I'm pretty sure it's just a SwiftUI bug.
+                    .actionOver(presented: $showingExport,
+                                title: "Export \(self.mod.name ?? "mod")",
+                                message: qrCodeBuffer == nil ? "Mod too large to generate QR code." : nil,
+                                buttons: exportButtons,
+                                ipadAndMacConfiguration: IpadAndMacConfiguration(anchor: nil, arrowEdge: nil),
+                                normalButtonColor: UIColor.systemBlue)
                 }
             }
         }
@@ -185,28 +229,11 @@ struct ModDetailView: View {
         .alert(item: $selectedIngredient) { ingredient in
             Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
         }
-        .actionSheet(isPresented: $showingExport) {
-            ActionSheet(title: Text("Export \(self.mod.name ?? "mod")"), message: nil, buttons: [
-                .default(Text("QR Code")) {
-                    self.qrCode = PortController.shared.exportToQRCode(for: self.mod)
-                },
-                .default(Text("JSON Text")) {
-                    guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
-                    self.exportJSON = json
-                    self.showingShareSheet = true
-                },
-                .default(Text("JSON File")) {
-                    guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
-                    self.exportFile = file
-                    self.showingShareSheet = true
-                },
-                .cancel()
-            ])
-        }
         .sheet(item: self.$qrCode) { qrCode in
             NavigationView {
                 QRCodeView(name: self.mod.name, qrCode: qrCode)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

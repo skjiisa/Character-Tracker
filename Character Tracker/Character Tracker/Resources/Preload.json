@@ -2806,7 +2806,21 @@
       "female": false,
       "id": "8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E",
       "name": "Ja’Zakajirr",
-      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F"
+      "race": "8FCD6875-97BC-4207-BA41-0E1979B0187F",
+      "modules": [
+        {
+          "module": "2EC7D7AD-F2E9-4ADE-9535-44F2FB5F9B2A"
+        },
+        {
+          "module": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68"
+        },
+        {
+          "module": "3E9B9CE5-18B6-449C-89C4-D459A122E320"
+        },
+        {
+          "module": "F139D09C-AD44-402E-A1B4-1FF375D84485"
+        }
+      ]
     }
   ],
   "mods": [
@@ -2876,7 +2890,8 @@
         "49611A8E-DD43-4CDC-AF0A-E5FDAD4ED91C"
       ],
       "images": [
-        
+        "https://images.uesp.net/f/f3/SR-cover-Hearthfire.jpg",
+        "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg"
       ],
       "games": [
         "33839302-E5B9-4299-AA81-444BED243F20",

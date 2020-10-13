@@ -2,6 +2,8 @@
 
 ## v1.2
 
+Released 2020 October 12
+
 ### Major Features
 
 You can now track game mods!

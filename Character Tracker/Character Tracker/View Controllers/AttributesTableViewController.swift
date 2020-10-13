@@ -121,7 +121,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
                 AttributesFilterForm(checkedTypes: filteredTypes,
                                      delegate: self)
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         )
         present(attributesFilterForm, animated: true)
     }

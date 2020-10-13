@@ -440,6 +440,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         moduleController.removeMissingTempModules(from: savedCharacter, context: context)
         moduleController.saveTempModules(to: savedCharacter, context: context)
         
+        attributeTypeSectionController?.saveTempSections(to: savedCharacter)
+        
         gameReference?.isSafeToChangeGame = true
         
         if character == nil {

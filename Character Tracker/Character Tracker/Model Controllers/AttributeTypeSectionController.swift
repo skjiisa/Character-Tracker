@@ -184,9 +184,39 @@ class AttributeTypeSectionController {
     func loadFromPersistentStore() {
         let fileManager = FileManager.default
         guard let sectionsUrl = persistentFileURL(file: .sections),
-            let defaultsUrl = persistentFileURL(file: .defaults),
-            fileManager.fileExists(atPath: sectionsUrl.path),
-            fileManager.fileExists(atPath: defaultsUrl.path) else { return }
+              let defaultsUrl = persistentFileURL(file: .defaults),
+              fileManager.fileExists(atPath: sectionsUrl.path),
+              fileManager.fileExists(atPath: defaultsUrl.path) else {
+            // No persistent store found. Initial app launch.
+            // Set "Equipment" showing by default for the Skyrims
+            
+            do {
+                guard let equipment = sections.first(where: { $0.id == UUID(uuidString: "EA1A35DB-3165-45F0-A55D-A94D5B5DA6BE") }) else { return }
+                
+                tempSectionsToShow.append(TempSection(section: equipment))
+                
+                let gamesFetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+                gamesFetchRequest.predicate = NSPredicate(format: "name CONTAINS[c] 'skyrim'")
+                let games = try CoreDataStack.shared.mainContext.fetch(gamesFetchRequest)
+                
+                for game in games {
+                    defaultSectionsByGame[game] = tempSectionsToShow
+                }
+                
+                let charactersFetchRequest: NSFetchRequest<Character> = Character.fetchRequest()
+                charactersFetchRequest.predicate = NSPredicate(format: "id == '8A1CD69A-4D4F-417A-B3A0-6ABE8A6C8C0E'")
+                let characters = try CoreDataStack.shared.mainContext.fetch(charactersFetchRequest)
+                if let character = characters.first {
+                    sectionsByCharacter[character] = tempSectionsToShow
+                }
+                
+                saveToPersistentStore()
+            } catch {
+                NSLog("Error setting default shown sections: \(error)")
+            }
+            
+            return
+        }
         
         do {
             // Decode characters
