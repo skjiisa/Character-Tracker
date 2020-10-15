@@ -68,3 +68,8 @@ Dependencies:
 
 There may be build warnings for SPM packages about an iOS 8 deployment target.
 These are issues with the packages themselves and can safely be ignored.
+
+## License
+
+This project is open-source and licensed under the [The 2-Clause BSD License](LICENSE).
+
