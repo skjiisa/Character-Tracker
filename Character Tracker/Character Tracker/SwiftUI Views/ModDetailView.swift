@@ -131,7 +131,8 @@ struct ModDetailView: View {
                         // Popping it first by setting showingNewModule to false fixes that.
                         self.showingNewModule = false
                         self.modController.add(module, to: self.mod, context: self.moc)
-                    }, isActive: $showingNewModule)
+                    }.environment(\.managedObjectContext, moc),
+                    isActive: $showingNewModule)
                 }
             }
             
