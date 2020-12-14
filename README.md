@@ -59,12 +59,15 @@ Building Character Tracker requires Xcode 12+ on macOS 10.15 or later for
 + iOS Swift Package Manager support
 + SwiftUI 2
 
-Dependencies:
+### Dependencies
+
+Dependencies are either included in-code or obtained through Swift Package Manager.
 
 * [Pluralize.swift](https://github.com/joshualat/Pluralize.swift) (included)
-* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) (SPM)
-* [EFQRCode](https://github.com/EFPrefix/EFQRCode) (SPM)
-* [ActionOver](https://github.com/AndreaMiotto/ActionOver) (SPM)
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+* [EFQRCode](https://github.com/EFPrefix/EFQRCode)
+* [SDWebImage](https://github.com/SDWebImage/SDWebImage)
+* [ActionOver](https://github.com/AndreaMiotto/ActionOver)
 
 There may be build warnings for SPM packages about an iOS 8 deployment target.
 These are issues with the packages themselves and can safely be ignored.
@@ -72,4 +75,3 @@ These are issues with the packages themselves and can safely be ignored.
 ## License
 
 This project is open-source and licensed under the [The 2-Clause BSD License](LICENSE).
-
