@@ -147,9 +147,9 @@ struct ModDetailView: View {
                         .foregroundColor(.primary)
                     }
                     .onDelete { indexSet in
-                        let ingredientsToDelete = indexSet.map { ingredients[$0] }
+                        let ingredientsToRemove = indexSet.map { ingredients[$0] }
                         DispatchQueue.main.async {
-                            modController.remove(ingredientsToDelete, from: mod, context: moc)
+                            modController.remove(ingredientsToRemove, from: mod, context: moc)
                         }
                     }
                     .deleteDisabled(!editMode)
