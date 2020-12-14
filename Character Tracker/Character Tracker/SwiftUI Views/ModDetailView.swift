@@ -147,9 +147,10 @@ struct ModDetailView: View {
                         .foregroundColor(.primary)
                     }
                     .onDelete { indexSet in
-                        guard let index = indexSet.first else { return }
-                        let ingredient = self.ingredients[index]
-                        self.modController.remove(ingredient, from: self.mod, context: self.moc)
+                        let ingredientsToDelete = indexSet.map { ingredients[$0] }
+                        DispatchQueue.main.async {
+                            modController.remove(ingredientsToDelete, from: mod, context: moc)
+                        }
                     }
                     .deleteDisabled(!editMode)
                 }
@@ -298,13 +299,13 @@ struct ModuleTypeSection: View {
                         .sheet(item: $showingModule) { module in
                             ModuleDetailView(module: module)
                                 .environmentObject(gameReference)
+                                .environment(\.managedObjectContext, moc)
                         }
                     }
                     .onDelete { indexSet in
-                        guard let index = indexSet.first else { return }
-                        let module = self.modules[index]
+                        let modulesToRemove = indexSet.map { modules[$0] }
                         DispatchQueue.main.async {
-                            self.modController.remove(module, from: self.mod, context: self.moc)
+                            modController.remove(modulesToRemove, from: mod, context: moc)
                         }
                     }
                     .deleteDisabled(deleteDisabled)
