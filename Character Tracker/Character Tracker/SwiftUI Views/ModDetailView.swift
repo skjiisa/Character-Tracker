@@ -302,7 +302,9 @@ struct ModuleTypeSection: View {
                     .onDelete { indexSet in
                         guard let index = indexSet.first else { return }
                         let module = self.modules[index]
-                        self.modController.remove(module, from: self.mod, context: self.moc)
+                        DispatchQueue.main.async {
+                            self.modController.remove(module, from: self.mod, context: self.moc)
+                        }
                     }
                     .deleteDisabled(deleteDisabled)
                 }
