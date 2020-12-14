@@ -12,10 +12,11 @@ import SwiftyJSON
 protocol RelationshipProtocol {
     var key: String { get }
     
-    func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws
+    @discardableResult
+    func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws -> Bool
     func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, from string: String, context: NSManagedObjectContext) throws
     func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, relationshipObject: RelationshipType, context: NSManagedObjectContext)
-    func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws
+    func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws -> Bool
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches json: JSON) -> Bool
     func object<ObjectType: NSManagedObject>(_ object: ObjectType, matches string: String) -> Bool
     func object<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(_ object: ObjectType, isRelatedTo relative: RelationshipType) -> Bool
@@ -28,7 +29,7 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     var createIfNotFound: Bool = false
     let jsonRepresentation: JSONRepresentation<ObjectType>
     
-    func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws {
+    func addRelationship<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws -> Bool {
         try JSONController.addRelationship(to: object, json: json, with: self, context: context)
     }
     
@@ -42,7 +43,7 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
         object.setValue(relationshipObject, forKey: key)
     }
     
-    func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws {
+    func addRelationships<ObjectType: NSManagedObject>(to object: ObjectType, json: JSON, context: NSManagedObjectContext) throws -> Bool {
         try JSONController.addRelationships(to: object, json: json, with: self, context: context)
     }
     
@@ -106,6 +107,18 @@ struct Relationship<ObjectType: NSManagedObject>: RelationshipProtocol {
     }
 }
 
+struct RelationshipContainer {
+    var relationship: RelationshipProtocol
+    var exportObjects: Bool
+    var required: Bool
+    
+    init(_ relationship: RelationshipProtocol, exportObjects: Bool = false, required: Bool = false) {
+        self.relationship = relationship
+        self.exportObjects = exportObjects
+        self.required = required
+    }
+}
+
 class JSONController {
     private init() {}
     
@@ -129,7 +142,7 @@ class JSONController {
             objects.count > 0 {
             var allObjects = try self.allObjects(for: rep, context: context)
             
-            for objectJSON in objects {
+            objectsLoop: for objectJSON in objects {
                 guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: rep.idIsUUID, context: context) else { continue }
                 
                 importAttributes(with: rep.attributes, for: object, from: objectJSON)
@@ -138,12 +151,24 @@ class JSONController {
                     output.append(name)
                 }
                 
-                for relationship in rep.toOneRelationships {
-                    try relationship.relationship.addRelationship(to: object, json: objectJSON, context: context)
+                for container in rep.toOneRelationships {
+                    let objectFound = try container.relationship.addRelationship(to: object, json: objectJSON, context: context)
+                    // Delete if a required relationship is not present
+                    if container.required,
+                       !objectFound {
+                        context.delete(object)
+                        continue objectsLoop
+                    }
                 }
                 
-                for relationship in rep.toManyRelationships {
-                    try relationship.relationship.addRelationships(to: object, json: objectJSON, context: context)
+                for container in rep.toManyRelationships {
+                    let objectFound = try container.relationship.addRelationships(to: object, json: objectJSON, context: context)
+                    // Delete if a required relationship is not present
+                    if container.required,
+                       !objectFound {
+                        context.delete(object)
+                        continue objectsLoop
+                    }
                 }
                 
                 for relationship in rep.relationshipObjects {
@@ -198,7 +223,8 @@ class JSONController {
         }
     }
     
-    static func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws {
+    @discardableResult
+    static func addRelationship<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws -> Bool{
         
         let relationshipObjects = try allObjects(for: relationship.jsonRepresentation, context: context)
         
@@ -213,16 +239,19 @@ class JSONController {
                 }
                 
                 return false
-            }) else { return }
+            }) else { return false }
         
         object.setValue(relationshipObject, forKey: relationship.key)
+        return true
     }
     
-    static func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws {
+    static func addRelationships<ObjectType: NSManagedObject, RelationshipType: NSManagedObject>(to object: ObjectType, json: JSON, with relationship: Relationship<RelationshipType>, context: NSManagedObjectContext) throws -> Bool {
         guard let idArray = json[relationship.key].array,
-            idArray.count > 0 || relationship.createIfNotFound else { return }
+            idArray.count > 0 || relationship.createIfNotFound else { return false }
         
         let relationshipObjects = try allObjects(for: relationship.jsonRepresentation, context: context)
+        
+        var notEmpty = false
         
         for idJSON in idArray {
             guard let id = idJSON.string else { continue }
@@ -265,7 +294,10 @@ class JSONController {
             } else {
                 object.mutableSetValue(forKey: relationship.key).add(relationshipObject)
             }
+            notEmpty = true
         }
+        
+        return notEmpty
     }
     
     static func object<ObjectType: NSManagedObject>(_ object: ObjectType, hasID id: String) -> Bool {
