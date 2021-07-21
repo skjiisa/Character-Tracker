@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-protocol IngredientsTableDelegate: class {
+protocol IngredientsTableDelegate: AnyObject {
     func choose(ingredient: Ingredient, quantity: Int16)
 }
 

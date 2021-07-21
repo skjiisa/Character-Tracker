@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-protocol AttributesFilterFormDelegate: class {
+protocol AttributesFilterFormDelegate: AnyObject {
     func toggle(_: AttributeType)
     func clearFilter()
     func dismiss()

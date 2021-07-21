@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CharacterNameCellDelegate: class {
+protocol CharacterNameCellDelegate: AnyObject {
     func valueChanged(_ sender: UISegmentedControl)
 }
 
