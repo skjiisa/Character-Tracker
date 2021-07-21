@@ -53,9 +53,9 @@ class ModController: ObservableObject {
         CoreDataStack.shared.save(context: context)
     }
     
-    func remove(_ module: Module, from mod: Mod, context: NSManagedObjectContext) {
-        let modules = mod.mutableSetValue(forKey: "modules")
-        modules.remove(module)
+    func remove(_ modules: [Module], from mod: Mod, context: NSManagedObjectContext) {
+        let modModules = mod.mutableSetValue(forKey: "modules")
+        modules.forEach(modModules.remove)
         CoreDataStack.shared.save(context: context)
     }
     
@@ -67,9 +67,9 @@ class ModController: ObservableObject {
         CoreDataStack.shared.save(context: context)
     }
     
-    func remove(_ ingredient: Ingredient, from mod: Mod, context: NSManagedObjectContext) {
-        let ingredients = mod.mutableSetValue(forKey: "ingredients")
-        ingredients.remove(ingredient)
+    func remove(_ ingredients: [Ingredient], from mod: Mod, context: NSManagedObjectContext) {
+        let modIngredients = mod.mutableSetValue(forKey: "ingredients")
+        ingredients.forEach(modIngredients.remove)
         CoreDataStack.shared.save(context: context)
     }
     

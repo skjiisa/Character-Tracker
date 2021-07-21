@@ -1,5 +1,12 @@
 # Character Tracker Changelog
 
+## v1.2.1
+
+Bug fixes and minor improvements [#120](https://github.com/Isvvc/Character-Tracker/pull/120)
+
+* Prevent crash when removing ingredients and modules from a mod
+* Prevent loading invalid data from QR codes
+
 ## v1.2
 
 Released 2020 October 12

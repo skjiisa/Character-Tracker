@@ -41,27 +41,17 @@ protocol JSONRepresentationProtocol {
 class JSONRepresentation<ObjectType: NSManagedObject>: JSONEntity<ObjectType>, JSONRepresentationProtocol {
     var arrayKey: String
     var attributes: [String]
-    var toOneRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)]
-    var toManyRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)]
+    var toOneRelationships: [RelationshipContainer]
+    var toManyRelationships: [RelationshipContainer]
     var relationshipObjects: [JSONRelationshipProtocol] = []
     var idIsUUID: Bool = true
     
-    init(arrayKey: String, attributes: [String], toOneRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)], toManyRelationships: [(relationship: RelationshipProtocol, exportObjects: Bool)], idIsUUID: Bool = true) {
+    init(arrayKey: String, attributes: [String], toOneRelationships: [RelationshipContainer] = [], toManyRelationships: [RelationshipContainer] = [], idIsUUID: Bool = true) {
         self.arrayKey = arrayKey
         self.attributes = attributes
         self.toOneRelationships = toOneRelationships
         self.toManyRelationships = toManyRelationships
         self.idIsUUID = idIsUUID
-    }
-    
-    convenience init(arrayKey: String, attributes: [String], toOneRelationships: [RelationshipProtocol] = [], toManyRelationships: [RelationshipProtocol] = [], idIsUUID: Bool = true) {
-        self.init(
-            arrayKey: arrayKey,
-            attributes: attributes,
-            toOneRelationships: toOneRelationships.map { ($0, false) },
-            toManyRelationships: toManyRelationships.map { ($0, false) },
-            idIsUUID: idIsUUID
-        )
     }
     
     func json(_ object: ObjectType) -> (objectJSON: JSON, relationshipsJSON: JSON) {
@@ -263,7 +253,7 @@ class PortController {
         let attributeTypeSections = JSONRepresentation<AttributeTypeSection>(
             arrayKey: "attribute_type_sections",
             attributes: ["name", "maxPriority", "minPriority"],
-            toOneRelationships: [attributeTypesRelationship])
+            toOneRelationships: [.init(attributeTypesRelationship, required: true)])
         setRep(attributeTypeSections)
         
         // Attributes
@@ -271,8 +261,8 @@ class PortController {
         let attributes = JSONRepresentation<Attribute>(
             arrayKey: "attributes",
             attributes: ["name"],
-            toOneRelationships: [attributeTypesRelationship],
-            toManyRelationships: [gamesRelationship])
+            toOneRelationships: [.init(attributeTypesRelationship, required: true)],
+            toManyRelationships: [.init(gamesRelationship, required: true)])
         setRep(attributes)
         
         // Module Types
@@ -285,7 +275,7 @@ class PortController {
         let ingredients = JSONRepresentation<Ingredient>(
             arrayKey: "ingredients",
             attributes: ["name"],
-            toManyRelationships: [gamesRelationship],
+            toManyRelationships: [.init(gamesRelationship, required: true)],
             idIsUUID: false)
         setRep(ingredients)
         
@@ -294,8 +284,9 @@ class PortController {
         let modules = JSONRepresentation<Module>(
             arrayKey: "modules",
             attributes: ["name", "level", "notes"],
-            toOneRelationships: [moduleTypesRelationship],
-            toManyRelationships: [gamesRelationship, imagesRelationship])
+            toOneRelationships: [.init(moduleTypesRelationship, required: true)],
+            toManyRelationships: [.init(gamesRelationship, required: true),
+                                  .init(imagesRelationship)])
         setRep(modules)
         
         // Module Ingredients
@@ -319,7 +310,7 @@ class PortController {
         let races = JSONRepresentation<Race>(
             arrayKey: "races",
             attributes: ["name"],
-            toManyRelationships: [gamesRelationship])
+            toManyRelationships: [.init(gamesRelationship, required: true)])
         setRep(races)
         
         // Characters
@@ -328,7 +319,8 @@ class PortController {
         let characters = JSONRepresentation<Character>(
             arrayKey: "characters",
             attributes: ["female", "name"],
-            toOneRelationships: [raceRelationship, gameRelationship])
+            toOneRelationships: [.init(raceRelationship, required: true),
+                                 .init(gameRelationship, required: true)])
         setRep(characters)
         
         // Character Modules
@@ -343,12 +335,11 @@ class PortController {
         let mods = JSONRepresentation<Mod>(
             arrayKey: "mods",
             attributes: ["name"],
-            toOneRelationships: [],
             toManyRelationships: [
-                (gamesRelationship, false),
-                (modulesRelationship, true),
-                (ingredientsRelationship, true),
-                (imagesRelationship, true)
+                .init(gamesRelationship, exportObjects: false, required: true),
+                .init(modulesRelationship, exportObjects: true),
+                .init(ingredientsRelationship, exportObjects: true),
+                .init(imagesRelationship, exportObjects: true)
         ])
         setRep(mods)
     }

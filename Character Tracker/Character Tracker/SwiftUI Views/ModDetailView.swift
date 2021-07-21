@@ -131,7 +131,8 @@ struct ModDetailView: View {
                         // Popping it first by setting showingNewModule to false fixes that.
                         self.showingNewModule = false
                         self.modController.add(module, to: self.mod, context: self.moc)
-                    }, isActive: $showingNewModule)
+                    }.environment(\.managedObjectContext, moc),
+                    isActive: $showingNewModule)
                 }
             }
             
@@ -146,9 +147,10 @@ struct ModDetailView: View {
                         .foregroundColor(.primary)
                     }
                     .onDelete { indexSet in
-                        guard let index = indexSet.first else { return }
-                        let ingredient = self.ingredients[index]
-                        self.modController.remove(ingredient, from: self.mod, context: self.moc)
+                        let ingredientsToRemove = indexSet.map { ingredients[$0] }
+                        DispatchQueue.main.async {
+                            modController.remove(ingredientsToRemove, from: mod, context: moc)
+                        }
                     }
                     .deleteDisabled(!editMode)
                 }
@@ -297,12 +299,14 @@ struct ModuleTypeSection: View {
                         .sheet(item: $showingModule) { module in
                             ModuleDetailView(module: module)
                                 .environmentObject(gameReference)
+                                .environment(\.managedObjectContext, moc)
                         }
                     }
                     .onDelete { indexSet in
-                        guard let index = indexSet.first else { return }
-                        let module = self.modules[index]
-                        self.modController.remove(module, from: self.mod, context: self.moc)
+                        let modulesToRemove = indexSet.map { modules[$0] }
+                        DispatchQueue.main.async {
+                            modController.remove(modulesToRemove, from: mod, context: moc)
+                        }
                     }
                     .deleteDisabled(deleteDisabled)
                 }
