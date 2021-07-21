@@ -85,13 +85,9 @@ struct ModDetailView: View {
     //MARK: Views
     
     var editButton: some View {
-        Button(action: {
-            self.editMode.toggle()
-        }) {
-            if editMode {
-                Text("Done")
-            } else {
-                Text("Edit")
+        Button(editMode ? "Done" : "Edit") {
+            withAnimation {
+                editMode.toggle()
             }
         }
     }
