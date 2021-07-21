@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LevelTableViewCellDelegate: class {
+protocol LevelTableViewCellDelegate: AnyObject {
     func levelChanged()
 }
 
