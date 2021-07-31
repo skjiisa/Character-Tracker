@@ -114,6 +114,10 @@ struct ModDetailView: View {
                 }
             }
             
+            LinksSection(mod: mod, editMode: $editMode) {
+                ExternalLink(mod: mod, context: moc)
+            }
+            
             // Modules
             
             ModulesSection(mod: mod, deleteDisabled: !editMode)

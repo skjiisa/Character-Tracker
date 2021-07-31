@@ -130,3 +130,11 @@ extension ModuleAttribute {
         self.value = value
     }
 }
+
+extension ExternalLink {
+    @discardableResult
+    convenience init(mod: Mod, context moc: NSManagedObjectContext) {
+        self.init(context: moc)
+        self.mods = [mod]
+    }
+}
