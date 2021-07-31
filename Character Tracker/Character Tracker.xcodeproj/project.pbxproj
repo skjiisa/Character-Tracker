@@ -84,6 +84,7 @@
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */; };
+		59FDD1AD26B5E7260061FC5F /* Coalescing Operators in Frameworks */ = {isa = PBXBuildFile; productRef = 59FDD1AC26B5E7260061FC5F /* Coalescing Operators */; };
 		59FFF31B250050210067DA17 /* ModuleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFF31A250050210067DA17 /* ModuleDetailView.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5901BC01252E70160056886F /* ActionOver in Frameworks */,
+				59FDD1AD26B5E7260061FC5F /* Coalescing Operators in Frameworks */,
 				591040F024F896FF00FDA521 /* SDWebImageSwiftUI in Frameworks */,
 				5946EF9423BD660A0077770D /* SwiftyJSON in Frameworks */,
 				596C947424CFC23400EAA609 /* EFQRCode in Frameworks */,
@@ -397,6 +399,7 @@
 				596C947324CFC23400EAA609 /* EFQRCode */,
 				591040EF24F896FF00FDA521 /* SDWebImageSwiftUI */,
 				5901BC00252E70160056886F /* ActionOver */,
+				59FDD1AC26B5E7260061FC5F /* Coalescing Operators */,
 			);
 			productName = "Character Tracker";
 			productReference = 595F7717236A55EF00151209 /* Character Tracker.app */;
@@ -431,6 +434,7 @@
 				596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 				591040EE24F896FF00FDA521 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				5901BBFF252E70160056886F /* XCRemoteSwiftPackageReference "ActionOver" */,
+				59FDD1AB26B5E7260061FC5F /* XCRemoteSwiftPackageReference "Coalescing-Operators" */,
 			);
 			productRefGroup = 595F7718236A55EF00151209 /* Products */;
 			projectDirPath = "";
@@ -767,6 +771,14 @@
 				minimumVersion = 5.1.6;
 			};
 		};
+		59FDD1AB26B5E7260061FC5F /* XCRemoteSwiftPackageReference "Coalescing-Operators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Isvvc/Coalescing-Operators.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -789,6 +801,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 596C947224CFC23400EAA609 /* XCRemoteSwiftPackageReference "EFQRCode" */;
 			productName = EFQRCode;
+		};
+		59FDD1AC26B5E7260061FC5F /* Coalescing Operators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59FDD1AB26B5E7260061FC5F /* XCRemoteSwiftPackageReference "Coalescing-Operators" */;
+			productName = "Coalescing Operators";
 		};
 /* End XCSwiftPackageProductDependency section */
 

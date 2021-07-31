@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Coalescing_Operators
 
 struct LinksSection: View {
     @Environment(\.managedObjectContext) var moc
@@ -89,7 +90,7 @@ struct LinkItem: View {
                         UIApplication.shared.open(url)
                     }
                 } label: {
-                    Text(link.wrappedName)
+                    Text(link.name ??? link.id.wrappedString)
                 }
             }
         }
