@@ -2855,6 +2855,9 @@
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dragonborn"
       ]
     },
     {
@@ -2874,6 +2877,9 @@
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dawnguard"
       ]
     },
     {
@@ -2898,6 +2904,16 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ]
+    }
+  ],
+  "linkNames": [
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard",
+      "name": "Dawnguard - UESP"
+    },
+    {
+      "id": "aoeu",
+      "name": "Delet this"
     }
   ]
 }

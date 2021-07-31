@@ -42,3 +42,10 @@ extension ExternalLink {
         set { name = newValue }
     }
 }
+
+extension Optional where Wrapped == String {
+    var wrappedString: String {
+        get { self ?? "" }
+        set { self = newValue }
+    }
+}

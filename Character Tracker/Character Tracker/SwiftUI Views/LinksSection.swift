@@ -69,9 +69,7 @@ struct LinkItem: View {
                     Spacer()
                     Button("Done") {
                         link.name = name
-                        if let url = URL(string: url) {
-                            link.url = url
-                        }
+                        link.id = url
                         withAnimation {
                             editing = false
                         }
@@ -79,7 +77,7 @@ struct LinkItem: View {
                 }
                 .onAppear {
                     name = link.wrappedName
-                    url = link.url?.absoluteString ?? ""
+                    url = link.id.wrappedString
                 }
             } else {
                 Button {
@@ -87,7 +85,7 @@ struct LinkItem: View {
                         withAnimation {
                             editing = true
                         }
-                    } else if let url = link.url {
+                    } else if let url = URL(string: link.id.wrappedString) {
                         UIApplication.shared.open(url)
                     }
                 } label: {

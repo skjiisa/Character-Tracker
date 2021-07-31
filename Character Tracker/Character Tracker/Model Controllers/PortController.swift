@@ -242,6 +242,15 @@ class PortController {
             attributes: ["name", "index", "mainline"])
         setRep(games)
         
+        // Links
+        let links = JSONRepresentation<ExternalLink>(
+            arrayKey: "linkNames",
+            attributes: ["name"],
+            idIsUUID: false)
+        setRep(links)
+        
+        let linksRelationship = Relationship(key: "links", createIfNotFound: true, jsonRepresentation: links)
+        
         // Attribute Types
         let attributeTypes = JSONRepresentation<AttributeType>(
             arrayKey: "attribute_types",
@@ -324,7 +333,6 @@ class PortController {
         setRep(characters)
         
         // Character Modules
-        
         let characterRelationship = Relationship(key: "character", jsonRepresentation: characters)
         let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: [], parent: characterRelationship, child: moduleRelationship)
         characters.relationshipObjects.append(characterModules)
@@ -339,7 +347,9 @@ class PortController {
                 .init(gamesRelationship, exportObjects: false, required: true),
                 .init(modulesRelationship, exportObjects: true),
                 .init(ingredientsRelationship, exportObjects: true),
-                .init(imagesRelationship, exportObjects: true)
+                .init(imagesRelationship, exportObjects: true),
+                // I'm not sure if links should have exportObjects or not
+                .init(linksRelationship, exportObjects: true)
         ])
         setRep(mods)
     }
@@ -361,9 +371,9 @@ class PortController {
         }
     }
     
-    func importClass<ObjectType: NSManagedObject>(_: ObjectType.Type, json importJSON: JSON, context: NSManagedObjectContext) throws {
+    func importClass<ObjectType: NSManagedObject>(_: ObjectType.Type, json importJSON: JSON, updateOnly: Bool = false, context: NSManagedObjectContext) throws {
         if let rep = jsonRepresentation(ObjectType.self) {
-            lastImport.append(contentsOf: try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: rep, context: context))
+            lastImport.append(contentsOf: try JSONController.fetchAndImportAllObjects(from: importJSON, jsonRepresentation: rep, updateOnly: updateOnly, context: context))
         }
     }
     
@@ -378,6 +388,9 @@ class PortController {
         try importClass(Race.self, json: importJSON, context: context)
         try importClass(Character.self, json: importJSON, context: context)
         try importClass(Mod.self, json: importJSON, context: context)
+        // Links shouldn't be created from the linkNames section of the JSON.
+        // That should only be used to add names, so updateOnly is true.
+        try importClass(ExternalLink.self, json: importJSON, updateOnly: true, context: context)
         
         jsonRepresentations.values.forEach { $0.clearObjects() }
     }
