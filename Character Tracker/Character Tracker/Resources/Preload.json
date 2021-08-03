@@ -1293,6 +1293,9 @@
       "images": [
         "https://images.uesp.net/d/d7/SR-item-Leather_Armor_Female.jpg",
         "https://images.uesp.net/f/f4/SR-item-Leather_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Leather_Armor"
       ]
     },
     {
@@ -1336,6 +1339,9 @@
       "images": [
         "https://images.uesp.net/e/e6/SR-item-Elven_Armor_Female.jpg",
         "https://images.uesp.net/b/ba/SR-item-Elven_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Elven_Armor"
       ]
     },
     {
@@ -1378,6 +1384,9 @@
       "images": [
         "https://images.uesp.net/7/73/SR-item-Scaled_Armor_Female.jpg",
         "https://images.uesp.net/c/c2/SR-item-Scaled_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Scaled_Armor"
       ]
     },
     {
@@ -1422,6 +1431,9 @@
         {
           "child": "B7E8FE8E-19ED-4929-B8AD-C6A7729F2E68"
         }
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Elven_Gilded_Armor"
       ]
     },
     {
@@ -1465,6 +1477,9 @@
       "images": [
         "https://images.uesp.net/e/ef/SR-item-Glass_Armor_Female.jpg",
         "https://images.uesp.net/f/fe/SR-item-Glass_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Glass_Armor"
       ]
     },
     {
@@ -1508,6 +1523,9 @@
       "images": [
         "https://images.uesp.net/1/1e/SR-item-Dragonscale_Armor_Female.jpg",
         "https://images.uesp.net/3/3e/SR-item-Dragonscale_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dragonscale_Armor"
       ]
     },
     {
@@ -2906,13 +2924,48 @@
         "33839302-E5B9-4299-AA81-444BED243F20",
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Hearthfire"
       ]
     }
   ],
   "linkNames": [
     {
+      "id": "https://en.uesp.net/wiki/Skyrim:Leather_Armor",
+      "name": "Leather Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Elven_Armor",
+      "name": "Elven Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Scaled_Armor",
+      "name": "Scaled Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Elven_Gilded_Armor",
+      "name": "Elven Gilded Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Glass_Armor",
+      "name": "Glass Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dragonscale_Armor",
+      "name": "Dragonscale Armor - UESP"
+    },
+    {
       "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard",
       "name": "Dawnguard - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dragonborn",
+      "name": "Dragonborn - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Hearthfire",
+      "name": "Hearthfire - UESP"
     }
   ]
 }
