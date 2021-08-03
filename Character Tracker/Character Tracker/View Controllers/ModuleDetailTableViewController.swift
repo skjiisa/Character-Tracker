@@ -328,21 +328,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard editMode else { return false }
         
-        //TODO: replace this array with an integer
-        let array: [Any]
+        let endIndex: Int
         switch sections[indexPath.section].type {
         case .ingredients:
-            array = ingredientController.tempEntities
+            endIndex = ingredientController.tempEntities.count
         case .modules:
-            array = moduleController.tempEntities
+            endIndex = moduleController.tempEntities.count
         case .attributes:
-            array = attributeController.tempEntities
+            endIndex = attributeController.tempEntities.count
         case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
-            array = games
+            endIndex = games.count
         default:
             return false
         }
-        return indexPath.row < array.count
+        return indexPath.row < endIndex
     }
 
     // Override to support editing the table view.
