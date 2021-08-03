@@ -37,15 +37,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if let module = module,
                 let currentGame = gameReference?.game {
                 self.name = module.name
-                let context = CoreDataStack.shared.mainContext
                 let games = module.mutableSetValue(forKey: "games")
                 if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
                     self.games = gamesArray
                 }
-                //TODO: I guess these don't actually need their context arugments?
-                ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
-                moduleController.fetchTempModules(for: module, game: currentGame, context: context)
-                attributeController.fetchTempAttributes(for: module, context: context)
+                
+                ingredientController.fetchTempIngredients(for: module, in: currentGame)
+                moduleController.fetchTempModules(for: module, game: currentGame)
+                attributeController.fetchTempAttributes(for: module)
                 linkController.fetchTempLinks(for: module)
             }
         }

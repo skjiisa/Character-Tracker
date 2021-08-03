@@ -108,7 +108,7 @@ class AttributeController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempAttributes(for character: Character, context: NSManagedObjectContext) {
+    func fetchTempAttributes(for character: Character) {
         guard let characterAttributes = character.attributes as? Set<CharacterAttribute> else { return }
         
         for characterAttribute in characterAttributes {
@@ -147,7 +147,7 @@ class AttributeController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempAttributes(for module: Module, context: NSManagedObjectContext) {
+    func fetchTempAttributes(for module: Module) {
         tempEntities = []
         
         guard let moduleAttributes = module.attributes as? Set<ModuleAttribute> else { return }
