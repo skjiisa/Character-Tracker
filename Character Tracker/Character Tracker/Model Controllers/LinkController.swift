@@ -2,8 +2,7 @@
 //  LinkController.swift
 //  Character Tracker
 //
-//  Created by Isaac Lyons on 8/3/21.
-//  Copyright © 2021 Isaac Lyons. All rights reserved.
+//  Created by Elaine Lyons on 8/3/21.
 //
 
 import CoreData
@@ -11,7 +10,12 @@ import CoreData
 class LinkController {
     var tempLinks: [ExternalLink] = []
     
-    func fetchTempLinks(for module: Module, context: NSManagedObjectContext) {
-        tempLinks = (module.links as? Set<ExternalLink>)?.sorted(by: { $0.wrappedName < $1.wrappedName }) ?? []
+    func fetchTempLinks(for module: Module) {
+        tempLinks = (module.links as? Set<ExternalLink>)?.sorted(by: { $0.wrappedName > $1.wrappedName }) ?? []
+    }
+    
+    func newLink(for module: Module, context moc: NSManagedObjectContext) {
+        let link = ExternalLink(context: moc)
+        link.modules = [module]
     }
 }

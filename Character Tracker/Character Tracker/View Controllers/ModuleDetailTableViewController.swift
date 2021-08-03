@@ -42,10 +42,11 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
                     self.games = gamesArray
                 }
+                //TODO: I guess these don't actually need their context arugments?
                 ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
                 moduleController.fetchTempModules(for: module, game: currentGame, context: context)
                 attributeController.fetchTempAttributes(for: module, context: context)
-                linkController.fetchTempLinks(for: module, context: context)
+                linkController.fetchTempLinks(for: module)
             }
         }
     }
@@ -455,15 +456,28 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 prompt(title: ingredient.name ?? "Ingredient", message: "Plugin and FormID:\n\(ingredient.id ?? "")")
             }
         case .links:
+            tableView.deselectRow(at: indexPath, animated: true)
             if indexPath.row < linkController.tempLinks.count {
                 // Open the link
                 if let url = URL(string: linkController.tempLinks[indexPath.row].id.wrappedString) {
                     UIApplication.shared.open(url)
                 }
-                tableView.deselectRow(at: indexPath, animated: true)
             } else {
                 // Open the link editor
-                print("link editor")
+                guard let module = module else { return }
+                let linkEditor = UIHostingController(rootView: NavigationView { [weak self] in
+                    Form {
+                        LinksSection(module: module) {
+                            // I was expecting to have to update the links section here, but it
+                            // seems to be reloading the view controller without me telling it to.
+                            // TODO: Investigate why this is updating without me telling it to.
+                            self?.linkController.newLink(for: module, context: CoreDataStack.shared.mainContext)
+                        }
+                    }
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+                    .navigationBarTitle("\(module.name.wrappedString) Links")
+                })
+                present(linkEditor, animated: true)
             }
         default:
             break

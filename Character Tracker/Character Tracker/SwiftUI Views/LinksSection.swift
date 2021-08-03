@@ -2,8 +2,7 @@
 //  LinksSection.swift
 //  Character Tracker
 //
-//  Created by Isaac Lyons on 7/21/21.
-//  Copyright © 2021 Isaac Lyons. All rights reserved.
+//  Created by Elaine Lyons on 7/21/21.
 //
 
 import SwiftUI
@@ -32,6 +31,10 @@ struct LinksSection: View {
     
     init(mod: Mod, editMode: Binding<Bool>, onCreate: @escaping () -> Void) {
         self.init(predicate: NSPredicate(format: "%@ IN mods", mod), editMode: editMode, onCreate: onCreate)
+    }
+    
+    init(module: Module, onCreate: @escaping () -> Void) {
+        self.init(predicate: NSPredicate(format: "%@ IN modules", module), editMode: .constant(true), onCreate: onCreate)
     }
     
     var body: some View {
@@ -97,6 +100,8 @@ struct LinkItem: View {
         
         if editing {
             TextField("URL", text: $url)
+                .disableAutocorrection(true)
+                .keyboardType(.URL)
         }
     }
 }
