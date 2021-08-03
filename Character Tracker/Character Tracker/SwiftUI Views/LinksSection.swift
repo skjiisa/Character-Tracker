@@ -93,7 +93,11 @@ struct LinkItem: View {
                         UIApplication.shared.open(url)
                     }
                 } label: {
-                    Text(link.name ??? link.id.wrappedString)
+                    HStack {
+                        Text(link.name ??? link.id.wrappedString)
+                        Spacer()
+                        Image(systemName: "arrow.up.right")
+                    }
                 }
             }
         }
