@@ -1565,6 +1565,9 @@
       "images": [
         "https://images.uesp.net/9/96/SR-item-Dragonplate_Armor_Female.jpg",
         "https://images.uesp.net/2/23/SR-item-Dragonplate_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dragonplate_Armor"
       ]
     },
     {
@@ -1606,6 +1609,9 @@
         "https://images.uesp.net/9/90/SR-item-Steel_Armor_Male.jpg",
         "https://images.uesp.net/7/7d/SR-item-Steel_Armor_Female_02.jpg",
         "https://images.uesp.net/9/9e/SR-item-Steel_Armor_Male_02.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Steel_Armor"
       ]
     },
     {
@@ -1649,6 +1655,9 @@
       "images": [
         "https://images.uesp.net/5/5b/SR-item-Dwarven_Armor_Female.jpg",
         "https://images.uesp.net/4/45/SR-item-Dwarven_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dwarven_Armor"
       ]
     },
     {
@@ -1691,6 +1700,9 @@
       "images": [
         "https://images.uesp.net/0/0e/SR-item-Steel_Plate_Armor_Female.jpg",
         "https://images.uesp.net/e/e4/SR-item-Steel_Plate_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Steel_Plate_Armor"
       ]
     },
     {
@@ -1730,6 +1742,9 @@
       "images": [
         "https://images.uesp.net/6/63/SR-item-Orcish_Armor_Female.jpg",
         "https://images.uesp.net/e/e4/SR-item-Orcish_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Orcish_Armor"
       ]
     },
     {
@@ -1765,6 +1780,9 @@
       "images": [
         "https://images.uesp.net/3/3e/SR-item-Ebony_Armor_Female.jpg",
         "https://images.uesp.net/f/f8/SR-item-Ebony_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Ebony_Armor"
       ]
     },
     {
@@ -1804,6 +1822,9 @@
       "images": [
         "https://images.uesp.net/d/db/SR-item-Daedric_Armor_Female.jpg",
         "https://images.uesp.net/e/ef/SR-item-Daedric_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Daedric_Armor"
       ]
     },
     {
@@ -2954,6 +2975,34 @@
     {
       "id": "https://en.uesp.net/wiki/Skyrim:Dragonscale_Armor",
       "name": "Dragonscale Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dragonplate_Armor",
+      "name": "Dragonplate Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Steel_Armor",
+      "name": "Steel Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dwarven_Armor",
+      "name": "Dwarven Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Steel_Plate_Armor",
+      "name": "Steel Plate Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Orcish_Armor",
+      "name": "Orcish Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Ebony_Armor",
+      "name": "Ebony Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Daedric_Armor",
+      "name": "Daedric Armor - UESP"
     },
     {
       "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard",
