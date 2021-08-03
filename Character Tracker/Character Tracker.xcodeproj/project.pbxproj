@@ -82,6 +82,7 @@
 		59C33EF523BD6E3500FC1F11 /* JSONController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C33EF423BD6E3500FC1F11 /* JSONController.swift */; };
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
+		59DE942826B9E1BE00E8D204 /* LinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DE942726B9E1BE00E8D204 /* LinkController.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59F77B6A24CFBB86004A3241 /* Character_Tracker+Wrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */; };
 		59FDD1AD26B5E7260061FC5F /* Coalescing Operators in Frameworks */ = {isa = PBXBuildFile; productRef = 59FDD1AC26B5E7260061FC5F /* Coalescing Operators */; };
@@ -163,6 +164,7 @@
 		59C33EF423BD6E3500FC1F11 /* JSONController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONController.swift; sourceTree = "<group>"; };
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
+		59DE942726B9E1BE00E8D204 /* LinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkController.swift; sourceTree = "<group>"; };
 		59E7A7BA24CCD56D006E77D7 /* PortController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortController.swift; sourceTree = "<group>"; };
 		59F77B6924CFBB86004A3241 /* Character_Tracker+Wrapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character_Tracker+Wrapping.swift"; sourceTree = "<group>"; };
 		59FFF31A250050210067DA17 /* ModuleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDetailView.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				593DDF0824F47B0900D9E357 /* ModController.swift */,
 				5978EE872511609500AA9FB1 /* GameController.swift */,
 				5988DC8125147150001D5505 /* ImageLinkController.swift */,
+				59DE942726B9E1BE00E8D204 /* LinkController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				597545F424CB92DF00471664 /* AttributesFilterForm.swift in Sources */,
 				59083984250992E9007A86D5 /* ScannerInfoView.swift in Sources */,
 				59850F44237D0F4B00286067 /* ModuleNameTableViewCell.swift in Sources */,
+				59DE942826B9E1BE00E8D204 /* LinkController.swift in Sources */,
 				59BCF973237A3F62000E90B7 /* ModuleTypeController.swift in Sources */,
 				59B6B1CA24FDABFF003D168A /* AlertContainer.swift in Sources */,
 				59B3A78D236CF59800B3D33B /* SettingsTableViewController.swift in Sources */,

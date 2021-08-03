@@ -23,6 +23,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     let moduleController = ModuleController()
     let attributeController = AttributeController()
     var ingredientController = IngredientController()
+    let linkController = LinkController()
     var gameReference: GameReference? {
         didSet {
             if let game = gameReference?.game {
@@ -44,6 +45,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
                 moduleController.fetchTempModules(for: module, game: currentGame, context: context)
                 attributeController.fetchTempAttributes(for: module, context: context)
+                linkController.fetchTempLinks(for: module, context: context)
             }
         }
     }
@@ -62,6 +64,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case attributes
         case games
         case spacer
+        case links
     }
     
     var sections: [(name: String?, type: SectionTypes)] = []
@@ -163,6 +166,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return games.count + editMode.int
         case .spacer:
             return 0
+        case .links:
+            return linkController.tempLinks.count + editMode.int
         }
     }
     
@@ -303,6 +308,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
             }
+        case .links:
+            if indexPath.row < linkController.tempLinks.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath)
+                cell.textLabel?.text = linkController.tempLinks[indexPath.row].wrappedName
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell.textLabel?.text = "Edit links"
+                cell.detailTextLabel?.text = nil
+            }
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
         }
@@ -440,6 +454,17 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 tableView.deselectRow(at: indexPath, animated: true)
                 prompt(title: ingredient.name ?? "Ingredient", message: "Plugin and FormID:\n\(ingredient.id ?? "")")
             }
+        case .links:
+            if indexPath.row < linkController.tempLinks.count {
+                // Open the link
+                if let url = URL(string: linkController.tempLinks[indexPath.row].id.wrappedString) {
+                    UIApplication.shared.open(url)
+                }
+                tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                // Open the link editor
+                print("link editor")
+            }
         default:
             break
         }
@@ -476,6 +501,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sections.append(("Required Modules", .modules))
         sections.append(("Attributes", .attributes))
         sections.append(("Games", .games))
+        sections.append(("Links", .links))
     }
     
     private func updateViews() {

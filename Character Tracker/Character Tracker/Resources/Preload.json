@@ -2547,6 +2547,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dawnguard"
       ]
     },
     {
@@ -2910,10 +2913,6 @@
     {
       "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard",
       "name": "Dawnguard - UESP"
-    },
-    {
-      "id": "aoeu",
-      "name": "Delet this"
     }
   ]
 }

@@ -295,7 +295,8 @@ class PortController {
             attributes: ["name", "level", "notes"],
             toOneRelationships: [.init(moduleTypesRelationship, required: true)],
             toManyRelationships: [.init(gamesRelationship, required: true),
-                                  .init(imagesRelationship)])
+                                  .init(imagesRelationship),
+                                  .init(linksRelationship, exportObjects: true)])
         setRep(modules)
         
         // Module Ingredients
