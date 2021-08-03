@@ -1839,6 +1839,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/d/d6/SR-quest-Before_the_Storm_02.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Main_Quest"
       ]
     },
     {
@@ -1853,6 +1856,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/e/e4/SR-place-College_of_Winterhold.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:College_of_Winterhold_(faction)#Quests"
       ]
     },
     {
@@ -1867,6 +1873,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/f/f5/SR-place-Jorrvaskr.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Companions#Quests"
       ]
     },
     {
@@ -1881,6 +1890,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/f/f0/SR-place-Dark_Brotherhood_Sanctuary.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dark_Brotherhood#Quests"
       ]
     },
     {
@@ -1895,6 +1907,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/2/2e/SR-quest-Reunification_of_Skyrim.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Imperial_Legion#Quests"
       ]
     },
     {
@@ -1909,6 +1924,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/6/6e/SR-npc-Ulfric_Stormcloak.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Stormcloaks#Quests"
       ]
     },
     {
@@ -1923,6 +1941,9 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/4/42/SR-interior-The_Ragged_Flagon.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Thieves_Guild_(faction)#Quests"
       ]
     },
     {
@@ -1943,6 +1964,9 @@
       ],
       "images": [
         "https://images.uesp.net/d/d0/SR-place-Breezehome.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Breezehome"
       ]
     },
     {
@@ -1963,6 +1987,9 @@
       ],
       "images": [
         "https://images.uesp.net/3/31/SR-place-Honeyside.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Honeyside"
       ]
     },
     {
@@ -1983,6 +2010,9 @@
       ],
       "images": [
         "https://images.uesp.net/4/49/SR-place-Vlindrel_Hall.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Vlindrel_Hall"
       ]
     },
     {
@@ -2003,6 +2033,9 @@
       ],
       "images": [
         "https://images.uesp.net/f/f5/SR-place-Hjerim.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Hjerim"
       ]
     },
     {
@@ -2023,6 +2056,9 @@
       ],
       "images": [
         "https://images.uesp.net/1/19/SR-place-Proudspire_Manor.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Proudspire_Manor"
       ]
     },
     {
@@ -2037,6 +2073,9 @@
       "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
       "images": [
         "https://images.uesp.net/3/35/SR-place-Guardian_Stones.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Standing_Stone"
       ]
     },
     {
@@ -2048,7 +2087,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Daedric_Quests"
+      ]
     },
     {
       "id": "02B71115-0ADB-4A9F-9765-8FD62A9307F1",
@@ -2059,7 +2101,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dragon_Shouts"
+      ]
     },
     {
       "id": "2F52C9A2-D687-45AC-B9A9-17F59A2B9FC8",
@@ -2070,7 +2115,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Vampirism"
+      ]
     },
     {
       "id": "E1D7690D-FBBE-46F5-869C-B7D319FF7F05",
@@ -2084,6 +2132,9 @@
       "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
       "images": [
         "https://images.uesp.net/9/9a/SR-quest-No_Stone_Unturned.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:No_Stone_Unturned"
       ]
     },
     {
@@ -2118,6 +2169,9 @@
       ],
       "images": [
         "https://images.uesp.net/4/4a/SR-npc-Argis_the_Bulwark.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Argis_the_Bulwark"
       ]
     },
     {
@@ -2152,6 +2206,9 @@
       ],
       "images": [
         "https://images.uesp.net/2/26/SR-npc-Calder.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Calder"
       ]
     },
     {
@@ -2186,6 +2243,9 @@
       ],
       "images": [
         "https://images.uesp.net/0/03/SR-npc-Iona.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Iona"
       ]
     },
     {
@@ -2220,6 +2280,9 @@
       ],
       "images": [
         "https://images.uesp.net/e/e2/SR-npc-Jordis_the_Sword-Maiden.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Jordis_the_Sword-Maiden"
       ]
     },
     {
@@ -2257,6 +2320,9 @@
       ],
       "images": [
         "https://images.uesp.net/6/68/SR-npc-Lydia.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Lydia"
       ]
     },
     {
@@ -2272,6 +2338,10 @@
       "type": "60A0B797-9326-44C1-BB79-0B2F6AF8231E",
       "images": [
         "https://images.uesp.net/c/c9/SR-quest-Dragonborn_02.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dragonborn_Quests",
+        "https://en.uesp.net/wiki/Skyrim:Dragonborn"
       ]
     },
     {
@@ -2306,6 +2376,9 @@
       ],
       "images": [
         "https://images.uesp.net/thumb/d/d9/SR-npc-Frea.jpg/900px-SR-npc-Frea.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Frea"
       ]
     },
     {
@@ -2321,6 +2394,9 @@
       "type": "D453D642-DE13-41F2-B129-A89D447E2863",
       "images": [
         "https://images.uesp.net/0/01/SR-place-Severin_Manor.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Severin_Manor"
       ]
     },
     {
@@ -2360,6 +2436,9 @@
       "images": [
         "https://images.uesp.net/f/fd/SR-item-Stalhrim_Light_Armor_Female.jpg",
         "https://images.uesp.net/f/ff/SR-item-Stalhrim_Light_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Stalhrim_Light_Armor"
       ]
     },
     {
@@ -2399,6 +2478,9 @@
       "images": [
         "https://images.uesp.net/b/b8/SR-item-Stalhrim_Heavy_Armor_Female.jpg",
         "https://images.uesp.net/9/90/SR-item-Stalhrim_Heavy_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Stalhrim#Stalhrim_Heavy_Armor"
       ]
     },
     {
@@ -2438,6 +2520,9 @@
       "images": [
         "https://images.uesp.net/5/53/SR-item-Chitin_Armor_Female.jpg",
         "https://images.uesp.net/5/57/SR-item-Chitin_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Chitin_Armor"
       ]
     },
     {
@@ -2477,6 +2562,9 @@
       "images": [
         "https://images.uesp.net/9/94/SR-item-Chitin_Heavy_Armor_Female.jpg",
         "https://images.uesp.net/8/82/SR-item-Chitin_Heavy_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Chitin_Heavy_Armor"
       ]
     },
     {
@@ -2516,6 +2604,9 @@
       "images": [
         "https://images.uesp.net/6/65/SR-item-Bonemold_Armor_Female.jpg",
         "https://images.uesp.net/c/cb/SR-item-Bonemold_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Bonemold_Armor"
       ]
     },
     {
@@ -2571,6 +2662,9 @@
       "images": [
         "https://images.uesp.net/c/cc/SR-item-Bonemold_Pauldron_Armor_Female.jpg",
         "https://images.uesp.net/a/a8/SR-item-Bonemold_Pauldron_Armor_Male.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Improved_Bonemold_Armor"
       ]
     },
     {
@@ -2588,6 +2682,7 @@
         "https://images.uesp.net/9/94/SR-quest-Dawnguard_%28quest%29.jpg"
       ],
       "links": [
+        "https://en.uesp.net/wiki/Skyrim:Dawnguard_Quests",
         "https://en.uesp.net/wiki/Skyrim:Dawnguard"
       ]
     },
@@ -2603,6 +2698,9 @@
       "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
       "images": [
         "https://images.uesp.net/6/63/SR-perktree-Werewolf.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Lycanthropy#Skill_Perks"
       ]
     },
     {
@@ -2617,6 +2715,9 @@
       "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
       "images": [
         "https://images.uesp.net/f/f2/SR-perktree-Vampirism.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Vampire_Lord#Skill_Perks"
       ]
     },
     {
@@ -2650,6 +2751,9 @@
       ],
       "images": [
         "https://images.uesp.net/a/a1/SR-npc-Serana.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Serana"
       ]
     },
     {
@@ -2661,7 +2765,10 @@
         "75CFE734-1107-4B03-8269-AC130D88A8B7",
         "C68322E4-6550-4588-B5E4-D54DF5976E7C"
       ],
-      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05"
+      "type": "E80837B9-4F26-41BA-93ED-A1ED46A88A05",
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Adoption"
+      ]
     },
     {
       "id": "72D58669-91D5-4CB4-B544-A20120C57DC6",
@@ -2677,6 +2784,9 @@
         "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg",
         "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg",
         "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Hearthfire#Available_Houses"
       ]
     },
     {
@@ -2697,6 +2807,9 @@
       ],
       "images": [
         "https://images.uesp.net/5/50/SR-place-Heljarchen_Hall.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Heljarchen_Hall"
       ]
     },
     {
@@ -2731,6 +2844,9 @@
       ],
       "images": [
         "https://images.uesp.net/4/4a/SR-npc-Gregor.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Gregor"
       ]
     },
     {
@@ -2751,6 +2867,9 @@
       ],
       "images": [
         "https://images.uesp.net/1/1d/SR-place-Lakeview_Manor_13.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Lakeview_Manor"
       ]
     },
     {
@@ -2785,6 +2904,9 @@
       ],
       "images": [
         "https://images.uesp.net/b/be/SR-npc-Rayya.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Rayya"
       ]
     },
     {
@@ -2805,6 +2927,9 @@
       ],
       "images": [
         "https://images.uesp.net/8/8c/SR-place-Windstad_Manor.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Windstad_Manor"
       ]
     },
     {
@@ -2839,6 +2964,9 @@
       ],
       "images": [
         "https://images.uesp.net/d/de/SR-npc-Valdimar.jpg"
+      ],
+      "links": [
+        "https://en.uesp.net/wiki/Skyrim:Valdimar"
       ]
     }
   ],
@@ -3003,6 +3131,178 @@
     {
       "id": "https://en.uesp.net/wiki/Skyrim:Daedric_Armor",
       "name": "Daedric Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Main_Quest",
+      "name": "Main Quest - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:College_of_Winterhold_(faction)#Quests",
+      "name": "College of Winterhold - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Companions#Quests",
+      "name": "Companions - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dark_Brotherhood#Quests",
+      "name": "Dark Brotherhood - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Imperial_Legion#Quests",
+      "name": "Imperial Legion - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Stormcloaks#Quests",
+      "name": "Stormcloaks - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Thieves_Guild_(faction)#Quests",
+      "name": "Thieves Guild - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Breezehome",
+      "name": "Breezehome - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Honeyside",
+      "name": "Honeyside - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Vlindrel_Hall",
+      "name": "Vlindrel Hall - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Hjerim",
+      "name": "Hjerim - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Proudspire_Manor",
+      "name": "Proudspire Manor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Standing_Stone",
+      "name": "Standing Stone - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Daedric_Quests",
+      "name": "Daedric Quests - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dragon_Shouts",
+      "name": "Dragon Shouts - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Vampirism",
+      "name": "Vampirism - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:No_Stone_Unturned",
+      "name": "No Stone Unturned - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Argis_the_Bulwark",
+      "name": "Argis the Bulwark - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Calder",
+      "name": "Calder - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Iona",
+      "name": "Iona - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Jordis_the_Sword-Maiden",
+      "name": "Jordis the Sword-Maiden - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Lydia",
+      "name": "Lydia - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dragonborn_Quests",
+      "name": "Dragonborn Quests - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Frea",
+      "name": "Frea - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Severin_Manor",
+      "name": "Severin Manor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Stalhrim_Light_Armor",
+      "name": "Stalhrim Light Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Stalhrim#Stalhrim_Heavy_Armor",
+      "name": "Stalhrim Heavy Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Chitin_Armor",
+      "name": "Chitin Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Chitin_Heavy_Armor",
+      "name": "Chitin Heavy Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Bonemold_Armor",
+      "name": "Bonemold Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Improved_Bonemold_Armor",
+      "name": "Improved Bonemold Armor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard_Quests",
+      "name": "Dawnguard Quests - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Lycanthropy#Skill_Perks",
+      "name": "Lycanthropy Skill Perks - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Vampire_Lord#Skill_Perks",
+      "name": "Vampire Lord Skill Perks - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Serana",
+      "name": "Serana - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Adoption",
+      "name": "Adoption - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Hearthfire#Available_Houses",
+      "name": "Hearthfire Available Houses - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Heljarchen_Hall",
+      "name": "Heljarchen Hall - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Gregor",
+      "name": "Gregor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Lakeview_Manor",
+      "name": "Lakeview Manor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Rayya",
+      "name": "Rayya - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Windstad_Manor",
+      "name": "Windstad Manor - UESP"
+    },
+    {
+      "id": "https://en.uesp.net/wiki/Skyrim:Valdimar",
+      "name": "Valdimar - UESP"
     },
     {
       "id": "https://en.uesp.net/wiki/Skyrim:Dawnguard",
