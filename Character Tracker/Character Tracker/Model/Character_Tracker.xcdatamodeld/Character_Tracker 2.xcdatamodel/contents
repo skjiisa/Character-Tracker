@@ -69,6 +69,7 @@
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="links" inverseEntity="Game"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="links" inverseEntity="Ingredient"/>
         <relationship name="mods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mod" inverseName="links" inverseEntity="Mod"/>
+        <relationship name="modules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Module" inverseName="links" inverseEntity="Module"/>
         <relationship name="races" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Race" inverseName="links" inverseEntity="Race"/>
     </entity>
     <entity name="Game" representedClassName="Game" syncable="YES" codeGenerationType="class">
@@ -124,6 +125,7 @@
         <relationship name="games" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Game" inverseName="modules" inverseEntity="Game"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Image" inverseName="modules" inverseEntity="Image"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleIngredient" inverseName="module" inverseEntity="ModuleIngredient"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExternalLink" inverseName="modules" inverseEntity="ExternalLink"/>
         <relationship name="mod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Mod" inverseName="modules" inverseEntity="Mod"/>
         <relationship name="parents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ModuleModule" inverseName="child" inverseEntity="ModuleModule"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ModuleType" inverseName="modules" inverseEntity="ModuleType"/>
@@ -166,12 +168,12 @@
         <element name="Character" positionX="157" positionY="-242" width="128" height="193"/>
         <element name="CharacterAttribute" positionX="365" positionY="-310" width="128" height="88"/>
         <element name="CharacterModule" positionX="371" positionY="3" width="128" height="118"/>
-        <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="149"/>
+        <element name="ExternalLink" positionX="-90" positionY="-613" width="128" height="164"/>
         <element name="Game" positionX="171" positionY="-533" width="128" height="208"/>
         <element name="Image" positionX="178" positionY="370" width="128" height="103"/>
         <element name="Ingredient" positionX="745" positionY="367" width="128" height="133"/>
         <element name="Mod" positionX="173" positionY="-12" width="128" height="223"/>
-        <element name="Module" positionX="343" positionY="203" width="128" height="253"/>
+        <element name="Module" positionX="343" positionY="203" width="128" height="254"/>
         <element name="ModuleAttribute" positionX="557" positionY="79" width="128" height="88"/>
         <element name="ModuleIngredient" positionX="568" positionY="332" width="128" height="103"/>
         <element name="ModuleModule" positionX="617" positionY="197" width="128" height="88"/>

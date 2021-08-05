@@ -149,7 +149,7 @@ class ModuleController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempModules(for character: Character, context: NSManagedObjectContext) {
+    func fetchTempModules(for character: Character) {
         tempEntities = []
         
         guard let characterModules = character.modules as? Set<CharacterModule> else { return }
@@ -162,10 +162,10 @@ class ModuleController: EntityController {
     
     func checkTempModules(againstCharacterFrom characterModule: CharacterModule, context: NSManagedObjectContext) {
         guard let character = characterModule.character else { return }
-        checkTempModules(againstCharacter: character, context: context)
+        checkTempModules(againstCharacter: character)
     }
     
-    func checkTempModules(againstCharacter character: Character, context: NSManagedObjectContext) {
+    func checkTempModules(againstCharacter character: Character) {
         guard let characterModules = character.modules as? Set<CharacterModule> else { return }
         for characterModule in characterModules {
             guard let module = characterModule.module,
@@ -214,7 +214,7 @@ class ModuleController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempModules(for module: Module, game: Game?, context: NSManagedObjectContext) {
+    func fetchTempModules(for module: Module, game: Game?) {
         tempEntities = []
         
         guard let childModules = module.children as? Set<ModuleModule> else { return }
