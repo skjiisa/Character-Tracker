@@ -242,6 +242,10 @@ struct ModDetailView: View {
         .navigationBarTitle(mod.name ?? "Mod")
         .navigationBarItems(trailing: editButton)
         .onDisappear {
+            // This doesn't seem to be the best way to check this. When navigating
+            // to a module, this is called. Instead, storing a property indicating
+            // if there are changes to be saved could be better.
+            // TODO: Update this
             if !self.presentationMode.wrappedValue.isPresented {
                 self.modController.saveOrDeleteIfEmpty(self.mod, context: self.moc)
             }

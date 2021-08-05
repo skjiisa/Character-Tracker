@@ -19,6 +19,8 @@ struct LinksSection: View {
     @Binding var editMode: Bool
     var create: () -> Void
     var delete: ([ExternalLink]) -> Void
+    
+    @State private var changesToSave = false
         
     init(predicate: NSPredicate, editMode: Binding<Bool>, onCreate: @escaping () -> Void, onDelete: @escaping ([ExternalLink]) -> Void) {
         linksFetchRequest = FetchRequest(
@@ -43,16 +45,24 @@ struct LinksSection: View {
         if !links.isEmpty || editMode {
             Section(header: Text(editMode ? "Links" : "")) {
                 ForEach(links) { link in
-                    LinkItem(link: link, editMode: $editMode)
+                    LinkItem(link: link, editMode: $editMode, changesToSave: $changesToSave)
                 }
                 .onDelete { indexSet in
                     delete(indexSet.map { links[$0] })
+                    changesToSave = true
                 }
                 
                 if editMode {
                     Button("Add link") {
                         create()
+                        changesToSave = true
                     }
+                }
+            }
+            .onDisappear {
+                if changesToSave {
+                    CoreDataStack.shared.save(context: moc, source: "LinksSection onDisappear")
+                    changesToSave = false
                 }
             }
         }
@@ -62,6 +72,7 @@ struct LinksSection: View {
 struct LinkItem: View {
     @ObservedObject var link: ExternalLink
     @Binding var editMode: Bool
+    @Binding var changesToSave: Bool
     
     @State private var name = ""
     @State private var url = ""
@@ -76,6 +87,7 @@ struct LinkItem: View {
                     Button("Done") {
                         link.name = name
                         link.id = url
+                        changesToSave = true
                         withAnimation {
                             editing = false
                         }
