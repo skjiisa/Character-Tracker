@@ -466,10 +466,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let linkEditor = UIHostingController(rootView: NavigationView { [weak self] in
                     Form {
                         LinksSection(module: module) {
-                            // TODO: Refresh the links list
                             self?.linkController.newLink(for: module, context: CoreDataStack.shared.mainContext)
+                            if let section = self?.sections.firstIndex(where: { $0.type == .links }) {
+                                self?.tableView.reloadSections([section], with: .none)
+                            }
                         } onDelete: { links in
                             self?.linkController.remove(links: links, from: module, context: CoreDataStack.shared.mainContext)
+                            if let section = self?.sections.firstIndex(where: { $0.type == .links }) {
+                                self?.tableView.reloadSections([section], with: .none)
+                            }
                         }
                     }
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
