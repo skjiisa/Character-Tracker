@@ -18,8 +18,9 @@ struct LinksSection: View {
     
     @Binding var editMode: Bool
     var create: () -> Void
+    var delete: ([ExternalLink]) -> Void
         
-    init(predicate: NSPredicate, editMode: Binding<Bool>, onCreate: @escaping () -> Void) {
+    init(predicate: NSPredicate, editMode: Binding<Bool>, onCreate: @escaping () -> Void, onDelete: @escaping ([ExternalLink]) -> Void) {
         linksFetchRequest = FetchRequest(
             entity: ExternalLink.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \ExternalLink.name, ascending: true)],
@@ -27,14 +28,15 @@ struct LinksSection: View {
             animation: .default)
         _editMode = editMode
         create = onCreate
+        delete = onDelete
     }
     
-    init(mod: Mod, editMode: Binding<Bool>, onCreate: @escaping () -> Void) {
-        self.init(predicate: NSPredicate(format: "%@ IN mods", mod), editMode: editMode, onCreate: onCreate)
+    init(mod: Mod, editMode: Binding<Bool>, onCreate: @escaping () -> Void, onDelete: @escaping ([ExternalLink]) -> Void) {
+        self.init(predicate: NSPredicate(format: "%@ IN mods", mod), editMode: editMode, onCreate: onCreate, onDelete: onDelete)
     }
     
-    init(module: Module, onCreate: @escaping () -> Void) {
-        self.init(predicate: NSPredicate(format: "%@ IN modules", module), editMode: .constant(true), onCreate: onCreate)
+    init(module: Module, onCreate: @escaping () -> Void, onDelete: @escaping ([ExternalLink]) -> Void) {
+        self.init(predicate: NSPredicate(format: "%@ IN modules", module), editMode: .constant(true), onCreate: onCreate, onDelete: onDelete)
     }
     
     var body: some View {
@@ -44,7 +46,7 @@ struct LinksSection: View {
                     LinkItem(link: link, editMode: $editMode)
                 }
                 .onDelete { indexSet in
-                    indexSet.map { links[$0] }.forEach(moc.delete)
+                    delete(indexSet.map { links[$0] })
                 }
                 
                 if editMode {

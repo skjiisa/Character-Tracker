@@ -7,7 +7,7 @@
 
 import CoreData
 
-class LinkController {
+class LinkController: ObservableObject {
     var tempLinks: [ExternalLink] = []
     
     func fetchTempLinks(for module: Module) {
@@ -17,5 +17,25 @@ class LinkController {
     func newLink(for module: Module, context moc: NSManagedObjectContext) {
         let link = ExternalLink(context: moc)
         link.modules = [module]
+    }
+    
+    func remove(links: [ExternalLink], from module: Module, context moc: NSManagedObjectContext) {
+        links.forEach { link in
+            link.mutableSetValue(forKey: "modules").remove(module)
+            deleteIfUnused(link, context: moc)
+        }
+    }
+    
+    func remove(links: [ExternalLink], from mod: Mod, context moc: NSManagedObjectContext) {
+        links.forEach { link in
+            link.mutableSetValue(forKey: "mods").remove(mod)
+            deleteIfUnused(link, context: moc)
+        }
+    }
+    
+    func deleteIfUnused(_ link: ExternalLink, context moc: NSManagedObjectContext) {
+        if ["attributes", "authors", "games", "ingredients", "mods", "modules", "races"].compactMap({ (link.value(forKey: $0) as? NSSet)?.anyObject() }).isEmpty {
+            moc.delete(link)
+        }
     }
 }

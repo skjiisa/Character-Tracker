@@ -468,6 +468,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                         LinksSection(module: module) {
                             // TODO: Refresh the links list
                             self?.linkController.newLink(for: module, context: CoreDataStack.shared.mainContext)
+                        } onDelete: { links in
+                            self?.linkController.remove(links: links, from: module, context: CoreDataStack.shared.mainContext)
                         }
                     }
                     .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)

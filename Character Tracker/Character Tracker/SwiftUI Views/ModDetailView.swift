@@ -30,7 +30,8 @@ struct ModDetailView: View {
     
     @EnvironmentObject var modController: ModController
     @EnvironmentObject var gameReference: GameReference
-    @ObservedObject var gameController = GameController()
+    @StateObject private var gameController = GameController()
+    @StateObject private var linkController = LinkController()
     
     @ObservedObject var mod: Mod
     
@@ -118,6 +119,8 @@ struct ModDetailView: View {
             
             LinksSection(mod: mod, editMode: $editMode) {
                 ExternalLink(mod: mod, context: moc)
+            } onDelete: { links in
+                linkController.remove(links: links, from: mod, context: moc)
             }
             
             // Modules
