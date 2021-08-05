@@ -9,6 +9,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 import ActionOver
+import Introspect
 
 struct ModDetailView: View {
     
@@ -43,6 +44,7 @@ struct ModDetailView: View {
     @State private var exportJSON: String? = nil
     @State private var exportFile: URL? = nil
     @State private var showingShareSheet = false
+    @State private var vc: UIViewController?
     
     init(mod: Mod, editMode: Bool = false) {
         self.mod = mod
@@ -120,7 +122,17 @@ struct ModDetailView: View {
             
             // Modules
             
-            ModulesSection(mod: mod, deleteDisabled: !editMode)
+            ModulesSection(mod: mod, deleteDisabled: !editMode) { module in
+                guard let vc = vc else { return print("no vc") }
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let moduleDetailVC = storyboard.instantiateViewController(withIdentifier: "ModuleDetail") as! ModuleDetailTableViewController
+                
+                moduleDetailVC.gameReference = gameReference
+                moduleDetailVC.moduleType = module.type
+                moduleDetailVC.module = module
+                
+                vc.navigationController?.pushViewController(moduleDetailVC, animated: true)
+            }
             
             if editMode {
                 Section {
@@ -221,6 +233,9 @@ struct ModDetailView: View {
                 }
             }
         }
+        .introspectViewController { vc in
+            self.vc = vc
+        }
         .navigationBarTitle(mod.name ?? "Mod")
         .navigationBarItems(trailing: editButton)
         .onDisappear {
@@ -247,10 +262,11 @@ struct ModulesSection: View {
     
     var mod: Mod
     var deleteDisabled: Bool
+    var selectModule: (Module) -> Void
     
     var body: some View {
         ForEach(types) { type in
-            ModuleTypeSection(mod: self.mod, type: type, deleteDisabled: self.deleteDisabled)
+            ModuleTypeSection(mod: mod, type: type, deleteDisabled: deleteDisabled, selectModule: selectModule)
         }
     }
 }
@@ -266,41 +282,31 @@ struct ModuleTypeSection: View {
     @EnvironmentObject var modController: ModController
     @EnvironmentObject var gameReference: GameReference
     
-    @State private var showingModule: Module?
-    
     var mod: Mod
     var type: ModuleType
     var deleteDisabled: Bool
+    var selectModule: (Module) -> Void
     
-    init(mod: Mod, type: ModuleType, deleteDisabled: Bool) {
+    init(mod: Mod, type: ModuleType, deleteDisabled: Bool, selectModule: @escaping (Module) -> Void) {
         self.mod = mod
         self.type = type
         self.deleteDisabled = deleteDisabled
         self.fetchRequest = FetchRequest(entity: Module.entity(), sortDescriptors: [], predicate: NSPredicate(format: "mod = %@ AND type = %@", mod, type))
+        self.selectModule = selectModule
     }
     
     var body: some View {
-        // I honestly don't really like this solution using Group
-        // since it adds so many layers, but we can't have the if
-        // statement top-level or do the check in the parent view
-        // with how things are set up right now.
+        // Not sure if I'm crazy or if they changed the SwiftUI compiler,
+        // but this Group doesn't actually need to be here.
+        //TODO: Remove this Group
         Group {
             if modules.count > 0 {
                 Section(header: Text(type.typeName.pluralize())) {
                     ForEach (modules) { module in
-                        // I would have preferred to have navigation links here,
-                        // but since ModuleDetailView is currently just a container
-                        // for a UITableView, the navigation bar gets all messed up
-                        // when you try navigating to it from SwiftUI.
                         Button(module.name ?? "Unknown module") {
-                            self.showingModule = module
+                            selectModule(module)
                         }
                         .foregroundColor(.primary)
-                        .sheet(item: $showingModule) { module in
-                            ModuleDetailView(module: module)
-                                .environmentObject(gameReference)
-                                .environment(\.managedObjectContext, moc)
-                        }
                     }
                     .onDelete { indexSet in
                         let modulesToRemove = indexSet.map { modules[$0] }

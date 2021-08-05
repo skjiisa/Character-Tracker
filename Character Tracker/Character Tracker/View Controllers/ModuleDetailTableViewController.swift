@@ -466,9 +466,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 let linkEditor = UIHostingController(rootView: NavigationView { [weak self] in
                     Form {
                         LinksSection(module: module) {
-                            // I was expecting to have to update the links section here, but it
-                            // seems to be reloading the view controller without me telling it to.
-                            // TODO: Investigate why this is updating without me telling it to.
+                            // TODO: Refresh the links list
                             self?.linkController.newLink(for: module, context: CoreDataStack.shared.mainContext)
                         }
                     }
