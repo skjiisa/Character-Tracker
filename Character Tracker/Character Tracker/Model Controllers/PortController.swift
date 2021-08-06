@@ -244,7 +244,7 @@ class PortController {
         
         // Links
         let links = JSONRepresentation<ExternalLink>(
-            arrayKey: "linkNames",
+            arrayKey: "link_names",
             attributes: ["name"],
             idIsUUID: false)
         setRep(links)
@@ -390,7 +390,7 @@ class PortController {
         try importClass(Race.self, json: importJSON, context: context)
         try importClass(Character.self, json: importJSON, context: context)
         try importClass(Mod.self, json: importJSON, context: context)
-        // Links shouldn't be created from the linkNames section of the JSON.
+        // Links shouldn't be created from the link_names section of the JSON.
         // That should only be used to add names, so updateOnly is true.
         try importClass(ExternalLink.self, json: importJSON, updateOnly: true, context: context)
         
