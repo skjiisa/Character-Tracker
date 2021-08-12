@@ -64,7 +64,7 @@ class IngredientController: EntityController {
         CoreDataStack.shared.save(context: context)
     }
     
-    func fetchTempIngredients(for module: Module, in game: Game, context: NSManagedObjectContext) {
+    func fetchTempIngredients(for module: Module, in game: Game) {
         tempEntities = []
         
         guard let moduleIngredients = module.ingredients as? Set<ModuleIngredient> else { return }

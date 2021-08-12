@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-protocol ModulesFilterFormDelegate: class {
+protocol ModulesFilterFormDelegate: AnyObject {
     func toggle(_: ModuleType)
     func toggle(_: Attribute)
     func clearFilter()

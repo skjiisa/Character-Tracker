@@ -135,6 +135,7 @@ class JSONController {
     static func fetchAndImportAllObjects<ObjectType: NSManagedObject> (
         from json: JSON,
         jsonRepresentation rep: JSONRepresentation<ObjectType>,
+        updateOnly: Bool = false,
         context: NSManagedObjectContext) throws -> [String] {
         var output: [String] = []
         
@@ -143,7 +144,7 @@ class JSONController {
             var allObjects = try self.allObjects(for: rep, context: context)
             
             objectsLoop: for objectJSON in objects {
-                guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: rep.idIsUUID, context: context) else { continue }
+                guard let object = getOrCreateObject(json: objectJSON, from: allObjects, idIsUUID: rep.idIsUUID, getOnly: updateOnly, context: context) else { continue }
                 
                 importAttributes(with: rep.attributes, for: object, from: objectJSON)
                 
@@ -185,33 +186,29 @@ class JSONController {
     }
     
     // This could maybe be simplified using implicit conversions between Strings and UUIDs
-    static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], idIsUUID: Bool = true, context: NSManagedObjectContext) -> ObjectType? {
+    static private func getOrCreateObject<ObjectType: NSManagedObject>(json: JSON, from existingObjects: [ObjectType], idIsUUID: Bool = true, getOnly: Bool = false, context: NSManagedObjectContext) -> ObjectType? {
         guard let idString = json["id"].string else { return nil }
         
         if idIsUUID {
             guard let uuid = UUID(uuidString: idString) else { return nil }
             
-            if let existingObject = existingObjects.first(where: { existingObject -> Bool in
+            return existingObjects.first(where: { existingObject -> Bool in
                 guard let id = existingObject.value(forKey: "id") as? UUID else { return false }
                 return id == uuid
-            }) {
-                return existingObject
-            }
-            
-            let object = ObjectType(context: context)
-            object.setValue(uuid, forKey: "id")
-            return object
+            }) ?? (getOnly ? nil : {
+                let object = ObjectType(context: context)
+                object.setValue(uuid, forKey: "id")
+                return object
+            }())
         } else {
-            if let existingObject = existingObjects.first(where: { existingObject -> Bool in
+            return existingObjects.first(where: { existingObject -> Bool in
                 guard let id = existingObject.value(forKey: "id") as? String else { return false }
                 return id.lowercased() == idString.lowercased()
-            }) {
-                return existingObject
-            }
-            
-            let object = ObjectType(context: context)
-            object.setValue(idString, forKey: "id")
-            return object
+            }) ?? (getOnly ? nil : {
+                let object = ObjectType(context: context)
+                object.setValue(idString, forKey: "id")
+                return object
+            }())
         }
     }
     

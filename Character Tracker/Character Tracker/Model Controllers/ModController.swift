@@ -42,7 +42,7 @@ class ModController: ObservableObject {
             delete(mod: mod, context: context)
         }
         
-        CoreDataStack.shared.save(context: context)
+        CoreDataStack.shared.save(context: context, source: "ModController.saveOrDeleteIfEmpty")
     }
     
     //MARK: Modules

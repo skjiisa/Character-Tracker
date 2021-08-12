@@ -35,3 +35,17 @@ extension ImageLink {
         set { self.id = newValue }
     }
 }
+
+extension ExternalLink {
+    var wrappedName: String {
+        get { name ?? "" }
+        set { name = newValue }
+    }
+}
+
+extension Optional where Wrapped == String {
+    var wrappedString: String {
+        get { self ?? "" }
+        set { self = newValue }
+    }
+}

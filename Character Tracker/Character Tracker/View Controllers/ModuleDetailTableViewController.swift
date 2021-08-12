@@ -23,6 +23,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     let moduleController = ModuleController()
     let attributeController = AttributeController()
     var ingredientController = IngredientController()
+    let linkController = LinkController()
     var gameReference: GameReference? {
         didSet {
             if let game = gameReference?.game {
@@ -36,14 +37,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             if let module = module,
                 let currentGame = gameReference?.game {
                 self.name = module.name
-                let context = CoreDataStack.shared.mainContext
                 let games = module.mutableSetValue(forKey: "games")
                 if let gamesArray = games.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [Game] {
                     self.games = gamesArray
                 }
-                ingredientController.fetchTempIngredients(for: module, in: currentGame, context: context)
-                moduleController.fetchTempModules(for: module, game: currentGame, context: context)
-                attributeController.fetchTempAttributes(for: module, context: context)
+                
+                ingredientController.fetchTempIngredients(for: module, in: currentGame)
+                moduleController.fetchTempModules(for: module, game: currentGame)
+                attributeController.fetchTempAttributes(for: module)
+                linkController.fetchTempLinks(for: module)
             }
         }
     }
@@ -62,6 +64,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         case attributes
         case games
         case spacer
+        case links
     }
     
     var sections: [(name: String?, type: SectionTypes)] = []
@@ -163,6 +166,8 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             return games.count + editMode.int
         case .spacer:
             return 0
+        case .links:
+            return linkController.tempLinks.count + editMode.int
         }
     }
     
@@ -303,6 +308,15 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectGameCell", for: indexPath)
             }
+        case .links:
+            if indexPath.row < linkController.tempLinks.count {
+                cell = tableView.dequeueReusableCell(withIdentifier: "LinkCell", for: indexPath)
+                cell.textLabel?.text = linkController.tempLinks[indexPath.row].wrappedName
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+                cell.textLabel?.text = "Edit links"
+                cell.detailTextLabel?.text = nil
+            }
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
         }
@@ -314,21 +328,20 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard editMode else { return false }
         
-        //TODO: replace this array with an integer
-        let array: [Any]
+        let endIndex: Int
         switch sections[indexPath.section].type {
         case .ingredients:
-            array = ingredientController.tempEntities
+            endIndex = ingredientController.tempEntities.count
         case .modules:
-            array = moduleController.tempEntities
+            endIndex = moduleController.tempEntities.count
         case .attributes:
-            array = attributeController.tempEntities
+            endIndex = attributeController.tempEntities.count
         case .games where games.firstIndex(where: { $0 == gameReference?.game }) != indexPath.row:
-            array = games
+            endIndex = games.count
         default:
             return false
         }
-        return indexPath.row < array.count
+        return indexPath.row < endIndex
     }
 
     // Override to support editing the table view.
@@ -440,6 +453,35 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
                 tableView.deselectRow(at: indexPath, animated: true)
                 prompt(title: ingredient.name ?? "Ingredient", message: "Plugin and FormID:\n\(ingredient.id ?? "")")
             }
+        case .links:
+            tableView.deselectRow(at: indexPath, animated: true)
+            if indexPath.row < linkController.tempLinks.count {
+                // Open the link
+                if let url = URL(string: linkController.tempLinks[indexPath.row].id.wrappedString) {
+                    UIApplication.shared.open(url)
+                }
+            } else {
+                // Open the link editor
+                guard let module = module else { return }
+                let linkEditor = UIHostingController(rootView: NavigationView { [weak self] in
+                    Form {
+                        LinksSection(module: module) {
+                            self?.linkController.newLink(for: module, context: CoreDataStack.shared.mainContext)
+                            if let section = self?.sections.firstIndex(where: { $0.type == .links }) {
+                                self?.tableView.reloadSections([section], with: .none)
+                            }
+                        } onDelete: { links in
+                            self?.linkController.remove(links: links, from: module, context: CoreDataStack.shared.mainContext)
+                            if let section = self?.sections.firstIndex(where: { $0.type == .links }) {
+                                self?.tableView.reloadSections([section], with: .none)
+                            }
+                        }
+                    }
+                    .environment(\.managedObjectContext, CoreDataStack.shared.mainContext)
+                    .navigationBarTitle("\(module.name.wrappedString) Links")
+                })
+                present(linkEditor, animated: true)
+            }
         default:
             break
         }
@@ -476,6 +518,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         sections.append(("Required Modules", .modules))
         sections.append(("Attributes", .attributes))
         sections.append(("Games", .games))
+        sections.append(("Links", .links))
     }
     
     private func updateViews() {

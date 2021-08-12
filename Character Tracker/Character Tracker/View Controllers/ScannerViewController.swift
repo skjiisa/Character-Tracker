@@ -9,7 +9,7 @@
 import SwiftUI
 import AVFoundation
 
-protocol ScannerViewControllerDelegate: class {
+protocol ScannerViewControllerDelegate: AnyObject {
     func found(code: String)
 }
 

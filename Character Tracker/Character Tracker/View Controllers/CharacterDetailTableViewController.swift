@@ -33,8 +33,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             name = character.name
             race = character.race
             female = character.female
-            attributeController.fetchTempAttributes(for: character, context: CoreDataStack.shared.mainContext)
-            moduleController.fetchTempModules(for: character, context: CoreDataStack.shared.mainContext)
+            attributeController.fetchTempAttributes(for: character)
+            moduleController.fetchTempModules(for: character)
             attributeTypeSectionController?.loadTempSections(for: character)
         }
     }
@@ -107,7 +107,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let character = character {
-            moduleController.checkTempModules(againstCharacter: character, context: CoreDataStack.shared.mainContext)
+            moduleController.checkTempModules(againstCharacter: character)
         }
         tableView.reloadData()
     }
