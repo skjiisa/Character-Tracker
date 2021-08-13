@@ -418,14 +418,38 @@ class PortController {
         return jsonRep?.json(objects).rawString(options: prettyPrinted ? .prettyPrinted : .fragmentsAllowed)
     }
     
-    func exportToQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> CGImage? {
-        exportToQRCode(for: [object])
+    func exportToQRCodes<ObjectType: NSManagedObject>(for object: ObjectType) -> [CGImage]? {
+        exportToQRCodes(for: [object])
     }
     
-    func exportToQRCode<ObjectType: NSManagedObject>(for objects: [ObjectType]) -> CGImage? {
+    func exportToQRCodes<ObjectType: NSManagedObject>(for objects: [ObjectType]) -> [CGImage]? {
         guard let json = jsonString(for: objects, prettyPrinted: false),
-            let icon = UIImage(named: "IconVector"),
-            let inputImage = CIImage(image: icon) else { return nil }
+              let jsonData = json.data(using: .utf8),
+              let icon = UIImage(named: "IconVector"),
+              let inputImage = CIImage(image: icon) else { return nil }
+        
+        // QR Codes can only hold up to 2953 bytes of binary data.
+        // Split it up into multiple codes if the JSON is too large
+        
+        let inputs: [String]
+        if jsonData.count > 2953 {
+            // Divide into chunks of max size 2900 to give space for the header
+            // and a large buffer for UTF-8 characters that are multiple bytes.
+            // Ideally the UTF-8 data should be split up rather than the string
+            // itself, but EFQRCode doesn't support passing in raw data.
+            // Header example: 99/99\n
+            let numCodes = Int(ceil(Float(json.count) / 2900))
+            let sizeEach = Float(json.count) / Float(numCodes)
+            
+            inputs = (0..<numCodes).map { index in
+                let startIndex = json.index(json.startIndex, offsetBy: Int(round(Float(index) * sizeEach)))
+                let endIndex = json.index(json.startIndex, offsetBy: Int(round(Float(index + 1) * sizeEach)), limitedBy: json.endIndex) ?? json.endIndex
+                let input = json[startIndex..<endIndex]
+                return "\(index)/\(numCodes)\n" + input
+            }
+        } else {
+            inputs = [json]
+        }
         
         var watermark: CGImage?
         
@@ -438,25 +462,27 @@ class PortController {
             watermark = context.createCGImage(ciImage, from: inputImage.extent)
         }
         
-        return EFQRCode.generate(content: json,
-                                 size: EFIntSize(width: 512, height: 512),
-                                 watermark: watermark,
-                                 inputCorrectionLevel: .m,
-                                 magnification: EFIntSize(width: 10, height: 10))
+        return inputs.map { input in
+            EFQRCode.generate(content: input,
+                              size: EFIntSize(width: 512, height: 512),
+                              watermark: watermark,
+                              inputCorrectionLevel: .l,
+                              magnification: EFIntSize(width: 10, height: 10))
+        } as? [CGImage] // If any QR code fails to generate, don't return any.
     }
     
-    func saveTempQRCode(cgImage: CGImage) -> URL? {
+    func saveTempQRCode(cgImage: CGImage, index: Int) -> URL? {
         let url = FileManager.default.temporaryDirectory
-            .appendingPathComponent("QRCode")
+            .appendingPathComponent("QRCode\(index)")
             .appendingPathExtension("png")
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return nil }
         CGImageDestinationAddImage(destination, cgImage, nil)
         return CGImageDestinationFinalize(destination) ? url : nil
     }
     
-    func saveTempQRCode<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
-        guard let qrCode = exportToQRCode(for: object) else { return nil }
-        return saveTempQRCode(cgImage: qrCode)
+    func saveTempQRCodes<ObjectType: NSManagedObject>(for object: ObjectType) -> [URL]? {
+        guard let qrCodes = exportToQRCodes(for: object) else { return nil }
+        return qrCodes.enumerated().map { saveTempQRCode(cgImage: $1, index: $0) } as? [URL]
     }
     
     func saveTempJSON<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
