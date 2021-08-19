@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftyJSON
 
 struct ScannerView: UIViewControllerRepresentable {
     typealias UIViewControllerType = ScannerViewController
@@ -34,18 +35,39 @@ struct ScannerView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: ScannerViewController, context: Context) {}
     
-    class Coordinator: ScannerViewControllerDelegate {
+    class Coordinator: ScannerViewControllerDelegate, MultiQRDelegate {
         var parent: ScannerView
+        var multiQR: MultiQR?
         
         init(_ parent: ScannerView) {
             self.parent = parent
         }
         
         func found(code: String) {
+            let json = JSON(parseJSON: code)
+            // Confusingly, json's null value being nil means that the JSON is not null.
+            if json.null == nil {
+                // This code is JSON
+                self.import(json: json)
+            } else {
+                // This code is not JSON. Try to load it as a MultiQR
+                if let multiQR = multiQR {
+                    // If this is the last code, MultiQR will call its delegate's
+                    // `import` function, in this case its delegate being this.
+                    multiQR.scan(code: code)
+                } else {
+                    multiQR = MultiQR(code: code, delegate: self)
+                }
+            }
+        }
+        
+        func `import`(json: JSON) {
+            print("JSON import successful!", json)
+            
             let context = CoreDataStack.shared.container.newBackgroundContext()
             
             context.performAndWait {
-                let importedNames = PortController.shared.importOnBackgroundContext(string: code, context: context)
+                let importedNames = PortController.shared.import(json: json, context: context)
                 
                 let save = Alert.Button.default(Text("Save")) {
                     CoreDataStack.shared.save(context: context)

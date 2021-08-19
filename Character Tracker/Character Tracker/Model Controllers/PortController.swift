@@ -395,6 +395,7 @@ class PortController {
         jsonRepresentations.values.forEach { $0.clearObjects() }
     }
     
+    //TODO: Remove this in favor of `import`
     @discardableResult
     func importOnBackgroundContext(string: String, context: NSManagedObjectContext) -> [String] {
         let json = JSON(parseJSON: string)
@@ -402,6 +403,19 @@ class PortController {
         
         do {
             try importData(json: json, context: context)
+        } catch {
+            NSLog("Error importing JSON: \(error)")
+        }
+        
+        return lastImport
+    }
+    
+    @discardableResult
+    func `import`(json: JSON, context moc: NSManagedObjectContext) -> [String] {
+        lastImport.removeAll()
+        
+        do {
+            try importData(json: json, context: moc)
         } catch {
             NSLog("Error importing JSON: \(error)")
         }
@@ -577,7 +591,7 @@ class MultiQR {
         // Check if the JSON is complete
         if content.count == total + 1,
            let unwrappedContent = content as? [String] {
-            delegate?.import(json: JSON(stringLiteral: unwrappedContent.reduce("", +)))
+            delegate?.import(json: JSON(parseJSON: unwrappedContent.reduce("", +)))
         }
         
         return counts.index
