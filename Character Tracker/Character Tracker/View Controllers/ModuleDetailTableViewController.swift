@@ -679,38 +679,34 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     @IBAction func export(_ sender: Any) {
-        guard let module = module,
-              let type = module.type else { return }
-        let qrCode = PortController.shared.exportToQRCode(for: module)
+        guard let module = module else { return }
         
-        let actionSheet = UIAlertController(title: "Export \(module.name ?? "Module")", message: qrCode == nil ? "\(type.typeName) too large to generate QR code." : nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Export \(module.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
         
-        let json = UIAlertAction(title: "JSON Text", style: .default) { _ in
-            guard let module = self.module,
-                let json = PortController.shared.exportJSONText(for: module) else { return }
-            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
-            self.present(activityVC, animated: true)
+        let qrCodeAction = UIAlertAction(title: "QR Codes", style: .default) { [weak self] _ in
+            self?.qrCodes()
         }
         
-        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { _ in
-            guard let module = self.module,
-                let url = PortController.shared.saveTempJSON(for: module) else { return }
+        let json = UIAlertAction(title: "JSON Text", style: .default) { [weak self] _ in
+            guard let module = self?.module,
+                  let json = PortController.shared.exportJSONText(for: module) else { return }
+            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
+            self?.present(activityVC, animated: true)
+        }
+        
+        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { [weak self] _ in
+            guard let module = self?.module,
+                  let url = PortController.shared.saveTempJSON(for: module) else { return }
             let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             activityVC.completionWithItemsHandler = { _, _, _, _ in
                 PortController.shared.clearFilesFromTempDirectory()
             }
-            self.present(activityVC, animated: true)
+            self?.present(activityVC, animated: true)
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
-        if let qrCode = qrCode {
-            let qrCodeAction = UIAlertAction(title: "QR Code", style: .default) { _ in
-                self.qrCode(qrCode)
-            }
-            
-            actionSheet.addAction(qrCodeAction)
-        }
+        actionSheet.addAction(qrCodeAction)
         actionSheet.addAction(json)
         actionSheet.addAction(jsonFile)
         actionSheet.addAction(cancel)
@@ -725,10 +721,14 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         present(actionSheet, animated: true)
     }
     
-    private func qrCode(_ code: CGImage) {
+    private func qrCodes() {
+        //TODO: Generate QR codes on background thread and show a loading toast.
+        guard let module = module,
+              let codes = PortController.shared.exportToQRCodes(for: module), let qrCodes = QRCodes(codes) else { return }
+        
         let qrCodeView = UIHostingController(rootView:
             NavigationView {
-                QRCodeView(name: self.module?.name, qrCode: code, delegate: self)
+                QRCodeView(name: module.name, qrCodes: qrCodes, delegate: self)
             }.navigationViewStyle(StackNavigationViewStyle())
         )
         

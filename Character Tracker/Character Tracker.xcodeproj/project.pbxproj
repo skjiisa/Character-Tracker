@@ -17,6 +17,7 @@
 		591040EA24F874DE00FDA521 /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591040E924F874DE00FDA521 /* IngredientsView.swift */; };
 		591040F024F896FF00FDA521 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 591040EF24F896FF00FDA521 /* SDWebImageSwiftUI */; };
 		591B236324EB299B0002096A /* CharacterTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591B236224EB299B0002096A /* CharacterTrackerViewController.swift */; };
+		591B7CAD26CDE47D00C43949 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 591B7CAC26CDE47D00C43949 /* AlertToast */; };
 		592F0D8B23DAB2CA00F06F75 /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F0D8A23DAB2CA00F06F75 /* Pluralize.swift */; };
 		593ADAF926BB67710097F43E /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 593ADAF826BB67710097F43E /* Introspect */; };
 		593DDF0924F47B0900D9E357 /* ModController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593DDF0824F47B0900D9E357 /* ModController.swift */; };
@@ -177,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5901BC01252E70160056886F /* ActionOver in Frameworks */,
+				591B7CAD26CDE47D00C43949 /* AlertToast in Frameworks */,
 				593ADAF926BB67710097F43E /* Introspect in Frameworks */,
 				59FDD1AD26B5E7260061FC5F /* Coalescing Operators in Frameworks */,
 				591040F024F896FF00FDA521 /* SDWebImageSwiftUI in Frameworks */,
@@ -406,6 +408,7 @@
 				5901BC00252E70160056886F /* ActionOver */,
 				59FDD1AC26B5E7260061FC5F /* Coalescing Operators */,
 				593ADAF826BB67710097F43E /* Introspect */,
+				591B7CAC26CDE47D00C43949 /* AlertToast */,
 			);
 			productName = "Character Tracker";
 			productReference = 595F7717236A55EF00151209 /* Character Tracker.app */;
@@ -442,6 +445,7 @@
 				5901BBFF252E70160056886F /* XCRemoteSwiftPackageReference "ActionOver" */,
 				59FDD1AB26B5E7260061FC5F /* XCRemoteSwiftPackageReference "Coalescing-Operators" */,
 				593ADAF726BB67710097F43E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				591B7CAB26CDE47D00C43949 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 595F7718236A55EF00151209 /* Products */;
 			projectDirPath = "";
@@ -763,6 +767,14 @@
 				minimumVersion = 1.5.0;
 			};
 		};
+		591B7CAB26CDE47D00C43949 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		593ADAF726BB67710097F43E /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
@@ -807,6 +819,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 591040EE24F896FF00FDA521 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		591B7CAC26CDE47D00C43949 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 591B7CAB26CDE47D00C43949 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		593ADAF826BB67710097F43E /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;

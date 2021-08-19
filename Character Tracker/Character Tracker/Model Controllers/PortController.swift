@@ -418,10 +418,24 @@ class PortController {
         return jsonRep?.json(objects).rawString(options: prettyPrinted ? .prettyPrinted : .fragmentsAllowed)
     }
     
+    /// Generates QR codes for the given object.
+    /// - Parameter object: An object of a type that can be exported to
+    /// JSON (by setting it in the `PortController` initializer).
+    /// - Returns: An array of QR codes with the encoded JSON.
+    ///
+    /// This process can take a long time, especially if the generated
+    /// JSON for the object is more than can fit into a single QR code.
     func exportToQRCodes<ObjectType: NSManagedObject>(for object: ObjectType) -> [CGImage]? {
         exportToQRCodes(for: [object])
     }
     
+    /// Generates QR codes for the given objects.
+    /// - Parameter objects: An array of objects of types that can be exported to
+    /// JSON (by setting them in the `PortController` initializer).
+    /// - Returns: An array of QR codes with the encoded JSON.
+    ///
+    /// This process can take a long time, especially if the generated
+    /// JSON for the objects is more than can fit into a single QR code.
     func exportToQRCodes<ObjectType: NSManagedObject>(for objects: [ObjectType]) -> [CGImage]? {
         guard let json = jsonString(for: objects, prettyPrinted: false),
               let jsonData = json.data(using: .utf8),
@@ -471,18 +485,22 @@ class PortController {
         } as? [CGImage] // If any QR code fails to generate, don't return any.
     }
     
-    func saveTempQRCode(cgImage: CGImage, index: Int) -> URL? {
+    func saveTempQRCode(_ qrCode: CGImage, index: Int) -> URL? {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("QRCode\(index)")
             .appendingPathExtension("png")
         guard let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) else { return nil }
-        CGImageDestinationAddImage(destination, cgImage, nil)
+        CGImageDestinationAddImage(destination, qrCode, nil)
         return CGImageDestinationFinalize(destination) ? url : nil
+    }
+    
+    func saveTempQRCodes(_ qrCodes: [CGImage]) -> [URL]? {
+        qrCodes.enumerated().map { saveTempQRCode($1, index: $0) } as? [URL]
     }
     
     func saveTempQRCodes<ObjectType: NSManagedObject>(for object: ObjectType) -> [URL]? {
         guard let qrCodes = exportToQRCodes(for: object) else { return nil }
-        return qrCodes.enumerated().map { saveTempQRCode(cgImage: $1, index: $0) } as? [URL]
+        return saveTempQRCodes(qrCodes)
     }
     
     func saveTempJSON<ObjectType: NSManagedObject>(for object: ObjectType) -> URL? {
