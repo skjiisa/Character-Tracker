@@ -68,6 +68,8 @@ Dependencies are either included in-code or obtained through Swift Package Manag
 * [EFQRCode](https://github.com/EFPrefix/EFQRCode)
 * [SDWebImage](https://github.com/SDWebImage/SDWebImage)
 * [ActionOver](https://github.com/AndreaMiotto/ActionOver)
+* [Introspect for SwiftUI](https://github.com/siteline/SwiftUI-Introspect)
+* [AlertToast](https://github.com/elai950/AlertToast)
 
 There may be build warnings for SPM packages about an iOS 8 deployment target.
 These are issues with the packages themselves and can safely be ignored.
