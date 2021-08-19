@@ -540,3 +540,59 @@ class PortController {
     }
     
 }
+
+//MARK: MultiQR
+
+protocol MultiQRDelegate: AnyObject {
+    func `import`(json: JSON)
+}
+
+class MultiQR {
+    var total: Int
+    var content: [String?] = []
+    weak var delegate: MultiQRDelegate?
+    
+    init?(code: String, delegate: MultiQRDelegate) {
+        guard let total = try? MultiQR.getCounts(in: code)?.total else { return nil }
+        self.total = total
+        self.delegate = delegate
+        
+        scan(code: code)
+    }
+    
+    @discardableResult
+    func scan(code: String) -> Int? {
+        guard let counts = try? MultiQR.getCounts(in: code),
+              counts.total == total,
+              counts.index <= counts.total else { return nil }
+        
+        var jsonFragment = code
+        jsonFragment.removeSubrange(code.lineRange(for: ..<code.startIndex))
+        
+        while content.count < counts.index + 1 {
+            content.append(nil)
+        }
+        content[counts.index] = jsonFragment
+        
+        // Check if the JSON is complete
+        if content.count == total + 1,
+           let unwrappedContent = content as? [String] {
+            delegate?.import(json: JSON(stringLiteral: unwrappedContent.reduce("", +)))
+        }
+        
+        return counts.index
+    }
+    
+    static func getCounts(in string: String) throws -> (index: Int, total: Int)? {
+        let firstLineRange = string.lineRange(for: ..<string.startIndex)
+        let regex = try NSRegularExpression(pattern: #"\A(\d+)\/(\d+)$"#, options: [])
+        
+        guard let match = regex.firstMatch(in: string, options: [], range: NSRange(firstLineRange, in: string)),
+              let indexRange = Range(match.range(at: 1), in: string),
+              let totalRange = Range(match.range(at: 2), in: string) else { return nil }
+        let index = string[indexRange]
+        let total = string[totalRange]
+        
+        return (Int(index), Int(total)) as? (Int, Int)
+    }
+}
