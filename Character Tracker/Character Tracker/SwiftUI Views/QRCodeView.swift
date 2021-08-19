@@ -30,8 +30,19 @@ struct QRCodes: Identifiable {
 //MARK: URLs
 
 struct URLs: Identifiable {
-    var id = UUID()
-    var urls: [URL]?
+    var id: UUID
+    var urls: [URL]
+    
+    init?(_ urls: [URL]) {
+        guard !urls.isEmpty else { return nil }
+        self.urls = urls
+        id = UUID()
+    }
+    
+    init(url: URL) {
+        urls = [url]
+        id = UUID()
+    }
 }
 
 //MARK: QRCodeView
@@ -41,8 +52,7 @@ struct QRCodeView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var shareURLs: [URL]?
-    @State private var showingShareSheet: Bool = false
+    @State private var shareURLs: URLs?
     @State private var selection: Int = 0
     
     var name: String?
@@ -60,8 +70,7 @@ struct QRCodeView: View {
     var shareButton: some View {
         Button {
             guard let url = PortController.shared.saveTempQRCode(qrCodes.codes[selection], index: selection) else { return }
-            shareURLs = [url]
-            showingShareSheet = true
+            shareURLs = URLs(url: url)
         } label: {
             if #available(iOS 14.0, *) {
                 // Label improves accessibility by having a title.
@@ -77,8 +86,7 @@ struct QRCodeView: View {
     var shareAllButton: some View {
         Button {
             guard let urls = PortController.shared.saveTempQRCodes(qrCodes.codes) else { return }
-            shareURLs = urls
-            showingShareSheet = true
+            shareURLs = URLs(urls)
         } label: {
             if #available(iOS 14.0, *) {
                 // Label improves accessibility by having a title.
@@ -140,12 +148,10 @@ struct QRCodeView: View {
         }
         qrCodesList
             .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
-            .sheet(isPresented: $showingShareSheet) {
+            .sheet(item: $shareURLs) {
                 PortController.shared.clearFilesFromTempDirectory()
-            } content: {
-                if let shareURLs = shareURLs {
-                    ShareSheet(activityItems: shareURLs)
-                }
+            } content: { urls in
+                ShareSheet(activityItems: urls.urls)
             }
     }
 }
