@@ -19,6 +19,9 @@ protocol SwiftUIModalDelegate {
 struct QRCodes: Identifiable {
     var id: UUID
     var codes: [CGImage]
+    var count: Int {
+        codes.count
+    }
     
     init?(_ codes: [CGImage]) {
         guard !codes.isEmpty else { return nil }
@@ -80,7 +83,6 @@ struct QRCodeView: View {
                 Image(systemName: "square.and.arrow.up")
             }
         }
-        .imageScale(.large)
     }
     
     var shareAllButton: some View {
@@ -96,7 +98,17 @@ struct QRCodeView: View {
                 Image(systemName: "square.and.arrow.up.on.square")
             }
         }
-        .imageScale(.large)
+    }
+    
+    var shareBarButtons: some View {
+        HStack {
+            shareButton
+            if qrCodes.count > 1 {
+                shareAllButton
+                    .padding(.leading)
+            }
+        }
+        .font(.body)
     }
     
     var doneButton: some View {
@@ -110,7 +122,7 @@ struct QRCodeView: View {
     var qrCodesList: some View {
         if #available(iOS 14.0, *) {
             TabView(selection: $selection) {
-                ForEach(0..<qrCodes.codes.count) { index in
+                ForEach(0..<qrCodes.count) { index in
                     Image(decorative: qrCodes.codes[index], scale: 1)
                         .resizable()
                         .scaledToFit()
@@ -118,22 +130,36 @@ struct QRCodeView: View {
                 }
             }
             .tabViewStyle(PageTabViewStyle())
+            .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     doneButton
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
                     shareButton
-                    if qrCodes.codes.count > 1 {
+                    if qrCodes.count > 1 {
+                        Spacer()
+                        Text("\(selection + 1)/\(qrCodes.count)")
+                            .font(.body.monospacedDigit())
                         Spacer()
                         shareAllButton
                     }
                 }
             }
         } else {
-            //TODO: iOS 13 solution
-            EmptyView()
-                .navigationBarItems(leading: shareButton, trailing: doneButton)
+            PageView(pageCount: qrCodes.count, currentIndex: $selection) {
+                ForEach(0..<qrCodes.count) { index in
+                    VStack {
+                        Spacer()
+                        Image(decorative: qrCodes.codes[index], scale: 1)
+                            .resizable()
+                            .scaledToFit()
+                        Spacer()
+                    }
+                }
+            }
+            .navigationBarTitle(qrCodes.count > 1 ? "\(selection + 1)/\(qrCodes.count)" : "\(name ?? "QR Code")", displayMode: .inline)
+            .navigationBarItems(leading: shareBarButtons, trailing: doneButton)
         }
     }
     
@@ -147,7 +173,6 @@ struct QRCodeView: View {
             EmptyView()
         }
         qrCodesList
-            .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
             .sheet(item: $shareURLs) {
                 PortController.shared.clearFilesFromTempDirectory()
             } content: { urls in
