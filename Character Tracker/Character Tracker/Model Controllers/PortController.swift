@@ -459,7 +459,7 @@ class PortController {
                 let startIndex = json.index(json.startIndex, offsetBy: Int(round(Float(index) * sizeEach)))
                 let endIndex = json.index(json.startIndex, offsetBy: Int(round(Float(index + 1) * sizeEach)), limitedBy: json.endIndex) ?? json.endIndex
                 let input = json[startIndex..<endIndex]
-                return "\(index)/\(numCodes)\n" + input
+                return "\(index)/\(numCodes-1)\n" + input
             }
         } else {
             inputs = [json]

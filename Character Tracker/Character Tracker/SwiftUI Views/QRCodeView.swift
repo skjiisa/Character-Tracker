@@ -8,9 +8,13 @@
 
 import SwiftUI
 
+//MARK: SwiftUIModalDelegate
+
 protocol SwiftUIModalDelegate {
     func dismiss()
 }
+
+//MARK: QRCodes
 
 struct QRCodes: Identifiable {
     var id: UUID
@@ -23,10 +27,21 @@ struct QRCodes: Identifiable {
     }
 }
 
+//MARK: URLs
+
+struct URLs: Identifiable {
+    var id = UUID()
+    var urls: [URL]?
+}
+
+//MARK: QRCodeView
+
 struct QRCodeView: View {
+    //MARK: Properties
+    
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var shareURL: URL?
+    @State private var shareURLs: [URL]?
     @State private var showingShareSheet: Bool = false
     @State private var selection: Int = 0
     
@@ -40,10 +55,12 @@ struct QRCodeView: View {
         self.delegate = delegate
     }
     
+    //MARK: Views
+    
     var shareButton: some View {
         Button {
-            guard let url = PortController.shared.saveTempQRCodes(qrCodes.codes)?.first else { return }
-            shareURL = url
+            guard let url = PortController.shared.saveTempQRCode(qrCodes.codes[selection], index: selection) else { return }
+            shareURLs = [url]
             showingShareSheet = true
         } label: {
             if #available(iOS 14.0, *) {
@@ -52,15 +69,15 @@ struct QRCodeView: View {
                     .labelStyle(IconOnlyLabelStyle())
             } else {
                 Image(systemName: "square.and.arrow.up")
-                    .imageScale(.large)
             }
         }
+        .imageScale(.large)
     }
     
     var shareAllButton: some View {
         Button {
             guard let urls = PortController.shared.saveTempQRCodes(qrCodes.codes) else { return }
-            //TODO: Shore URLs
+            shareURLs = urls
             showingShareSheet = true
         } label: {
             if #available(iOS 14.0, *) {
@@ -69,9 +86,9 @@ struct QRCodeView: View {
                     .labelStyle(IconOnlyLabelStyle())
             } else {
                 Image(systemName: "square.and.arrow.up.on.square")
-                    .imageScale(.large)
             }
         }
+        .imageScale(.large)
     }
     
     var doneButton: some View {
@@ -93,13 +110,29 @@ struct QRCodeView: View {
                 }
             }
             .tabViewStyle(PageTabViewStyle())
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    doneButton
+                }
+                ToolbarItemGroup(placement: .bottomBar) {
+                    shareButton
+                    if qrCodes.codes.count > 1 {
+                        Spacer()
+                        shareAllButton
+                    }
+                }
+            }
         } else {
             //TODO: iOS 13 solution
+            EmptyView()
+                .navigationBarItems(leading: shareButton, trailing: doneButton)
         }
     }
     
+    //MARK: Body
+    
     var body: some View {
-        if shareURL != nil {
+        if shareURLs != nil {
             // If we don't have anything observing shareURL,
             // it won't update, meaning it'll be nil when
             // we try accessing it for the Share Sheet.
@@ -107,12 +140,11 @@ struct QRCodeView: View {
         }
         qrCodesList
             .navigationBarTitle("\(name ?? "QR Code")", displayMode: .inline)
-            .navigationBarItems(leading: shareButton, trailing: doneButton)
             .sheet(isPresented: $showingShareSheet) {
                 PortController.shared.clearFilesFromTempDirectory()
             } content: {
-                if shareURL != nil {
-                    ShareSheet(activityItems: [shareURL!])
+                if let shareURLs = shareURLs {
+                    ShareSheet(activityItems: shareURLs)
                 }
             }
     }
