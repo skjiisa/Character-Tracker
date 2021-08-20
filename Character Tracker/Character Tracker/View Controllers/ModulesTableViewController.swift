@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import CoreData
+import SwiftyJSON
 
 class ModulesTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -26,6 +27,8 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var character: Character?
     var gameReference: GameReference?
     var showAll = false
+    var multiQR: MultiQR?
+    weak var scannerVC: ScannerViewController?
     var callbacks: [( (Module) -> Void )] = []
 
     let searchController = UISearchController(searchResultsController: nil)
@@ -296,6 +299,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         scannerVC.title = "Import from QR Code"
         scannerVC.delegate = self
         let scannerNavigationView = UINavigationController(rootViewController: scannerVC)
+        self.scannerVC = scannerVC
         present(scannerNavigationView, animated: true)
     }
 
@@ -415,5 +419,81 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
     
     func dismiss() {
         dismiss(animated: true)
+    }
+}
+
+//MARK: Scanner view controller delegate
+
+extension ModulesTableViewController: ScannerViewControllerDelegate, MultiQRDelegate {
+    func found(code: String, continueScanning: (() -> Void)?) {
+        
+        let json = JSON(parseJSON: code)
+        // Confusingly, json's null value being nil means that the JSON is not null.
+        if json.null == nil {
+            // This code is JSON
+            self.import(json: json)
+        } else {
+            // This code is not JSON. Try to load it as a MultiQR
+            var index: Int?
+            
+            if let multiQR = multiQR {
+                // If this is the last code, MultiQR will call its delegate's
+                // `import` function, in this case its delegate being this.
+                index = multiQR.scan(code: code)
+            } else {
+                multiQR = MultiQR(code: code, delegate: self)
+                index = multiQR?.content.firstIndex(where: { $0 != nil })
+            }
+            
+            let alert: UIAlertController
+            if let index = index,
+               let multiQR = multiQR {
+                // Show alert of the scanned index
+                alert = UIAlertController(title: "\(multiQR.scannedCodes)/\(multiQR.total + 1)",
+                                          message: "Code \(index + 1) scanned!",
+                                          preferredStyle: .alert)
+            } else {
+                // Show error
+                alert = UIAlertController(title: "Error", message: "Invalid code", preferredStyle: .alert)
+            }
+            //TODO: Allow the alert to be dismissed early on a tap
+            // Show the alert
+            guard let scannerVC = scannerVC else { return }
+            scannerVC.present(alert, animated: true) {
+                // Dismiss the alert after 2 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    scannerVC.dismiss(animated: true, completion: continueScanning)
+                }
+            }
+        }
+    }
+    
+    func `import`(json: JSON) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        // Dismiss the scanner
+        dismiss(animated: true) {
+            dispatchGroup.leave()
+        }
+        
+        let context = CoreDataStack.shared.container.newBackgroundContext()
+        
+        context.performAndWait {
+            let importedNames = PortController.shared.import(json: json, context: context)
+            
+            let alert = UIAlertController(title: "Imported objects", message: importedNames.joined(separator: ", "), preferredStyle: .alert)
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            let save = UIAlertAction(title: "Save", style: .default) { _ in
+                CoreDataStack.shared.save(context: context)
+            }
+            
+            alert.addAction(cancel)
+            alert.addAction(save)
+            
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                self?.present(alert, animated: true)
+            }
+        }
     }
 }
