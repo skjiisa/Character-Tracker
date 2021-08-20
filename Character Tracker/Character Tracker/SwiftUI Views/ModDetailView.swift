@@ -106,7 +106,7 @@ struct ModDetailView: View {
             // Images
             
             Section {
-                ImagesView(images: mod.images!.array as! [ImageLink], parent: mod) { imageLink in
+                ImagesView(images: mod.images?.array as? [ImageLink] ?? [], parent: mod) { imageLink in
                     self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
