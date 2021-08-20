@@ -51,6 +51,7 @@ struct URLs: Identifiable {
 //MARK: QRCodeView
 
 struct QRCodeView: View {
+    
     //MARK: Properties
     
     @Environment(\.presentationMode) var presentationMode

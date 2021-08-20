@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct ModsView: View {
+    
+    //MARK: Properties
+    
     @Environment(\.managedObjectContext) var moc
     var fetchRequest: FetchRequest<Mod>
     var mods: FetchedResults<Mod> {
@@ -34,33 +37,35 @@ struct ModsView: View {
         self.fetchRequest = FetchRequest(entity: Character_Tracker.Mod.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: predicate)
     }
     
+    //MARK: Views
+    
     var newModButton: some View {
-        Button(action: {
+        Button {
             guard let game = gameReference.game else { return }
-            let newMod = self.modController.create(game: game, context: self.moc)
+            let newMod = modController.create(game: game, context: moc)
             self.newMod = newMod
-        }) {
+        } label: {
             Image(systemName: "plus")
                 .imageScale(.large)
         }
     }
     
     var scannerButton: some View {
-        Button(action: {
-            self.showingScanner = true
-        }) {
+        Button {
+            showingScanner = true
+        } label: {
             Image(systemName: "qrcode.viewfinder")
                 .imageScale(.large)
         }
-        .sheet(isPresented: $showingScanner, onDismiss: {
+        .sheet(isPresented: $showingScanner) {
             // alert is set from the ScannerView binding, but it is set too fast,
             // before this sheet is dismissed, so the alert item needs to be set
             // after the sheet is dismissed.
-            guard let alert = self.alert else { return }
-            self.showingAlert = AlertContainer(alert)
-        }) {
-            ScannerNavigationView(showing: self.$showingScanner, alert: self.$alert)
-            }
+            guard let alert = alert else { return }
+            showingAlert = AlertContainer(alert)
+        } content: {
+            ScannerNavigationView(showing: $showingScanner, alert: $alert)
+        }
         .alert(item: $showingAlert) { alertContainer -> Alert in
             alertContainer.alert
         }
@@ -73,6 +78,8 @@ struct ModsView: View {
                 .padding(.leading)
         }
     }
+    
+    //MARK: Body
     
     var body: some View {
         List {
@@ -113,6 +120,8 @@ struct ModsView: View {
         }
     }
 }
+
+//MARK: Previews
 
 struct ModsView_Previews: PreviewProvider {
     static var previews: some View {

@@ -722,7 +722,6 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     }
     
     private func qrCodes() {
-        //TODO: Generate QR codes on background thread and show a loading toast.
         // Show loading toast
         let alert = UIAlertController(title: nil, message: "Generating QR Codes", preferredStyle: .alert)
         
@@ -739,6 +738,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
             dispatchGroup.leave()
         }
         
+        // Generate the QR codes on a background thread
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let module = self?.module,
                   let codes = PortController.shared.exportToQRCodes(for: module),
