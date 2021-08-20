@@ -566,6 +566,10 @@ class MultiQR {
     var content: [String?] = []
     weak var delegate: MultiQRDelegate?
     
+    var scannedCodes: Int {
+        content.compactMap { $0 }.count
+    }
+    
     init?(code: String, delegate: MultiQRDelegate) {
         guard let total = try? MultiQR.getCounts(in: code)?.total else { return nil }
         self.total = total

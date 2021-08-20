@@ -14,6 +14,7 @@ struct ScannerView: UIViewControllerRepresentable {
     
     @Binding var showing: Bool
     @Binding var alert: Alert?
+    @Binding var toast: ToastItem
     
     var dispatchGroup = DispatchGroup()
     
@@ -43,7 +44,7 @@ struct ScannerView: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        func found(code: String) {
+        func found(code: String, continueScanning: (() -> Void)?) {
             let json = JSON(parseJSON: code)
             // Confusingly, json's null value being nil means that the JSON is not null.
             if json.null == nil {
@@ -51,13 +52,29 @@ struct ScannerView: UIViewControllerRepresentable {
                 self.import(json: json)
             } else {
                 // This code is not JSON. Try to load it as a MultiQR
+                var index: Int?
+                
                 if let multiQR = multiQR {
                     // If this is the last code, MultiQR will call its delegate's
                     // `import` function, in this case its delegate being this.
-                    multiQR.scan(code: code)
+                    index = multiQR.scan(code: code)
                 } else {
                     multiQR = MultiQR(code: code, delegate: self)
+                    index = multiQR?.content.firstIndex(where: { $0 != nil })
                 }
+                
+                if let index = index,
+                   let multiQR = multiQR {
+                    // Show alert of the scanned index
+                    parent.toast.title = "\(multiQR.scannedCodes)/\(multiQR.total + 1)"
+                    parent.toast.subtitle = "Code \(index + 1) scanned!"
+                } else {
+                    // Show error
+                    parent.toast.title = "Error"
+                    parent.toast.subtitle = "Invalid code"
+                }
+                parent.toast.completion = continueScanning
+                parent.toast.show()
             }
         }
         

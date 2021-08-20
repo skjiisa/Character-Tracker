@@ -10,7 +10,7 @@ import SwiftUI
 import AVFoundation
 
 protocol ScannerViewControllerDelegate: AnyObject {
-    func found(code: String)
+    func found(code: String, continueScanning: (() -> Void)?)
 }
 
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -101,7 +101,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     func found(code: String) {
-        delegate?.found(code: code)
+        delegate?.found(code: code) { [weak self] in
+            if self?.captureSession.isRunning == false {
+                self?.captureSession.startRunning()
+            }
+        }
     }
 
     override var prefersStatusBarHidden: Bool {

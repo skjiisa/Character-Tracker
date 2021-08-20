@@ -15,7 +15,7 @@ protocol CharacterTrackerViewController: UIViewController, ScannerViewController
 //MARK: Scanner view controller delegate
 
 extension CharacterTrackerViewController {
-    func found(code: String) {
+    func found(code: String, continueScanning: (() -> Void)?) {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         dismiss(animated: true) {
