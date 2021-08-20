@@ -723,16 +723,43 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     private func qrCodes() {
         //TODO: Generate QR codes on background thread and show a loading toast.
-        guard let module = module,
-              let codes = PortController.shared.exportToQRCodes(for: module), let qrCodes = QRCodes(codes) else { return }
+        // Show loading toast
+        let alert = UIAlertController(title: nil, message: "Generating QR Codes", preferredStyle: .alert)
         
-        let qrCodeView = UIHostingController(rootView:
-            NavigationView {
-                QRCodeView(name: module.name, qrCodes: qrCodes, delegate: self)
-            }.navigationViewStyle(StackNavigationViewStyle())
-        )
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = .medium
+        loadingIndicator.startAnimating();
         
-        present(qrCodeView, animated: true)
+        alert.view.addSubview(loadingIndicator)
+        
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        present(alert, animated: true) {
+            dispatchGroup.leave()
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let module = self?.module,
+                  let codes = PortController.shared.exportToQRCodes(for: module),
+                  let qrCodes = QRCodes(codes) else { return }
+            
+            let qrCodeView = UIHostingController(
+                rootView:
+                    NavigationView {
+                        QRCodeView(name: module.name, qrCodes: qrCodes, delegate: self)
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
+            )
+            
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                // Dismiss the loading toast
+                self?.dismiss(animated: true) {
+                    // Does this run on the mean thread?
+                    self?.present(qrCodeView, animated: true)
+                }
+            }
+        }
     }
     
     // MARK: - Navigation
