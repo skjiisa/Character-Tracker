@@ -28,6 +28,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var gameReference: GameReference?
     var showAll = false
     var multiQR: MultiQR?
+    var dismissWorkItem: DispatchWorkItem?
     weak var scannerVC: ScannerViewController?
     var callbacks: [( (Module) -> Void )] = []
 
@@ -456,16 +457,35 @@ extension ModulesTableViewController: ScannerViewControllerDelegate, MultiQRDele
                 // Show error
                 alert = UIAlertController(title: "Error", message: "Invalid code", preferredStyle: .alert)
             }
-            //TODO: Allow the alert to be dismissed early on a tap
             // Show the alert
             guard let scannerVC = scannerVC else { return }
-            scannerVC.present(alert, animated: true) {
+            
+            let dismissWorkItem = DispatchWorkItem {
+                scannerVC.dismiss(animated: true, completion: continueScanning)
+            }
+            self.dismissWorkItem = dismissWorkItem
+            
+            scannerVC.present(alert, animated: true) { [weak self] in
+                guard let self = self else { return }
+                // Dismiss alert when tapping outside of it.
+                // Note that this is the opposite behavior of the SwiftUI version, which requires you to tap the
+                // toast itself. That's because the SwiftUI toast has native support for dismiss on tap, and I
+                // can only figure out how to get this to dismiss on background tap. The background graying on
+                // this but not the other will hopefully make it more obvious what to do to dismiss each of them.
+                let dismissGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissWork))
+                alert.view.superview?.isUserInteractionEnabled = true
+                alert.view.superview?.addGestureRecognizer(dismissGesture)
+                
                 // Dismiss the alert after 2 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    scannerVC.dismiss(animated: true, completion: continueScanning)
-                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: dismissWorkItem)
             }
         }
+    }
+    
+    @objc
+    func dismissWork() {
+        dismissWorkItem?.perform()
+        dismissWorkItem?.cancel()
     }
     
     func `import`(json: JSON) {
