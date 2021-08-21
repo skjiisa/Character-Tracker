@@ -87,6 +87,7 @@
 		59C33EF723BD6EF700FC1F11 /* Preload.json in Resources */ = {isa = PBXBuildFile; fileRef = 59C33EF623BD6EF700FC1F11 /* Preload.json */; };
 		59DC8021237E343200A77728 /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC8020237E343200A77728 /* NotesTableViewCell.swift */; };
 		59DC958926D1804E00FC2C37 /* UIPopoverPresentationController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC958826D1804E00FC2C37 /* UIPopoverPresentationController+Convenience.swift */; };
+		59DC958B26D1841C00FC2C37 /* AcknowledgementLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC958A26D1841C00FC2C37 /* AcknowledgementLink.swift */; };
 		59DE942826B9E1BE00E8D204 /* LinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DE942726B9E1BE00E8D204 /* LinkController.swift */; };
 		59E7A7BB24CCD56D006E77D7 /* PortController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E7A7BA24CCD56D006E77D7 /* PortController.swift */; };
 		59E98D6D26CE27990022D55B /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E98D6C26CE27990022D55B /* PageView.swift */; };
@@ -173,6 +174,7 @@
 		59C33EF623BD6EF700FC1F11 /* Preload.json */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = text.json; path = Preload.json; sourceTree = "<group>"; };
 		59DC8020237E343200A77728 /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 		59DC958826D1804E00FC2C37 /* UIPopoverPresentationController+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+Convenience.swift"; sourceTree = "<group>"; };
+		59DC958A26D1841C00FC2C37 /* AcknowledgementLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementLink.swift; sourceTree = "<group>"; };
 		59DE942726B9E1BE00E8D204 /* LinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkController.swift; sourceTree = "<group>"; };
 		59E7A7BA24CCD56D006E77D7 /* PortController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortController.swift; sourceTree = "<group>"; };
 		59E98D6C26CE27990022D55B /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			children = (
 				5959073724DCBC8E00BE372F /* PreferencesForm.swift */,
 				595A065B2528F4B700BE6258 /* AcknowledgementsView.swift */,
+				59DC958A26D1841C00FC2C37 /* AcknowledgementLink.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				59B3A78F236CF68E00B3D33B /* GameReference.swift in Sources */,
 				59ADFD5A240B228F00B5E828 /* EntityController.swift in Sources */,
 				59083982250990B3007A86D5 /* ScannerNavigationView.swift in Sources */,
+				59DC958B26D1841C00FC2C37 /* AcknowledgementLink.swift in Sources */,
 				59B8D943237F8F6C00C7A28F /* IngredientController.swift in Sources */,
 				59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */,
 				596DE3A726D176210075C27F /* SwiftUIModalDelegate.swift in Sources */,
