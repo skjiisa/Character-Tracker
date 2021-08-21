@@ -280,12 +280,7 @@ class AttributesTableViewController: UITableViewController, CharacterTrackerView
         alertController.addAction(cancelAction)
         
         alertController.pruneNegativeWidthConstraints()
-        
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.view
-            let buttonBounds = addAttributeButton.convert(addAttributeButton.bounds, to: self.view)
-            popoverController.sourceRect = buttonBounds
-        }
+        alertController.setPopover(source: view, button: addAttributeButton)
         
         present(alertController, animated: true, completion: nil)
     }
