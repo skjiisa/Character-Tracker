@@ -8,12 +8,6 @@
 
 import SwiftUI
 
-//MARK: SwiftUIModalDelegate
-
-protocol SwiftUIModalDelegate {
-    func dismiss()
-}
-
 //MARK: QRCodes
 
 struct QRCodes: Identifiable {
