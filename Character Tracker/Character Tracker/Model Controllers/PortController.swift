@@ -335,8 +335,12 @@ class PortController {
         
         // Character Modules
         let characterRelationship = Relationship(key: "character", jsonRepresentation: characters)
-        let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: [], parent: characterRelationship, child: moduleRelationship)
+        let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: ["completed", "notes"], parent: characterRelationship, child: moduleRelationship)
         characters.relationshipObjects.append(characterModules)
+        
+        // Character Attributes
+        let characterAttributes = JSONRelationship<CharacterAttribute>(key: "attributes", attributes: ["priority"], parent: characterRelationship, child: attributeRelationship)
+        characters.relationshipObjects.append(characterAttributes)
         
         // Mods
         let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
@@ -393,21 +397,6 @@ class PortController {
         try importClass(ExternalLink.self, json: importJSON, updateOnly: true, context: context)
         
         jsonRepresentations.values.forEach { $0.clearObjects() }
-    }
-    
-    //TODO: Remove this in favor of `import`
-    @discardableResult
-    func importOnBackgroundContext(string: String, context: NSManagedObjectContext) -> [String] {
-        let json = JSON(parseJSON: string)
-        lastImport.removeAll()
-        
-        do {
-            try importData(json: json, context: context)
-        } catch {
-            NSLog("Error importing JSON: \(error)")
-        }
-        
-        return lastImport
     }
     
     @discardableResult

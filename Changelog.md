@@ -1,5 +1,22 @@
 # Character Tracker Changelog
 
+## v1.3
+
+### Major Features
+
+* Mods and Modules can now have links to external webpages ([#124](https://github.com/Isvvc/Character-Tracker/pull/124), [#125](https://github.com/Isvvc/Character-Tracker/pull/125))
+  * All included mods (DLC) and modules have links to their pages on the [UESP](https://en.uesp.net/wiki/Main_Page).
+* Data imported and exported can now be split into multiple QR codes ([#127](https://github.com/Isvvc/Character-Tracker/pull/127))
+* Characters can now be imported and exported ([#128](https://github.com/Isvvc/Character-Tracker/issues/128))
+
+### Minor improvements
+
+* Animate edit mode transition on mod detail page ([c968676](https://github.com/Isvvc/Character-Tracker/commit/c96867671387ef985d3aaa042e73a06007825e6b))
+* Fix crash on sharing JSON exports on iPad ([564e5aa](https://github.com/Isvvc/Character-Tracker/commit/564e5aa7ffd1d8035e1b02bc0f8597977a9be36a))
+* Launch screen now contains tab bar ([#114](https://github.com/Isvvc/Character-Tracker/issues/114))
+* Fix issue where tab bar title would change when viewing acknowledgements ([#121](https://github.com/Isvvc/Character-Tracker/issues/121))
+* Prevent data with no game specified from being imported ([#104](https://github.com/Isvvc/Character-Tracker/issues/104))
+
 ## v1.2.1
 
 Bug fixes and minor improvements [#120](https://github.com/Isvvc/Character-Tracker/pull/120)

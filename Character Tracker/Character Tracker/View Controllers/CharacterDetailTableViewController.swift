@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController {
+class CharacterDetailTableViewController: UITableViewController, CharacterTrackerViewController, SwiftUIModalDelegate {
     
     //MARK: Outlets
     
@@ -83,6 +83,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             }
         }
         
+        sections.append("") // Export
+        
         return sections
     }
     
@@ -129,6 +131,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 2
+        } else if section == tableView.numberOfSections - 1 {
+            return 1
         }
         
         guard let tempSection = attributeTypeSectionController?.sectionToShow(section) else {
@@ -172,7 +176,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard section < allSections.count else {
+        guard section < tableView.numberOfSections else {
             NSLog("That weird crash happened again where index is out of range for titleForHeaderInSection.")
             return "<Something went wrong!>"
         }
@@ -200,6 +204,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 if indexPath.row < tempAttributes.count {
                     cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
                     cell.textLabel?.text = tempAttributes[indexPath.row].name
+                    cell.textLabel?.textColor = .label
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "SelectAttributeCell", for: indexPath)
                     cell.textLabel?.text = "Add \(attributeSection.typeName.pluralize())"
@@ -235,7 +240,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                 cell = tableView.dequeueReusableCell(withIdentifier: "SelectModuleCell", for: indexPath)
                 cell.textLabel?.text = "Add \(moduleSection.typeName.pluralize())"
             }
-        } else {
+        } else if indexPath.section == 0 {
             // Character section
             if indexPath.row == 0 {
                 if let textFieldCell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as? CharacterNameTableViewCell {
@@ -276,6 +281,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                     cell.accessoryType = .none
                 }
             }
+        } else {
+            // Export section
+            cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath)
+            cell.textLabel?.text = "Export"
+            cell.textLabel?.textColor = .link
         }
         
         return cell
@@ -319,7 +329,8 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
     //MARK: Table view delegate
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if attributeTypeSectionController?.sectionToShow(section - 1)?.section is ModuleType {
+        if attributeTypeSectionController?.sectionToShow(section - 1)?.section is ModuleType
+            || section == tableView.numberOfSections - 1 {
             return 2
         }
         
@@ -331,7 +342,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         
         view.tag = section
         
-        if section > 0 {
+        if (1..<tableView.numberOfSections-1).contains(section) {
             let tap = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
             view.addGestureRecognizer(tap)
         }
@@ -383,6 +394,11 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
             if let nameCell = tableView.cellForRow(at: indexPath) as? CharacterNameTableViewCell {
                 nameCell.textField.becomeFirstResponder()
             }
+        } else if indexPath.section == tableView.numberOfSections - 1,
+                  let character = character,
+                  let cell = tableView.cellForRow(at: indexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            export(character, name: character.name ?? "Character", button: cell)
         }
     }
     
@@ -409,7 +425,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
         }
         
         attributeTypeSectionController?.toggleSection(index)
-        if index < tableView.numberOfSections {
+        if index < tableView.numberOfSections - 1 {
             tableView.reloadSections(sections, with: .automatic)
         }
     }

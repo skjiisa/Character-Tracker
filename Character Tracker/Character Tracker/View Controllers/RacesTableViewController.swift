@@ -141,12 +141,7 @@ class RacesTableViewController: UITableViewController, CharacterTrackerViewContr
         alertController.addAction(cancelAction)
         
         alertController.pruneNegativeWidthConstraints()
-        
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.view
-            let buttonBounds = addRaceView.convert(addRaceView.bounds, to: self.view)
-            popoverController.sourceRect = buttonBounds
-        }
+        alertController.setPopover(source: view, button: addRaceView)
                 
         present(alertController, animated: true, completion: nil)
     }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController {
+class ModuleDetailTableViewController: UITableViewController, CharacterTrackerViewController, SwiftUIModalDelegate {
     
     //MARK: Outlets
     
@@ -678,88 +678,9 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
         updateViews()
     }
     
-    @IBAction func export(_ sender: Any) {
+    @IBAction func exportTapped(_ sender: UIButton) {
         guard let module = module else { return }
-        
-        let actionSheet = UIAlertController(title: "Export \(module.name ?? "Module")", message: nil, preferredStyle: .actionSheet)
-        
-        let qrCodeAction = UIAlertAction(title: "QR Codes", style: .default) { [weak self] _ in
-            self?.qrCodes()
-        }
-        
-        let json = UIAlertAction(title: "JSON Text", style: .default) { [weak self] _ in
-            guard let module = self?.module,
-                  let json = PortController.shared.exportJSONText(for: module) else { return }
-            let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
-            self?.present(activityVC, animated: true)
-        }
-        
-        let jsonFile = UIAlertAction(title: "JSON File", style: .default) { [weak self] _ in
-            guard let module = self?.module,
-                  let url = PortController.shared.saveTempJSON(for: module) else { return }
-            let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            activityVC.completionWithItemsHandler = { _, _, _, _ in
-                PortController.shared.clearFilesFromTempDirectory()
-            }
-            self?.present(activityVC, animated: true)
-        }
-        
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        actionSheet.addAction(qrCodeAction)
-        actionSheet.addAction(json)
-        actionSheet.addAction(jsonFile)
-        actionSheet.addAction(cancel)
-        actionSheet.pruneNegativeWidthConstraints()
-        
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            let buttonBounds = exportButton.convert(exportButton.bounds, to: self.view)
-            popoverController.sourceRect = buttonBounds
-        }
-        
-        present(actionSheet, animated: true)
-    }
-    
-    private func qrCodes() {
-        // Show loading toast
-        let alert = UIAlertController(title: nil, message: "Generating QR Codes", preferredStyle: .alert)
-        
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = .medium
-        loadingIndicator.startAnimating();
-        
-        alert.view.addSubview(loadingIndicator)
-        
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        present(alert, animated: true) {
-            dispatchGroup.leave()
-        }
-        
-        // Generate the QR codes on a background thread
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let module = self?.module,
-                  let codes = PortController.shared.exportToQRCodes(for: module),
-                  let qrCodes = QRCodes(codes) else { return }
-            
-            let qrCodeView = UIHostingController(
-                rootView:
-                    NavigationView {
-                        QRCodeView(name: module.name, qrCodes: qrCodes, delegate: self)
-                    }
-                    .navigationViewStyle(StackNavigationViewStyle())
-            )
-            
-            dispatchGroup.notify(queue: .main) { [weak self] in
-                // Dismiss the loading toast
-                self?.dismiss(animated: true) {
-                    // Does this run on the mean thread?
-                    self?.present(qrCodeView, animated: true)
-                }
-            }
-        }
+        export(module, name: module.name ?? "Module", button: sender)
     }
     
     // MARK: - Navigation
@@ -920,13 +841,5 @@ extension ModuleDetailTableViewController: IngredientsTableDelegate {
 extension ModuleDetailTableViewController: LevelTableViewCellDelegate {
     func levelChanged() {
         moduleHasBeenModified()
-    }
-}
-
-//MARK: SwiftUIModalDelegate
-
-extension ModuleDetailTableViewController: SwiftUIModalDelegate {
-    func dismiss() {
-        dismiss(animated: true)
     }
 }

@@ -18,29 +18,24 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let viewControllers = viewControllers {
-            for vc in viewControllers {
-                if let navigationVC = vc as? UINavigationController {
-                    for vc in navigationVC.viewControllers {
-                        
-                        if let characterTrackerVC = vc as? CharacterTrackerViewController {
-                            characterTrackerVC.gameReference = gameReference
-                            
-                            if let settingsVC = characterTrackerVC as? SettingsTableViewController {
-                                settingsVC.attributeTypeController = attributeTypeController
-                                settingsVC.moduleTypeController = moduleTypeController
-                            } else if let charactersVC = characterTrackerVC as? CharactersTableViewController {
-                                charactersVC.attributeTypeController = attributeTypeController
-                            }
-                            
-                        }
-                        
-                    }
+        
+        // Pass in controllers
+        viewControllers?
+            .compactMap { ($0 as? UINavigationController)?.viewControllers }
+            .flatMap { $0 }
+            .compactMap { $0 as? CharacterTrackerViewController }
+            .forEach { vc in
+                vc.gameReference = gameReference
+                
+                if let settingsVC = vc as? SettingsTableViewController {
+                    settingsVC.attributeTypeController = attributeTypeController
+                    settingsVC.moduleTypeController = moduleTypeController
+                } else if let charactersVC = vc as? CharactersTableViewController {
+                    charactersVC.attributeTypeController = attributeTypeController
                 }
             }
-        }
         
+        // Add mods view
         let modsViewHost = UIHostingController(rootView:
             NavigationView {
                 ModsViewContainer()
