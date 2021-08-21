@@ -17,7 +17,7 @@ extension SwiftUIModalDelegate {
         dismiss(animated: true)
     }
     
-    func export<ObjectType: NSManagedObject>(_ object: ObjectType, name: String, button: UIView, parent: UIView) {
+    func export<ObjectType: NSManagedObject>(_ object: ObjectType, name: String, button: UIView) {
         let actionSheet = UIAlertController(title: "Export \(name)", message: nil, preferredStyle: .actionSheet)
         
         let qrCodeAction = UIAlertAction(title: "QR Codes", style: .default) { [weak self] _ in
@@ -25,18 +25,22 @@ extension SwiftUIModalDelegate {
         }
         
         let json = UIAlertAction(title: "JSON Text", style: .default) { [weak self] _ in
-            guard let json = PortController.shared.exportJSONText(for: object) else { return }
+            guard let json = PortController.shared.exportJSONText(for: object),
+                  let self = self else { return }
             let activityVC = UIActivityViewController(activityItems: [json], applicationActivities: nil)
-            self?.present(activityVC, animated: true)
+            activityVC.setPopover(source: self.view, button: button)
+            self.present(activityVC, animated: true)
         }
         
         let jsonFile = UIAlertAction(title: "JSON File", style: .default) { [weak self] _ in
-            guard let url = PortController.shared.saveTempJSON(for: object) else { return }
+            guard let url = PortController.shared.saveTempJSON(for: object),
+                  let self = self else { return }
             let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
             activityVC.completionWithItemsHandler = { _, _, _, _ in
                 PortController.shared.clearFilesFromTempDirectory()
             }
-            self?.present(activityVC, animated: true)
+            activityVC.setPopover(source: self.view, button: button)
+            self.present(activityVC, animated: true)
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -47,11 +51,7 @@ extension SwiftUIModalDelegate {
         actionSheet.addAction(cancel)
         actionSheet.pruneNegativeWidthConstraints()
         
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            let buttonBounds = button.convert(button.bounds, to: parent)
-            popoverController.sourceRect = buttonBounds
-        }
+        actionSheet.setPopover(source: view, button: button)
         
         present(actionSheet, animated: true)
     }

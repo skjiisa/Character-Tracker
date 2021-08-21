@@ -398,7 +398,7 @@ class CharacterDetailTableViewController: UITableViewController, CharacterTracke
                   let character = character,
                   let cell = tableView.cellForRow(at: indexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
-            export(character, name: character.name ?? "Character", button: cell, parent: view)
+            export(character, name: character.name ?? "Character", button: cell)
         }
     }
     

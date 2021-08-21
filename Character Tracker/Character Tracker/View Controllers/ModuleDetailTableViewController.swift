@@ -680,7 +680,7 @@ class ModuleDetailTableViewController: UITableViewController, CharacterTrackerVi
     
     @IBAction func exportTapped(_ sender: UIButton) {
         guard let module = module else { return }
-        export(module, name: module.name ?? "Module", button: sender, parent: view)
+        export(module, name: module.name ?? "Module", button: sender)
     }
     
     // MARK: - Navigation
