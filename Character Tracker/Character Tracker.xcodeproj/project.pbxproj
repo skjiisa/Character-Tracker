@@ -28,6 +28,7 @@
 		594D7ABF2371212100F0795D /* CharacterNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */; };
 		594D7AC1237124AD00F0795D /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594D7AC0237124AD00F0795D /* CharacterController.swift */; };
 		5953DEE126A7F019001C8001 /* LinksSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953DEE026A7F019001C8001 /* LinksSection.swift */; };
+		59567AF226D095E0001893A8 /* SettingsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59567AF126D095E0001893A8 /* SettingsNavigationController.swift */; };
 		5959073424DCA7FC00BE372F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073324DCA7FC00BE372F /* QRCodeView.swift */; };
 		5959073624DCB14F00BE372F /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073524DCB14F00BE372F /* ShareSheet.swift */; };
 		5959073824DCBC8E00BE372F /* PreferencesForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959073724DCBC8E00BE372F /* PreferencesForm.swift */; };
@@ -109,6 +110,7 @@
 		594D7ABE2371212100F0795D /* CharacterNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterNameTableViewCell.swift; sourceTree = "<group>"; };
 		594D7AC0237124AD00F0795D /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		5953DEE026A7F019001C8001 /* LinksSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinksSection.swift; sourceTree = "<group>"; };
+		59567AF126D095E0001893A8 /* SettingsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigationController.swift; sourceTree = "<group>"; };
 		5959073324DCA7FC00BE372F /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		5959073524DCB14F00BE372F /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		5959073724DCBC8E00BE372F /* PreferencesForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesForm.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				59B3A794236D063C00B3D33B /* RacesTableViewController.swift */,
 				59B3A78A236CF29900B3D33B /* TabBarController.swift */,
 				59B3A78C236CF59800B3D33B /* SettingsTableViewController.swift */,
+				59567AF126D095E0001893A8 /* SettingsNavigationController.swift */,
 				59B3A790236CFBEE00B3D33B /* GamesTableViewController.swift */,
 				59B3A792236D01B300B3D33B /* CharactersTableViewController.swift */,
 				59850F41237D061500286067 /* ModuleDetailTableViewController.swift */,
@@ -496,6 +499,7 @@
 				59ACCD39252BD0AD00994D70 /* Character_Tracker+OrderedImages.swift in Sources */,
 				59AE903623DA8AEA00CD1D6F /* NSManagedObject+Delete.swift in Sources */,
 				59C116C524DE44560078AA10 /* ScannerViewController.swift in Sources */,
+				59567AF226D095E0001893A8 /* SettingsNavigationController.swift in Sources */,
 				59B3A797236D506000B3D33B /* AttributeController.swift in Sources */,
 				59B3A791236CFBEE00B3D33B /* GamesTableViewController.swift in Sources */,
 				5978EE8625115DB800AA9FB1 /* ModsViewContainer.swift in Sources */,
