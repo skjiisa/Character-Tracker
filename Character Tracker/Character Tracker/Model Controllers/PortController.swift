@@ -335,8 +335,12 @@ class PortController {
         
         // Character Modules
         let characterRelationship = Relationship(key: "character", jsonRepresentation: characters)
-        let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: [], parent: characterRelationship, child: moduleRelationship)
+        let characterModules = JSONRelationship<CharacterModule>(key: "modules", attributes: ["completed", "notes"], parent: characterRelationship, child: moduleRelationship)
         characters.relationshipObjects.append(characterModules)
+        
+        // Character Attributes
+        let characterAttributes = JSONRelationship<CharacterAttribute>(key: "attributes", attributes: ["priority"], parent: characterRelationship, child: attributeRelationship)
+        characters.relationshipObjects.append(characterAttributes)
         
         // Mods
         let modulesRelationship = Relationship(key: "modules", jsonRepresentation: modules)
