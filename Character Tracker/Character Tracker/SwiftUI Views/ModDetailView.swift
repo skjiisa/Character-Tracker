@@ -308,26 +308,21 @@ struct ModuleTypeSection: View {
     }
     
     var body: some View {
-        // Not sure if I'm crazy or if they changed the SwiftUI compiler,
-        // but this Group doesn't actually need to be here.
-        //TODO: Remove this Group
-        Group {
-            if modules.count > 0 {
-                Section(header: Text(type.typeName.pluralize())) {
-                    ForEach (modules) { module in
-                        Button(module.name ?? "Unknown module") {
-                            selectModule(module)
-                        }
-                        .foregroundColor(.primary)
+        if modules.count > 0 {
+            Section(header: Text(type.typeName.pluralize())) {
+                ForEach (modules) { module in
+                    Button(module.name ?? "Unknown module") {
+                        selectModule(module)
                     }
-                    .onDelete { indexSet in
-                        let modulesToRemove = indexSet.map { modules[$0] }
-                        DispatchQueue.main.async {
-                            modController.remove(modulesToRemove, from: mod, context: moc)
-                        }
-                    }
-                    .deleteDisabled(deleteDisabled)
+                    .foregroundColor(.primary)
                 }
+                .onDelete { indexSet in
+                    let modulesToRemove = indexSet.map { modules[$0] }
+                    DispatchQueue.main.async {
+                        modController.remove(modulesToRemove, from: mod, context: moc)
+                    }
+                }
+                .deleteDisabled(deleteDisabled)
             }
         }
     }
