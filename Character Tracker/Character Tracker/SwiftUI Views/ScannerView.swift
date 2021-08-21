@@ -7,12 +7,14 @@
 //
 
 import SwiftUI
+import SwiftyJSON
 
 struct ScannerView: UIViewControllerRepresentable {
     typealias UIViewControllerType = ScannerViewController
     
     @Binding var showing: Bool
     @Binding var alert: Alert?
+    @Binding var toast: ToastItem
     
     var dispatchGroup = DispatchGroup()
     
@@ -34,18 +36,55 @@ struct ScannerView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: ScannerViewController, context: Context) {}
     
-    class Coordinator: ScannerViewControllerDelegate {
+    class Coordinator: ScannerViewControllerDelegate, MultiQRDelegate {
         var parent: ScannerView
+        var multiQR: MultiQR?
         
         init(_ parent: ScannerView) {
             self.parent = parent
         }
         
-        func found(code: String) {
+        func found(code: String, continueScanning: (() -> Void)?) {
+            let json = JSON(parseJSON: code)
+            // Confusingly, json's null value being nil means that the JSON is not null.
+            if json.null == nil {
+                // This code is JSON
+                self.import(json: json)
+            } else {
+                // This code is not JSON. Try to load it as a MultiQR
+                var index: Int?
+                
+                if let multiQR = multiQR {
+                    // If this is the last code, MultiQR will call its delegate's
+                    // `import` function, in this case its delegate being this.
+                    index = multiQR.scan(code: code)
+                } else {
+                    multiQR = MultiQR(code: code, delegate: self)
+                    index = multiQR?.content.firstIndex(where: { $0 != nil })
+                }
+                
+                if let index = index,
+                   let multiQR = multiQR {
+                    // Show alert of the scanned index
+                    parent.toast.title = "\(multiQR.scannedCodes)/\(multiQR.total + 1)"
+                    parent.toast.subtitle = "Code \(index + 1) scanned!"
+                } else {
+                    // Show error
+                    parent.toast.title = "Error"
+                    parent.toast.subtitle = "Invalid code"
+                }
+                parent.toast.completion = continueScanning
+                parent.toast.show()
+            }
+        }
+        
+        func `import`(json: JSON) {
+            print("JSON import successful!", json)
+            
             let context = CoreDataStack.shared.container.newBackgroundContext()
             
             context.performAndWait {
-                let importedNames = PortController.shared.importOnBackgroundContext(string: code, context: context)
+                let importedNames = PortController.shared.import(json: json, context: context)
                 
                 let save = Alert.Button.default(Text("Save")) {
                     CoreDataStack.shared.save(context: context)

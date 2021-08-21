@@ -10,6 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 import ActionOver
 import Introspect
+import AlertToast
 
 struct ModDetailView: View {
     
@@ -40,11 +41,11 @@ struct ModDetailView: View {
     @State private var editMode: Bool
     @State private var selectedIngredient: Ingredient?
     @State private var showingExport = false
-    @State private var qrCodeBuffer: CGImage? = nil
-    @State private var qrCode: CGImage? = nil
+    @State private var qrCodes: QRCodes? = nil
     @State private var exportJSON: String? = nil
     @State private var exportFile: URL? = nil
     @State private var showingShareSheet = false
+    @State private var showingLoading = false
     @State private var vc: UIViewController?
     
     init(mod: Mod, editMode: Bool = false) {
@@ -60,30 +61,32 @@ struct ModDetailView: View {
         _editMode = .init(initialValue: editMode)
     }
     
-    var exportButtons: [ActionOverButton] {
-        var actions: [ActionOverButton] = [
-            ActionOverButton(title: "JSON Text", type: .normal) {
-                guard let json = PortController.shared.exportJSONText(for: self.mod) else { return }
-                self.exportJSON = json
-                self.showingShareSheet = true
-            },
-            ActionOverButton(title: "JSON File", type: .normal) {
-                guard let file = PortController.shared.saveTempJSON(for: self.mod) else { return }
-                self.exportFile = file
-                self.showingShareSheet = true
-            },
-            ActionOverButton(title: nil, type: .cancel, action: nil)
-        ]
-        
-        if qrCodeBuffer != nil {
-            actions.insert(
-                ActionOverButton(title: "QR Code", type: .normal) {
-                    qrCode = qrCodeBuffer
-                }, at: 0)
-        }
-        
-        return actions
-    }
+    var exportButtons: [ActionOverButton] {[
+        ActionOverButton(title: "QR Codes", type: .normal) {
+            // Generating the QR codes can take a long time.
+            showingLoading = true
+            DispatchQueue.global(qos: .userInitiated).async {
+                let codes = PortController.shared.exportToQRCodes(for: mod)
+                DispatchQueue.main.async {
+                    // The QRCodes initializer will fail if the the array is empty,
+                    // but nil-coalescing here is easier than unmrapping codes.
+                    qrCodes = QRCodes(codes ?? [])
+                    showingLoading = false
+                }
+            }
+        },
+        ActionOverButton(title: "JSON Text", type: .normal) {
+            guard let json = PortController.shared.exportJSONText(for: mod) else { return }
+            exportJSON = json
+            showingShareSheet = true
+        },
+        ActionOverButton(title: "JSON File", type: .normal) {
+            guard let file = PortController.shared.saveTempJSON(for: mod) else { return }
+            exportFile = file
+            showingShareSheet = true
+        },
+        ActionOverButton(title: nil, type: .cancel, action: nil)
+    ]}
     
     //MARK: Views
     
@@ -103,7 +106,7 @@ struct ModDetailView: View {
             // Images
             
             Section {
-                ImagesView(images: mod.images!.array as! [ImageLink], parent: mod) { imageLink in
+                ImagesView(images: mod.images?.array as? [ImageLink] ?? [], parent: mod) { imageLink in
                     self.mod.mutableOrderedSetValue(forKey: "images").add(imageLink)
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -202,7 +205,6 @@ struct ModDetailView: View {
             if !editMode {
                 Section {
                     Button(action: {
-                        self.qrCodeBuffer = PortController.shared.exportToQRCode(for: self.mod)
                         self.showingExport = true
                     }) {
                         HStack {
@@ -229,7 +231,7 @@ struct ModDetailView: View {
                     // I'm pretty sure it's just a SwiftUI bug.
                     .actionOver(presented: $showingExport,
                                 title: "Export \(self.mod.name ?? "mod")",
-                                message: qrCodeBuffer == nil ? "Mod too large to generate QR code." : nil,
+                                message: nil,
                                 buttons: exportButtons,
                                 ipadAndMacConfiguration: IpadAndMacConfiguration(anchor: nil, arrowEdge: nil),
                                 normalButtonColor: UIColor.systemBlue)
@@ -238,6 +240,9 @@ struct ModDetailView: View {
         }
         .introspectViewController { vc in
             self.vc = vc
+        }
+        .toast(isPresenting: $showingLoading) {
+            AlertToast(displayMode: .alert, type: .loading, title: "Generating QR Codes")
         }
         .navigationBarTitle(mod.name ?? "Mod")
         .navigationBarItems(trailing: editButton)
@@ -253,9 +258,9 @@ struct ModDetailView: View {
         .alert(item: $selectedIngredient) { ingredient in
             Alert(title: Text(ingredient.name ?? "Unknown ingredient"), message: Text("Plugin and FormID:\n\(ingredient.id ?? "")"))
         }
-        .sheet(item: self.$qrCode) { qrCode in
+        .sheet(item: self.$qrCodes) { qrCodes in
             NavigationView {
-                QRCodeView(name: self.mod.name, qrCode: qrCode)
+                QRCodeView(name: mod.name, qrCodes: qrCodes)
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }

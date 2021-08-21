@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import CoreData
+import SwiftyJSON
 
 class ModulesTableViewController: UITableViewController, CharacterTrackerViewController {
     
@@ -26,6 +27,9 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
     var character: Character?
     var gameReference: GameReference?
     var showAll = false
+    var multiQR: MultiQR?
+    var dismissWorkItem: DispatchWorkItem?
+    weak var scannerVC: ScannerViewController?
     var callbacks: [( (Module) -> Void )] = []
 
     let searchController = UISearchController(searchResultsController: nil)
@@ -296,6 +300,7 @@ class ModulesTableViewController: UITableViewController, CharacterTrackerViewCon
         scannerVC.title = "Import from QR Code"
         scannerVC.delegate = self
         let scannerNavigationView = UINavigationController(rootViewController: scannerVC)
+        self.scannerVC = scannerVC
         present(scannerNavigationView, animated: true)
     }
 
@@ -415,5 +420,100 @@ extension ModulesTableViewController: ModulesFilterFormDelegate {
     
     func dismiss() {
         dismiss(animated: true)
+    }
+}
+
+//MARK: Scanner view controller delegate
+
+extension ModulesTableViewController: ScannerViewControllerDelegate, MultiQRDelegate {
+    func found(code: String, continueScanning: (() -> Void)?) {
+        
+        let json = JSON(parseJSON: code)
+        // Confusingly, json's null value being nil means that the JSON is not null.
+        if json.null == nil {
+            // This code is JSON
+            self.import(json: json)
+        } else {
+            // This code is not JSON. Try to load it as a MultiQR
+            var index: Int?
+            
+            if let multiQR = multiQR {
+                // If this is the last code, MultiQR will call its delegate's
+                // `import` function, in this case its delegate being this.
+                index = multiQR.scan(code: code)
+            } else {
+                multiQR = MultiQR(code: code, delegate: self)
+                index = multiQR?.content.firstIndex(where: { $0 != nil })
+            }
+            
+            let alert: UIAlertController
+            if let index = index,
+               let multiQR = multiQR {
+                // Show alert of the scanned index
+                alert = UIAlertController(title: "\(multiQR.scannedCodes)/\(multiQR.total + 1)",
+                                          message: "Code \(index + 1) scanned!",
+                                          preferredStyle: .alert)
+            } else {
+                // Show error
+                alert = UIAlertController(title: "Error", message: "Invalid code", preferredStyle: .alert)
+            }
+            // Show the alert
+            guard let scannerVC = scannerVC else { return }
+            
+            let dismissWorkItem = DispatchWorkItem {
+                scannerVC.dismiss(animated: true, completion: continueScanning)
+            }
+            self.dismissWorkItem = dismissWorkItem
+            
+            scannerVC.present(alert, animated: true) { [weak self] in
+                guard let self = self else { return }
+                // Dismiss alert when tapping outside of it.
+                // Note that this is the opposite behavior of the SwiftUI version, which requires you to tap the
+                // toast itself. That's because the SwiftUI toast has native support for dismiss on tap, and I
+                // can only figure out how to get this to dismiss on background tap. The background graying on
+                // this but not the other will hopefully make it more obvious what to do to dismiss each of them.
+                let dismissGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissWork))
+                alert.view.superview?.isUserInteractionEnabled = true
+                alert.view.superview?.addGestureRecognizer(dismissGesture)
+                
+                // Dismiss the alert after 2 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: dismissWorkItem)
+            }
+        }
+    }
+    
+    @objc
+    func dismissWork() {
+        dismissWorkItem?.perform()
+        dismissWorkItem?.cancel()
+    }
+    
+    func `import`(json: JSON) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        // Dismiss the scanner
+        dismiss(animated: true) {
+            dispatchGroup.leave()
+        }
+        
+        let context = CoreDataStack.shared.container.newBackgroundContext()
+        
+        context.performAndWait {
+            let importedNames = PortController.shared.import(json: json, context: context)
+            
+            let alert = UIAlertController(title: "Imported objects", message: importedNames.joined(separator: ", "), preferredStyle: .alert)
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            let save = UIAlertAction(title: "Save", style: .default) { _ in
+                CoreDataStack.shared.save(context: context)
+            }
+            
+            alert.addAction(cancel)
+            alert.addAction(save)
+            
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                self?.present(alert, animated: true)
+            }
+        }
     }
 }

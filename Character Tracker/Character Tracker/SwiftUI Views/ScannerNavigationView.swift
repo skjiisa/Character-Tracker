@@ -7,14 +7,29 @@
 //
 
 import SwiftUI
+import AlertToast
+
+struct ToastItem {
+    var showing = false
+    var title: String?
+    var subtitle: String?
+    var completion: (() -> Void)?
+    
+    mutating func show() {
+        showing = true
+    }
+}
 
 struct ScannerNavigationView: View {
+    
     @Binding var showing: Bool
     @Binding var alert: Alert?
     
+    @State private var toast = ToastItem()
+    
     var cancelButton: some View {
         Button("Cancel") {
-            self.showing = false
+            showing = false
         }
     }
     
@@ -27,9 +42,17 @@ struct ScannerNavigationView: View {
     
     var body: some View {
         NavigationView {
-            ScannerView(showing: $showing, alert: $alert)
+            ScannerView(showing: $showing, alert: $alert, toast: $toast)
                 .navigationBarTitle("Scan QR Code", displayMode: .inline)
                 .navigationBarItems(leading: cancelButton, trailing: infoButton)
+                .toast(isPresenting: $toast.showing, duration: 2, tapToDismiss: true) {
+                    AlertToast(displayMode: .alert, type: .regular, title: toast.title, subTitle: toast.subtitle, custom: .custom(titleFont: .largeTitle, subTitleFont: .title))
+                } completion: {
+                    // Resume scanning
+                    print("Resume scanning")
+                    toast.completion?()
+                }
+
         }
     }
 }
